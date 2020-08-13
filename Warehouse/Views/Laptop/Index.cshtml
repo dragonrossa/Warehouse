@@ -1,0 +1,33 @@
+﻿@model  Warehouse.Models.LaptopModels
+
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
+
+
+<div class="container-fluid">
+    <h4>Warehouse</h4>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.ActionLink("Create", "Create", "Laptop") </a></li>
+            <li class="breadcrumb-item"><a href="#"> @Html.ActionLink("List", "List", "Laptop")</a></li>
+            <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Edit", "EditList", "Laptop")</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> @Html.ActionLink("Delete", "DeleteList", "Laptop")</li>
+        </ol>
+    </nav>
+
+    @*@Html.ActionLink("Create", "Create", "Laptop") |
+        @Html.ActionLink("List", "List", "Laptop") |
+        @Html.ActionLink("Edit", "EditList", "Laptop") |
+        @Html.ActionLink("Delete", "DeleteList", "Laptop")*@
+
+</div>
