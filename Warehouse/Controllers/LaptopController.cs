@@ -15,8 +15,8 @@ namespace Warehouse.Controllers
         // GET: MasterData
         public ActionResult Index()
         {
-
-            return View();
+            List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
+            return View(ListLaptop);
         }
 
         //GET: MasterData/Create
