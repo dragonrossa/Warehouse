@@ -42,6 +42,9 @@ namespace Warehouse.Models
         public int? UserID { get; set; }
         //PlaceID
         public int? PlaceID { get; set; }
+        //FullPrice
+        [Column(TypeName = "money")]
+        public decimal? FullPrice { get; set; }
 
     }
 }

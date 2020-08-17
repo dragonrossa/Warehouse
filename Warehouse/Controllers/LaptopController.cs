@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using Warehouse.Models;
 
@@ -34,8 +37,24 @@ namespace Warehouse.Controllers
             {
                 _db.LaptopModels.Add(laptop);
                 _db.SaveChanges();
+
+                var lastInput = (from k in _db.LaptopModels
+                                 select k)
+                           .OrderByDescending(k => k.ID)
+                           .First();
+
+                //var last = lastInput.ID;
+
+              
+                lastInput.FullPrice = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).First();
+
+                _db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+
+          
+
             return View(laptop);
         }
 
@@ -68,6 +87,18 @@ namespace Warehouse.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             LaptopModels laptop = _db.LaptopModels.Find(id);
+
+            var idUser = Convert.ToInt32(id);
+
+            //Update Full price if price changed in meanwhile
+
+            var result = (from k in _db.LaptopModels where k.ID == idUser select k.Price * k.Quantity).First(); //select price
+
+            var laptopFind = (from k in _db.LaptopModels where k.ID == idUser select k).First(); //select laptop
+
+            laptopFind.FullPrice = Convert.ToDecimal(result); // update FullPrice
+
+            _db.SaveChanges();
 
             if (laptop == null)
             {
@@ -131,6 +162,44 @@ namespace Warehouse.Controllers
                 return HttpNotFound();
             }
             return View(laptop);
+        }
+
+        public ActionResult Result()
+        {
+            
+
+            var laptop = (from k in _db.LaptopModels select k).ToList();
+
+            var result = (from k in _db.LaptopModels select k.Price*k.Quantity).ToList();
+
+
+            foreach(var lap in laptop)
+            {
+               
+                foreach(var res in result)
+                {
+                    
+                    lap.FullPrice = Convert.ToDecimal(res);
+                 
+                    _db.SaveChanges();
+
+                }
+
+            }
+
+          
+
+
+
+           
+
+
+
+            ViewBag.selectResult = "abcd";
+
+
+
+            return View(result);
         }
 
     }

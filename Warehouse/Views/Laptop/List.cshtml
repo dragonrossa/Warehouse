@@ -26,21 +26,14 @@
         <th>
             @Html.DisplayNameFor(model => model.Manufacturer)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SN)
-        </th>
+        
         <th>
             @Html.DisplayNameFor(model => model.OS)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PlaceID)
-        </th>
+     
         <th></th>
     </tr>
 
@@ -57,23 +50,12 @@
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Manufacturer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SN)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.OS)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlaceID)
-            </td>
+          
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ID }) |

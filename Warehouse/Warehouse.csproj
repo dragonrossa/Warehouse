@@ -330,6 +330,7 @@
     <Content Include="Views\Laptop\EditList.cshtml" />
     <Content Include="Views\Laptop\Index.cshtml" />
     <Content Include="Views\Laptop\List.cshtml" />
+    <Content Include="Views\Laptop\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
