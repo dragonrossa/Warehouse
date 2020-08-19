@@ -43,10 +43,9 @@ namespace Warehouse.Controllers
                            .OrderByDescending(k => k.ID)
                            .First();
 
-                //var last = lastInput.ID;
-
               
-                lastInput.FullPrice = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).First();
+                lastInput.FullPrice = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).First(); //Full price of products
+                lastInput.Savings = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.OldPrice - k.Price).First(); // Savings per unit
 
                 _db.SaveChanges();
 
@@ -90,13 +89,19 @@ namespace Warehouse.Controllers
 
             var idUser = Convert.ToInt32(id);
 
+            TempData["id"] = idUser;
+
             //Update Full price if price changed in meanwhile
 
             var result = (from k in _db.LaptopModels where k.ID == idUser select k.Price * k.Quantity).First(); //select price
 
+            var savings = (from k in _db.LaptopModels where k.ID == idUser select k.OldPrice - k.Price).First();
+
             var laptopFind = (from k in _db.LaptopModels where k.ID == idUser select k).First(); //select laptop
 
             laptopFind.FullPrice = Convert.ToDecimal(result); // update FullPrice
+
+            laptopFind.Savings = Convert.ToDecimal(savings);
 
             _db.SaveChanges();
 
@@ -105,7 +110,7 @@ namespace Warehouse.Controllers
                 return HttpNotFound();
             }
 
-            //List<MasterData> ListMaster = (from k in _db.LaptopModels select k).ToList();
+            
             return View(laptop);
         }
 
@@ -117,6 +122,17 @@ namespace Warehouse.Controllers
             {
                 _db.Entry(laptop).State = EntityState.Modified;
                 _db.SaveChanges();
+
+                //var id = Convert.ToInt32(TempData["id"]);
+
+                //var savings = (from k in _db.LaptopModels where k.ID == id select k.OldPrice - k.Price).First(); //calculate saving
+
+                //var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
+
+                //laptopFind.Savings = Convert.ToDecimal(savings); //EF Savings
+
+                //_db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             return View(laptop);
@@ -188,13 +204,6 @@ namespace Warehouse.Controllers
             }
 
           
-
-
-
-           
-
-
-
             ViewBag.selectResult = "abcd";
 
 

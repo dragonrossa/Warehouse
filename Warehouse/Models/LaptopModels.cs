@@ -45,6 +45,9 @@ namespace Warehouse.Models
         //FullPrice
         [Column(TypeName = "money")]
         public decimal? FullPrice { get; set; }
+        //Savings
+        [Column(TypeName = "money")]
+        public decimal? Savings { get; set; }
 
     }
 }
