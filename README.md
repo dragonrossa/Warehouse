@@ -7,6 +7,8 @@ Register and login
 
 Calculate Full price after adding Price and Quantity
 
-Soon coming - Savings per unit - Old Price minus New Price
+19.08. Added Savings per unit - Old Price minus New Price, different Edit, different Details, different Index
+
+Next -> Add shops (markets) for notebooks
 
 Rosana
