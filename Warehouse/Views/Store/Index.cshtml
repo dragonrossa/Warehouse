@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Warehouse.Models.StoreModels>
+
+<head>
+
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+
+<div class="container-fluid">
+    
+    <h1>Store manager</h1>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.ActionLink("Create", "Create", "Store") </a></li>
+            <li class="breadcrumb-item"><a href="#"> @Html.ActionLink("List", "List", "Store")</a></li>
+            <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Edit", "EditList", "Store")</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> @Html.ActionLink("Delete", "DeleteList", "Store")</li>
+        </ol>
+    </nav>
+
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkingTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ZipCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkingTime)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "List", new { id=item.ID }) 
+        </td>
+    </tr>
+}
+
+</table>

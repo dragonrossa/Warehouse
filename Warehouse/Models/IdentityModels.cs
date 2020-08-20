@@ -35,5 +35,6 @@ namespace Warehouse.Models
         }
 
         public virtual DbSet<LaptopModels> LaptopModels { get; set; }
+        public virtual DbSet<StoreModels> StoreModels { get; set; }
     }
 }

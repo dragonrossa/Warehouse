@@ -123,15 +123,19 @@ namespace Warehouse.Controllers
                 _db.Entry(laptop).State = EntityState.Modified;
                 _db.SaveChanges();
 
-                //var id = Convert.ToInt32(TempData["id"]);
+                var id = Convert.ToInt32(TempData["id"]);
 
-                //var savings = (from k in _db.LaptopModels where k.ID == id select k.OldPrice - k.Price).First(); //calculate saving
+                var savings = (from k in _db.LaptopModels where k.ID == id select k.OldPrice - k.Price).First(); //calculate saving
 
-                //var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
+                var result = (from k in _db.LaptopModels where k.ID == id select k.Price * k.Quantity).First(); //calculate new full price
 
-                //laptopFind.Savings = Convert.ToDecimal(savings); //EF Savings
+                var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
 
-                //_db.SaveChanges();
+                laptopFind.Savings = Convert.ToDecimal(savings); //EF Savings
+
+                laptopFind.FullPrice = Convert.ToDecimal(result);
+
+                _db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
