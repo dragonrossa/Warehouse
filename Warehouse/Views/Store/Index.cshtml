@@ -30,10 +30,7 @@
             @Html.DisplayNameFor(model => model.Location)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ZipCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WorkingTime)
+            @Html.DisplayNameFor(model => model.QoP)
         </th>
         <th></th>
     </tr>
@@ -47,10 +44,7 @@
             @Html.DisplayFor(modelItem => item.Location)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ZipCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WorkingTime)
+            @Html.DisplayFor(modelItem => item.QoP)
         </td>
         <td>
             @Html.ActionLink("Details", "List", new { id=item.ID }) 

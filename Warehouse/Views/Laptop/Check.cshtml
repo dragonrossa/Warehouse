@@ -1,0 +1,18 @@
+﻿
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+<div class="container-fluid">
+    <h4>Do you want to send those articles?</h4>
+</div>
+
+<div class="container-fluid">
+    @ViewBag.number x @ViewBag.name
+</div>

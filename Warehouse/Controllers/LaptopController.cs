@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
@@ -213,6 +214,39 @@ namespace Warehouse.Controllers
 
 
             return View(result);
+        }
+
+
+        //GET: MasterData/Send
+        public ActionResult Send()
+        {
+            List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
+            return View(ListLaptop);
+        }
+
+        //GET: MasterData/Send
+        public ActionResult SendArticle(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LaptopModels laptop = _db.LaptopModels.Find(id);
+
+            if (laptop == null)
+            {
+                return HttpNotFound();
+            }
+            return View(laptop);
+        }
+
+        //GET:MasterData/Check
+        public ActionResult Check(int? id, string name, int quantity)
+        {
+            @ViewBag.id = id;
+            ViewBag.name = name;
+            @ViewBag.number = quantity;
+            return View();
         }
 
     }

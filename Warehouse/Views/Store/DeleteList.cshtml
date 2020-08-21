@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Warehouse.Models.StoreModels>
 
+
 <head>
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
@@ -7,8 +8,7 @@
 </head>
 
 <div class="container-fluid">
-    <h4>List of Stores</h4>
-
+    <h4>Delete</h4>
 
     <table class="table">
         <tr>
@@ -24,7 +24,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.Telephone)
             </th>
@@ -34,7 +33,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.WorkingTime)
             </th>
-
             <th></th>
         </tr>
 
@@ -62,9 +60,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.WorkingTime)
                 </td>
-
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                 </td>
             </tr>
         }
@@ -74,4 +71,5 @@
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
+
 </div>

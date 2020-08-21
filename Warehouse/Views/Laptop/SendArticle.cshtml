@@ -1,0 +1,35 @@
+﻿@model Warehouse.Models.LaptopModels
+
+<div>
+    <h4>LaptopModels</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <br />
+        <dd>
+            <p>
+                @Html.ActionLink("Check", "Check", new { id = Model.ID, name= Model.Name, quantity = Model.Quantity })
+            </p>
+            <p>
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+        </dd>
+
+    </dl>
+</div>
+
+

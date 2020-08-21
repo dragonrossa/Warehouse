@@ -329,7 +329,6 @@
     <Content Include="Views\Laptop\DeleteList.cshtml" />
     <Content Include="Views\Laptop\Details.cshtml" />
     <Content Include="Views\Laptop\Edit.cshtml" />
-    <Content Include="Views\Laptop\EditList.cshtml" />
     <Content Include="Views\Laptop\Index.cshtml" />
     <Content Include="Views\Laptop\List.cshtml" />
     <Content Include="Views\Laptop\Result.cshtml" />
@@ -338,6 +337,12 @@
     <Content Include="Views\Store\List.cshtml" />
     <Content Include="Views\Store\Edit.cshtml" />
     <Content Include="Views\Store\Delete.cshtml" />
+    <Content Include="Views\Store\EditList.cshtml" />
+    <Content Include="Views\Store\DeleteList.cshtml" />
+    <Content Include="Views\Laptop\EditList.cshtml" />
+    <Content Include="Views\Laptop\Send.cshtml" />
+    <Content Include="Views\Laptop\SendArticle.cshtml" />
+    <Content Include="Views\Laptop\Check.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

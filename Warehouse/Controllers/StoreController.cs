@@ -34,18 +34,6 @@ namespace Warehouse.Controllers
             {
                 _db.StoreModels.Add(store);
                 _db.SaveChanges();
-
-                //var lastInput = (from k in _db.LaptopModels
-                //                 select k)
-                //           .OrderByDescending(k => k.ID)
-                //           .First();
-
-
-                //lastInput.FullPrice = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).First(); //Full price of products
-                //lastInput.Savings = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.OldPrice - k.Price).First(); // Savings per unit
-
-                //_db.SaveChanges();
-
                 return RedirectToAction("Index");
             }
 
@@ -84,24 +72,6 @@ namespace Warehouse.Controllers
             }
             StoreModels store = _db.StoreModels.Find(id);
 
-            //var idUser = Convert.ToInt32(id);
-
-            //TempData["id"] = idUser;
-
-            ////Update Full price if price changed in meanwhile
-
-            //var result = (from k in _db.LaptopModels where k.ID == idUser select k.Price * k.Quantity).First(); //select price
-
-            //var savings = (from k in _db.LaptopModels where k.ID == idUser select k.OldPrice - k.Price).First();
-
-            //var laptopFind = (from k in _db.LaptopModels where k.ID == idUser select k).First(); //select laptop
-
-            //laptopFind.FullPrice = Convert.ToDecimal(result); // update FullPrice
-
-            //laptopFind.Savings = Convert.ToDecimal(savings);
-
-            //_db.SaveChanges();
-
             if (store == null)
             {
                 return HttpNotFound();
@@ -120,19 +90,7 @@ namespace Warehouse.Controllers
                 _db.Entry(store).State = EntityState.Modified;
                 _db.SaveChanges();
 
-                //var id = Convert.ToInt32(TempData["id"]);
-
-                //var savings = (from k in _db.LaptopModels where k.ID == id select k.OldPrice - k.Price).First(); //calculate saving
-
-                //var result = (from k in _db.LaptopModels where k.ID == id select k.Price * k.Quantity).First(); //calculate new full price
-
-                //var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
-
-                //laptopFind.Savings = Convert.ToDecimal(savings); //EF Savings
-
-                //laptopFind.FullPrice = Convert.ToDecimal(result);
-
-                //_db.SaveChanges();
+              
 
                 return RedirectToAction("Index");
             }
