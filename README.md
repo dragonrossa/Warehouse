@@ -3,7 +3,7 @@ Warehouse - storage for notebooks made with Entity Framework.
 
 CRUD - notebook
 
-Register and login
+Register and login - create username and password and test it!
 
 Calculate Full price after adding Price and Quantity
 
