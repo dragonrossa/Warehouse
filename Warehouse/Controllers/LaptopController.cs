@@ -243,10 +243,47 @@ namespace Warehouse.Controllers
         //GET:MasterData/Check
         public ActionResult Check(int? id, string name, int quantity)
         {
-            @ViewBag.id = id;
+            ViewBag.id = id;
             ViewBag.name = name;
-            @ViewBag.number = quantity;
+            ViewBag.number = quantity;
+
+            TempData["id"] = id;
+            TempData["name"] = name;
+            TempData["number"] = quantity;
+
+
+            ViewData["ddlList"] = _db.StoreModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.ID.ToString()
+            }).ToList();
+
+           // ViewBag.poste_id = new SelectList(_db.StoreModels, "Name", "Name");
+
             return View();
+         
+        }
+
+        [HttpPost]
+        public ActionResult Check(FormCollection form, TransferModels transfer)
+        {
+            // string strDDLValue = form["poste_id"].ToString();
+            int id = Convert.ToInt32(TempData["id"]);
+            string name = TempData["name"].ToString();
+            int quantity = Convert.ToInt32(TempData["number"]);
+            int storeID= Convert.ToInt32(form["ddlList"].ToString());
+
+            
+            //int id2 = Convert.ToInt32(TempData["id"]);
+            transfer.LaptopID = id;
+            transfer.LaptopName = name;
+            transfer.LaptopQuantity = quantity;
+            transfer.StoreID = storeID;// add if any field you want insert
+            _db.TransferModels.Add(transfer);           // pass the table object 
+            _db.SaveChanges();
+
+            Debug.Write("T u  sa m");
+            return RedirectToAction("Index");
         }
 
     }

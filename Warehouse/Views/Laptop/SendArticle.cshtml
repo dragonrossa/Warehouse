@@ -19,7 +19,7 @@
         <dd>
             @Html.DisplayFor(model => model.Quantity)
         </dd>
-        <br />
+       @* <br />*@
         <dd>
             <p>
                 @Html.ActionLink("Check", "Check", new { id = Model.ID, name= Model.Name, quantity = Model.Quantity })
