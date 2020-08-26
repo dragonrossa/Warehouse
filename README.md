@@ -13,6 +13,8 @@ Calculate Full price after adding Price and Quantity
 
 21.08. Preparations for sending notebooks from Warehouse to Store  
 
-25.08. Transfer model -> send from Warehouse to Store, not done yet
+25.08. Transfer model -> send from Warehouse to Store
+
+26.08. Modified transfer, view and transfer status in Details
 
 Rosana
