@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Warehouse.Models.TransferModels>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
+<div class="container-fluid">
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LaptopName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LaptopQuantity)
+            </th>
+            <th>Place</th>
+            <th></th>
+        </tr>
+
+        @*@foreach (var item in Model)
+        {*@
+    <tr>
+
+        @*<td>
+            @Html.DisplayFor(modelItem => item.LaptopName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LaptopQuantity)
+        </td>*@
+        <td>
+            @foreach (var item2 in ViewData["storeList2"] as List<string>)
+            {
+
+                @item2 <br />
+            }
+
+        </td>
+        <td>
+            @foreach (var item2 in ViewData["storeList3"] as List<string>)
+            {
+
+                @item2 <br />
+            }
+
+        </td>
+        <td>
+            @foreach (var item2 in ViewData["storeList"] as List<string>)
+            {
+
+                @item2 <br />
+            }
+
+        </td>
+
+    </tr>
+        @*}*@
+
+    </table>
+
+    
+
+   
+
+
+
+    @*@foreach (var std in (IEnumerable<string>)ViewData["storeList"])
+        {
+            @std
+            @:&nbsp;
+            @:<br />
+        }
+
+
+        @foreach (var item2 in ViewData["storeList"] as List<string>)
+        {
+
+            @item2
+
+
+        }*@
+
+    @*@foreach (var item in Model.Concat(ViewData["storeList"] as IEnumerable<string>))
+        {
+            //TODO: Real code goes here
+        }*@
+
+    @*@foreach (var item2 in ViewData["storeList"] as List<string>)
+        {
+
+            @item2
+
+        }*@
+
+
+
+
+</div>

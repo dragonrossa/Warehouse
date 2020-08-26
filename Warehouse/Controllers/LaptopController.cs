@@ -172,6 +172,7 @@ namespace Warehouse.Controllers
         //GET: MasterData/Details/1
         public ActionResult Details(int? id)
         {
+            var laptopID = id;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -182,6 +183,15 @@ namespace Warehouse.Controllers
             {
                 return HttpNotFound();
             }
+
+
+            var query = (from t in _db.TransferModels
+                         join s in _db.StoreModels on t.StoreID equals s.ID
+                         where t.LaptopID==laptopID
+                         select s.Name).SingleOrDefault();
+
+            ViewBag.storeName = query;
+
             return View(laptop);
         }
 
@@ -267,23 +277,22 @@ namespace Warehouse.Controllers
         [HttpPost]
         public ActionResult Check(FormCollection form, TransferModels transfer)
         {
-            // string strDDLValue = form["poste_id"].ToString();
             int id = Convert.ToInt32(TempData["id"]);
             string name = TempData["name"].ToString();
             int quantity = Convert.ToInt32(TempData["number"]);
             int storeID= Convert.ToInt32(form["ddlList"].ToString());
 
-            
-            //int id2 = Convert.ToInt32(TempData["id"]);
             transfer.LaptopID = id;
             transfer.LaptopName = name;
             transfer.LaptopQuantity = quantity;
-            transfer.StoreID = storeID;// add if any field you want insert
+            transfer.StoreID = storeID;                 // add if any field you want insert
             _db.TransferModels.Add(transfer);           // pass the table object 
+            var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
+            laptopFind.Quantity = 0;  //put quantity to 0
+            var storeFind = (from s in _db.StoreModels where s.ID == storeID select s).First(); //select store, change Qop
+            storeFind.QoP = storeFind.QoP - quantity; // reduce QoP for quantity number
             _db.SaveChanges();
-
-            Debug.Write("T u  sa m");
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Transfer", new { });
         }
 
     }

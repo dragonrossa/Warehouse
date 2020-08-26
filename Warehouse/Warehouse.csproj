@@ -221,6 +221,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -344,6 +345,7 @@
     <Content Include="Views\Laptop\Send.cshtml" />
     <Content Include="Views\Laptop\SendArticle.cshtml" />
     <Content Include="Views\Laptop\Check.cshtml" />
+    <Content Include="Views\Transfer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
