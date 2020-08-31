@@ -17,4 +17,6 @@ Calculate Full price after adding Price and Quantity
 
 26.08. Modified transfer, view and transfer status in Details
 
+31.08 Added Helpers, new class and list, new controller, Datetime for LaptopController
+
 Rosana
