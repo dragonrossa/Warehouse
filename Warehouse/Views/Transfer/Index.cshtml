@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Warehouse.Models.TransferModels>
+﻿@model List<Warehouse.Helpers.TransferIndex>
 
 @section Scripts{
     @Scripts.Render("~/bundles/knockout")
@@ -19,58 +19,92 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.LaptopName)
+                LaptopName
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LaptopQuantity)
+                LaptopQuantity
             </th>
             <th>Place</th>
             <th></th>
         </tr>
 
-        @*@foreach (var item in Model)
-        {*@
-    <tr>
 
-        @*<td>
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
             @Html.DisplayFor(modelItem => item.LaptopName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LaptopQuantity)
-        </td>*@
-        <td>
-            @foreach (var item2 in ViewData["storeList2"] as List<string>)
-            {
-
-                @item2 <br />
-            }
-
         </td>
         <td>
-            @foreach (var item2 in ViewData["storeList3"] as List<string>)
-            {
-
-                @item2 <br />
-            }
-
+            @Html.DisplayFor(modelItem => item.StoreName)
         </td>
-        <td>
-            @foreach (var item2 in ViewData["storeList"] as List<string>)
-            {
-
-                @item2 <br />
-            }
-
-        </td>
-
     </tr>
+        }
+
+
+
+
+        @*@foreach (var item in Model)
+        {*@
+        <tr>
+
+            @*<td>
+
+                @Html.DisplayFor(model => model.LaptopName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.LaptopQuantity)
+            </td>*@
+
+            @*<td>
+                @Html.DisplayFor(modelItem => item.LaptopName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LaptopQuantity)
+            </td>*@
+            @*<td>
+                @foreach (var item2 in ViewData["storeList2"] as List<string>)
+                {
+
+                    @item2 <br />
+                }
+
+            </td>
+            <td>
+                @foreach (var item2 in ViewData["storeList3"] as List<string>)
+                {
+
+                    @item2 <br />
+                }
+
+            </td>
+            <td>
+                @foreach (var item2 in ViewData["storeList"] as List<string>)
+                {
+
+                    @item2 <br />
+                }
+
+            </td>*@
+
+        </tr>
         @*}*@
 
     </table>
 
-    
+    @*@foreach (var item2 in ViewData["storeList4"] as List<Tra>)
+        {
 
-   
+            @item2 <br />
+        }*@
+
+
+
+
+
 
 
 

@@ -48,6 +48,7 @@ namespace Warehouse.Models
         //Savings
         [Column(TypeName = "money")]
         public decimal? Savings { get; set; }
+        public DateTime? Date { get; set; }
 
     }
 }

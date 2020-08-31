@@ -15,7 +15,9 @@ namespace Warehouse.Controllers
         // GET: MasterData
         public ActionResult Index()
         {
-            List<StoreModels> storeModels = (from k in _db.StoreModels select k).ToList();
+            List<StoreModels> storeModels = (from k in _db.StoreModels select k)
+                .OrderBy(x => x.QoP)
+                .ToList();
             return View(storeModels);
         }
 

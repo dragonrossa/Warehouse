@@ -19,7 +19,9 @@ namespace Warehouse.Controllers
         // GET: MasterData
         public ActionResult Index()
         {
-            List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
+            List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k)
+                                             .OrderBy(x => x.Quantity)
+                                             .ToList();
             return View(ListLaptop);
         }
 
@@ -47,6 +49,7 @@ namespace Warehouse.Controllers
               
                 lastInput.FullPrice = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).First(); //Full price of products
                 lastInput.Savings = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.OldPrice - k.Price).First(); // Savings per unit
+                lastInput.Date = DateTime.Now;
 
                 _db.SaveChanges();
 
@@ -231,7 +234,9 @@ namespace Warehouse.Controllers
         public ActionResult Send()
         {
             List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
-            return View(ListLaptop);
+            var newList = ListLaptop.Where(i => i.Quantity != 0).ToList();
+            return View(newList);
+
         }
 
         //GET: MasterData/Send
