@@ -38,5 +38,7 @@ namespace Warehouse.Models
         //Working time - not required
         [Column(TypeName = "text")]
         public string WorkingTime { get; set; }
+        //input - DateTime
+        public DateTime? Date { get; set; }
     }
 }

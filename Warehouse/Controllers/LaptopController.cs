@@ -290,7 +290,8 @@ namespace Warehouse.Controllers
             transfer.LaptopID = id;
             transfer.LaptopName = name;
             transfer.LaptopQuantity = quantity;
-            transfer.StoreID = storeID;                 // add if any field you want insert
+            transfer.StoreID = storeID;
+            transfer.Date = DateTime.Now;// add if any field you want insert
             _db.TransferModels.Add(transfer);           // pass the table object 
             var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
             laptopFind.Quantity = 0;  //put quantity to 0

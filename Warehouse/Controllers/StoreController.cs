@@ -36,6 +36,14 @@ namespace Warehouse.Controllers
             {
                 _db.StoreModels.Add(store);
                 _db.SaveChanges();
+
+                var result = (from k in _db.StoreModels
+                                              select k)
+                          .OrderByDescending(k => k.ID)
+                          .First();
+                result.Date = DateTime.Now;
+                _db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

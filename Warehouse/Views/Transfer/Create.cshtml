@@ -1,0 +1,62 @@
+﻿@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+}
+<head>
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+</head>
+
+@*@{*@
+   
+
+@*<div class="container-fluid">
+    <h4>Do you want to send those articles?</h4>
+</div>
+
+<div class="container-fluid">
+    @ViewBag.number x @ViewBag.name
+</div>*@
+
+@using (Html.BeginForm("Check", "Laptop", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="container-fluid">
+
+    <p style="padding:10px 10px 10px 0px">What article do you want to send?</p>
+
+    @Html.DropDownList("LaptopName")
+
+    <p style="padding: 10px 10px 10px 0px">Where do you want to send article?</p>
+
+
+    @Html.DropDownList("StoreName")
+
+    <p style="padding: 10px 10px 10px 0px">How much do you want to send?</p>
+
+    <input type="number" id="number" name="number" placeholder="0" pattern="0"><br>
+
+    @*@ViewBag.LaptopName[2].Value*@
+</div>
+
+    <div class="container-fluid">
+        <div class="row justify-content-md-center">
+            <div class="col">
+                <div class="col-md col-md-1">
+                    <input type="submit" value="Confirm" class="btn btn-default" />
+                </div>
+            </div>
+
+       
+        </div>
+    </div>
+
+}
+
+
+<div class="container-fluid">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+

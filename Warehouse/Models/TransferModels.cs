@@ -14,5 +14,6 @@ namespace Warehouse.Models
         public string LaptopName { get; set; }
         public int LaptopQuantity { get; set; }
         public int StoreID { get; set; }
+        public DateTime? Date { get; set; }
     }
 }

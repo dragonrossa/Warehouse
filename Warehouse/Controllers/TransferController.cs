@@ -60,6 +60,30 @@ namespace Warehouse.Controllers
             return View(index);
         }
 
+        public ActionResult Create()
+        {
+            ViewData["StoreName"] = _db.StoreModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.ID.ToString()
+            }).ToList();
+
+            ViewData["LaptopName"] = _db.LaptopModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.ID.ToString()
+            }).ToList();
+
+
+            //int id = ViewBag.LaptopName[2].Value;
+   
+            //ViewBag.quantity = (from k in _db.LaptopModels 
+            //                       where k.ID==k.ID
+            //                    select k.Quantity).First();
+
+            return View();
+        }
+
        
     }
 }
