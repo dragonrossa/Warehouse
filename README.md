@@ -19,4 +19,6 @@ Calculate Full price after adding Price and Quantity
 
 31.08 Added Helpers, new class and list, new controller, Datetime for LaptopController
 
+01.09. Datetime variable to other controllers, Create new Transfer, Warehouse backup
+
 Rosana
