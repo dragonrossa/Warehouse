@@ -21,4 +21,6 @@ Calculate Full price after adding Price and Quantity
 
 01.09. Datetime variable to other controllers, Create new Transfer, Warehouse backup
 
+02.09 Defined new Transfer with options
+
 Rosana
