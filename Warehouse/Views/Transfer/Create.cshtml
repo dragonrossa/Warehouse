@@ -17,7 +17,7 @@
     @ViewBag.number x @ViewBag.name
 </div>*@
 
-@using (Html.BeginForm("Check", "Laptop", FormMethod.Post))
+@using (Html.BeginForm("Create", "Transfer", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -34,7 +34,7 @@
 
     <p style="padding: 10px 10px 10px 0px">How much do you want to send?</p>
 
-    <input type="number" id="number" name="number" placeholder="0" pattern="0"><br>
+    <input type="number" id="LaptopQuantity" name="LaptopQuantity" placeholder="0" pattern="0"><br>
 
     @*@ViewBag.LaptopName[2].Value*@
 </div>
