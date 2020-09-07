@@ -25,4 +25,6 @@ Calculate Full price after adding Price and Quantity
 
 07.09. Details on Index pages for Laptop, Store and Transfer Controller
 
+07.09. Created Logs controller, Logs view, Logs model - when new Laptop, Store or Transfer is created the Log table will be filled with info
+
 Rosana
