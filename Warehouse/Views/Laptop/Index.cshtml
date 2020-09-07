@@ -23,6 +23,8 @@
         </ol>
     </nav>
 
+
+
     <table class="table">
         <tr>
             <th>
@@ -63,5 +65,122 @@
 
     </table>
 
+
+    @*<button type="button" onclick=myFunction2() id="hide" class="btn btn-info">Info</button>
+        <p id="laptopInfo"></p>
+
+        <button type="button" onclick=myFunction3() id="hide" class="btn btn-info">Articles</button>
+        <p id="maxNumber"></p>*@
+
+   @* <p id="showDetails" onclick=showDetails()>Show details</p>*@
+
+<div class="container-fluid">
+    <button type="button" id="showDetails" onclick="showDetails()">Show details</button>
 </div>
+
+   
+
+    <div class="row" style="padding-top:20px">
+        <div class="col-6 col-sm-3">
+            <button type="button" onclick=myFunction2() id="hide" class="btn btn-info" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 50%; display:none;">Info</button>
+            <p id="laptopInfo" style="text-align:center"></p>
+        </div>
+        <div class="col-6 col-sm-3">
+            <button type="button" onclick=myFunction3() id="hide2" class="btn btn-info" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 50%; display:none;">Articles</button>
+            <p id="maxNumber" style="text-align:center"></p>
+        </div>
+
+
+        <div class="col-6 col-sm-3">
+            <button type="button" onclick=myFunction4() id="hide3" class="btn btn-info" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 50%;display:none;">Quantity</button>
+            <p id="quantity" style="text-align:center"></p>
+        </div>
+        <div class="col-6 col-sm-3">
+            <button type="button" onclick=myFunction5() id="hide4" class="btn btn-info" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 50%;display:none;">Full price</button>
+            <p id="fullprice" style="text-align:center"></p>
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-6 col-sm-3" style="padding-top:15px">
+            <button type="button" onclick=hideAllInfo() id="hideAllInfo" class="btn btn-danger" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 50%; display:none;">Hide all</button>
+        </div>
+    </div>
+
+    </div>
+
+
+    <script>
+
+    function myFunction2() {
+        var date = "@ViewBag.date";
+        var laptop = "@ViewBag.laptop";
+        var quantity = "@ViewBag.quantity";
+
+        document.getElementById("laptopInfo").innerHTML = "Last laptop was inserted on " + date + ", " + laptop + ", quantity - " + quantity + ".";
+        $("#laptopInfo").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "15px" });
+        $("#hide").click(function () {
+            $("#laptopInfo").hide();
+        });
+
+    }
+
+    function myFunction3() {
+        var maxNumber = "@ViewBag.maxNumber";
+        document.getElementById("maxNumber").innerHTML = "There are " + maxNumber + " of articles called laptop for now in this warehouse.";
+        $("#maxNumber").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "15px" });
+        $("#hide2").click(function () {
+            $("#maxNumber").hide();
+        });
+    }
+
+    function myFunction4() {
+        var sumQuantity = "@ViewBag.sumQuantity";
+        document.getElementById("quantity").innerHTML = "There are " + sumQuantity + " of articles in this warehouse for now.";
+        $("#quantity").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "15px" });
+        $("#hide3").click(function () {
+            $("#quantity").hide();
+        });
+
+    }
+    function myFunction5() {
+        var sumFullPrice = "@ViewBag.sumFullPrice";
+        document.getElementById("fullprice").innerHTML = "There is " + sumFullPrice + " KN in articles.";
+        $("#fullprice").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "15px" });
+        $("#hideAllInfo").show();
+        $("#hide4").click(function () {
+            $("#fullprice").hide();
+        });
+
+    }
+
+    function hideAllInfo() {
+        $("#hideAllInfo").click(function () {
+            $("#laptopInfo").hide();
+            $("#maxNumber").hide();
+            $("#quantity").hide();
+            $("#fullprice").hide();
+            $("#hide").hide();
+            $("#hide2").hide();
+            $("#hide3").hide();
+            $("#hide4").hide();
+            $("#hideAllInfo").hide();
+        });
+        }
+
+
+        function showDetails() {
+            $("#hide").show();
+            $("#hide2").show();
+            $("#hide3").show();
+            $("#hide4").show();
+        }
+       
+    </script>
+
+
+
 

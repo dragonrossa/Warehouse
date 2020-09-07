@@ -7,7 +7,7 @@
 </head>
 
 <div class="container-fluid">
-    
+
     <h1>Store manager</h1>
 
     <nav aria-label="breadcrumb">
@@ -19,7 +19,6 @@
         </ol>
     </nav>
 
-</div>
 
 <table class="table">
     <tr>
@@ -35,21 +34,46 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QoP)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "List", new { id=item.ID }) 
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QoP)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "List", new { id = item.ID })
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+
+<button type="button" onclick=myFunction2() id="hide" class="btn btn-info">Info</button>
+<p id="laptopInfo"></p>
+
+
+</div>
+
+
+<script>
+
+    function myFunction2() {
+        var store = "@ViewBag.store";
+        var location = "@ViewBag.location";
+        var date = "@ViewBag.date";
+        document.getElementById("laptopInfo").innerHTML = "Last store was inserted on " + store + ", " + location + ", on " + date + ".";
+        $("#laptopInfo").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "15px" });
+        $("#hide").click(function () {
+            $("#laptopInfo").hide();
+        });
+
+    }
+</script>

@@ -18,6 +18,16 @@ namespace Warehouse.Controllers
             List<StoreModels> storeModels = (from k in _db.StoreModels select k)
                 .OrderBy(x => x.QoP)
                 .ToList();
+
+            var lastInput = (from k in _db.StoreModels
+                             select k)
+                       .OrderByDescending(k => k.ID)
+                       .First();
+
+            ViewBag.store = lastInput.Name;
+            ViewBag.date = lastInput.Date;
+            ViewBag.location = lastInput.Location;
+
             return View(storeModels);
         }
 

@@ -22,6 +22,27 @@ namespace Warehouse.Controllers
             List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k)
                                              .OrderBy(x => x.Quantity)
                                              .ToList();
+
+            var lastInput = (from k in _db.LaptopModels
+                             select k)
+                            .OrderByDescending(k => k.ID)
+                            .First();
+
+            ViewBag.laptop = lastInput.Name;
+            ViewBag.date = lastInput.Date;
+            ViewBag.quantity = lastInput.Quantity;
+
+            var maxNumber = ListLaptop.Max(d => d.ID);
+
+            var sumQuantity = ListLaptop.Sum(d => d.Quantity);
+
+            var sumFullPrice = ListLaptop.Sum(d => d.FullPrice);
+
+
+            ViewBag.maxNumber = maxNumber;
+            ViewBag.sumQuantity = sumQuantity;
+            ViewBag.sumFullPrice = sumFullPrice;
+
             return View(ListLaptop);
         }
 

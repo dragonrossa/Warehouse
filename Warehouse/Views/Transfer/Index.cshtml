@@ -31,64 +31,64 @@
 
         @foreach (var item in Model)
         {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LaptopName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LaptopQuantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StoreName)
-        </td>
-    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LaptopName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LaptopQuantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StoreName)
+                </td>
+            </tr>
         }
 
 
 
 
         @*@foreach (var item in Model)
-        {*@
+            {*@
         <tr>
 
             @*<td>
 
-                @Html.DisplayFor(model => model.LaptopName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.LaptopQuantity)
-            </td>*@
+                    @Html.DisplayFor(model => model.LaptopName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.LaptopQuantity)
+                </td>*@
 
             @*<td>
-                @Html.DisplayFor(modelItem => item.LaptopName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LaptopQuantity)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.LaptopName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LaptopQuantity)
+                </td>*@
             @*<td>
-                @foreach (var item2 in ViewData["storeList2"] as List<string>)
-                {
+                    @foreach (var item2 in ViewData["storeList2"] as List<string>)
+                    {
 
-                    @item2 <br />
-                }
+                        @item2 <br />
+                    }
 
-            </td>
-            <td>
-                @foreach (var item2 in ViewData["storeList3"] as List<string>)
-                {
+                </td>
+                <td>
+                    @foreach (var item2 in ViewData["storeList3"] as List<string>)
+                    {
 
-                    @item2 <br />
-                }
+                        @item2 <br />
+                    }
 
-            </td>
-            <td>
-                @foreach (var item2 in ViewData["storeList"] as List<string>)
-                {
+                </td>
+                <td>
+                    @foreach (var item2 in ViewData["storeList"] as List<string>)
+                    {
 
-                    @item2 <br />
-                }
+                        @item2 <br />
+                    }
 
-            </td>*@
+                </td>*@
 
         </tr>
         @*}*@
@@ -139,4 +139,25 @@
 
 
 
+
+    <button type="button" onclick=myFunction2() id="hide" class="btn btn-info">Info</button>
+    <p id="laptopInfo"></p>
+
+
 </div>
+
+
+<script>
+
+    function myFunction2() {
+        var date = "@ViewBag.date";
+        var laptop = "@ViewBag.laptop";
+        var quantity = "@ViewBag.quantity";
+        document.getElementById("laptopInfo").innerHTML = "Last transfer was inserted on " + date + ", " + laptop + ", quantity to send - " + quantity + ".";
+        $("#laptopInfo").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "15px" });
+        $("#hide").click(function () {
+            $("#laptopInfo").hide();
+        });
+
+    }
+</script>

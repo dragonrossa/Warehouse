@@ -56,7 +56,17 @@ namespace Warehouse.Controllers
             //            join s in _db.StoreModels on t.StoreID equals s.ID
             //            select new { s.Name, t.LaptopName, t.LaptopQuantity }).ToList();
 
-   
+
+            var lastInput = (from k in _db.TransferModels
+                             select k)
+                       .OrderByDescending(k => k.ID)
+                       .First();
+
+            ViewBag.laptop = lastInput.LaptopName;
+            ViewBag.date = lastInput.Date;
+            ViewBag.quantity = lastInput.LaptopQuantity;
+
+
             return View(index);
         }
 
