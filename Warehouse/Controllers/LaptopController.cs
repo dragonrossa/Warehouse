@@ -70,9 +70,20 @@ namespace Warehouse.Controllers
               
                 lastInput.FullPrice = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).First(); //Full price of products
                 lastInput.Savings = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.OldPrice - k.Price).First(); // Savings per unit
-                lastInput.Date = DateTime.Now;
-
+                lastInput.Date = DateTime.Now;  // add Date time now
                 _db.SaveChanges();
+                //  List<LogModels> logModels = (from l in _db.LogModels select l).ToList();
+
+                //Create new log
+                LogModels log = new LogModels {
+                    Type="0",
+                    Description = "New laptop was inserted with name " + lastInput.Name + " on date " + lastInput.Date + " with quantity of " + lastInput.Quantity + ".",
+                    Date = lastInput.Date
+                    };
+
+                _db.LogModels.Add(log);
+                _db.SaveChanges();
+                
 
                 return RedirectToAction("Index");
             }

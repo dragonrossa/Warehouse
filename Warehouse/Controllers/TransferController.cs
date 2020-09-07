@@ -38,25 +38,6 @@ namespace Warehouse.Controllers
             }
 
 
-            //var query = (from t in _db.TransferModels
-            //             join s in _db.StoreModels on t.StoreID equals s.ID
-            //            select s.Name).ToList();
-
-            //ViewData["storeList"] = (from t in _db.TransferModels
-            //                         join s in _db.StoreModels on t.StoreID equals s.ID
-            //                         select s.Name).ToList();
-            //ViewData["storeList2"] = (from t in _db.TransferModels
-            //                         join s in _db.StoreModels on t.StoreID equals s.ID
-            //                         select t.LaptopName).ToList();
-            //ViewData["storeList3"] = (from t in _db.TransferModels
-            //                          join s in _db.StoreModels on t.StoreID equals s.ID
-            //                          select t.LaptopQuantity.ToString()).ToList();
-
-            //var query2 = (from t in _db.TransferModels
-            //            join s in _db.StoreModels on t.StoreID equals s.ID
-            //            select new { s.Name, t.LaptopName, t.LaptopQuantity }).ToList();
-
-
             var lastInput = (from k in _db.TransferModels
                              select k)
                        .OrderByDescending(k => k.ID)
@@ -84,13 +65,7 @@ namespace Warehouse.Controllers
                 Value = u.ID.ToString()
             }).ToList();
 
-           // var newList = ListLaptop.Where(i => i.Quantity != 0).ToList();
-            //int id = ViewBag.LaptopName[2].Value;
-
-            //ViewBag.quantity = (from k in _db.LaptopModels 
-            //                       where k.ID==k.ID
-            //                    select k.Quantity).First();
-
+      
             return View();
         }
 
@@ -98,36 +73,64 @@ namespace Warehouse.Controllers
 
         public ActionResult Create(FormCollection form, TransferModels transfer)
         {
-            
-            int storeID = Convert.ToInt32(form["StoreName"].ToString());
-            int LaptopID = Convert.ToInt32(form["LaptopName"].ToString());
-            int LaptopQuantity = Convert.ToInt32(form["LaptopQuantity"].ToString());
 
-            var possibleCount = (from k in _db.LaptopModels where k.ID == LaptopID select k.Quantity).First();
-
-            if (possibleCount > 0)
+            try
             {
-                if (LaptopQuantity > 0)
+                int storeID = Convert.ToInt32(form["StoreName"].ToString());
+                int LaptopID = Convert.ToInt32(form["LaptopName"].ToString());
+                int LaptopQuantity = Convert.ToInt32(form["LaptopQuantity"].ToString());
+
+                var possibleCount = (from k in _db.LaptopModels where k.ID == LaptopID select k.Quantity).First();
+
+                if (possibleCount > 0)
                 {
-                    var laptop = (from k in _db.LaptopModels where k.ID == LaptopID select k.Name).First();
-                    transfer.StoreID = storeID;
-                    transfer.LaptopID = LaptopID;
-                    transfer.LaptopName = laptop;
-                    transfer.LaptopQuantity = LaptopQuantity;
-                    transfer.Date = DateTime.Now;// add if any field you want insert
-                    _db.TransferModels.Add(transfer);
-                    var laptopFind = (from k in _db.LaptopModels where k.ID == transfer.LaptopID select k).First(); //select laptop
-                    laptopFind.Quantity = laptopFind.Quantity - LaptopQuantity;  //put quantity to 0
-                    var storeFind = (from s in _db.StoreModels where s.ID == storeID select s).First(); //select store, change Qop
-                    storeFind.QoP = storeFind.QoP - LaptopQuantity; // reduce QoP for quantity number
-                    _db.SaveChanges();
-                }
-            }
+                    if (LaptopQuantity > 0)
+                    {
+                        //get Laptops name and add attributes to Transfer
+                        var laptop = (from k in _db.LaptopModels where k.ID == LaptopID select k.Name).First();
+                        transfer.StoreID = storeID;
+                        transfer.LaptopID = LaptopID;
+                        transfer.LaptopName = laptop;
+                        transfer.LaptopQuantity = LaptopQuantity;
+                        transfer.Date = DateTime.Now;// add if any field you want insert
+                        _db.TransferModels.Add(transfer);
 
-            else
-            {
-                return RedirectToAction("Index", "Laptop", new { });
+                        //get Laptop
+                        var laptopFind = (from k in _db.LaptopModels where k.ID == transfer.LaptopID select k).First(); //select laptop
+                        laptopFind.Quantity -= LaptopQuantity;  // reduce LaptopQuantity from Quantity
+                        var storeFind = (from s in _db.StoreModels where s.ID == storeID select s).First(); //select store, change Qop
+                        storeFind.QoP -= LaptopQuantity; // reduce QoP for quantity number
+                        _db.SaveChanges();
+
+                        //Create new log
+                        LogModels log = new LogModels
+                        {
+                            Type = "2",
+                            Description = "New transfer was inserted with transfer of laptop called " + transfer.LaptopName + " with quantity of " +
+                            transfer.LaptopQuantity + " on date " + laptopFind.Date + " with location to " + storeFind.Name + ", " + storeFind.Location + ".",
+                            Date = laptopFind.Date
+                        };
+
+                        _db.LogModels.Add(log);
+                        _db.SaveChanges();
+                    }
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Laptop", new { });
+                }
+
             }
+            catch(Exception e)
+            {
+                Console.WriteLine("Error reading from {0}. Message = {1}", e.Message);
+            }
+            finally
+            {
+
+            }
+            
 
             return RedirectToAction("Index", "Transfer", new { });
         }

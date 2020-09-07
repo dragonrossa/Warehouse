@@ -54,6 +54,17 @@ namespace Warehouse.Controllers
                 result.Date = DateTime.Now;
                 _db.SaveChanges();
 
+                //Create new log
+                LogModels log = new LogModels
+                {
+                    Type = "1",
+                    Description = "New store was inserted with name " + result.Name + " on date " + result.Date + " with location on " + result.Location + ".",
+                    Date = result.Date
+                };
+
+                _db.LogModels.Add(log);
+                _db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
