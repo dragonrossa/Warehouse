@@ -23,4 +23,6 @@ Calculate Full price after adding Price and Quantity
 
 02.09 Defined new Transfer with options
 
+07.09. Details on Index pages for Laptop, Store and Transfer Controller
+
 Rosana
