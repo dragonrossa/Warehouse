@@ -13,10 +13,23 @@ namespace Warehouse.Controllers
         // GET: Log
         public ActionResult Index()
         {
-            List<LogModels> log = (from k in _db.LogModels select k)
+            //Logs for Laptop
+            List<LogModels> log = (from k in _db.LogModels where k.Type=="0" select k)
                                              .OrderBy(x => x.ID)
                                              .ToList();
-            return View(log);
+            //Logs for Store
+            List<LogModels> log1 = (from k in _db.LogModels where k.Type == "1" select k)
+                                             .OrderBy(x => x.ID)
+                                             .ToList();
+            //Logs for Transfer
+            List<LogModels> log2 = (from k in _db.LogModels where k.Type == "2" select k)
+                                            .OrderBy(x => x.ID)
+                                            .ToList();
+
+            //return View(log);
+
+            return View(new LogModels() { log = log, log1 = log1, log2 = log2 });
         }
+
     }
 }
