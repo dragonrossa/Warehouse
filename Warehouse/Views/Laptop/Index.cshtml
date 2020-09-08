@@ -19,7 +19,7 @@
             <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.ActionLink("Create", "Create", "Laptop") </a></li>
             <li class="breadcrumb-item"><a href="#"> @Html.ActionLink("List", "List", "Laptop")</a></li>
             <li class="breadcrumb-item"><a href="#">@Html.ActionLink("Edit", "EditList", "Laptop")</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> @Html.ActionLink("Delete", "DeleteList", "Laptop")</li>
+            <li class="breadcrumb-item" > @Html.ActionLink("Delete", "DeleteList", "Laptop")</li>
         </ol>
     </nav>
 
@@ -66,45 +66,59 @@
     </table>
 
 
-   
-
-<div class="container-fluid" style="padding-bottom:20px">
-    <button type="button" id="showDetails" onclick="showDetails()">Show details</button>
-</div>
-
-   
-
-    <div class="row" style="padding-top:20px">
-        <div class="col-6 col-sm-3">
-            <button type="button" onclick=myFunction2() id="hide" class="btn btn-info" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 50%; display:none;">Info</button>
-            <p id="laptopInfo" style="text-align:center"></p>
-        </div>
-        <div class="col-6 col-sm-3">
-            <button type="button" onclick=myFunction3() id="hide2" class="btn btn-info" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 50%; display:none;">Articles</button>
-            <p id="maxNumber" style="text-align:center"></p>
-        </div>
-
-
-        <div class="col-6 col-sm-3">
-            <button type="button" onclick=myFunction4() id="hide3" class="btn btn-info" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 50%;display:none;">Quantity</button>
-            <p id="quantity" style="text-align:center"></p>
-        </div>
-        <div class="col-6 col-sm-3">
-            <button type="button" onclick=myFunction5() id="hide4" class="btn btn-info" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 50%;display:none;">Full price</button>
-            <p id="fullprice" style="text-align:center"></p>
-        </div>
-
+    <div class="container-fluid" style="padding-bottom:20px">
+        <button type="button" id="showDetails" onclick="showDetails()">Show details</button>
     </div>
 
+    <div class="container-fluid" style="display:none" id="lapDetails" name="lapDetails">
+
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false" onclick="myFunction2()">Info</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="article-tab" data-toggle="tab" href="#article" role="tab" aria-controls="article" aria-selected="false" onclick="myFunction3()">Article</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="quantity-tab" data-toggle="tab" href="#quantity" role="tab" aria-controls="quantity" aria-selected="false" onclick="myFunction4()">Quantity</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="price-tab" data-toggle="tab" href="#price" role="tab" aria-controls="price" aria-selected="false" onclick="myFunction5()">Full price</a>
+            </li>
+        </ul>
+        <div class="container-fluid" id="hideme" name="hideme">
+            <p>Click on tab to see details about Laptops in Warehouse.</p>
+            <p>More tabs coming soon.</p>
+            
+        </div>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+                <p id="laptopInfo"></p>
+            </div>
+            <div class="tab-pane fade" id="article" role="tabpanel" aria-labelledby="article-tab">
+                <p id="maxNumber"></p>
+            </div>
+            <div class="tab-pane fade" id="quantity" role="tabpanel" aria-labelledby="quantity-tab">
+                <p id="quantity"></p>
+            </div>
+            <div class="tab-pane fade" id="price" role="tabpanel" aria-labelledby="price-tab">
+                <p id="fullprice"></p>
+            </div>
+        </div>
+
+
+
+    </div>
 
 
     <div class="row">
         <div class="col-6 col-sm-3" style="padding-top:15px">
-            <button type="button" onclick=hideAllInfo() id="hideAllInfo" class="btn btn-danger" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 50%; display:none;">Hide all</button>
+            <button type="button" onclick=hideAllInfo() id="hideAllInfo" class="btn btn-danger" style=" height: 35px; width: 100px; margin: -20px -50px; position: relative; top: 50%; left: 30%; display:none;">Hide all</button>
         </div>
     </div>
 
-    </div>
+</div>
 
 
     <script>
@@ -115,39 +129,35 @@
         var quantity = "@ViewBag.quantity";
 
         document.getElementById("laptopInfo").innerHTML = "Last laptop was inserted on " + date + ", " + laptop + ", quantity - " + quantity + ".";
-        $("#laptopInfo").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "15px" });
-        $("#hide").click(function () {
-            $("#laptopInfo").hide();
-        });
+        $("#laptopInfo").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "25px", "text-align": "center" });
+        $("#hideme").hide();
+
+       
 
     }
 
     function myFunction3() {
         var maxNumber = "@ViewBag.maxNumber";
         document.getElementById("maxNumber").innerHTML = "There are " + maxNumber + " of articles called laptop for now in this warehouse.";
-        $("#maxNumber").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "15px" });
-        $("#hide2").click(function () {
-            $("#maxNumber").hide();
-        });
+        $("#maxNumber").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "25px", "text-align": "center"});
+        $("#hideme").hide();
     }
 
     function myFunction4() {
         var sumQuantity = "@ViewBag.sumQuantity";
         document.getElementById("quantity").innerHTML = "There are " + sumQuantity + " of articles in this warehouse for now.";
-        $("#quantity").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "15px" });
-        $("#hide3").click(function () {
-            $("#quantity").hide();
-        });
+        $("#quantity").show();
+        $("#quantity").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "25px","text-align":"center" });
+        $("#hideme").hide();
 
     }
     function myFunction5() {
         var sumFullPrice = "@ViewBag.sumFullPrice";
         document.getElementById("fullprice").innerHTML = "There is " + sumFullPrice + " KN in articles.";
-        $("#fullprice").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "15px" });
+        $("#fullprice").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "25px", "text-align": "center"});
         $("#hideAllInfo").show();
-        $("#hide4").click(function () {
-            $("#fullprice").hide();
-        });
+        $("#hideme").hide();
+        $("#quantity").hide();
 
     }
 
@@ -162,6 +172,8 @@
             $("#hide3").hide();
             $("#hide4").hide();
             $("#hideAllInfo").hide();
+            $("#lapDetails").hide();
+            $("#hideme").hide();
         });
         }
 
@@ -171,6 +183,11 @@
             $("#hide2").show();
             $("#hide3").show();
             $("#hide4").show();
+            $("#lapDetails").show();
+            $("#laptopInfo").show();
+            $("#maxNumber").show();
+            $("#quantity").show();
+            $("#fullprice").show();
         }
        
     </script>
