@@ -29,4 +29,6 @@ Calculate Full price after adding Price and Quantity
 
 08.09. Logs, - jquery and tabs, custom models for view (Log Models)
 
+08.09. New tab for Details, Index (Laptop Controller)
+
 Rosana
