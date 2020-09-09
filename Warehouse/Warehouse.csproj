@@ -226,6 +226,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Company.cs" />
     <Compile Include="Helpers\TransferIndex.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -351,6 +352,7 @@
     <Content Include="Views\Transfer\Index.cshtml" />
     <Content Include="Views\Transfer\Create.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
+    <Content Include="Views\Laptop\Company.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

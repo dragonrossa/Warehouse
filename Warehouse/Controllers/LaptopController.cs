@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using Warehouse.Models;
+using Warehouse.Helpers;
 
 namespace Warehouse.Controllers
 {
@@ -333,5 +334,27 @@ namespace Warehouse.Controllers
             return RedirectToAction("Index","Transfer", new { });
         }
 
+        public ActionResult Company()
+        {
+       
+            Company company = new Company
+            {
+                
+                Name = "Abeceda d.o.o.",
+                Street = "Ruđera Boškovića 32",
+                Town = "Zagreb",
+                ZipCode = "10000",
+                Country = "Croatia",
+                OIB = "123123123"
+                };
+
+
+            List<Company> companies = new List<Company>
+            {
+                company
+            };
+
+            return View(companies);
+        }
     }
 }

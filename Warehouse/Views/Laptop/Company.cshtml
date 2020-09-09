@@ -1,0 +1,97 @@
+﻿@model List<Warehouse.Helpers.Company>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+}
+
+<head>
+
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+<div class="container-fluid">
+    <h1>Details about Company</h1>
+</div>
+
+
+
+<dl class="dl-horizontal container-fluid">
+
+    @foreach (var item in Model)
+    {
+        <dt>
+            Name:
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => item.Name)
+        </dd>
+        <dt>
+            Street:
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => item.Street)
+        </dd>
+        <dt>
+            ZipCode:
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => item.ZipCode)
+        </dd>
+        <dt>
+            Town:
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => item.Town)
+        </dd>
+        <dt>
+            Country:
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => item.Country)
+        </dd>
+        <dt>
+            OIB:
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItem => item.OIB)
+
+        </dd>
+
+    }
+
+</dl>
+
+<div class="container-fluid">
+    <h1>Company options</h1>
+</div>
+
+
+<dl class="dl-horizontal container-fluid">
+<dt>
+    Warehouse:
+</dt>
+<dd>
+    @Html.ActionLink("Create", "Create", "Laptop"), @Html.ActionLink("Details", "List", "Laptop"), @Html.ActionLink("Send", "Send", "Laptop")
+</dd>
+    <dt>
+        Store:
+    </dt>
+    <dd>
+        @Html.ActionLink("Create", "Create", "Store"), @Html.ActionLink("Details", "List", "Store")
+    </dd>
+    <dt>
+        Transfer:
+    </dt>
+    <dd>
+        @Html.ActionLink("Create Transfer", "Create", "Transfer"),  @Html.ActionLink("Details", "Index", "Transfer")
+    </dd>
+    <dt>
+        Log
+    </dt>
+    <dd>
+        @Html.ActionLink("Details", "Index", "Log")
+    </dd>
+</dl>
