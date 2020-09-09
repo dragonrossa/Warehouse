@@ -35,4 +35,6 @@ Calculate Full price after adding Price and Quantity
 
 09.09. Display names, Search controller, Model, defined tests for Search options
 
+09.09. Search - Laptop + Bootstrap latest update v4.5
+
 Rosana
