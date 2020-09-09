@@ -31,4 +31,6 @@ Calculate Full price after adding Price and Quantity
 
 08.09. New tab for Details, Index (Laptop Controller)
 
+09.09. Company info, Company class, Company view
+
 Rosana
