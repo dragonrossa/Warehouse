@@ -12,17 +12,21 @@
 }
 
 <div class="container-fluid">
+    <h1>List of transfers</h1>
 
-    <p>
-        @Html.ActionLink("Create Transfer", "Create")
-    </p>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.ActionLink("Create Transfer", "Create", "Transfer") </a></li>
+
+        </ol>
+    </nav>
     <table class="table">
         <tr>
             <th>
-                LaptopName
+                Name
             </th>
             <th>
-                LaptopQuantity
+                Quantity
             </th>
             <th>Place</th>
             <th></th>

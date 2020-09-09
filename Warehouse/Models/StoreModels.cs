@@ -20,13 +20,16 @@ namespace Warehouse.Models
         //Location - not required
         public string Location { get; set; }
         //Zip code - not required
+        [Display(Name = "Zip code")]
         public int? ZipCode { get; set; }
         //Address - not required
         [Column(TypeName = "text")]
         public string Address { get; set; }
         //Quantity of Products - not required
+        [Display(Name = "Quantity of products")]
         public int? QoP { get; set; }
         //Stock price - not required
+        [Display(Name = "Stock price")]
         [Column(TypeName = "money")]
         public decimal? StockPrice { get; set; }
         //Contact - telephone - not required
@@ -36,6 +39,7 @@ namespace Warehouse.Models
         [Column(TypeName = "text")]
         public string Email { get; set; }
         //Working time - not required
+        [Display(Name = "Working time")]
         [Column(TypeName = "text")]
         public string WorkingTime { get; set; }
         //input - DateTime

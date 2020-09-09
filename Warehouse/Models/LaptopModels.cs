@@ -37,6 +37,7 @@ namespace Warehouse.Models
         public decimal? Price { get; set; }
         //Old price
         [Column(TypeName = "money")]
+        [Display(Name = "Old price")]
         public decimal? OldPrice { get; set; }
         //UserID
         public int? UserID { get; set; }
@@ -44,6 +45,7 @@ namespace Warehouse.Models
         public int? PlaceID { get; set; }
         //FullPrice
         [Column(TypeName = "money")]
+        [Display(Name = "Full price")]
         public decimal? FullPrice { get; set; }
         //Savings
         [Column(TypeName = "money")]
