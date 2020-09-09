@@ -1,0 +1,137 @@
+﻿
+<div class="container-fluid">
+    <h1>Search</h1>
+</div>
+
+@*/ GET: Search
+    //Search - Laptop
+    //Search - Store
+    //Search - Transfer
+
+    //Example 1. search for Notebook Acer Aspire 1 in Laptop section
+    //Example 2. search for SD Store Zadar in Store section
+    //Example 3. search for Notebook HP 250-G7 in Transfers*@
+
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="laptop-tab" data-toggle="tab" href="#laptop" role="tab" aria-controls="laptop" aria-selected="true">Search Laptop</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="store-tab" data-toggle="tab" href="#store" role="tab" aria-controls="store" aria-selected="false">Search Store</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="transfer-tab" data-toggle="tab" href="#transfer" role="tab" aria-controls="transfer" aria-selected="false">Search Transfer</a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade" id="laptop" role="tabpanel" aria-labelledby="laptop-tab">
+
+
+        @using (Html.BeginForm("Result", "Search"))
+        {
+            <div class="container-fluid">
+
+
+                <div class="container-fluid">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-5">
+                        <h3>Please insert laptop name</h3>
+                        <label for="name">Name: </label>
+                        <input type="text" id="name" name="name">
+                    </div>
+                </div>
+
+               
+                <br />
+                <div class="container">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="submit" value="Submit">
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+
+    </div>
+    <div class="tab-pane fade" id="store" role="tabpanel" aria-labelledby="store-tab">
+
+
+        @using (Html.BeginForm("Result", "Search"))
+        {
+            <div class="container-fluid">
+
+
+                <div class="container-fluid">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-5">
+                        <h3>Please insert store name</h3>
+                        <label for="name">Name: </label>
+                        <input type="text" id="name" name="name">
+                    </div>
+                </div>
+
+             
+                <br />
+                <div class="container">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="submit" value="Submit">
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+
+    </div>
+    <div class="tab-pane fade" id="transfer" role="tabpanel" aria-labelledby="transfer-tab">
+
+
+        @using (Html.BeginForm("Result","Search"))
+        {
+            <div class="container-fluid">
+
+
+                <div class="container-fluid">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-5">
+                        <h3>Please insert laptop name</h3>
+                        <label for="name">Name: </label>
+                        <input type="text" id="name" name="name">
+                    </div>
+                </div>
+
+               
+                <br />
+                <div class="container">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="submit" value="Submit">
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+
+    </div>
+</div>
+
