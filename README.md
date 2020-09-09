@@ -33,4 +33,6 @@ Calculate Full price after adding Price and Quantity
 
 09.09. Company info, Company class, Company view
 
+09.09. Display names, Search controller, Model, defined tests for Search options
+
 Rosana
