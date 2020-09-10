@@ -15,15 +15,24 @@
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-        <a class="nav-link" id="laptop-tab" data-toggle="tab" href="#laptop" role="tab" aria-controls="laptop" aria-selected="true">Search Laptop</a>
+        <a class="nav-link" id="laptop-tab" data-toggle="tab" href="#laptop" role="tab" aria-controls="laptop" aria-selected="true" onclick="hideAllInfo()">Search Laptop</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a class="nav-link" id="store-tab" data-toggle="tab" href="#store" role="tab" aria-controls="store" aria-selected="false">Search Store</a>
+        <a class="nav-link" id="store-tab" data-toggle="tab" href="#store" role="tab" aria-controls="store" aria-selected="false" onclick="hideAllInfo()">Search Store</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a class="nav-link" id="transfer-tab" data-toggle="tab" href="#transfer" role="tab" aria-controls="transfer" aria-selected="false">Search Transfer</a>
+        <a class="nav-link" id="transfer-tab" data-toggle="tab" href="#transfer" role="tab" aria-controls="transfer" aria-selected="false" onclick="hideAllInfo()">Search Transfer</a>
     </li>
 </ul>
+
+<div class="container-fluid" id="hide" name="hide">
+    <p style="padding-top:10px">Choose from tab what do you want to search.</p>
+    <ul>
+        <li>Laptop</li>
+        <li>Store</li>
+        <li>Transfer</li>
+    </ul>
+</div>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade" id="laptop" role="tabpanel" aria-labelledby="laptop-tab">
 
@@ -76,7 +85,7 @@
                     <div class="col-sm-5">
                         <h3>Please insert store name</h3>
                         <label for="name">Name: </label>
-                        <input type="text" id="name" name="name">
+                        <input type="text" id="storeName" name="storeName">
                     </div>
                 </div>
 
@@ -112,7 +121,7 @@
                     <div class="col-sm-5">
                         <h3>Please insert laptop name</h3>
                         <label for="name">Name: </label>
-                        <input type="text" id="name" name="name">
+                        <input type="text" id="laptopName" name="laptopName">
                     </div>
                 </div>
 
@@ -135,3 +144,9 @@
     </div>
 </div>
 
+<script>
+    function hideAllInfo() {
+        $("#hide").hide();
+        //alert('a_onClick');
+    }
+</script>

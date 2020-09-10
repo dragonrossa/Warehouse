@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Helpers;
@@ -32,30 +33,86 @@ namespace Warehouse.Controllers
         {
             SearchIndex search = new SearchIndex();
             List<SearchIndex> index = new List<SearchIndex>();
+
+            //Search for Laptop
+
+
            
-            search.Name = form["name"];
 
-            ViewBag.Name = search.Name;
-            TempData["searchName"] = ViewBag.Name;
-            var searchName = (from k in _db.LaptopModels where k.Name==search.Name select k).FirstOrDefault();
-
-            if (searchName == null)
+            if (form["name"] != null)
             {
-                return View("ResultNotExists");
-            }
 
-            else
+                search.Name = form["name"];
+                ViewBag.Name = search.Name;
+                TempData["searchName"] = ViewBag.Name;
+                var searchName = (from k in _db.LaptopModels where k.Name == search.Name select k).FirstOrDefault();
+
+                if (searchName == null)
+                {
+                    return View("ResultNotExists");
+                }
+
+                else
+                {
+                    //Create Laptop object
+                    search.LaptopName = searchName.Name;
+                    search.Quantity = searchName.Quantity;
+                    search.FullPrice = searchName.FullPrice;
+
+                    //Add laptop object to list
+
+                    index.Add(search);
+                    return View(index);
+                }
+            }
+            else if (form["storeName"] != null)
             {
-                //Create Laptop object
-                search.LaptopName = searchName.Name;
-                search.Quantity = searchName.Quantity;
-                search.FullPrice = searchName.FullPrice;
+                search.Name = form["storeName"];
+                ViewBag.Name = search.Name;
+                TempData["searchName"] = ViewBag.Name;
+                var searchName = (from k in _db.StoreModels where k.Name == search.Name select k).FirstOrDefault();
+                if (searchName == null)
+                {
+                    return View("ResultNotExists");
+                }
+                else
+                {
+                    //Create Store object
+                    search.StoreName = searchName.Name;
+                    search.StoreAddress = searchName.Address;
+                    search.StoreLocation = searchName.Location;
 
-                //Add object to list
-
-                index.Add(search);
-                return View(index);
+                    //Add store object to list
+                    index.Add(search);
+                    return View("ResultStore",index);
+                }
             }
+            else if (form["laptopName"] != null)
+            {
+                search.Name = form["laptopName"];
+                ViewBag.Name = search.Name;
+                TempData["searchName"] = ViewBag.Name;
+                var searchName = (from k in _db.TransferModels where k.LaptopName == search.Name select k).FirstOrDefault();
+                if (searchName == null)
+                {
+                    return View("ResultNotExists");
+                }
+                else
+                {
+                    var store = (from k in _db.StoreModels where k.ID == searchName.StoreID select k.Name).FirstOrDefault();
+                    //Create Store object
+                    search.TransferLaptopName = searchName.LaptopName;
+                    search.TransferLaptopQuantity = searchName.LaptopQuantity;
+                    search.TransferStoreName = store;
+
+                    //Add store object to list
+                    index.Add(search);
+                    return View("ResultTransfer", index);
+                }
+            }
+            //Search for Store
+
+            return View();
         }
 
         public ActionResult ResultNotExists()

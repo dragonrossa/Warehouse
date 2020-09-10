@@ -463,6 +463,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Search\Result.cshtml" />
     <Content Include="Views\Search\ResultNotExists.cshtml" />
+    <Content Include="Views\Search\ResultStore.cshtml" />
+    <Content Include="Views\Search\ResultTransfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

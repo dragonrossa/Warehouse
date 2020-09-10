@@ -31,22 +31,22 @@
     @foreach (var item in Model)
     {
         <dt>
-            @Html.DisplayNameFor(modelitem=>item.Name)
+            @Html.DisplayNameFor(modelitem=>item.StoreName)
         </dt>
         <dd>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.StoreName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(modelitem => item.Quantity)
+            @Html.DisplayNameFor(modelitem => item.StoreLocation)
         </dt>
         <dd>
-            @Html.DisplayFor(modelItem => item.Quantity)
+            @Html.DisplayFor(modelItem => item.StoreLocation)
         </dd>
         <dt>
-            @Html.DisplayNameFor(modelitem => item.FullPrice)
+            @Html.DisplayNameFor(modelitem => item.StoreAddress)
         </dt>
         <dd>
-            @Html.DisplayFor(modelItem => item.FullPrice)
+            @Html.DisplayFor(modelItem => item.StoreAddress)
         </dd>
         
 
@@ -54,8 +54,8 @@
 
 </dl>
 
-
 <div class="container">
     @Html.ActionLink("Back", "Index")
 </div>
+
 
