@@ -37,4 +37,6 @@ Calculate Full price after adding Price and Quantity
 
 09.09. Search - Laptop + Bootstrap latest update v4.5
 
+10.9. Search - Store + Transfer, searchable by Laptop name, Store name
+
 Rosana
