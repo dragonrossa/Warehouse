@@ -49,6 +49,15 @@ namespace Warehouse.Controllers
 
                 if (searchName == null)
                 {
+                    LogModels log = new LogModels
+                    {
+                        Type = "4",
+                        Description = "There was new search in Transfer section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
                     return View("ResultNotExists");
                 }
 
@@ -59,9 +68,22 @@ namespace Warehouse.Controllers
                     search.Quantity = searchName.Quantity;
                     search.FullPrice = searchName.FullPrice;
 
+                    
                     //Add laptop object to list
 
                     index.Add(search);
+
+                    //Create new log
+                    LogModels log = new LogModels
+                    {
+                        Type = "3",
+                        Description = "There was new search in Laptop section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+
                     return View(index);
                 }
             }
@@ -73,6 +95,15 @@ namespace Warehouse.Controllers
                 var searchName = (from k in _db.StoreModels where k.Name == search.Name select k).FirstOrDefault();
                 if (searchName == null)
                 {
+                    LogModels log = new LogModels
+                    {
+                        Type = "4",
+                        Description = "There was new search in Transfer section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
                     return View("ResultNotExists");
                 }
                 else
@@ -84,6 +115,16 @@ namespace Warehouse.Controllers
 
                     //Add store object to list
                     index.Add(search);
+                    //Create new log
+                    LogModels log = new LogModels
+                    {
+                        Type = "3",
+                        Description = "There was new search in Store section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
                     return View("ResultStore",index);
                 }
             }
@@ -95,6 +136,15 @@ namespace Warehouse.Controllers
                 var searchName = (from k in _db.TransferModels where k.LaptopName == search.Name select k).FirstOrDefault();
                 if (searchName == null)
                 {
+                    LogModels log = new LogModels
+                    {
+                        Type = "4",
+                        Description = "There was new search in Transfer section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
                     return View("ResultNotExists");
                 }
                 else
@@ -107,6 +157,15 @@ namespace Warehouse.Controllers
 
                     //Add store object to list
                     index.Add(search);
+                    LogModels log = new LogModels
+                    {
+                        Type = "3",
+                        Description = "There was new search in Transfer section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
                     return View("ResultTransfer", index);
                 }
             }
