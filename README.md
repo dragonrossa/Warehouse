@@ -41,4 +41,6 @@ Calculate Full price after adding Price and Quantity
 
 10.9. Search log, Not found log - Log Index, Log Controller
 
+11.9. Backup Warehouse, User Details (new + update), Logs for new Users
+
 Rosana
