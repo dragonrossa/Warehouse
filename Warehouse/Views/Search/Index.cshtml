@@ -1,4 +1,15 @@
-﻿
+﻿@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
+
 <div class="container-fluid">
     <h1>Search</h1>
 </div>
@@ -53,7 +64,7 @@
                     </div>
                 </div>
 
-               
+
                 <br />
                 <div class="container">
                     <div class="col-sm-1">
@@ -89,7 +100,7 @@
                     </div>
                 </div>
 
-             
+
                 <br />
                 <div class="container">
                     <div class="col-sm-1">
@@ -109,7 +120,7 @@
     <div class="tab-pane fade" id="transfer" role="tabpanel" aria-labelledby="transfer-tab">
 
 
-        @using (Html.BeginForm("Result","Search"))
+        @using (Html.BeginForm("Result", "Search"))
         {
             <div class="container-fluid">
 
@@ -125,7 +136,7 @@
                     </div>
                 </div>
 
-               
+
                 <br />
                 <div class="container">
                     <div class="col-sm-1">

@@ -1,10 +1,15 @@
 ﻿@model IEnumerable<Warehouse.Models.StoreModels>
 
-<head>
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
 
-    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+    <head>
 
-</head>
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
 
 <div class="container-fluid">
     <h4>List of Stores</h4>

@@ -1,5 +1,16 @@
 ﻿@model IEnumerable<Warehouse.Models.StoreModels>
 
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
 
 <head>
 

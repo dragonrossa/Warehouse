@@ -1,5 +1,16 @@
 ﻿@model Warehouse.Models.LaptopModels
 
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
 <div>
     <h4>Laptop for sending</h4>
     <hr />
@@ -19,10 +30,10 @@
         <dd>
             @Html.DisplayFor(model => model.Quantity)
         </dd>
-       @* <br />*@
+        @* <br />*@
         <dd>
             <p>
-                @Html.ActionLink("Check", "Check", new { id = Model.ID, name= Model.Name, quantity = Model.Quantity })
+                @Html.ActionLink("Check", "Check", new { id = Model.ID, name = Model.Name, quantity = Model.Quantity })
             </p>
             <p>
                 @Html.ActionLink("Back to List", "Index")

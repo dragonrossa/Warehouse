@@ -1,5 +1,16 @@
 ﻿@model Warehouse.Models.LaptopModels
 
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Delete Laptop</h4>
@@ -95,11 +106,11 @@
             <input type="submit" value="Delete" class="btn btn-default" />
         </div>
     }
-<div class="container-fluid" style="padding-top:10px">
-    @Html.ActionLink("Back to List", "Index")
-</div> 
+    <div class="container-fluid" style="padding-top:10px">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 </div>
 
 
-  
+
 

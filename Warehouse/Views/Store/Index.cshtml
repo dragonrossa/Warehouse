@@ -1,10 +1,15 @@
 ﻿@model IEnumerable<Warehouse.Models.StoreModels>
 
-<head>
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
 
-    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+    <head>
 
-</head>
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
 
 <div class="container-fluid">
 
@@ -20,44 +25,44 @@
     </nav>
 
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QoP)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QoP)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "List", new { id = item.ID })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QoP)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QoP)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "List", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
+    </table>
 
 
 
-<button type="button" onclick=myFunction2() id="hide" class="btn btn-info">Info</button>
-<p id="laptopInfo"></p>
+    <button type="button" onclick=myFunction2() id="hide" class="btn btn-info">Info</button>
+    <p id="laptopInfo"></p>
 
 
 </div>

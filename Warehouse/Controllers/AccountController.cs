@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -15,6 +16,7 @@ namespace Warehouse.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private ApplicationDbContext _db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -164,10 +166,20 @@ namespace Warehouse.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = model.Hometown };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    //Add new user in table UserModels with various options for edit
+                    var userDetails = new UserModels { UserName = model.Email, Mail = model.Email, DateModified = DateTime.Now, Hometown = model.Hometown };
+                    _db.UserModels.Add(userDetails);
+
+                    //Save log for new user in database LogModels
+                    var userLogs = new LogModels { Date = DateTime.Now, Type = "5", Description = "New user " + model.Email + " was created on " + DateTime.Now + "." };
+                    _db.LogModels.Add(userLogs);
+                    _db.SaveChanges();
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

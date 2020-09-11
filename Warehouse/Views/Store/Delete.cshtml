@@ -1,10 +1,15 @@
 ﻿@model Warehouse.Models.StoreModels
 
-<head>
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
 
-    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+    <head>
 
-</head>
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
 
 <h3>Are you sure you want to delete this?</h3>
 <div class="container-fluid">
@@ -85,7 +90,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

@@ -1,5 +1,16 @@
 ﻿@model IEnumerable<Warehouse.Models.LaptopModels>
 
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
 <head>
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
@@ -29,7 +40,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
-     
+
         <th></th>
     </tr>
 
@@ -51,7 +62,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-          
+
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ID }) |

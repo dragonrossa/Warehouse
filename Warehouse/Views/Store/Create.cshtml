@@ -3,17 +3,22 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 
-<head>
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
 
-    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+    <head>
 
-</head>
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal container-fluid">
         <h4>Create Store</h4>
         <hr />
@@ -59,12 +64,12 @@
         </div>
 
         @*<div class="form-group">
-            @Html.LabelFor(model => model.StockPrice, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StockPrice, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StockPrice, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                @Html.LabelFor(model => model.StockPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.StockPrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.StockPrice, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Telephone, htmlAttributes: new { @class = "control-label col-md-2" })

@@ -1,5 +1,16 @@
 ﻿@model Warehouse.Models.LaptopModels
 
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
 <div>
     <h4>Laptop</h4>
     <hr />
@@ -80,7 +91,7 @@
         <dt>
             Laptop transfered:
         </dt>
-   
+
         <dd>
             @ViewBag.storeName
         </dd>

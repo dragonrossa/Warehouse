@@ -21,11 +21,12 @@ namespace Warehouse.Models
         //Date + time
         public DateTime? Date { get; set; }
 
-        //Custom models needed for Index for Type 0, 1, 2
+        //Custom models needed for Index for Type 0, 1, 2, 3, 4
         public List<LogModels> log { get; set; }
         public List<LogModels> log1 { get; set; }
         public List<LogModels> log2 { get; set; }
         public List<LogModels> log3 { get; set; }
         public List<LogModels> log4 { get; set; }
+        public List<LogModels> log5 { get; set; }
     }
 }

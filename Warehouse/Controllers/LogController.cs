@@ -25,16 +25,21 @@ namespace Warehouse.Controllers
             List<LogModels> log2 = (from k in _db.LogModels where k.Type == "2" select k)
                                             .OrderBy(x => x.ID)
                                             .ToList();
+            //Logs for Search
             List<LogModels> log3 = (from k in _db.LogModels where k.Type == "3" select k)
                                         .OrderBy(x => x.ID)
                                         .ToList();
-
+            //Logs for Search - not found
             List<LogModels> log4 = (from k in _db.LogModels where k.Type == "4" select k)
                                        .OrderBy(x => x.ID)
                                        .ToList();
+            //Logs for New user
+            List<LogModels> log5 = (from k in _db.LogModels where k.Type == "5" select k)
+                                      .OrderBy(x => x.ID)
+                                      .ToList();
             //return View(log);
 
-            return View(new LogModels() { log = log, log1 = log1, log2 = log2, log3 = log3 , log4 = log4});
+            return View(new LogModels() { log = log, log1 = log1, log2 = log2, log3 = log3 , log4 = log4, log5=log5});
         }
 
     }
