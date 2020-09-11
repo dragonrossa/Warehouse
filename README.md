@@ -37,10 +37,12 @@ Calculate Full price after adding Price and Quantity
 
 09.09. Search - Laptop + Bootstrap latest update v4.5
 
-10.9. Search - Store + Transfer, searchable by Laptop name, Store name
+10.09. Search - Store + Transfer, searchable by Laptop name, Store name
 
-10.9. Search log, Not found log - Log Index, Log Controller
+10.09. Search log, Not found log - Log Index, Log Controller
 
-11.9. Backup Warehouse, User Details (new + update), Logs for new Users
+11.09. Backup Warehouse, User Details (new + update), Logs for new Users
+
+11.09. Web APIs for Laptop, Log, Store, Transfer, User
 
 Rosana
