@@ -39,4 +39,6 @@ Calculate Full price after adding Price and Quantity
 
 10.9. Search - Store + Transfer, searchable by Laptop name, Store name
 
+10.9. Search log, Not found log - Log Index, Log Controller
+
 Rosana
