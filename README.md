@@ -45,4 +45,6 @@ Calculate Full price after adding Price and Quantity
 
 11.09. Web APIs for Laptop, Log, Store, Transfer, User
 
+11.09. StoreAPI - update
+
 Rosana
