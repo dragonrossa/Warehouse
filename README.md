@@ -49,4 +49,6 @@ Calculate Full price after adding Price and Quantity
 
 12.09. New nav bar - changes on various Views
 
+12.09. StoreAPI - Web API for email + quantity
+
 Rosana
