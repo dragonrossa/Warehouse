@@ -137,26 +137,26 @@ namespace Warehouse.Controllers
             return response;
         }
 
-        //Example:
-        //api/storeAPI/quantity/400
-        //[Route("quantity/{quantity}")]
-        //public HttpResponseMessage GetStoreByQuantity([FromUri] StoreModels store)
-        //{
+        //quantity
+        [Route("qop/{qop}")]
+        public HttpResponseMessage GetStoreByQuantity([FromUri] StoreModels store)
+        {
 
-        //    int quantity = Convert.ToInt32(store.QoP);
-        //    //if (quantity == null)
-        //    //{
-        //    //    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
-        //    //}
+            int? qop = store.QoP;
+            if (qop == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
+            }
 
-        //    List<StoreModels> stores = (from k in _db.StoreModels where k.QoP == quantity select k).ToList();
+            List<StoreModels> stores = (from k in _db.StoreModels where k.QoP == qop select k).ToList();
 
-        //    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, stores);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, stores);
 
 
-        //    return response;
-        //}
+            return response;
+        }
 
+      
         //Example:
         //api/storeAPI/telephone/010101010
         [Route("telephone/{telephone}")]
@@ -178,24 +178,24 @@ namespace Warehouse.Controllers
         }
 
         //Example:
-        //api/storeAPI/email/zadar@sancta-domenica.hr (Dummy info)
-        //[Route("email/{email}")]
-        //public HttpResponseMessage GetStoreByEmail([FromUri] StoreModels store)
-        //{
+        //api/storeAPI/email/zadar@sancta-domenica.hr/ (Dummy info) -> add slash on the end
+        [Route("email/{email}")]
+        public HttpResponseMessage GetStoreByEmail([FromUri] StoreModels store)
+        {
 
-        //    string email = store.Email;
-        //    if (email == null)
-        //    {
-        //        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
-        //    }
+            string email = store.Email;
+            if (email == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
+            }
 
-        //    List<StoreModels> stores = (from k in _db.StoreModels where k.Email == email select k).ToList();
+            List<StoreModels> stores = (from k in _db.StoreModels where k.Email == email select k).ToList();
 
-        //    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, stores);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, stores);
 
 
-        //    return response;
-        //}
+            return response;
+        }
 
 
 
