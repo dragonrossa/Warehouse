@@ -47,4 +47,6 @@ Calculate Full price after adding Price and Quantity
 
 11.09. StoreAPI - update
 
+12.09. New nav bar - changes on various Views
+
 Rosana
