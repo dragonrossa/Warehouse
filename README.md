@@ -55,4 +55,6 @@ Calculate Full price after adding Price and Quantity
 
 14.09. Web APIs for transferAPI controller
 
+14.09. Web API for LaptopAPI controller
+
 Rosana
