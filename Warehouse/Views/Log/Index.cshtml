@@ -1,0 +1,272 @@
+﻿@model Warehouse.Models.LogModels
+
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
+<div class="container-fluid">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="laptop-tab" name="laptop-tab" data-toggle="tab" href="#laptop" role="tab" aria-controls="laptop" aria-selected="true" onclick=hideAllInfo()>Laptop</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="store-tab" data-toggle="tab" href="#store" role="tab" aria-controls="store" aria-selected="false" onclick="hideAllInfo()">Store</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="transfer-tab" data-toggle="tab" href="#transfer" role="tab" aria-controls="transfer" aria-selected="false" onclick="hideAllInfo()">Transfer</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="search-tab" data-toggle="tab" href="#search" role="tab" aria-controls="search" aria-selected="false" onclick="hideAllInfo()">Search</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="searchNotFound-tab" data-toggle="tab" href="#searchNotFound" role="tab" aria-controls="searchNotFound" aria-selected="false" onclick="hideAllInfo()">Not found</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false" onclick="hideAllInfo()">User</a>
+        </li>
+    </ul>
+    <div class="container-fluid" id="hide" name="hide">
+        <p>Here are logs for all crucial parts in this applications:</p>
+        <p>Check Laptop, Store, Transfer, Search, Not Found, New user Logs.</p>
+        <p>More logs coming soon.</p>
+    </div>
+</div>
+
+<div class="tab-content container-fluid" id="myTabContent">
+    <div class="tab-pane fade" id="laptop" role="tabpanel" aria-labelledby="laptop-tab">
+
+        <div class="container-fluid">
+            <h1>Logs for warehouse - Laptop</h1>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.log)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+    <div class="tab-pane fade" id="store" role="tabpanel" aria-labelledby="store-tab">
+
+        <div class="container-fluid">
+            <h1>Logs for warehouse - Store</h1>
+
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.log1)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+
+
+        </div>
+    </div>
+    <div class="tab-pane fade" id="transfer" role="tabpanel" aria-labelledby="transfer-tab">
+        <div class="container-fluid">
+            <h1>Logs for warehouse - Transfer</h1>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.log2)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
+        <div class="container-fluid">
+            <h1>Logs for warehouse - Search</h1>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.log3)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="searchNotFound" role="tabpanel" aria-labelledby="searchNotFound-tab">
+        <div class="container-fluid">
+            <h1>Logs for warehouse - Search not found</h1>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.log4)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
+        <div class="container-fluid">
+            <h1>Logs for warehouse - New user</h1>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.log5)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    function hideAllInfo() {
+        $("#hide").hide();
+        //alert('a_onClick');
+    }
+</script>
