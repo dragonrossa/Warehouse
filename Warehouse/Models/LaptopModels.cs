@@ -27,7 +27,6 @@ namespace Warehouse.Models
         [StringLength(100, ErrorMessage = "Manufacturer cant have more than 100 letters")]
         public string Manufacturer { get; set; }
         //SN - Serial Number
-        [Column(TypeName = "text")]
         public string SN { get; set; }
         //OS - Operating System
         [StringLength(50, ErrorMessage = "OS cant have more than 50 letters")]

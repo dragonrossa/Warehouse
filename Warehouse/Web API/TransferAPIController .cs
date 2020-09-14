@@ -10,7 +10,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Controllers
 {
-    [RoutePrefix("api/transferAPI")]
+    [RoutePrefix("api/transfer")]
     public class TransferAPIController : ApiController
     {
         private ApplicationDbContext _db = new ApplicationDbContext();

@@ -10,6 +10,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Controllers
 {
+    [RoutePrefix("api/laptop")]
     public class LaptopAPIController : ApiController
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
@@ -34,6 +35,95 @@ namespace Warehouse.Controllers
             return Ok(laptop);
         }
 
+        //Example:
+        //api/laptopAPI/name/Notebook Acer
+        [Route("name/{name}")]
+        public HttpResponseMessage GetLaptopByName([FromUri] LaptopModels laptop)
+        {
 
+            string name = laptop.Name;
+            if (name == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
+            }
+
+            List<LaptopModels> laptops = (from k in _db.LaptopModels where k.Name == name select k).ToList();
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, laptops);
+            return response;
+        }
+
+        //Example:
+        //api/laptopAPI/quantity/5
+        [Route("quantity/{quantity}")]
+        public HttpResponseMessage GetLaptopByQuantity([FromUri] LaptopModels laptop)
+        {
+
+            int quantity = laptop.Quantity;
+            if (quantity == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
+            }
+
+            List<LaptopModels> laptops = (from k in _db.LaptopModels where k.Quantity == quantity select k).ToList();
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, laptops);
+            return response;
+        }
+
+       
+        //Example:
+        //api/laptopAPI/manufacturer/HP
+        [Route("manufacturer/{manufacturer}")]
+        public HttpResponseMessage GetLaptopByManufacturer([FromUri] LaptopModels laptop)
+        {
+
+            string manufacturer = laptop.Manufacturer;
+            if (manufacturer == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
+            }
+
+            List<LaptopModels> laptops = (from k in _db.LaptopModels where k.Manufacturer == manufacturer select k).ToList();
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, laptops);
+            return response;
+        }
+
+        //Example:
+        //api/laptopAPI/sn/123456789
+        [Route("sn/{sn}")]
+        public HttpResponseMessage GetLaptopBySN([FromUri] LaptopModels laptop)
+        {
+
+            string sn = laptop.SN;
+            if (sn == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
+            }
+
+            List<LaptopModels> laptops = (from k in _db.LaptopModels where k.SN == sn select k).ToList();
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, laptops);
+            return response;
+        }
+
+        //Example:
+        //api/laptopAPI/os/Linux
+        [Route("os/{os}")]
+        public HttpResponseMessage GetLaptopByOS([FromUri] LaptopModels laptop)
+        {
+
+            string os = laptop.OS;
+            if (os == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
+            }
+
+            List<LaptopModels> laptops = (from k in _db.LaptopModels where k.OS == os select k).ToList();
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, laptops);
+            return response;
+        }
     }
 }

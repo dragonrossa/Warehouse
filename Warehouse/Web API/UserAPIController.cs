@@ -10,6 +10,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Controllers
 {
+    [RoutePrefix("api/user")]
     public class UserAPIController : ApiController
     {
         private ApplicationDbContext _db = new ApplicationDbContext();

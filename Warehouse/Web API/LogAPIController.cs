@@ -10,7 +10,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Controllers
 {
-    [RoutePrefix("api/LogAPI")]
+    [RoutePrefix("api/log")]
     public class LogAPIController : ApiController
     {
         
