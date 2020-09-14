@@ -10,8 +10,10 @@ using Warehouse.Models;
 
 namespace Warehouse.Controllers
 {
+    [RoutePrefix("api/LogAPI")]
     public class LogAPIController : ApiController
     {
+        
         private ApplicationDbContext _db = new ApplicationDbContext();
 
         [HttpGet]
@@ -34,6 +36,5 @@ namespace Warehouse.Controllers
             return Ok(log);
         }
 
-       
     }
 }
