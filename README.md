@@ -51,4 +51,6 @@ Calculate Full price after adding Price and Quantity
 
 12.09. StoreAPI - Web API for email + quantity
 
+14.09. Added Index for Log controller (was ignored)
+
 Rosana
