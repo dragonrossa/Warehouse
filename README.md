@@ -59,4 +59,6 @@ Calculate Full price after adding Price and Quantity
 
 17.09. Web API for UserAPI controller
 
+17.09. Search  - changes, new Actions
+
 Rosana
