@@ -16,6 +16,8 @@ namespace Warehouse.Helpers
         public int Quantity { get; set; }
         [Display(Name = "Full price")]
         public decimal? FullPrice { get; set; }
+        [Display(Name="All products")]
+        public int QuantityOfAllProducts { get; set; }
 
         //Store
         [Display(Name = "Store")]

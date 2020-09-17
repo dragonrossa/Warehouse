@@ -473,6 +473,8 @@
     <Content Include="Views\Search\ResultStore.cshtml" />
     <Content Include="Views\Search\ResultTransfer.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Search\SearchByManufacturer.cshtml" />
+    <Content Include="Views\Search\SearchByOS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

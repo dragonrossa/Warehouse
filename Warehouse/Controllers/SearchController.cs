@@ -37,8 +37,6 @@ namespace Warehouse.Controllers
             //Search for Laptop
 
 
-           
-
             if (form["name"] != null)
             {
 
@@ -87,8 +85,147 @@ namespace Warehouse.Controllers
                     return View(index);
                 }
             }
-            else if (form["storeName"] != null)
+
+
+          
+            return View();
+        }
+
+
+        public ActionResult SearchByManufacturer(FormCollection form)
+        {
+            SearchIndex search = new SearchIndex();
+            List<SearchIndex> index = new List<SearchIndex>();
+
+            if (form["manufacturer"] != null)
             {
+
+                search.Name = form["manufacturer"];
+                ViewBag.Name = search.Name;
+                TempData["searchName"] = ViewBag.Name;
+                var searchName = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).FirstOrDefault();
+                int QuantityOfAllProducts = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).Count();
+
+                //int count = _db.LaptopModels.Where(x => x.Manufacturer == search.Name).Count();
+
+                //log for Search if not exists
+
+                if (searchName == null)
+                {
+                    LogModels log = new LogModels
+                    {
+                        Type = "4",
+                        Description = "There was new search in Transfer section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+                    return View("ResultNotExists");
+                }
+
+                else
+                {
+                    //Create Laptop object
+                    search.LaptopName = searchName.Name;
+                    search.Quantity = searchName.Quantity;
+                    search.FullPrice = searchName.FullPrice;
+                    search.QuantityOfAllProducts = QuantityOfAllProducts;
+
+
+                    //Add laptop object to list
+
+                    index.Add(search);
+
+                    //Create new log
+                    LogModels log = new LogModels
+                    {
+                        Type = "3",
+                        Description = "There was new search in Laptop section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+
+                    return View(index);
+                }
+            }
+
+            return View();
+        }
+
+
+        public ActionResult SearchByOS(FormCollection form)
+        {
+            SearchIndex search = new SearchIndex();
+            List<SearchIndex> index = new List<SearchIndex>();
+
+            if (form["os"] != null)
+            {
+
+                search.Name = form["os"];
+                ViewBag.Name = search.Name;
+                TempData["searchName"] = ViewBag.Name;
+                var searchName = (from k in _db.LaptopModels where k.OS == search.Name select k).FirstOrDefault();
+                int QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
+
+                //log for Search if not exists
+
+                if (searchName == null)
+                {
+                    LogModels log = new LogModels
+                    {
+                        Type = "4",
+                        Description = "There was new search in Transfer section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+                    return View("ResultNotExists");
+                }
+
+                else
+                {
+                    //Create Laptop object
+                    search.LaptopName = searchName.Name;
+                    search.Quantity = searchName.Quantity;
+                    search.FullPrice = searchName.FullPrice;
+                    search.QuantityOfAllProducts = QuantityOfAllProducts;
+
+
+                    //Add laptop object to list
+
+                    index.Add(search);
+
+                    //Create new log
+                    LogModels log = new LogModels
+                    {
+                        Type = "3",
+                        Description = "There was new search in Laptop section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+
+                    return View(index);
+                }
+            }
+
+            return View();
+        }
+
+
+
+        public ActionResult SearchStore(FormCollection form)
+        {
+            SearchIndex search = new SearchIndex();
+            List<SearchIndex> index = new List<SearchIndex>();
+
+           if (form["storeName"] != null){
+
                 search.Name = form["storeName"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
@@ -125,10 +262,20 @@ namespace Warehouse.Controllers
 
                     _db.LogModels.Add(log);
                     _db.SaveChanges();
-                    return View("ResultStore",index);
+                    return View("ResultStore", index);
                 }
             }
-            else if (form["laptopName"] != null)
+            return View();
+        }
+
+        public ActionResult SearchTransfer(FormCollection form)
+        {
+            SearchIndex search = new SearchIndex();
+            List<SearchIndex> index = new List<SearchIndex>();
+
+            //Search for Store
+
+            if (form["laptopName"] != null)
             {
                 search.Name = form["laptopName"];
                 ViewBag.Name = search.Name;
@@ -169,10 +316,11 @@ namespace Warehouse.Controllers
                     return View("ResultTransfer", index);
                 }
             }
-            //Search for Store
-
+         
             return View();
         }
+
+
 
         public ActionResult ResultNotExists()
         {
