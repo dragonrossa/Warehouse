@@ -57,4 +57,6 @@ Calculate Full price after adding Price and Quantity
 
 14.09. Web API for LaptopAPI controller
 
+17.09. Web API for UserAPI controller
+
 Rosana
