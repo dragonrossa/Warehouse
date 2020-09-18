@@ -1,4 +1,4 @@
-﻿@model List<Warehouse.Helpers.SearchIndex>
+﻿@model List<Warehouse.Models.LaptopModels>
 
 @*@foreach (var item in Model)
     {
@@ -48,12 +48,12 @@
         <dd>
             @Html.DisplayFor(modelItem => item.FullPrice)
         </dd>
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(modelitem => item.QuantityOfAllProducts)
         </dt>
         <dd>
             @Html.DisplayFor(modelItem => item.QuantityOfAllProducts)
-        </dd>
+        </dd>*@
 
 
     }

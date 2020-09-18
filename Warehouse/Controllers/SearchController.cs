@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
@@ -43,9 +44,15 @@ namespace Warehouse.Controllers
                 search.Name = form["name"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                var searchName = (from k in _db.LaptopModels where k.Name == search.Name select k).FirstOrDefault();
+                ViewBag.searchname = (from k in _db.LaptopModels where k.Name == search.Name select k).FirstOrDefault();
+                int QuantityOfAllProducts = (from k in _db.LaptopModels where k.Name == search.Name select k).Count();
+                List<LaptopModels> laptops = (from k in _db.LaptopModels where k.Name == search.Name select k).ToList();
 
-                if (searchName == null)
+               
+
+                
+
+                if (ViewBag.searchname == null)
                 {
                     LogModels log = new LogModels
                     {
@@ -61,15 +68,7 @@ namespace Warehouse.Controllers
 
                 else
                 {
-                    //Create Laptop object
-                    search.LaptopName = searchName.Name;
-                    search.Quantity = searchName.Quantity;
-                    search.FullPrice = searchName.FullPrice;
-
-                    
-                    //Add laptop object to list
-
-                    index.Add(search);
+                   
 
                     //Create new log
                     LogModels log = new LogModels
@@ -82,7 +81,7 @@ namespace Warehouse.Controllers
                     _db.LogModels.Add(log);
                     _db.SaveChanges();
 
-                    return View(index);
+                    return View(laptops);
                 }
             }
 
@@ -101,16 +100,18 @@ namespace Warehouse.Controllers
             {
 
                 search.Name = form["manufacturer"];
-                ViewBag.Name = search.Name;
+                ViewBag.Name = form["manufacturer"];
                 TempData["searchName"] = ViewBag.Name;
-                var searchName = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).FirstOrDefault();
+                ViewBag.searchname = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).FirstOrDefault();
                 int QuantityOfAllProducts = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).Count();
+
+                List<LaptopModels> laptops = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).ToList();
 
                 //int count = _db.LaptopModels.Where(x => x.Manufacturer == search.Name).Count();
 
                 //log for Search if not exists
 
-                if (searchName == null)
+                if (ViewBag.searchname == null)
                 {
                     LogModels log = new LogModels
                     {
@@ -126,16 +127,7 @@ namespace Warehouse.Controllers
 
                 else
                 {
-                    //Create Laptop object
-                    search.LaptopName = searchName.Name;
-                    search.Quantity = searchName.Quantity;
-                    search.FullPrice = searchName.FullPrice;
-                    search.QuantityOfAllProducts = QuantityOfAllProducts;
-
-
-                    //Add laptop object to list
-
-                    index.Add(search);
+                  
 
                     //Create new log
                     LogModels log = new LogModels
@@ -148,7 +140,7 @@ namespace Warehouse.Controllers
                     _db.LogModels.Add(log);
                     _db.SaveChanges();
 
-                    return View(index);
+                    return View(laptops);
                 }
             }
 
@@ -161,18 +153,22 @@ namespace Warehouse.Controllers
             SearchIndex search = new SearchIndex();
             List<SearchIndex> index = new List<SearchIndex>();
 
+            
+
             if (form["os"] != null)
             {
 
                 search.Name = form["os"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                var searchName = (from k in _db.LaptopModels where k.OS == search.Name select k).FirstOrDefault();
+                ViewBag.searchName = (from k in _db.LaptopModels where k.OS == search.Name select k).FirstOrDefault();
                 int QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
+
+                List<LaptopModels> laptops = (from k in _db.LaptopModels where k.OS == search.Name select k).ToList();
 
                 //log for Search if not exists
 
-                if (searchName == null)
+                if (ViewBag.searchname == null)
                 {
                     LogModels log = new LogModels
                     {
@@ -189,15 +185,15 @@ namespace Warehouse.Controllers
                 else
                 {
                     //Create Laptop object
-                    search.LaptopName = searchName.Name;
-                    search.Quantity = searchName.Quantity;
-                    search.FullPrice = searchName.FullPrice;
-                    search.QuantityOfAllProducts = QuantityOfAllProducts;
+                    //search.LaptopName = searchName.Name;
+                    //search.Quantity = searchName.Quantity;
+                    //search.FullPrice = searchName.FullPrice;
+                    //search.QuantityOfAllProducts = QuantityOfAllProducts;
 
 
                     //Add laptop object to list
 
-                    index.Add(search);
+                    //index.Add(search);
 
                     //Create new log
                     LogModels log = new LogModels
@@ -210,7 +206,7 @@ namespace Warehouse.Controllers
                     _db.LogModels.Add(log);
                     _db.SaveChanges();
 
-                    return View(index);
+                    return View(laptops);
                 }
             }
 
