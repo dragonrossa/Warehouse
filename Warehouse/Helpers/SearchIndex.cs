@@ -11,12 +11,12 @@ namespace Warehouse.Helpers
         //User inputs name
         public string Name { get; set; }
         //Laptop
-        [Display(Name = "Name")]
-        public string LaptopName { get; set; }      
-        public int Quantity { get; set; }
-        [Display(Name = "Full price")]
-        public decimal? FullPrice { get; set; }
-        [Display(Name="All products")]
+        //[Display(Name = "Name")]
+        //public string LaptopName { get; set; }      
+        //public int Quantity { get; set; }
+        //[Display(Name = "Full price")]
+        //public decimal? FullPrice { get; set; }
+        //[Display(Name="All products")]
         public int QuantityOfAllProducts { get; set; }
 
         //Store

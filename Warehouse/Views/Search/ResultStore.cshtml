@@ -1,11 +1,4 @@
-﻿@model List<Warehouse.Helpers.SearchIndex>
-
-@*@foreach (var item in Model)
-{
-    @item.LaptopName
-    @item.Quantity
-    @item.FullPrice
-}*@
+﻿@model List<Warehouse.Models.StoreModels>
 
 
 @section Scripts{
@@ -17,45 +10,93 @@
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
 
+    <style>
+        #more {
+            display: none;
+        }
+    </style>
+
 </head>
+
 
 
 <div class="container-fluid">
     <h1>Details about @ViewBag.Name</h1>
 </div>
 
-
-
-<dl class="dl-horizontal container-fluid">
-
-    @foreach (var item in Model)
-    {
+<p>
+    <dl class="dl-horizontal container-fluid">
         <dt>
-            @Html.DisplayNameFor(modelitem=>item.StoreName)
+            Number of available pieces:
         </dt>
         <dd>
-            @Html.DisplayFor(modelItem => item.StoreName)
+            @ViewBag.quantity
         </dd>
-        <dt>
-            @Html.DisplayNameFor(modelitem => item.StoreLocation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(modelItem => item.StoreLocation)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(modelitem => item.StoreAddress)
-        </dt>
-        <dd>
-            @Html.DisplayFor(modelItem => item.StoreAddress)
-        </dd>
-        
 
-    }
+    </dl>
 
-</dl>
+    <span id="dots"></span>
+    <span id="more">
 
-<div class="container">
+        <h1 style="margin-left:10px;color:darkred">Details:</h1>
+        <dl class="dl-horizontal container-fluid">
+
+
+            @foreach (var item in Model)
+            {
+                <dt>
+                    @Html.DisplayNameFor(modelitem => item.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(modelitem => item.Address)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(modelitem => item.Location)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </dd>
+
+
+            }
+
+        </dl>
+    </span>
+</p>
+
+<button onclick="myFunction()" id="myBtn" style="margin-left:10px">Read more</button>
+
+
+<div class="container-fluid">
     @Html.ActionLink("Back", "Index")
 </div>
+
+
+<script>
+    function myFunction() {
+        var dots = document.getElementById("dots");
+        var moreText = document.getElementById("more");
+        var btnText = document.getElementById("myBtn");
+
+        if (dots.style.display === "none") {
+            dots.style.display = "inline";
+            btnText.innerHTML = "Read more";
+            moreText.style.display = "none";
+        } else {
+            dots.style.display = "none";
+            btnText.innerHTML = "Read less";
+            moreText.style.display = "inline";
+        }
+    }
+</script>
+
+
+
 
 

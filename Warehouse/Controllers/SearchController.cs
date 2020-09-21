@@ -47,10 +47,9 @@ namespace Warehouse.Controllers
                 ViewBag.searchname = (from k in _db.LaptopModels where k.Name == search.Name select k).FirstOrDefault();
                 int QuantityOfAllProducts = (from k in _db.LaptopModels where k.Name == search.Name select k).Count();
                 List<LaptopModels> laptops = (from k in _db.LaptopModels where k.Name == search.Name select k).ToList();
+                search.QuantityOfAllProducts = (from k in _db.LaptopModels where k.Name == search.Name select k).Count();
+                ViewBag.quantity = (from k in _db.LaptopModels where k.Name == search.Name select (int?)k.Quantity).Sum();
 
-               
-
-                
 
                 if (ViewBag.searchname == null)
                 {
@@ -94,7 +93,7 @@ namespace Warehouse.Controllers
         public ActionResult SearchByManufacturer(FormCollection form)
         {
             SearchIndex search = new SearchIndex();
-            List<SearchIndex> index = new List<SearchIndex>();
+           // List<SearchIndex> index = new List<SearchIndex>();
 
             if (form["manufacturer"] != null)
             {
@@ -104,8 +103,9 @@ namespace Warehouse.Controllers
                 TempData["searchName"] = ViewBag.Name;
                 ViewBag.searchname = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).FirstOrDefault();
                 int QuantityOfAllProducts = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).Count();
-
+                search.QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
                 List<LaptopModels> laptops = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).ToList();
+                ViewBag.quantity = (from k in _db.LaptopModels where k.Manufacturer == search.Name select (int?)k.Quantity).Sum();
 
                 //int count = _db.LaptopModels.Where(x => x.Manufacturer == search.Name).Count();
 
@@ -151,8 +151,7 @@ namespace Warehouse.Controllers
         public ActionResult SearchByOS(FormCollection form)
         {
             SearchIndex search = new SearchIndex();
-            List<SearchIndex> index = new List<SearchIndex>();
-
+           // List<SearchIndex> index = new List<SearchIndex>();
             
 
             if (form["os"] != null)
@@ -163,6 +162,8 @@ namespace Warehouse.Controllers
                 TempData["searchName"] = ViewBag.Name;
                 ViewBag.searchName = (from k in _db.LaptopModels where k.OS == search.Name select k).FirstOrDefault();
                 int QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
+                search.QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
+                ViewBag.quantity = (from k in _db.LaptopModels where k.OS == search.Name select (int?)k.Quantity).Sum();
 
                 List<LaptopModels> laptops = (from k in _db.LaptopModels where k.OS == search.Name select k).ToList();
 
@@ -185,16 +186,11 @@ namespace Warehouse.Controllers
                 else
                 {
                     //Create Laptop object
-                    //search.LaptopName = searchName.Name;
-                    //search.Quantity = searchName.Quantity;
-                    //search.FullPrice = searchName.FullPrice;
-                    //search.QuantityOfAllProducts = QuantityOfAllProducts;
-
+                    
 
                     //Add laptop object to list
 
-                    //index.Add(search);
-
+        
                     //Create new log
                     LogModels log = new LogModels
                     {
@@ -218,15 +214,18 @@ namespace Warehouse.Controllers
         public ActionResult SearchStore(FormCollection form)
         {
             SearchIndex search = new SearchIndex();
-            List<SearchIndex> index = new List<SearchIndex>();
+           // List<SearchIndex> index = new List<SearchIndex>();
 
            if (form["storeName"] != null){
 
                 search.Name = form["storeName"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                var searchName = (from k in _db.StoreModels where k.Name == search.Name select k).FirstOrDefault();
-                if (searchName == null)
+                ViewBag.searchName = (from k in _db.StoreModels where k.Name == search.Name select k).FirstOrDefault();
+                List<StoreModels> stores = (from k in _db.StoreModels where k.Name == search.Name select k).ToList();
+                ViewBag.quantity = (from k in _db.StoreModels where k.Name == search.Name select (int?)k.QoP).Sum();
+
+                if (ViewBag.searchName == null)
                 {
                     LogModels log = new LogModels
                     {
@@ -242,12 +241,10 @@ namespace Warehouse.Controllers
                 else
                 {
                     //Create Store object
-                    search.StoreName = searchName.Name;
-                    search.StoreAddress = searchName.Address;
-                    search.StoreLocation = searchName.Location;
+              
 
                     //Add store object to list
-                    index.Add(search);
+                    //index.Add(search);
                     //Create new log
                     LogModels log = new LogModels
                     {
@@ -258,7 +255,7 @@ namespace Warehouse.Controllers
 
                     _db.LogModels.Add(log);
                     _db.SaveChanges();
-                    return View("ResultStore", index);
+                    return View("ResultStore",stores);
                 }
             }
             return View();
@@ -267,7 +264,7 @@ namespace Warehouse.Controllers
         public ActionResult SearchTransfer(FormCollection form)
         {
             SearchIndex search = new SearchIndex();
-            List<SearchIndex> index = new List<SearchIndex>();
+           // List<SearchIndex> index = new List<SearchIndex>();
 
             //Search for Store
 
@@ -276,8 +273,11 @@ namespace Warehouse.Controllers
                 search.Name = form["laptopName"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                var searchName = (from k in _db.TransferModels where k.LaptopName == search.Name select k).FirstOrDefault();
-                if (searchName == null)
+                ViewBag.searchname = (from k in _db.TransferModels where k.LaptopName == search.Name select k).FirstOrDefault();
+                ViewBag.quantity = (from k in _db.TransferModels where k.LaptopName == search.Name select (int?)k.LaptopQuantity).Sum();
+                List<TransferModels> transfers = (from k in _db.TransferModels where k.LaptopName == search.Name select k).ToList();
+
+                if (ViewBag.searchname == null && ViewBag.quantity == null)
                 {
                     LogModels log = new LogModels
                     {
@@ -292,14 +292,14 @@ namespace Warehouse.Controllers
                 }
                 else
                 {
-                    var store = (from k in _db.StoreModels where k.ID == searchName.StoreID select k.Name).FirstOrDefault();
+                   // var store = (from k in _db.StoreModels where k.ID == searchName.StoreID select k.Name).FirstOrDefault();
                     //Create Store object
-                    search.TransferLaptopName = searchName.LaptopName;
-                    search.TransferLaptopQuantity = searchName.LaptopQuantity;
-                    search.TransferStoreName = store;
+                   // search.TransferLaptopName = searchName.LaptopName;
+                   // search.TransferLaptopQuantity = searchName.LaptopQuantity;
+                   // search.TransferStoreName = store;
 
                     //Add store object to list
-                    index.Add(search);
+                   // index.Add(search);
                     LogModels log = new LogModels
                     {
                         Type = "3",
@@ -309,7 +309,7 @@ namespace Warehouse.Controllers
 
                     _db.LogModels.Add(log);
                     _db.SaveChanges();
-                    return View("ResultTransfer", index);
+                    return View("ResultTransfer",transfers);
                 }
             }
          
