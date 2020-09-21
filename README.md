@@ -61,4 +61,6 @@ Calculate Full price after adding Price and Quantity
 
 17.09. Search  - changes, new Actions
 
+18.09. Search - update and new views
+
 Rosana
