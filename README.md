@@ -63,4 +63,8 @@ Calculate Full price after adding Price and Quantity
 
 18.09. Search - update and new views
 
+21.09. Search - additional improvements
+
+23.09. Server validation for various models, Search - Transfer Controller, Search - Store Controller
+
 Rosana
