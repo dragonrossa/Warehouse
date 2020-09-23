@@ -10,6 +10,7 @@ namespace Warehouse.Helpers
     {
         //User inputs name
         public string Name { get; set; }
+       // public int? ZipCode { get; set; }
         //Laptop
         //[Display(Name = "Name")]
         //public string LaptopName { get; set; }      
@@ -20,19 +21,19 @@ namespace Warehouse.Helpers
         public int QuantityOfAllProducts { get; set; }
 
         //Store
-        [Display(Name = "Store")]
-        public string StoreName { get; set; }
-        [Display(Name = "Location")]
-        public string StoreLocation { get; set;}
-        [Display(Name = "Address")]
-        public string StoreAddress { get; set; }
+        //[Display(Name = "Store")]
+        //public string StoreName { get; set; }
+        //[Display(Name = "Location")]
+        //public string StoreLocation { get; set;}
+        //[Display(Name = "Address")]
+        //public string StoreAddress { get; set; }
 
         //Transfer
-        [Display(Name = "Name")]
-        public string TransferLaptopName { get; set; }
-        [Display(Name = "Quantity")]
-        public int TransferLaptopQuantity { get; set; }
-        [Display(Name = "Store")]
-        public string TransferStoreName { get; set; }
+        //[Display(Name = "Name")]
+        //public string TransferLaptopName { get; set; }
+        //[Display(Name = "Quantity")]
+        //public int TransferLaptopQuantity { get; set; }
+        //[Display(Name = "Store")]
+        //public string TransferStoreName { get; set; }
     }
 }

@@ -25,10 +25,12 @@ namespace Warehouse.Models
         //Address - not required
         public string Address { get; set; }
         //Quantity of Products - not required
+        //[Range(1, 500)]
         [Display(Name = "Quantity of products")]
         public int? QoP { get; set; }
         //Stock price - not required
         [Display(Name = "Stock price")]
+        [Range(1, 500000)]
         [Column(TypeName = "money")]
         public decimal? StockPrice { get; set; }
         //Contact - telephone - not required

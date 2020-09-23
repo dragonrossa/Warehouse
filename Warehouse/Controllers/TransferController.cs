@@ -74,8 +74,8 @@ namespace Warehouse.Controllers
         public ActionResult Create(FormCollection form, TransferModels transfer)
         {
 
-            try
-            {
+            //try
+            //{
                 int storeID = Convert.ToInt32(form["StoreName"].ToString());
                 int LaptopID = Convert.ToInt32(form["LaptopName"].ToString());
                 int LaptopQuantity = Convert.ToInt32(form["LaptopQuantity"].ToString());
@@ -84,8 +84,8 @@ namespace Warehouse.Controllers
 
                 if (possibleCount > 0)
                 {
-                    if (LaptopQuantity > 0)
-                    {
+                    //if (LaptopQuantity > 0)
+                    //{
                         //get Laptops name and add attributes to Transfer
                         var laptop = (from k in _db.LaptopModels where k.ID == LaptopID select k.Name).First();
                         transfer.StoreID = storeID;
@@ -94,16 +94,18 @@ namespace Warehouse.Controllers
                         transfer.LaptopQuantity = LaptopQuantity;
                         transfer.Date = DateTime.Now;// add if any field you want insert
                         _db.TransferModels.Add(transfer);
+                    _db.SaveChanges();
+                    //get Laptop
+                    var storeFind = (from s in _db.StoreModels where s.ID == storeID select s).First(); //select store, change Qop
+                    storeFind.QoP = storeFind.QoP - LaptopQuantity; // reduce QoP for quantity number
+                    _db.SaveChanges();
+                    var laptopFind = (from k in _db.LaptopModels where k.ID == transfer.LaptopID select k).First(); //select laptop
+                        laptopFind.Quantity = laptopFind.Quantity - LaptopQuantity;  // reduce LaptopQuantity from Quantity
+                    _db.SaveChanges();
+                   
 
-                        //get Laptop
-                        var laptopFind = (from k in _db.LaptopModels where k.ID == transfer.LaptopID select k).First(); //select laptop
-                        laptopFind.Quantity -= LaptopQuantity;  // reduce LaptopQuantity from Quantity
-                        var storeFind = (from s in _db.StoreModels where s.ID == storeID select s).First(); //select store, change Qop
-                        storeFind.QoP -= LaptopQuantity; // reduce QoP for quantity number
-                        _db.SaveChanges();
-
-                        //Create new log
-                        LogModels log = new LogModels
+                    //Create new log
+                    LogModels log = new LogModels
                         {
                             Type = "2",
                             Description = "New transfer was inserted with transfer of laptop called " + transfer.LaptopName + " with quantity of " +
@@ -113,7 +115,7 @@ namespace Warehouse.Controllers
 
                         _db.LogModels.Add(log);
                         _db.SaveChanges();
-                    }
+                    //}
                 }
 
                 else
@@ -121,15 +123,15 @@ namespace Warehouse.Controllers
                     return RedirectToAction("Index", "Laptop", new { });
                 }
 
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("Error reading from {0}. Message = {1}", e.Message);
-            }
-            finally
-            {
+            //}
+            //catch(Exception e)
+            //{
+            //   Console.WriteLine("Error reading from {0}. Message = {1}", e.Message);
+            //}
+            //finally
+            //{
 
-            }
+            //}
             
 
             return RedirectToAction("Index", "Transfer", new { });

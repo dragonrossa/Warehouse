@@ -93,7 +93,7 @@ namespace Warehouse.Controllers
         public ActionResult SearchByManufacturer(FormCollection form)
         {
             SearchIndex search = new SearchIndex();
-           // List<SearchIndex> index = new List<SearchIndex>();
+         
 
             if (form["manufacturer"] != null)
             {
@@ -214,7 +214,7 @@ namespace Warehouse.Controllers
         public ActionResult SearchStore(FormCollection form)
         {
             SearchIndex search = new SearchIndex();
-           // List<SearchIndex> index = new List<SearchIndex>();
+         
 
            if (form["storeName"] != null){
 
@@ -240,11 +240,7 @@ namespace Warehouse.Controllers
                 }
                 else
                 {
-                    //Create Store object
-              
-
-                    //Add store object to list
-                    //index.Add(search);
+                  
                     //Create new log
                     LogModels log = new LogModels
                     {
@@ -261,10 +257,107 @@ namespace Warehouse.Controllers
             return View();
         }
 
+        public ActionResult SearchStoreByLocation(FormCollection form)
+        {
+            SearchIndex search = new SearchIndex();
+
+
+            if (form["storeLocation"] != null)
+            {
+
+                search.Name = form["storeLocation"];
+                ViewBag.Name = search.Name;
+                TempData["searchName"] = ViewBag.Name;
+                ViewBag.searchName = (from k in _db.StoreModels where k.Location == search.Name select k).FirstOrDefault();
+                List<StoreModels> stores = (from k in _db.StoreModels where k.Location == search.Name select k).ToList();
+                ViewBag.quantity = (from k in _db.StoreModels where k.Location == search.Name select (int?)k.QoP).Sum();
+
+                if (ViewBag.searchName == null)
+                {
+                    LogModels log = new LogModels
+                    {
+                        Type = "4",
+                        Description = "There was new search in Transfer section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+                    return View("ResultNotExists");
+                }
+                else
+                {
+
+                    //Create new log
+                    LogModels log = new LogModels
+                    {
+                        Type = "3",
+                        Description = "There was new search in Store section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+                    return View("ResultStore", stores);
+                }
+            }
+            return View();
+
+        }
+
+        public ActionResult SearchStoreByZipCode(FormCollection form)
+        {
+            SearchIndex search = new SearchIndex();
+
+
+            if (form["storeZipcode"] != null)
+            {
+                
+                search.Name = form["storeZipcode"];
+                int? test = Convert.ToInt32(search.Name);
+                ViewBag.Name = search.Name;
+                TempData["searchName"] = ViewBag.Name;
+                ViewBag.searchName = (from k in _db.StoreModels where k.ZipCode == test select k).FirstOrDefault();
+                List<StoreModels> stores = (from k in _db.StoreModels where k.ZipCode == test select k).ToList();
+                ViewBag.quantity = (from k in _db.StoreModels where k.ZipCode == test select (int?)k.QoP).Sum();
+
+                if (ViewBag.searchName == null)
+                {
+                    LogModels log = new LogModels
+                    {
+                        Type = "4",
+                        Description = "There was new search in Transfer section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+                    return View("ResultNotExists");
+                }
+                else
+                {
+
+                    //Create new log
+                    LogModels log = new LogModels
+                    {
+                        Type = "3",
+                        Description = "There was new search in Store section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+                    return View("ResultStore", stores);
+                }
+            }
+
+            return View();
+        }
+
         public ActionResult SearchTransfer(FormCollection form)
         {
             SearchIndex search = new SearchIndex();
-           // List<SearchIndex> index = new List<SearchIndex>();
+         
 
             //Search for Store
 
@@ -292,14 +385,9 @@ namespace Warehouse.Controllers
                 }
                 else
                 {
-                   // var store = (from k in _db.StoreModels where k.ID == searchName.StoreID select k.Name).FirstOrDefault();
-                    //Create Store object
-                   // search.TransferLaptopName = searchName.LaptopName;
-                   // search.TransferLaptopQuantity = searchName.LaptopQuantity;
-                   // search.TransferStoreName = store;
-
+               
                     //Add store object to list
-                   // index.Add(search);
+                
                     LogModels log = new LogModels
                     {
                         Type = "3",
@@ -313,6 +401,81 @@ namespace Warehouse.Controllers
                 }
             }
          
+            return View();
+        }
+
+        public ActionResult SearchTransferByStoreName(FormCollection form)
+        {
+            SearchIndex search = new SearchIndex();
+            //Search for Store
+
+            if (form["storeName"] != null)
+            {
+                search.Name = form["storeName"];
+                ViewBag.Name = search.Name;
+                TempData["searchName"] = ViewBag.Name;
+
+                //check by storeName
+
+              //  ViewBag.quantity = (from k in _db.TransferModels where k.LaptopName == search.Name select (int?)k.LaptopQuantity).Sum();
+
+
+
+                //First find storeID
+
+                int storeID = (from s in _db.StoreModels
+                               where s.Name == search.Name
+                               select s.ID).SingleOrDefault();
+
+                //then find store name
+
+            
+
+                List <TransferModels> transfers = (from t in _db.TransferModels
+                                    where t.StoreID == storeID
+                                    select t).ToList();
+
+                //write down name for store
+
+                ViewBag.searchname = (from t in _db.TransferModels
+                                      where t.StoreID == storeID
+                                      select t).FirstOrDefault();
+
+                ViewBag.quantity = (from t in _db.TransferModels
+                                    where t.StoreID == storeID
+                                    select (int?)t.LaptopQuantity).Sum();
+
+
+                if (ViewBag.searchname == null && ViewBag.quantity == null)
+                {
+                    LogModels log = new LogModels
+                    {
+                        Type = "4",
+                        Description = "There was new search in Transfer section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+                    return View("ResultNotExists");
+                }
+                else
+                {
+
+
+                    LogModels log = new LogModels
+                    {
+                        Type = "3",
+                        Description = "There was new search in Transfer section for " + search.Name + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+                    return View("ResultTransfer", transfers);
+                }
+            }
+
             return View();
         }
 

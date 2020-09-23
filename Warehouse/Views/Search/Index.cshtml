@@ -181,6 +181,82 @@
         }
 
 
+   @*  </div>
+    <div class="tab-pane fade" id="store" role="tabpanel" aria-labelledby="store-tab">*@
+
+
+        @using (Html.BeginForm("SearchStoreByLocation", "Search"))
+        {
+            <div class="container-fluid">
+
+
+                <div class="container-fluid">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-5">
+                        <h4>Please insert location name</h4>
+                        <label for="name">Name: </label>
+                        <input type="text" id="storeLocation" name="storeLocation">
+                    </div>
+                </div>
+
+
+                <br />
+                <div class="container">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="submit" value="Submit" class="btn btn-primary">
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        }
+
+
+    @*</div>
+    <div class="tab-pane fade" id="store" role="tabpanel" aria-labelledby="store-tab">*@
+
+
+        @using (Html.BeginForm("SearchStoreByZipCode", "Search"))
+        {
+            <div class="container-fluid">
+
+
+                <div class="container-fluid">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-5">
+                        <h4>Please insert zipcode </h4>
+                        <label for="name">Name: </label>
+                        <input type="number" id="storeZipcode" name="storeZipcode">
+                    </div>
+                </div>
+
+
+                <br />
+                <div class="container">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="submit" value="Submit" class="btn btn-primary">
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        }
+
+
     </div>
     <div class="tab-pane fade" id="transfer" role="tabpanel" aria-labelledby="transfer-tab">
 
@@ -198,6 +274,42 @@
                         <h4>Please insert laptop name</h4>
                         <label for="name">Name: </label>
                         <input type="text" id="laptopName" name="laptopName">
+                    </div>
+                </div>
+
+
+                <br />
+                <div class="container">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="submit" value="Submit" class="btn btn-primary">
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+
+    @*</div>
+    <div class="tab-pane fade" id="transfer" role="tabpanel" aria-labelledby="transfer-tab">*@
+
+
+        @using (Html.BeginForm("SearchTransferByStoreName", "Search"))
+        {
+            <div class="container-fluid">
+
+
+                <div class="container-fluid">
+                    <div class="col-sm-1">
+
+                    </div>
+                    <div class="col-sm-5">
+                        <h4>Please insert store name</h4>
+                        <label for="name">Name: </label>
+                        <input type="text" id="storeName" name="storeName">
                     </div>
                 </div>
 

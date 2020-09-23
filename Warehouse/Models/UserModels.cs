@@ -21,6 +21,7 @@ namespace Warehouse.Models
         [StringLength(60, ErrorMessage = "Hometown cant have more than 60 letters")]
 
         public string Hometown { get; set; }
+        [RegularExpression(@"^\d{5}(?:[-\s]\d{4})?$)")] //check if zipcode is 5 or 4 letters
         [StringLength(20, ErrorMessage = "Zipcode cant have more than 20 letters")]
         [Display(Name = "Zip code")]
         public string ZipCode { get; set; }

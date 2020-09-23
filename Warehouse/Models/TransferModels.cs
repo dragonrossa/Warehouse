@@ -14,6 +14,7 @@ namespace Warehouse.Models
         public int LaptopID { get; set; }
         [Display(Name = "Laptop name")]
         public string LaptopName { get; set; }
+        [Range(1, 300)]
         [Display(Name = "Laptop quantity")]
         public int LaptopQuantity { get; set; }
         [Display(Name = "Store ID")]
