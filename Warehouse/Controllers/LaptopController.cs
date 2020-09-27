@@ -20,31 +20,40 @@ namespace Warehouse.Controllers
         // GET: MasterData
         public ActionResult Index()
         {
-            List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k)
-                                             .OrderBy(x => x.Quantity)
-                                             .ToList();
+            try
+            {
+                List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k)
+                                              .OrderBy(x => x.Quantity)
+                                              .ToList();
 
-            var lastInput = (from k in _db.LaptopModels
-                             select k)
-                            .OrderByDescending(k => k.ID)
-                            .First();
+                var lastInput = (from k in _db.LaptopModels
+                                 select k)
+                                .OrderByDescending(k => k.ID)
+                                .First();
 
-            ViewBag.laptop = lastInput.Name;
-            ViewBag.date = lastInput.Date;
-            ViewBag.quantity = lastInput.Quantity;
+                ViewBag.laptop = lastInput.Name;
+                ViewBag.date = lastInput.Date;
+                ViewBag.quantity = lastInput.Quantity;
 
-            var maxNumber = ListLaptop.Max(d => d.ID);
+                var maxNumber = ListLaptop.Max(d => d.ID);
 
-            var sumQuantity = ListLaptop.Sum(d => d.Quantity);
+                var sumQuantity = ListLaptop.Sum(d => d.Quantity);
 
-            var sumFullPrice = ListLaptop.Sum(d => d.FullPrice);
+                var sumFullPrice = ListLaptop.Sum(d => d.FullPrice);
 
+                ViewBag.maxNumber = maxNumber;
+                ViewBag.sumQuantity = sumQuantity;
+                ViewBag.sumFullPrice = sumFullPrice;
+                return View(ListLaptop);
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
 
-            ViewBag.maxNumber = maxNumber;
-            ViewBag.sumQuantity = sumQuantity;
-            ViewBag.sumFullPrice = sumFullPrice;
-
-            return View(ListLaptop);
+            return View();
+           
         }
 
         //GET: MasterData/Create
@@ -56,6 +65,7 @@ namespace Warehouse.Controllers
 
         //POST: MasterData/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(LaptopModels laptop)
         {
             if (ModelState.IsValid)
@@ -97,264 +107,427 @@ namespace Warehouse.Controllers
         //GET: MasterData/List
         public ActionResult List()
         {
-            List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
-            return View(ListLaptop);
+           
+            try
+            {
+                List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
+                return View(ListLaptop);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
         }
 
         //GET: MasterData/EditList
         public ActionResult EditList()
         {
-            List<LaptopModels> Laptop = (from k in _db.LaptopModels select k).ToList();
-            return View(Laptop);
+
+            try
+            {
+                List<LaptopModels> Laptop = (from k in _db.LaptopModels select k).ToList();
+                return View(Laptop);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+
         }
 
         ////GET: MasterData/DeleteList
         public ActionResult DeleteList()
         {
-            List<LaptopModels> Laptop = (from k in _db.LaptopModels select k).ToList();
-            return View(Laptop);
+            
+            try
+            {
+                List<LaptopModels> Laptop = (from k in _db.LaptopModels select k).ToList();
+                return View(Laptop);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
         }
 
         //GET: MasterData/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LaptopModels laptop = _db.LaptopModels.Find(id);
+
+                var idUser = Convert.ToInt32(id);
+
+                TempData["id"] = idUser;
+
+                //Update Full price if price changed in meanwhile
+
+                var result = (from k in _db.LaptopModels where k.ID == idUser select k.Price * k.Quantity).First(); //select price
+
+                var savings = (from k in _db.LaptopModels where k.ID == idUser select k.OldPrice - k.Price).First();
+
+                var laptopFind = (from k in _db.LaptopModels where k.ID == idUser select k).First(); //select laptop
+
+                laptopFind.FullPrice = Convert.ToDecimal(result); // update FullPrice
+
+                laptopFind.Savings = Convert.ToDecimal(savings);
+
+                _db.SaveChanges();
+
+                if (laptop == null)
+                {
+                    return HttpNotFound();
+                }
+
+
+                return View(laptop);
             }
-            LaptopModels laptop = _db.LaptopModels.Find(id);
-
-            var idUser = Convert.ToInt32(id);
-
-            TempData["id"] = idUser;
-
-            //Update Full price if price changed in meanwhile
-
-            var result = (from k in _db.LaptopModels where k.ID == idUser select k.Price * k.Quantity).First(); //select price
-
-            var savings = (from k in _db.LaptopModels where k.ID == idUser select k.OldPrice - k.Price).First();
-
-            var laptopFind = (from k in _db.LaptopModels where k.ID == idUser select k).First(); //select laptop
-
-            laptopFind.FullPrice = Convert.ToDecimal(result); // update FullPrice
-
-            laptopFind.Savings = Convert.ToDecimal(savings);
-
-            _db.SaveChanges();
-
-            if (laptop == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                Console.WriteLine("{0} Exception caught.", e);
             }
 
-            
-            return View(laptop);
+            return View();
+
+          
         }
 
         //POST: MasterData/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(LaptopModels laptop)
         {
-            if (ModelState.IsValid)
+
+            try
             {
-                _db.Entry(laptop).State = EntityState.Modified;
-                _db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    _db.Entry(laptop).State = EntityState.Modified;
+                    _db.SaveChanges();
 
-                var id = Convert.ToInt32(TempData["id"]);
+                    var id = Convert.ToInt32(TempData["id"]);
 
-                var savings = (from k in _db.LaptopModels where k.ID == id select k.OldPrice - k.Price).First(); //calculate saving
+                    var savings = (from k in _db.LaptopModels where k.ID == id select k.OldPrice - k.Price).First(); //calculate saving
 
-                var result = (from k in _db.LaptopModels where k.ID == id select k.Price * k.Quantity).First(); //calculate new full price
+                    var result = (from k in _db.LaptopModels where k.ID == id select k.Price * k.Quantity).First(); //calculate new full price
 
-                var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
+                    var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
 
-                laptopFind.Savings = Convert.ToDecimal(savings); //EF Savings
+                    laptopFind.Savings = Convert.ToDecimal(savings); //EF Savings
 
-                laptopFind.FullPrice = Convert.ToDecimal(result);
+                    laptopFind.FullPrice = Convert.ToDecimal(result);
 
-                _db.SaveChanges();
+                    _db.SaveChanges();
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                return View(laptop);
             }
-            return View(laptop);
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+
+           
         }
 
         //GET: MasterData/Delete/5
 
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            LaptopModels laptop = _db.LaptopModels.Find(id);
 
-            if (laptop == null)
+            try
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LaptopModels laptop = _db.LaptopModels.Find(id);
+
+                if (laptop == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(laptop);
             }
-            return View(laptop);
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+
+           
         }
         //POST: MasterData/Delete/5
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            LaptopModels laptop = _db.LaptopModels.Find(id);
-            _db.LaptopModels.Remove(laptop);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+
+            try
+            {
+                LaptopModels laptop = _db.LaptopModels.Find(id);
+                _db.LaptopModels.Remove(laptop);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+           
         }
 
         //GET: MasterData/Details/1
         public ActionResult Details(int? id)
         {
-            var laptopID = id;
-            if (id == null)
+
+
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            LaptopModels laptop = _db.LaptopModels.Find(id);
+                var laptopID = id;
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LaptopModels laptop = _db.LaptopModels.Find(id);
 
-            if (laptop == null)
+                if (laptop == null)
+                {
+                    return HttpNotFound();
+                }
+
+
+                var query = (from t in _db.TransferModels
+                             join s in _db.StoreModels on t.StoreID equals s.ID
+                             where t.LaptopID == laptopID
+                             select s.Name).SingleOrDefault();
+
+                ViewBag.storeName = query;
+
+                return View(laptop);
+            }
+            catch (Exception e)
             {
-                return HttpNotFound();
+                Console.WriteLine("{0} Exception caught.", e);
             }
 
-
-            var query = (from t in _db.TransferModels
-                         join s in _db.StoreModels on t.StoreID equals s.ID
-                         where t.LaptopID==laptopID
-                         select s.Name).SingleOrDefault();
-
-            ViewBag.storeName = query;
-
-            return View(laptop);
+            return View();
+            
         }
 
         public ActionResult Result()
         {
-            
-
-            var laptop = (from k in _db.LaptopModels select k).ToList();
-
-            var result = (from k in _db.LaptopModels select k.Price*k.Quantity).ToList();
 
 
-            foreach(var lap in laptop)
+            try
             {
-               
-                foreach(var res in result)
+                var laptop = (from k in _db.LaptopModels select k).ToList();
+
+                var result = (from k in _db.LaptopModels select k.Price * k.Quantity).ToList();
+
+
+                foreach (var lap in laptop)
                 {
-                    
-                    lap.FullPrice = Convert.ToDecimal(res);
-                 
-                    _db.SaveChanges();
+
+                    foreach (var res in result)
+                    {
+
+                        lap.FullPrice = Convert.ToDecimal(res);
+
+                        _db.SaveChanges();
+
+                    }
 
                 }
 
+
+                ViewBag.selectResult = "abcd";
+
+
+
+                return View(result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
             }
 
-          
-            ViewBag.selectResult = "abcd";
+            return View();
 
-
-
-            return View(result);
+            
         }
 
 
         //GET: MasterData/Send
         public ActionResult Send()
         {
-            List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
-            var newList = ListLaptop.Where(i => i.Quantity != 0).ToList();
-            return View(newList);
+
+            try
+            {
+
+                List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
+                var newList = ListLaptop.Where(i => i.Quantity != 0).ToList();
+                return View(newList);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
 
         }
 
         //GET: MasterData/Send
         public ActionResult SendArticle(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            LaptopModels laptop = _db.LaptopModels.Find(id);
 
-            if (laptop == null)
+            try
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                LaptopModels laptop = _db.LaptopModels.Find(id);
+
+                if (laptop == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(laptop);
             }
-            return View(laptop);
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+
+            
         }
 
         //GET:MasterData/Check
         public ActionResult Check(int? id, string name, int quantity)
         {
-            ViewBag.id = id;
-            ViewBag.name = name;
-            ViewBag.number = quantity;
-
-            TempData["id"] = id;
-            TempData["name"] = name;
-            TempData["number"] = quantity;
 
 
-            ViewData["ddlList"] = _db.StoreModels.ToList().Select(u => new SelectListItem
+            try
             {
-                Text = u.Name,
-                Value = u.ID.ToString()
-            }).ToList();
+                ViewBag.id = id;
+                ViewBag.name = name;
+                ViewBag.number = quantity;
 
-           // ViewBag.poste_id = new SelectList(_db.StoreModels, "Name", "Name");
+                TempData["id"] = id;
+                TempData["name"] = name;
+                TempData["number"] = quantity;
+
+
+                ViewData["ddlList"] = _db.StoreModels.ToList().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.ID.ToString()
+                }).ToList();
+
+                // ViewBag.poste_id = new SelectList(_db.StoreModels, "Name", "Name");
+
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
 
             return View();
-         
+
+
+
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Check(FormCollection form, TransferModels transfer)
         {
-            int id = Convert.ToInt32(TempData["id"]);
-            string name = TempData["name"].ToString();
-            int quantity = Convert.ToInt32(TempData["number"]);
-            int storeID= Convert.ToInt32(form["ddlList"].ToString());
 
-            transfer.LaptopID = id;
-            transfer.LaptopName = name;
-            transfer.LaptopQuantity = quantity;
-            transfer.StoreID = storeID;
-            transfer.Date = DateTime.Now;// add if any field you want insert
-            _db.TransferModels.Add(transfer);           // pass the table object 
-            var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
-            laptopFind.Quantity = 0;  //put quantity to 0
-            var storeFind = (from s in _db.StoreModels where s.ID == storeID select s).First(); //select store, change Qop
-            storeFind.QoP = storeFind.QoP - quantity; // reduce QoP for quantity number
-            _db.SaveChanges();
-            return RedirectToAction("Index","Transfer", new { });
+            try
+            {
+                int id = Convert.ToInt32(TempData["id"]);
+                string name = TempData["name"].ToString();
+                int quantity = Convert.ToInt32(TempData["number"]);
+                int storeID = Convert.ToInt32(form["ddlList"].ToString());
+
+                transfer.LaptopID = id;
+                transfer.LaptopName = name;
+                transfer.LaptopQuantity = quantity;
+                transfer.StoreID = storeID;
+                transfer.Date = DateTime.Now;// add if any field you want insert
+                _db.TransferModels.Add(transfer);           // pass the table object 
+                var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
+                laptopFind.Quantity = 0;  //put quantity to 0
+                var storeFind = (from s in _db.StoreModels where s.ID == storeID select s).First(); //select store, change Qop
+                storeFind.QoP = storeFind.QoP - quantity; // reduce QoP for quantity number
+                _db.SaveChanges();
+                return RedirectToAction("Index", "Transfer", new { });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+            
         }
 
         public ActionResult Company()
         {
-       
-            Company company = new Company
+
+            try
             {
-                
-                Name = "Abeceda d.o.o.",
-                Street = "Ruđera Boškovića 32",
-                Town = "Zagreb",
-                ZipCode = "10000",
-                Country = "Croatia",
-                OIB = "123123123"
+                Company company = new Company
+                {
+
+                    Name = "Abeceda d.o.o.",
+                    Street = "Ruđera Boškovića 32",
+                    Town = "Zagreb",
+                    ZipCode = "10000",
+                    Country = "Croatia",
+                    OIB = "123123123"
                 };
 
 
-            List<Company> companies = new List<Company>
+                List<Company> companies = new List<Company>
             {
                 company
             };
 
-            return View(companies);
+                return View(companies);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+
+            
         }
     }
 }

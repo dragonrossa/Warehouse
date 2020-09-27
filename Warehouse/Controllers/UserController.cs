@@ -16,23 +16,45 @@ namespace Warehouse.Controllers
         // GET: User
         public ActionResult Index()
         {
-            var user = User.Identity.GetUserName();
-            UserModels userModels = (from k in _db.UserModels where k.Mail==user select k).First();
-            ViewBag.user = user;
-            return View(userModels);
+
+            try
+            {
+                var user = User.Identity.GetUserName();
+                UserModels userModels = (from k in _db.UserModels where k.Mail == user select k).First();
+                ViewBag.user = user;
+                return View(userModels);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(UserModels userModels)
         {
-            if (ModelState.IsValid)
+
+            try
             {
-                _db.Entry(userModels).State = EntityState.Modified;
-                _db.SaveChanges();
-                return RedirectToAction("Index","Manage");
+                if (ModelState.IsValid)
+                {
+                    _db.Entry(userModels).State = EntityState.Modified;
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Manage");
+                }
+                return View(userModels);
             }
-            return View(userModels);
-            
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+
         }
     }
 }

@@ -15,24 +15,24 @@ namespace Warehouse.Models
         public string LastName { get; set; }
         [Display(Name = "Username")]
         public string UserName { get; set; }
-        [StringLength(80, ErrorMessage = "Address cant have more than 80 letters")]
+        [StringLength(80, ErrorMessage = "Address must be between 1 and 80 characters.",MinimumLength=1)]
 
         public string Address { get; set; }
-        [StringLength(60, ErrorMessage = "Hometown cant have more than 60 letters")]
+        [StringLength(60, ErrorMessage = "Hometown must be between 1 and 60 characters",MinimumLength=1)]
 
         public string Hometown { get; set; }
-        [RegularExpression(@"^\d{5}(?:[-\s]\d{4})?$)")] //check if zipcode is 5 or 4 letters
-        [StringLength(20, ErrorMessage = "Zipcode cant have more than 20 letters")]
+        //[RegularExpression(@"^\d{5}(?:[-\s]\d{4})?$)")] //check if zipcode is 5 or 4 letters
+        [StringLength(20, ErrorMessage = "Zipcode must be between 1 and 20 characters",MinimumLength=1)]
         [Display(Name = "Zip code")]
         public string ZipCode { get; set; }
-        [StringLength(30, ErrorMessage = "Country cant have more than 30 letters")]
+        [StringLength(30, ErrorMessage = "Country must be between 1 and 30 characters",MinimumLength =1)]
 
         public string Country { get; set; }
-        [StringLength(40, ErrorMessage = "Mail cant have more than 40 letters")]
+        [StringLength(40, ErrorMessage = "Mail must be between 1 and 40 characters",MinimumLength=1)]
 
         public string Mail { get; set; }
 
-        [StringLength(30, ErrorMessage = "Telephone cant have more than 30 letters")]
+        [StringLength(30, ErrorMessage = "Telephone must be between 1 and 30 characters",MinimumLength=1)]
 
         public string Telephone { get; set; }
         [Display(Name = "Date modified")]

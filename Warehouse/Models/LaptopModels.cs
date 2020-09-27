@@ -14,24 +14,24 @@ namespace Warehouse.Models
         public int ID { get; set; }
         //Name
         [Required]
-        [StringLength(100, ErrorMessage = "Name cant have more than 100 letters")]
+        [StringLength(100, ErrorMessage = "Name must be between 3 and 100 characters", MinimumLength = 3)]
         public string Name { get; set; }
         //Description
         [Required]
         [Column(TypeName = "text")]
-        [StringLength(100, ErrorMessage = "The Description must be max 100 characters long.", MinimumLength = 3)]
+        [StringLength(100, ErrorMessage = "The Description must be between 3 and 100 characters.", MinimumLength = 3)]
         public string Description { get; set; }
         //Quantity
         [Required]
         public int Quantity { get; set; }
         //Manufacturer
-        [StringLength(100, ErrorMessage = "Manufacturer cant have more than 100 letters")]
+        [StringLength(100, ErrorMessage = "Manufacturer must be between 3 and 100 characters", MinimumLength = 3)]
         public string Manufacturer { get; set; }
         //SN - Serial Number
-        [StringLength(50, ErrorMessage = "The SN must be max 50 characters long.", MinimumLength = 1)]
+        [StringLength(50, ErrorMessage = "The SN must be between 1 and 50 characters.", MinimumLength = 1)]
         public string SN { get; set; }
         //OS - Operating System
-        [StringLength(50, ErrorMessage = "OS cant have more than 50 letters")]
+        [StringLength(50, ErrorMessage = "OS must be between 5 and 50 characters", MinimumLength = 5)]
         public string OS { get; set; }
         //Price
         //[Range(1, 20000)]

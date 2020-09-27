@@ -1,0 +1,67 @@
+﻿
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
+<div class="container-fluid">
+    <h1>Details about user @ViewBag.user</h1>
+</div>
+
+@using (Html.BeginForm("ChangeRole", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        <table class="table">
+            <tr>
+                <th>
+                    Username:
+                </th>
+                <th>
+                    Curent role:
+                </th>
+                <th>
+                    Role:
+                </th>
+
+
+                <th></th>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @ViewBag.username
+                </td>
+                <td>
+                    @ViewBag.currentRole
+                </td>
+                <td>
+                    @Html.DropDownList("Roles")
+
+                </td>
+                <td>
+                    <input type="submit" value="Change" class="btn btn-primary">
+                </td>
+
+            </tr>
+
+
+        </table>
+
+
+    </div>
+}
+
+<div class="container-fluid">
+    @Html.ActionLink("Back", "Index","Admin")
+</div>

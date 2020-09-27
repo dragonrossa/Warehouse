@@ -15,14 +15,9 @@
                 <h4 class="text-white">@Html.ActionLink("Warehouse", "Company", "Laptop", new { area = "" }, new { @class = "navbar-brand" })</h4>
                 <span class="text-muted">
                     <ul class="nav navbar-nav">
-                        @* <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>*@
-                        <li>@Html.ActionLink("Laptop", "Index", "Laptop", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Store", "Index", "Store", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Send", "Send", "Laptop", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Transfer", "Index", "Transfer", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Logs", "Index", "Log", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Search", "Index", "Search", new { area = "" }, null)</li>
-                        <li> @Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, null)</li>
+         
+                        <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, null)</li>
+                       
                     </ul>
                 </span>
             </div>
@@ -32,7 +27,6 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             @Html.Partial("_LoginPartial")
-           
         </nav>
     </div>
 

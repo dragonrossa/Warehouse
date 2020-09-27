@@ -30,6 +30,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Result(FormCollection form)
         {
             SearchIndex search = new SearchIndex();
@@ -416,9 +417,6 @@ namespace Warehouse.Controllers
                 TempData["searchName"] = ViewBag.Name;
 
                 //check by storeName
-
-              //  ViewBag.quantity = (from k in _db.TransferModels where k.LaptopName == search.Name select (int?)k.LaptopQuantity).Sum();
-
 
 
                 //First find storeID

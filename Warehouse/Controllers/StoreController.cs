@@ -15,159 +15,274 @@ namespace Warehouse.Controllers
         // GET: MasterData
         public ActionResult Index()
         {
-            List<StoreModels> storeModels = (from k in _db.StoreModels select k)
+            try
+            {
+                List<StoreModels> storeModels = (from k in _db.StoreModels select k)
                 .OrderBy(x => x.QoP)
                 .ToList();
 
-            var lastInput = (from k in _db.StoreModels
-                             select k)
-                       .OrderByDescending(k => k.ID)
-                       .First();
+                var lastInput = (from k in _db.StoreModels
+                                 select k)
+                           .OrderByDescending(k => k.ID)
+                           .First();
 
-            ViewBag.store = lastInput.Name;
-            ViewBag.date = lastInput.Date;
-            ViewBag.location = lastInput.Location;
+                ViewBag.store = lastInput.Name;
+                ViewBag.date = lastInput.Date;
+                ViewBag.location = lastInput.Location;
 
-            return View(storeModels);
+                return View(storeModels);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+
+            
         }
 
         //GET: MasterData/Create
         public ActionResult Create()
         {
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
 
             return View();
         }
 
         //POST: MasterData/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(StoreModels store)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _db.StoreModels.Add(store);
-                _db.SaveChanges();
-
-                var result = (from k in _db.StoreModels
-                                              select k)
-                          .OrderByDescending(k => k.ID)
-                          .First();
-                result.Date = DateTime.Now;
-                _db.SaveChanges();
-
-                //Create new log
-                LogModels log = new LogModels
+                if (ModelState.IsValid)
                 {
-                    Type = "1",
-                    Description = "New store was inserted with name " + result.Name + " on date " + result.Date + " with location on " + result.Location + ".",
-                    Date = result.Date
-                };
+                    _db.StoreModels.Add(store);
+                    _db.SaveChanges();
 
-                _db.LogModels.Add(log);
-                _db.SaveChanges();
+                    var result = (from k in _db.StoreModels
+                                  select k)
+                              .OrderByDescending(k => k.ID)
+                              .First();
+                    result.Date = DateTime.Now;
+                    _db.SaveChanges();
 
-                return RedirectToAction("Index");
+                    //Create new log
+                    LogModels log = new LogModels
+                    {
+                        Type = "1",
+                        Description = "New store was inserted with name " + result.Name + " on date " + result.Date + " with location on " + result.Location + ".",
+                        Date = result.Date
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+
+
+
+                return View(store);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
             }
 
+            return View();
 
-
-            return View(store);
+            
         }
 
         //GET: MasterData/List
         public ActionResult List()
         {
-            List<StoreModels> storeModels = (from k in _db.StoreModels select k).ToList();
-            return View(storeModels);
+            try
+            {
+                List<StoreModels> storeModels = (from k in _db.StoreModels select k).ToList();
+                return View(storeModels);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+            
         }
 
         //GET: MasterData/EditList
         public ActionResult EditList()
         {
-            List<StoreModels> storeModels = (from k in _db.StoreModels select k).ToList();
-            return View(storeModels);
+            try
+            {
+                List<StoreModels> storeModels = (from k in _db.StoreModels select k).ToList();
+                return View(storeModels);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+            
         }
 
         ////GET: MasterData/DeleteList
         public ActionResult DeleteList()
         {
-            List<StoreModels> storeModels = (from k in _db.StoreModels select k).ToList();
-            return View(storeModels);
+            try
+            {
+                List<StoreModels> storeModels = (from k in _db.StoreModels select k).ToList();
+                return View(storeModels);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
         }
 
         //GET: MasterData/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            StoreModels store = _db.StoreModels.Find(id);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                StoreModels store = _db.StoreModels.Find(id);
 
-            if (store == null)
+                if (store == null)
+                {
+                    return HttpNotFound();
+                }
+
+
+                return View(store);
+            }
+            catch (Exception e)
             {
-                return HttpNotFound();
+                Console.WriteLine("{0} Exception caught.", e);
             }
 
-
-            return View(store);
+            return View();
+            
         }
 
         //POST: MasterData/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(StoreModels store)
         {
-            if (ModelState.IsValid)
+
+            try
             {
-                _db.Entry(store).State = EntityState.Modified;
-                _db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    _db.Entry(store).State = EntityState.Modified;
+                    _db.SaveChanges();
 
-              
 
-                return RedirectToAction("Index");
+
+                    return RedirectToAction("Index");
+                }
+                return View(store);
             }
-            return View(store);
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+            
         }
 
         //GET: MasterData/Delete/5
 
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            StoreModels store = _db.StoreModels.Find(id);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                StoreModels store = _db.StoreModels.Find(id);
 
-            if (store == null)
-            {
-                return HttpNotFound();
+                if (store == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(store);
             }
-            return View(store);
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
         }
         //POST: MasterData/Delete/5
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            StoreModels store = _db.StoreModels.Find(id);
-            _db.StoreModels.Remove(store);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+
+            try
+            {
+                StoreModels store = _db.StoreModels.Find(id);
+                _db.StoreModels.Remove(store);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
+
+            
         }
 
         //GET: MasterData/Details/1
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            StoreModels store = _db.StoreModels.Find(id);
 
-            if (store == null)
+            try
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                StoreModels store = _db.StoreModels.Find(id);
+
+                if (store == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(store);
             }
-            return View(store);
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+            }
+
+            return View();
         }
 
        

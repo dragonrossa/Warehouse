@@ -15,7 +15,7 @@ namespace Warehouse.Models
         public int ID { get; set; }
         //Name - required
         [Required]
-        [StringLength(50, ErrorMessage = "Name cant have more than 50 letters")]
+        [StringLength(50, ErrorMessage = "Name must be between 1 and 50 letters", MinimumLength =1)]
         public string Name { get; set; }
         //Location - not required
         public string Location { get; set; }
