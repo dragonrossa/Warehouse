@@ -67,4 +67,6 @@ Calculate Full price after adding Price and Quantity
 
 23.09. Server validation for various models, Search - Transfer Controller, Search - Store Controller
 
+27.09. Admin console for user roles
+
 Rosana
