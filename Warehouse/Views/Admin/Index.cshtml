@@ -43,20 +43,26 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.ActionLink("Change role", "ChangeRole", new { id = item.ID })
-                </td>
-            </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.ActionLink("Change role", "ChangeRole", new { id = item.ID })
+        </td>
+        <td>
+            @Html.ActionLink("Change details", "ChangeDetails", new { id = item.ID })
+        </td>
+        <td>
+            @Html.ActionLink("Access", "Access", new { id = item.ID })
+        </td>
+    </tr>
         }
 
     </table>

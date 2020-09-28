@@ -1,0 +1,46 @@
+﻿@model Warehouse.Models.AdminModels
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+}
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<head>
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<div class="container-fluid">
+
+    @using (Html.BeginForm("Access","Admin", new { Id = Model.ID }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <h4>Access granted</h4>
+
+
+        <div class="container-fluid">
+
+            @Html.Label("Access granted")
+
+
+            @Html.CheckBoxFor(x => x.Access, new { id = "access" })
+
+
+
+        </div>
+
+        <div class="container-fluid">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+       
+    }
+
+</div>
+
+

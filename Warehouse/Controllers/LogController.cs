@@ -37,9 +37,13 @@ namespace Warehouse.Controllers
             List<LogModels> log5 = (from k in _db.LogModels where k.Type == "5" select k)
                                       .OrderBy(x => x.ID)
                                       .ToList();
-            //return View(log);
 
-            return View(new LogModels() { log = log, log1 = log1, log2 = log2, log3 = log3 , log4 = log4, log5=log5});
+            //Logs for Admin console
+            List<LogModels> log6 = (from k in _db.LogModels where k.Type == "6" select k)
+                                      .OrderBy(x => x.ID)
+                                      .ToList();
+
+            return View(new LogModels() { log = log, log1 = log1, log2 = log2, log3 = log3 , log4 = log4, log5=log5, log6 = log6});
         }
 
     }

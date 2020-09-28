@@ -28,5 +28,6 @@ namespace Warehouse.Models
         public List<LogModels> log3 { get; set; }
         public List<LogModels> log4 { get; set; }
         public List<LogModels> log5 { get; set; }
+        public List<LogModels> log6 { get; set; }
     }
 }

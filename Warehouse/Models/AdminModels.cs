@@ -15,5 +15,7 @@ namespace Warehouse.Models
 
         public string Username { get; set; }
 
+        public bool Access { get; set; }
+
     }
 }

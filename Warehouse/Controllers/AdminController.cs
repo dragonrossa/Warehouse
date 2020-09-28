@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Security.Cryptography;
@@ -53,6 +54,8 @@ namespace Warehouse.Controllers
                                    where a.Username == user.UserName
                                    select r.Role).SingleOrDefault();
 
+            TempData["currentRole"] = ViewBag.currentRole;
+
             TempData["username"] = ViewBag.username;
 
             ViewData["Roles"] = _db.RolesModels.ToList().Select(u => new SelectListItem
@@ -65,7 +68,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
-       // [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult ChangeRole(FormCollection form)
         {
           
@@ -85,19 +88,128 @@ namespace Warehouse.Controllers
 
                 if (admin.Username == username)
                 {
-                   // admin.RoleID = Convert.ToInt32(roleID);
+                  
                     user.RoleID = Convert.ToInt32(roleID);
+                    _db.SaveChanges();
+
+                   //Create new log
+
+                LogModels log = new LogModels
+                {
+                    Type = "6",
+                    Description = "New change was made for user " + user.Username + " on date " + DateTime.Now + " for role " + TempData["currentRole"] + ".",
+                    Date = DateTime.Now
+                };
+
+                    _db.LogModels.Add(log);
                     _db.SaveChanges();
                 }
                 else
                 { 
                     _db.AdminModels.Add(admin);
                     _db.SaveChanges();
+
+                    
+                    LogModels log = new LogModels
+                    {
+                        Type = "6",
+                        Description = "Change was made for user " + user.Username + " on date " + DateTime.Now + " for role " + admin.RoleID + ".",
+                        Date = DateTime.Now
+                    };
+
+                    _db.LogModels.Add(log);
+                    _db.SaveChanges();
                     return RedirectToAction("Index", "Admin", new { });
                 } }
 
             return RedirectToAction("Index", "Admin", new { });
 
+        }
+
+        public ActionResult ChangeDetails(int id)
+        {
+            
+            TempData["UserID"] = id;
+
+
+            if (ModelState.IsValid)
+            {
+
+                UserModels user = _db.UserModels.Find(id);
+
+                return View(user);
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeDetails(UserModels user)
+        {
+            if (ModelState.IsValid)
+            {
+
+                _db.Entry(user).State = EntityState.Modified;
+                _db.SaveChanges();
+                return RedirectToAction("Index", "Admin", user);
+
+            }
+            return View();
+        }
+
+        public ActionResult Access(int id)
+        {
+            TempData["UserID"] = id;
+
+
+            var user = (from u in _db.UserModels where u.ID==id select u).FirstOrDefault();
+
+
+            if (ModelState.IsValid)
+            {
+
+                AdminModels admin = (from a in _db.AdminModels where a.Username == user.UserName select a).FirstOrDefault();
+                TempData["AdminID"] = admin.ID;
+
+                return View(admin);
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Access(AdminModels admin, FormCollection form, int id)
+        {
+            string access = form["access"];
+
+            int adminID = id;
+
+            var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+
+                if (access == "true,false")
+                {
+
+                    access = "true";
+                    adminUser.Access = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+                }
+                else
+                {
+                    access = "false";
+                    adminUser.Access = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+
+                }
+  
+            }
+            return View();
         }
     }
 }

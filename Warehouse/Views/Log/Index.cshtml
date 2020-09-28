@@ -31,6 +31,9 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="false" onclick="hideAllInfo()">User</a>
         </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false" onclick="hideAllInfo()">Admin console</a>
+        </li>
     </ul>
     <div class="container-fluid" id="hide" name="hide">
         <p>Here are logs for all crucial parts in this applications:</p>
@@ -243,6 +246,42 @@
                 </tr>
 
                 @foreach (var item in Model.log5)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
+        <div class="container-fluid">
+            <h1>Logs for warehouse - Admin console</h1>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.log6)
                 {
                     <tr>
                         <td>
