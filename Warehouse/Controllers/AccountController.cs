@@ -98,7 +98,7 @@ namespace Warehouse.Controllers
             if (access == fal)
             {
                 ModelState.AddModelError("", "Invalid login attempt.");
-                return View("Error");
+                return RedirectToAction("Error");
             }
             else
             {
@@ -119,6 +119,11 @@ namespace Warehouse.Controllers
             }
 
 
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
 
         //

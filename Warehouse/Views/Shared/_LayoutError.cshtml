@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Warehouse</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="pos-f-t">
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="bg-dark p-4">
+               @* <h4 class="text-white">@Html.ActionLink("Warehouse", "Company", "Laptop", new { area = "" }, new { @class = "navbar-brand" })</h4>*@
+                <span class="text-muted">
+                    <ul class="nav navbar-nav">
+         
+                       @* <li>@Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, null)</li>*@
+                       
+                    </ul>
+                </span>
+            </div>
+        </div>
+        <nav class="navbar navbar-dark bg-dark fixed-top">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            @*@Html.Partial("_LoginPartial")*@
+        </nav>
+    </div>
+
+    <div class="container body-content" style="padding-top:20px">
+        @RenderBody()
+        @RenderSection("SPAViews", required: false)
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Warehouse</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
