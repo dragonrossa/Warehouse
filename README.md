@@ -71,4 +71,6 @@ Calculate Full price after adding Price and Quantity
 
 28.09. Admin console - change details for user, change access for users
 
+28.09 User locked - cant login if he has no access
+
 Rosana
