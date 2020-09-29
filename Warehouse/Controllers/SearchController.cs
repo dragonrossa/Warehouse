@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -24,9 +25,23 @@ namespace Warehouse.Controllers
         //Example 3. search for Notebook HP 250-G7 in Transfers
         public ActionResult Index()
         {
-           
+            var user = User.Identity.GetUserName();
 
-            return View();
+            bool access = (from a in _db.AdminModels where a.Username == user select a.SearchAccess).FirstOrDefault();
+
+            bool fal = false;
+
+            if (access == fal)
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return RedirectToAction("Index", "Laptop");
+            }
+            else
+            {
+
+
+                return View();
+            }
         }
 
         [HttpPost]

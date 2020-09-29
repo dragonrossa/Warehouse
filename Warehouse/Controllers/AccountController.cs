@@ -91,18 +91,6 @@ namespace Warehouse.Controllers
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
 
-            bool access = (from a in _db.AdminModels where a.Username == model.Email select a.Access).FirstOrDefault();
-
-            bool fal = false;
-
-            if (access == fal)
-            {
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return RedirectToAction("Error");
-            }
-            else
-            {
-
                 switch (result)
                 {
                     case SignInStatus.Success:
@@ -116,7 +104,7 @@ namespace Warehouse.Controllers
                         ModelState.AddModelError("", "Invalid login attempt.");
                         return View(model);
                 }
-            }
+           
 
 
         }

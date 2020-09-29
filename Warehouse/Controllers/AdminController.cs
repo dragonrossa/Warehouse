@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,21 +18,39 @@ namespace Warehouse.Controllers
         // GET: Admin
 
         //list of users + list of roles + check button for roles
+
+
         public ActionResult Index()
         {
-            try
+
+            var user = User.Identity.GetUserName();
+
+            bool access = (from a in _db.AdminModels where a.Username == user select a.Access).FirstOrDefault();
+
+            bool fal = false;
+
+            if (access == fal)
             {
-                List<UserModels> users = (from u in _db.UserModels
-                                          select u).ToList();
-                return View(users);
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return RedirectToAction("Index","Laptop");
             }
-            catch(Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
-            finally
+            else
             {
 
+                try
+                {
+                    List<UserModels> users = (from u in _db.UserModels
+                                              select u).ToList();
+                    return View(users);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("{0} Exception caught.", e);
+                }
+                finally
+                {
+
+                }
             }
             return View();
         }
@@ -211,5 +230,182 @@ namespace Warehouse.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LaptopAccess(AdminModels admin, FormCollection form, int id)
+        {
+            string access = form["laptopAccess"];
+
+            int adminID = id;
+
+            var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+
+                if (access == "true,false")
+                {
+
+                    access = "true";
+                    adminUser.LaptopAccess = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+                }
+                else
+                {
+                    access = "false";
+                    adminUser.LaptopAccess = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+
+                }
+
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogAccess(AdminModels admin, FormCollection form, int id)
+        {
+            string access = form["logAccess"];
+
+            int adminID = id;
+
+            var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+
+                if (access == "true,false")
+                {
+
+                    access = "true";
+                    adminUser.LogAccess = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+                }
+                else
+                {
+                    access = "false";
+                    adminUser.LogAccess = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+
+                }
+
+            }
+            return View();
+        }
+
+     
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SearchAccess(AdminModels admin, FormCollection form, int id)
+        {
+            string access = form["searchAccess"];
+
+            int adminID = id;
+
+            var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+
+                if (access == "true,false")
+                {
+
+                    access = "true";
+                    adminUser.SearchAccess = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+                }
+                else
+                {
+                    access = "false";
+                    adminUser.SearchAccess = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+
+                }
+
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StoreAccess(AdminModels admin, FormCollection form, int id)
+        {
+            string access = form["storeAccess"];
+
+            int adminID = id;
+
+            var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+
+                if (access == "true,false")
+                {
+
+                    access = "true";
+                    adminUser.StoreAccess = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+                }
+                else
+                {
+                    access = "false";
+                    adminUser.StoreAccess = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+
+                }
+
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TransferAccess(AdminModels admin, FormCollection form, int id)
+        {
+            string access = form["transferAccess"];
+
+            int adminID = id;
+
+            var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+
+                if (access == "true,false")
+                {
+
+                    access = "true";
+                    adminUser.TransferAccess = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+                }
+                else
+                {
+                    access = "false";
+                    adminUser.TransferAccess = Convert.ToBoolean(access);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index", "Admin", admin);
+
+                }
+
+            }
+            return View();
+        }
+
+
+
     }
+
+
 }

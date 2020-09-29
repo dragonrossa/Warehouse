@@ -16,16 +16,16 @@
 
 <div class="container-fluid">
 
-    @using (Html.BeginForm("Access","Admin", new { Id = Model.ID }, FormMethod.Post))
+    @using (Html.BeginForm("Access", "Admin", new { Id = Model.ID }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
-        <h4>Access granted</h4>
+        <h4>Access for Warehouse</h4>
 
 
         <div class="container-fluid">
 
-            @Html.Label("Access granted")
+            @Html.Label("Admin access")
 
 
             @Html.CheckBoxFor(x => x.Access, new { id = "access" })
@@ -38,9 +38,150 @@
             <input type="submit" value="Save" class="btn btn-primary" />
         </div>
 
-       
+
+    }
+
+  
+
+
+</div>
+
+<div class="container-fluid">
+
+
+    @using (Html.BeginForm("LaptopAccess", "Admin", new { Id = Model.ID }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="container-fluid">
+
+            @Html.Label("Laptop access")
+
+
+            @Html.CheckBoxFor(x => x.LaptopAccess, new { id = "laptopAccess" })
+
+
+
+        </div>
+
+        <div class="container-fluid">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+
     }
 
 </div>
 
+
+<div class="container-fluid">
+
+    @using (Html.BeginForm("LogAccess", "Admin", new { Id = Model.ID }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="container-fluid">
+
+            @Html.Label("Log access")
+
+
+            @Html.CheckBoxFor(x => x.LogAccess, new { id = "logAccess" })
+
+
+
+        </div>
+
+        <div class="container-fluid">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+
+    }
+
+
+
+</div>
+
+
+<div class="container-fluid">
+
+
+    @using (Html.BeginForm("SearchAccess", "Admin", new { Id = Model.ID }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="container-fluid">
+
+            @Html.Label("Search access")
+
+
+            @Html.CheckBoxFor(x => x.SearchAccess, new { id = "searchAccess" })
+
+
+
+        </div>
+
+        <div class="container-fluid">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+
+    }
+
+</div>
+
+
+
+<div class="container-fluid">
+    @using (Html.BeginForm("StoreAccess", "Admin", new { Id = Model.ID }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="container-fluid">
+
+            @Html.Label("Store access")
+
+
+            @Html.CheckBoxFor(x => x.StoreAccess, new { id = "storeAccess" })
+
+
+
+        </div>
+
+        <div class="container-fluid">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+
+    }
+</div>
+
+<div class="container-fluid">
+    @using (Html.BeginForm("TransferAccess", "Admin", new { Id = Model.ID }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="container-fluid">
+
+            @Html.Label("Transfer access")
+
+
+            @Html.CheckBoxFor(x => x.TransferAccess, new { id = "transferAccess" })
+
+
+
+        </div>
+
+        <div class="container-fluid">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+
+    }
+</div>
 

@@ -11,6 +11,7 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using Warehouse.Models;
 using Warehouse.Helpers;
+using Microsoft.AspNet.Identity;
 
 namespace Warehouse.Controllers
 {
@@ -20,38 +21,52 @@ namespace Warehouse.Controllers
         // GET: MasterData
         public ActionResult Index()
         {
-            try
+            var user = User.Identity.GetUserName();
+
+            bool access = (from a in _db.AdminModels where a.Username == user select a.LaptopAccess).FirstOrDefault();
+
+            bool fal = false;
+
+            if (access == fal)
             {
-                List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k)
-                                              .OrderBy(x => x.Quantity)
-                                              .ToList();
-
-                var lastInput = (from k in _db.LaptopModels
-                                 select k)
-                                .OrderByDescending(k => k.ID)
-                                .First();
-
-                ViewBag.laptop = lastInput.Name;
-                ViewBag.date = lastInput.Date;
-                ViewBag.quantity = lastInput.Quantity;
-
-                var maxNumber = ListLaptop.Max(d => d.ID);
-
-                var sumQuantity = ListLaptop.Sum(d => d.Quantity);
-
-                var sumFullPrice = ListLaptop.Sum(d => d.FullPrice);
-
-                ViewBag.maxNumber = maxNumber;
-                ViewBag.sumQuantity = sumQuantity;
-                ViewBag.sumFullPrice = sumFullPrice;
-                return View(ListLaptop);
-                
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return RedirectToAction("Index", "Admin");
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
+                try
+                {
+                    List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k)
+                                                  .OrderBy(x => x.Quantity)
+                                                  .ToList();
 
+                    var lastInput = (from k in _db.LaptopModels
+                                     select k)
+                                    .OrderByDescending(k => k.ID)
+                                    .First();
+
+                    ViewBag.laptop = lastInput.Name;
+                    ViewBag.date = lastInput.Date;
+                    ViewBag.quantity = lastInput.Quantity;
+
+                    var maxNumber = ListLaptop.Max(d => d.ID);
+
+                    var sumQuantity = ListLaptop.Sum(d => d.Quantity);
+
+                    var sumFullPrice = ListLaptop.Sum(d => d.FullPrice);
+
+                    ViewBag.maxNumber = maxNumber;
+                    ViewBag.sumQuantity = sumQuantity;
+                    ViewBag.sumFullPrice = sumFullPrice;
+                    return View(ListLaptop);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("{0} Exception caught.", e);
+                }
+
+            }
             return View();
            
         }

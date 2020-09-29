@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,47 +17,61 @@ namespace Warehouse.Controllers
         // GET: Index
         public ActionResult Index()
         {
+            var user = User.Identity.GetUserName();
 
-            try
+            bool access = (from a in _db.AdminModels where a.Username == user select a.TransferAccess).FirstOrDefault();
+
+            bool fal = false;
+
+            if (access == fal)
             {
-                List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return RedirectToAction("Index", "Laptop");
+            }
+            else
+            {
 
-
-                var results = (from t in _db.TransferModels
-                               join s in _db.StoreModels on t.StoreID equals s.ID
-                               select new { s.Name, t.LaptopName, t.LaptopQuantity }).ToList();
-
-                TransferIndex result = new TransferIndex();
-                List<TransferIndex> index = new List<TransferIndex>();
-
-                foreach (var res in results)
+                try
                 {
-                    var LaptopName = res.LaptopName;
-                    var LaptopQuantity = res.LaptopQuantity;
-                    var StoreName = res.Name;
+                    List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
 
-                    index.Add(new TransferIndex() { LaptopName = LaptopName, LaptopQuantity = LaptopQuantity, StoreName = StoreName });
+
+                    var results = (from t in _db.TransferModels
+                                   join s in _db.StoreModels on t.StoreID equals s.ID
+                                   select new { s.Name, t.LaptopName, t.LaptopQuantity }).ToList();
+
+                    TransferIndex result = new TransferIndex();
+                    List<TransferIndex> index = new List<TransferIndex>();
+
+                    foreach (var res in results)
+                    {
+                        var LaptopName = res.LaptopName;
+                        var LaptopQuantity = res.LaptopQuantity;
+                        var StoreName = res.Name;
+
+                        index.Add(new TransferIndex() { LaptopName = LaptopName, LaptopQuantity = LaptopQuantity, StoreName = StoreName });
+                    }
+
+
+                    var lastInput = (from k in _db.TransferModels
+                                     select k)
+                               .OrderByDescending(k => k.ID)
+                               .First();
+
+                    ViewBag.laptop = lastInput.LaptopName;
+                    ViewBag.date = lastInput.Date;
+                    ViewBag.quantity = lastInput.LaptopQuantity;
+
+
+                    return View(index);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("{0} Exception caught.", e);
                 }
 
-
-                var lastInput = (from k in _db.TransferModels
-                                 select k)
-                           .OrderByDescending(k => k.ID)
-                           .First();
-
-                ViewBag.laptop = lastInput.LaptopName;
-                ViewBag.date = lastInput.Date;
-                ViewBag.quantity = lastInput.LaptopQuantity;
-
-
-                return View(index);
+                return View();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
-
-            return View();
         }
 
         public ActionResult Create()

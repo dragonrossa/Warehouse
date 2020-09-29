@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -15,31 +16,44 @@ namespace Warehouse.Controllers
         // GET: MasterData
         public ActionResult Index()
         {
-            try
+            var user = User.Identity.GetUserName();
+
+            bool access = (from a in _db.AdminModels where a.Username == user select a.StoreAccess).FirstOrDefault();
+
+            bool fal = false;
+
+            if (access == fal)
             {
-                List<StoreModels> storeModels = (from k in _db.StoreModels select k)
-                .OrderBy(x => x.QoP)
-                .ToList();
-
-                var lastInput = (from k in _db.StoreModels
-                                 select k)
-                           .OrderByDescending(k => k.ID)
-                           .First();
-
-                ViewBag.store = lastInput.Name;
-                ViewBag.date = lastInput.Date;
-                ViewBag.location = lastInput.Location;
-
-                return View(storeModels);
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return RedirectToAction("Index", "Laptop");
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine("{0} Exception caught.", e);
+                try
+                {
+                    List<StoreModels> storeModels = (from k in _db.StoreModels select k)
+                    .OrderBy(x => x.QoP)
+                    .ToList();
+
+                    var lastInput = (from k in _db.StoreModels
+                                     select k)
+                               .OrderByDescending(k => k.ID)
+                               .First();
+
+                    ViewBag.store = lastInput.Name;
+                    ViewBag.date = lastInput.Date;
+                    ViewBag.location = lastInput.Location;
+
+                    return View(storeModels);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("{0} Exception caught.", e);
+                }
+
+                return View();
+
             }
-
-            return View();
-
-            
         }
 
         //GET: MasterData/Create
