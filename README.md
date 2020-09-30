@@ -75,4 +75,6 @@ Calculate Full price after adding Price and Quantity
 
 29.09. Access to parts of application for various users - Admin, Laptop, Log, Search, Store, Transfer
 
+30.09. Task list, logs, My task list
+
 Rosana
