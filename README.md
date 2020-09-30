@@ -73,4 +73,6 @@ Calculate Full price after adding Price and Quantity
 
 28.09 User locked - cant login if he has no access
 
+29.09. Access to parts of application for various users - Admin, Laptop, Log, Search, Store, Transfer
+
 Rosana
