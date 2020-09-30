@@ -77,4 +77,6 @@ Calculate Full price after adding Price and Quantity
 
 30.09. Task list, logs, My task list
 
+30.09. TaskList changes, list of all tasks
+
 Rosana
