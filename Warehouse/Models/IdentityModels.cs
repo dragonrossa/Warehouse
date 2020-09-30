@@ -39,8 +39,8 @@ namespace Warehouse.Models
         public virtual DbSet<TransferModels> TransferModels { get; set; }
         public virtual DbSet<LogModels> LogModels { get; set; }
         public virtual DbSet<UserModels> UserModels { get; set; }
-
         public virtual DbSet<AdminModels> AdminModels { get; set; }
         public virtual DbSet<RolesModels> RolesModels { get; set; }
+        public virtual DbSet<TaskListModels> TaskListModels { get; set; }
     }
 }

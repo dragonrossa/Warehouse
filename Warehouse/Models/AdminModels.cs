@@ -24,6 +24,8 @@ namespace Warehouse.Models
         public bool SearchAccess { get; set; }
         public bool StoreAccess { get; set; }
         public bool TransferAccess { get; set; }
+
+        public bool TaskAccess { get; set; }
  
     }
 }

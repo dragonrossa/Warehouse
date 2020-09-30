@@ -185,3 +185,28 @@
     }
 </div>
 
+<div class="container-fluid">
+    @using (Html.BeginForm("TaskAccess", "Admin", new { Id = Model.ID }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="container-fluid">
+
+            @Html.Label("Task access")
+
+
+            @Html.CheckBoxFor(x => x.TaskAccess, new { id = "taskAccess" })
+
+
+
+        </div>
+
+        <div class="container-fluid">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+
+    }
+</div>
+

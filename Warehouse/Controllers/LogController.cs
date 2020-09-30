@@ -60,7 +60,12 @@ namespace Warehouse.Controllers
                                           .OrderBy(x => x.ID)
                                           .ToList();
 
-                return View(new LogModels() { log = log, log1 = log1, log2 = log2, log3 = log3, log4 = log4, log5 = log5, log6 = log6 });
+                //Logs for Access console
+                List<LogModels> log7 = (from k in _db.LogModels where k.Type == "7" select k)
+                                          .OrderBy(x => x.ID)
+                                          .ToList();
+
+                return View(new LogModels() { log = log, log1 = log1, log2 = log2, log3 = log3, log4 = log4, log5 = log5, log6=log6, log7 = log7 });
 
             }
 

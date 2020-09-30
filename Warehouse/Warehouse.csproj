@@ -226,9 +226,11 @@
     <Compile Include="Controllers\MeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="Controllers\TaskListController.cs" />
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\RolesModels.cs" />
+    <Compile Include="Models\TaskListModels.cs" />
     <Compile Include="Web API\LogAPIController.cs" />
     <Compile Include="Web API\TransferAPIController .cs" />
     <Compile Include="Web API\StoreAPIController.cs" />
@@ -486,6 +488,9 @@
     <Content Include="Views\Account\Error.cshtml" />
     <Content Include="Views\Shared\_LayoutError.cshtml" />
     <Content Include="Views\NoAccess\Error.cshtml" />
+    <Content Include="Views\TaskList\Index.cshtml" />
+    <Content Include="Views\TaskList\Create.cshtml" />
+    <Content Include="Views\TaskList\MyList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

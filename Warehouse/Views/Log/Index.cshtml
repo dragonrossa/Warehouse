@@ -34,10 +34,13 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false" onclick="hideAllInfo()">Admin console</a>
         </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="access-tab" data-toggle="tab" href="#access" role="tab" aria-controls="access" aria-selected="false" onclick="hideAllInfo()">Access</a>
+        </li>
     </ul>
     <div class="container-fluid" id="hide" name="hide">
         <p>Here are logs for all crucial parts in this applications:</p>
-        <p>Check Laptop, Store, Transfer, Search, Not Found, New user Logs.</p>
+        <p>Check Laptop, Store, Transfer, Search, Not Found, New user, Admin, Access Logs.</p>
         <p>More logs coming soon.</p>
     </div>
 </div>
@@ -282,6 +285,42 @@
                 </tr>
 
                 @foreach (var item in Model.log6)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="access" role="tabpanel" aria-labelledby="access-tab">
+        <div class="container-fluid">
+            <h1>Logs for warehouse - Access logs</h1>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.log7)
                 {
                     <tr>
                         <td>
