@@ -1,69 +1,76 @@
 ﻿@model IEnumerable<Warehouse.Models.TaskListModels>
 
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<head>
+
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+
 <div class="container-fluid">
     <h1>
         My task list
     </h1>
-</div>
+    <bt></bt>
+    <h4>List of tasks that needs to be done</h4>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Details)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th></th>
-    </tr>
+    @Html.ActionLink("All tasks", "List")
+
+
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Details)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.User)
-    </td>
-    @*<td>
-        @Html.DisplayFor(modelItem => item.Status)
-    </td>*@
-    <td>
-        @Html.CheckBoxFor(modelItem => item.Status, new { id = "taskAccess" })
-    </td>
-
-    
-
-</tr>
-    }
-
-    @*<div class="container-fluid">
-        @using (Html.BeginForm("TaskAccess", "Admin", new {  }, FormMethod.Post))
+        using (Html.BeginForm("MyList", "TaskList", new { id = item.ID }, FormMethod.Post))
         {
             @Html.AntiForgeryToken()
 
-
             <div class="container-fluid">
 
-                @Html.Label("Done")
+                <table class="table">
+                    @*<tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Details)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.User)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            <th>
+                                New status
+                            </th>
 
+                        </tr>*@
 
-                @Html.CheckBoxFor(x, new { id = "taskAccess" })
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Details)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User)
+                        </td>
+                        <td>
 
+                            @Html.CheckBoxFor(modelItem => item.Status, new { @class = "", Name = "status" })
 
+                        </td>
+                        <td>
+                            <input type="submit" value="Change" class="btn" style="color:darkred;font-weight:bold" />
+                        </td>
 
-            </div>
+                    </tr>
 
-            <div class="container-fluid">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                </table>
             </div>
 
 
         }
-    </div>*@
+    }
 
-</table>
+    <div class="container-fluid">
+        @Html.ActionLink("Back", "Index")
+    </div>
+</div>

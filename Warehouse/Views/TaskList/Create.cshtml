@@ -1,3 +1,21 @@
-﻿<div class="container-fluid">
-    Task created
+﻿
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<head>
+
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+<div class="container-fluid">
+    New task created...
+</div>
+
+<div class="container-fluid">
+    <h4>What do you want to do?</h4>
+    @Html.ActionLink("Go back","Index","TaskList")
+    or
+    @Html.ActionLink("Check tasks","MyList","TaskList")
 </div>

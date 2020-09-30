@@ -226,18 +226,7 @@ namespace Warehouse.Controllers
 
                     AdminModels admin = (from a in _db.AdminModels where a.Username == user.UserName select a).FirstOrDefault();
                     TempData["AdminID"] = admin.ID;
-
-                    //LogModels log = new LogModels
-                    //{
-                    //    Type = "7",
-                    //    Description = "New change was made for user " + user.Mail + " on date " + DateTime.Now + " for Admin access.",
-                    //    Date = DateTime.Now
-                    //};
-
-                    //_db.LogModels.Add(log);
-                    //_db.SaveChanges();
-
-                return View(admin);
+                    return View(admin);
                 }
             }
 

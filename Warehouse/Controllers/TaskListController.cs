@@ -36,7 +36,9 @@ namespace Warehouse.Controllers
             try
             {
                 var user = User.Identity.GetUserName();
-                var list = (from l in _db.TaskListModels where l.User==user select l).ToList();
+                bool status = false;
+                var list = (from l in _db.TaskListModels where l.Status==status select l).ToList();
+                
                 return View(list);
             }
             catch (Exception)
@@ -48,7 +50,40 @@ namespace Warehouse.Controllers
             {
 
             }
-            //return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MyList(FormCollection form, int id)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var task = (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
+                    string status = form["status"];
+                    task.Status = Convert.ToBoolean(form["status"]);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return View();
+          
+        }
+
+        public ActionResult List()
+        {
+            List<TaskListModels> taskListModels = new List<TaskListModels>();
+
+            taskListModels = (from t in _db.TaskListModels select t).ToList();
+
+            return View(taskListModels);
         }
     }
 }
