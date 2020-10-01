@@ -488,7 +488,6 @@ namespace Warehouse.Controllers
                 string name = TempData["name"].ToString();
                 int quantity = Convert.ToInt32(TempData["number"]);
                 int storeID = Convert.ToInt32(form["ddlList"].ToString());
-
                 transfer.LaptopID = id;
                 transfer.LaptopName = name;
                 transfer.LaptopQuantity = quantity;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -17,6 +18,16 @@ namespace Warehouse.Models
 
         public string User { get; set; }
         public bool Status { get; set; }
+
+        [DisplayName("Task Assistant")]
+
+        public string Assistant1 { get; set; }
+
+        [DisplayName("Task Assistant")]
+        public string Assistant2 { get; set; }
+
+        [DisplayName("Task Assistant")]
+        public string Assistant3 { get; set; }
 
 
 

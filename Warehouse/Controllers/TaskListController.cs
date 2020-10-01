@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(TaskListModels task, FormCollection form)
+        public ActionResult Create(TaskListModels task, System.Web.Mvc.FormCollection form)
         {
             task.Details = form["Details"];
             task.User = User.Identity.GetUserName();
@@ -54,7 +55,7 @@ namespace Warehouse.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MyList(FormCollection form, int id)
+        public ActionResult MyList(System.Web.Mvc.FormCollection form, int id)
         {
             try
             {
@@ -84,6 +85,87 @@ namespace Warehouse.Controllers
             taskListModels = (from t in _db.TaskListModels select t).ToList();
 
             return View(taskListModels);
+        }
+
+        public ActionResult Details(int id)
+        {
+            try
+            {
+                ViewData["assistant1"] = _db.UserModels.ToList().Select(u => new SelectListItem
+                {
+                    Text = u.UserName,
+                    Value = u.UserName
+                }).ToList();
+
+                ViewData["assistant2"] = _db.UserModels.ToList().Select(u => new SelectListItem
+                {
+                    Text = u.UserName,
+                    Value = u.UserName
+                }).ToList();
+
+                ViewData["assistant3"] = _db.UserModels.ToList().Select(u => new SelectListItem
+                {
+                    Text = u.UserName,
+                    Value = u.UserName
+                }).ToList();
+
+                TaskListModels task = new TaskListModels();
+
+                task = (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
+
+                return View(task);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult Details(System.Web.Mvc.FormCollection form)
+        {
+            string assistantID1 = form["assistant1"].ToString();
+            string assistantID2 = form["assistant2"].ToString();
+            string assistantID3 = form["assistant3"].ToString();
+            int id = Convert.ToInt32(form["ID"]);
+
+            var task = (from t in _db.TaskListModels where t.ID==id select t).FirstOrDefault();
+
+            if(assistantID1 != null)
+            {
+                task.Assistant1 = assistantID1;
+            }
+            else
+            {
+                return RedirectToAction("MyList");
+            }
+
+            if(assistantID2 != null)
+            {
+                task.Assistant2 = assistantID2;
+            }
+
+            else
+            {
+                return RedirectToAction("MyList");
+            }
+
+            if(assistantID3 != null)
+            {
+                task.Assistant3 = assistantID3;
+            }
+            else
+            {
+                return RedirectToAction("MyList");
+            }
+
+            _db.SaveChanges();
+
+            return RedirectToAction("MyList");
         }
     }
 }

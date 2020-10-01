@@ -1,0 +1,89 @@
+﻿@model Warehouse.Models.TaskListModels
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<head>
+
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+<div class="container-fluid">
+    <h1>Details about task</h1>
+
+    <div class="form-horizontal container-fluid">
+
+        @using (Html.BeginForm("Details", "TaskList", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+
+                @Html.HiddenFor(x => x.ID)
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(x => x.Details, new { style = "font-weight:bold;" }):
+                @Html.DisplayFor(x => x.Details)
+
+            </div>
+
+
+            <div class="form-group">
+
+                @Html.LabelFor(x => x.Status, new { style = "font-weight:bold;" }):
+                @Html.DisplayFor(x => x.Status)
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(x => x.User, new { style = "font-weight:bold;" }):
+                @Html.DisplayFor(x => x.User)
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Assistant1, new { style = "font-weight:bold;" }):
+                @Html.DropDownList("assistant1", null, string.Empty, new { @class = "form-control" })
+
+                <p style="font-weight:bold;color:darkred">Last change:</p>
+                @Html.DisplayFor(x => x.Assistant1)
+
+                @* @Html.DropDownListFor(n => n.Assistant1, new SelectList(Model.Assistant1), "Choose assistant from the list:")*@
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Assistant2, new { style = "font-weight:bold;" }):
+                @Html.DropDownList("assistant2", null, string.Empty, new { @class = "form-control" })
+
+                <p style="font-weight:bold;color:darkred">Last change:</p>
+                @Html.DisplayFor(x => x.Assistant2)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Assistant3, new { style = "font-weight:bold;" }):
+                @Html.DropDownList("assistant3", null, string.Empty, new { @class = "form-control" })
+
+                <p style="font-weight:bold;color:darkred">Last change:</p>
+                @Html.DisplayFor(x => x.Assistant3)
+            </div>
+
+
+            <div class="form-group">
+
+                <input type="submit" value="Change" class="btn btn-primary" />
+            </div>
+
+            @Html.ActionLink("Back to List", "MyList")
+
+        }
+
+    </div>
+
+    </div>
+
+

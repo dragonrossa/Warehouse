@@ -492,6 +492,7 @@
     <Content Include="Views\TaskList\Create.cshtml" />
     <Content Include="Views\TaskList\MyList.cshtml" />
     <Content Include="Views\TaskList\List.cshtml" />
+    <Content Include="Views\TaskList\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
