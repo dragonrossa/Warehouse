@@ -2,6 +2,7 @@
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -42,5 +43,6 @@ namespace Warehouse.Models
         public virtual DbSet<AdminModels> AdminModels { get; set; }
         public virtual DbSet<RolesModels> RolesModels { get; set; }
         public virtual DbSet<TaskListModels> TaskListModels { get; set; }
+        public virtual DbSet<UploadModels> UploadModels { get; set; }
     }
 }

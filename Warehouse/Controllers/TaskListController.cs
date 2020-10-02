@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -91,6 +93,31 @@ namespace Warehouse.Controllers
         {
             try
             {
+                TaskListModels task = new TaskListModels();
+
+               task = (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
+
+                TempData["assistant1"] = task.Assistant1;
+
+                TempData["assistant2"] = task.Assistant2;
+
+                TempData["assistant3"] = task.Assistant3;
+
+                if (String.IsNullOrEmpty(task.Assistant1))
+                {
+                    TempData["assistant1"] = "not assigned yet";
+                }
+
+                if (String.IsNullOrEmpty(task.Assistant2))
+                {
+                    TempData["assistant2"] = "not assigned yet";
+                }
+
+                if (String.IsNullOrEmpty(task.Assistant3))
+                {
+                    TempData["assistant3"] = "not assigned yet";
+                }
+
                 ViewData["assistant1"] = _db.UserModels.ToList().Select(u => new SelectListItem
                 {
                     Text = u.UserName,
@@ -109,11 +136,9 @@ namespace Warehouse.Controllers
                     Value = u.UserName
                 }).ToList();
 
-                TaskListModels task = new TaskListModels();
-
-                task = (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
 
                 return View(task);
+
             }
             catch (Exception)
             {
@@ -135,37 +160,30 @@ namespace Warehouse.Controllers
 
             var task = (from t in _db.TaskListModels where t.ID==id select t).FirstOrDefault();
 
-            if(assistantID1 != null)
+          
+            if (!String.IsNullOrEmpty(assistantID1))
             {
                 task.Assistant1 = assistantID1;
+                _db.SaveChanges();
             }
-            else
-            {
-                return RedirectToAction("MyList");
-            }
-
-            if(assistantID2 != null)
+            else if (!String.IsNullOrEmpty(assistantID2))
             {
                 task.Assistant2 = assistantID2;
+                _db.SaveChanges();
             }
-
-            else
-            {
-                return RedirectToAction("MyList");
-            }
-
-            if(assistantID3 != null)
-            {
+            else if (!String.IsNullOrEmpty(assistantID3))
+                {
                 task.Assistant3 = assistantID3;
+                _db.SaveChanges();
             }
             else
             {
                 return RedirectToAction("MyList");
             }
-
-            _db.SaveChanges();
 
             return RedirectToAction("MyList");
         }
+
+       
     }
 }

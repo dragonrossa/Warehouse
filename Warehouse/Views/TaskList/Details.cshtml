@@ -8,6 +8,12 @@
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
 
+    <style>
+        #more {
+            display: none;
+        }
+    </style>
+
 </head>
 
 
@@ -50,40 +56,56 @@
                 @Html.LabelFor(x => x.Assistant1, new { style = "font-weight:bold;" }):
                 @Html.DropDownList("assistant1", null, string.Empty, new { @class = "form-control" })
 
-                <p style="font-weight:bold;color:darkred">Last change:</p>
-                @Html.DisplayFor(x => x.Assistant1)
+                <p style="font-weight:bold;color:darkred">Last change:  @TempData["assistant1"]</p>
 
-                @* @Html.DropDownListFor(n => n.Assistant1, new SelectList(Model.Assistant1), "Choose assistant from the list:")*@
+               
+                
+
+               
+
+                <a class="nav-link active" id="assistants" name="assistants" data-toggle="assistants" href="#assistants" role="tab" aria-controls="assistants" aria-selected="true" onclick=hideAllInfo() style="padding-left:0px">More assistants</a>
+
+
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(x => x.Assistant2, new { style = "font-weight:bold;" }):
-                @Html.DropDownList("assistant2", null, string.Empty, new { @class = "form-control" })
+            <div id="more" name="more">
 
-                <p style="font-weight:bold;color:darkred">Last change:</p>
-                @Html.DisplayFor(x => x.Assistant2)
+              
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Assistant2, new { style = "font-weight:bold;" }):
+                        @Html.DropDownList("assistant2", null, string.Empty, new { @class = "form-control" })
+
+                        <p style="font-weight:bold;color:darkred">Last change: @TempData["assistant2"]</p>
+                       
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Assistant3, new { style = "font-weight:bold;" }):
+                        @Html.DropDownList("assistant3", null, string.Empty, new { @class = "form-control" })
+
+                        <p style="font-weight:bold;color:darkred">Last change:  @TempData["assistant3"]</p>
+                    </div>
+            </div>
+            
+                <div class="form-group">
+
+                    <input type="submit" value="Change" class="btn btn-primary" />
+                </div>
+
+                @Html.ActionLink("Back to List", "MyList")
+
+
+
+                }
+
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(x => x.Assistant3, new { style = "font-weight:bold;" }):
-                @Html.DropDownList("assistant3", null, string.Empty, new { @class = "form-control" })
+        </div>
 
-                <p style="font-weight:bold;color:darkred">Last change:</p>
-                @Html.DisplayFor(x => x.Assistant3)
-            </div>
-
-
-            <div class="form-group">
-
-                <input type="submit" value="Change" class="btn btn-primary" />
-            </div>
-
-            @Html.ActionLink("Back to List", "MyList")
-
-        }
-
-    </div>
-
-    </div>
-
+<script>
+    function hideAllInfo() {
+        $("#more").show();
+    }
+</script>
 

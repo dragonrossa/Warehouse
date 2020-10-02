@@ -228,9 +228,11 @@
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\TaskListController.cs" />
     <Compile Include="Controllers\TransferController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\RolesModels.cs" />
     <Compile Include="Models\TaskListModels.cs" />
+    <Compile Include="Models\UploadModels.cs" />
     <Compile Include="Web API\LogAPIController.cs" />
     <Compile Include="Web API\TransferAPIController .cs" />
     <Compile Include="Web API\StoreAPIController.cs" />
@@ -493,6 +495,7 @@
     <Content Include="Views\TaskList\MyList.cshtml" />
     <Content Include="Views\TaskList\List.cshtml" />
     <Content Include="Views\TaskList\Details.cshtml" />
+    <Content Include="Views\Upload\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
