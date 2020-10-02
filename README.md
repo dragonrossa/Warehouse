@@ -81,4 +81,6 @@ Calculate Full price after adding Price and Quantity
 
 01.10. Task - update Details
 
+02.10. Upload and download documents, Admin console changes, List changes
+
 Rosana
