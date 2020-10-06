@@ -25,7 +25,7 @@ namespace Warehouse.Models
         [Required]
         public int Quantity { get; set; }
         //Manufacturer
-        [StringLength(100, ErrorMessage = "Manufacturer must be between 3 and 100 characters", MinimumLength = 3)]
+        [StringLength(100, ErrorMessage = "Manufacturer must be between 1 and 100 characters", MinimumLength = 1)]
         public string Manufacturer { get; set; }
         //SN - Serial Number
         [StringLength(50, ErrorMessage = "The SN must be between 1 and 50 characters.", MinimumLength = 1)]
