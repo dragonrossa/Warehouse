@@ -83,4 +83,6 @@ Calculate Full price after adding Price and Quantity
 
 02.10. Upload and download documents, Admin console changes, List changes
 
+07.10 HandleError on POST actionresults, objects for Store, Roles, Task, Laptop
+
 Rosana
