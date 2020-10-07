@@ -85,4 +85,6 @@ Calculate Full price after adding Price and Quantity
 
 07.10 HandleError on POST actionresults, objects for Store, Roles, Task, Laptop
 
+07.10 Task - add documents, pictures as blob to task
+
 Rosana
