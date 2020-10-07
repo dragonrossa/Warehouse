@@ -13,7 +13,7 @@ namespace Warehouse.Models
     {
         [Key]
         public int ID { get; set; }
-        [RegularExpression(@"^[a-zA-Z ]*$")]
+        [RegularExpression(@"^[a-zA-Z0-9_.-]*$")]
         public string Details { get; set; }
 
         public string User { get; set; }
@@ -28,9 +28,14 @@ namespace Warehouse.Models
 
         [DisplayName("Task Assistant")]
         public string Assistant3 { get; set; }
+        [DisplayName("Upload file")]
+        public string UploadName { get; set; }
+        public string ContentType { get; set; }
+        [MaxLength(2130702268)]
+        public byte[] Data { get; set; }
 
 
 
-        
+
     }
 }

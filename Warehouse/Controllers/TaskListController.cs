@@ -105,6 +105,8 @@ namespace Warehouse.Controllers
 
                 TempData["assistant3"] = task.Assistant3;
 
+                TempData["id"] = task.ID;
+
                 if (String.IsNullOrEmpty(task.Assistant1))
                 {
                     TempData["assistant1"] = "not assigned yet";
@@ -154,16 +156,38 @@ namespace Warehouse.Controllers
         [HandleError]
         [ValidateAntiForgeryToken]
 
-        public ActionResult Details(System.Web.Mvc.FormCollection form)
+        public ActionResult Details(System.Web.Mvc.FormCollection form, HttpPostedFileBase postedFile)
         {
             string assistantID1 = form["assistant1"].ToString();
             string assistantID2 = form["assistant2"].ToString();
             string assistantID3 = form["assistant3"].ToString();
             int id = Convert.ToInt32(form["ID"]);
+            ViewBag.id = id;
+            
 
             var task = (from t in _db.TaskListModels where t.ID==id select t).FirstOrDefault();
 
-          
+            byte[] bytes;
+
+            using (BinaryReader br = new BinaryReader(postedFile.InputStream))
+            {
+                bytes = br.ReadBytes(postedFile.ContentLength);
+
+            }
+
+            //TaskListModels taskList = new TaskListModels();
+            var str = System.Text.Encoding.Default.GetString(bytes);
+
+            task.UploadName = postedFile.FileName;
+            task.ContentType = postedFile.ContentType;
+            task.Data = bytes;
+            
+
+            //_db.TaskListModels.Add(taskList);
+
+            _db.SaveChanges();
+
+
             if (!String.IsNullOrEmpty(assistantID1))
             {
                 task.Assistant1 = assistantID1;
@@ -184,9 +208,20 @@ namespace Warehouse.Controllers
                 return RedirectToAction("MyList");
             }
 
+
+
             return RedirectToAction("MyList");
         }
 
-       
+        [HttpPost]
+        [HandleError]
+        public FileResult DownloadFile(int? FileId)
+        {
+            TaskListModels taskList = new TaskListModels();
+            var file = _db.TaskListModels.ToList().Find(p => p.ID == FileId);
+            return File(file.Data, file.ContentType, file.UploadName);
+        }
+
+
     }
 }

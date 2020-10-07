@@ -1,5 +1,7 @@
 ﻿@model Warehouse.Models.TaskListModels
 
+@*@model IEnumerable<Warehouse.Models.TaskListModels>*@
+
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
@@ -22,7 +24,7 @@
 
     <div class="form-horizontal container-fluid">
 
-        @using (Html.BeginForm("Details", "TaskList", FormMethod.Post))
+        @using (Html.BeginForm("Details", "TaskList", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
@@ -58,10 +60,10 @@
 
                 <p style="font-weight:bold;color:darkred">Last change:  @TempData["assistant1"]</p>
 
-               
-                
 
-               
+
+
+
 
                 <a class="nav-link active" id="assistants" name="assistants" data-toggle="assistants" href="#assistants" role="tab" aria-controls="assistants" aria-selected="true" onclick=hideAllInfo() style="padding-left:0px">More assistants</a>
 
@@ -70,38 +72,71 @@
 
             <div id="more" name="more">
 
-              
 
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Assistant2, new { style = "font-weight:bold;" }):
-                        @Html.DropDownList("assistant2", null, string.Empty, new { @class = "form-control" })
 
-                        <p style="font-weight:bold;color:darkred">Last change: @TempData["assistant2"]</p>
-                       
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Assistant3, new { style = "font-weight:bold;" }):
-                        @Html.DropDownList("assistant3", null, string.Empty, new { @class = "form-control" })
-
-                        <p style="font-weight:bold;color:darkred">Last change:  @TempData["assistant3"]</p>
-                    </div>
-            </div>
-            
                 <div class="form-group">
+                    @Html.LabelFor(x => x.Assistant2, new { style = "font-weight:bold;" }):
+                    @Html.DropDownList("assistant2", null, string.Empty, new { @class = "form-control" })
 
-                    <input type="submit" value="Change" class="btn btn-primary" />
+                    <p style="font-weight:bold;color:darkred">Last change: @TempData["assistant2"]</p>
+
                 </div>
 
-                @Html.ActionLink("Back to List", "MyList")
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Assistant3, new { style = "font-weight:bold;" }):
+                    @Html.DropDownList("assistant3", null, string.Empty, new { @class = "form-control" })
 
-
-
-                }
-
+                    <p style="font-weight:bold;color:darkred">Last change:  @TempData["assistant3"]</p>
+                </div>
             </div>
 
-        </div>
+            <div class="form-group">
+
+                <h6>Add file to task:</h6>
+                <span><input type="file" name="postedFile" /></span>
+            </div>
+
+            <div class="form-group">
+
+                <input type="submit" value="Save" class="btn btn-primary" id="btnUpload" />
+            </div>
+
+            @Html.ActionLink("Back to List", "MyList")
+
+
+
+        }
+
+
+
+    </div>
+
+</div>
+
+
+@using (Html.BeginForm("DownloadFile", "TaskList", FormMethod.Post))
+{
+    <input type="hidden" id="hfFileId" name="FileId"/>
+
+    <input type="submit" id="btnDownload" value="Download" style="display:none" />
+}
+<hr />
+<table cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            @Html.LabelFor(x => x.UploadName, new { style = "font-weight:bold;" }):
+            @Html.DisplayFor(x => x.UploadName)
+            <a href="javascript:;" onclick="DownloadFile(@TempData["id"])">Download</a>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    function DownloadFile(FileId) {
+        $("#hfFileId").val(FileId);
+        $("#btnDownload")[0].click();
+    };
+</script>
 
 <script>
     function hideAllInfo() {
