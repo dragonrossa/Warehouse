@@ -73,6 +73,7 @@ namespace Warehouse.Controllers
 
         //POST: MasterData/Create
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Create(StoreModels store)
         {
@@ -198,6 +199,7 @@ namespace Warehouse.Controllers
 
         //POST: MasterData/Edit/5
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(StoreModels store)
         {

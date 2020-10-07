@@ -45,6 +45,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Result(FormCollection form)
         {

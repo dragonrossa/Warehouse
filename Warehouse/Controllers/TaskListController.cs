@@ -25,6 +25,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         public ActionResult Create(TaskListModels task, System.Web.Mvc.FormCollection form)
         {
             task.Details = form["Details"];
@@ -56,6 +57,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult MyList(System.Web.Mvc.FormCollection form, int id)
         {
@@ -149,6 +151,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
 
         public ActionResult Details(System.Web.Mvc.FormCollection form)

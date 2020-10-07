@@ -87,6 +87,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult ChangeRole(FormCollection form)
         {
@@ -189,6 +190,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult ChangeDetails(UserModels user)
         {
@@ -239,6 +241,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Access(AdminModels admin, FormCollection form, int id)
         {
@@ -301,6 +304,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult LaptopAccess(AdminModels admin, FormCollection form, int id)
         {
@@ -363,6 +367,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult LogAccess(AdminModels admin, FormCollection form, int id)
         {
@@ -427,6 +432,7 @@ namespace Warehouse.Controllers
      
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult SearchAccess(AdminModels admin, FormCollection form, int id)
         {
@@ -488,6 +494,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult StoreAccess(AdminModels admin, FormCollection form, int id)
         {
@@ -549,6 +556,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult TransferAccess(AdminModels admin, FormCollection form, int id)
         {
@@ -615,6 +623,7 @@ namespace Warehouse.Controllers
 
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult TaskAccess(AdminModels admin, FormCollection form, int id)
         {

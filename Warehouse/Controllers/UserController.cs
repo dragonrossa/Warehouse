@@ -34,6 +34,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Index(UserModels userModels)
         {

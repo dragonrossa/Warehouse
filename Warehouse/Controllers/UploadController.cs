@@ -24,6 +24,7 @@ namespace Warehouse.Controllers
         // POST: Upload
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Index(HttpPostedFileBase postedFile)
         {
@@ -51,6 +52,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         public FileResult DownloadFile(int? FileId)
         {
             UploadModels uploadModels = new UploadModels();

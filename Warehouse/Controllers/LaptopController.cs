@@ -80,6 +80,7 @@ namespace Warehouse.Controllers
 
         //POST: MasterData/Create
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Create(LaptopModels laptop)
         {
@@ -222,6 +223,7 @@ namespace Warehouse.Controllers
 
         //POST: MasterData/Edit/5
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(LaptopModels laptop)
         {
@@ -291,6 +293,7 @@ namespace Warehouse.Controllers
         }
         //POST: MasterData/Delete/5
         [HttpPost, ActionName("Delete")]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
@@ -478,6 +481,7 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public ActionResult Check(FormCollection form, TransferModels transfer)
         {

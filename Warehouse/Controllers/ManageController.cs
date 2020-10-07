@@ -78,6 +78,7 @@ namespace Warehouse.Controllers
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
+        [HandleError]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
