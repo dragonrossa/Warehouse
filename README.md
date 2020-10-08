@@ -5,24 +5,24 @@ Warehouse - storage for notebooks made with Entity Framework.
 
 ###### Create, edit and delete Notebooks
 
-Create, edit and delete Stores
+###### Create, edit and delete Stores
 
-Transfer Notebooks to Stores
+###### Transfer Notebooks to Stores
 
-Edit user profile
+###### Edit user profile
 
-Give acces to various parts of application
+###### Give acces to various parts of application
 
-Create task and upload documents or images
+###### Create task and upload documents or images
 
-Main menu for options
+###### Main menu for options
 
-Admin console
+###### Admin console
 
-Read logs
+###### Read logs
 
-Search Notebooks, Stores and Transfers
+###### Search Notebooks, Stores and Transfers
 
-**For more check folder ~/Warehouse/Content/printscreen**
+### For more check folder ~/Warehouse/Content/printscreen
 
 Rosana
