@@ -1,0 +1,108 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+
+    <head>
+
+        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    </head>
+}
+
+<style>
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+</style>
+
+
+<div class="container-fluid"  style="padding-top:20px">
+    <h1>Warehouse options:</h1>
+    <h4>@ViewBag.user, what do you want to do?</h4>
+  
+</div>
+
+<div class="container-fluid" style="padding-top:30px">
+    <div class="row">
+        <div class="col">
+            <a href='@Url.Action("Index", "Laptop")'>
+                <img src="@Url.Content("~/Content/Images/notebook.jpg")" style="width:250px;height:200px" class="center" />
+            </a>
+            <h6 style="text-align:center">
+                @Html.ActionLink("Check laptop warehouse", "Index", "Laptop")
+            </h6>
+        </div>
+        <div class="col">
+            <a href='@Url.Action("Index", "Store")'>
+                <img src="@Url.Content("~/Content/Images/store.jpg")" style="width:250px;height:200px" class="center" />
+            </a>
+            <h6 style="text-align:center">
+                @Html.ActionLink("Check store status", "Index", "Store")
+            </h6>
+        </div>
+    </div>
+    <div class="row" style="padding-top:20px">
+        <div class="col">
+            <a href='@Url.Action("Index", "Transfer")'>
+                <img src="@Url.Content("~/Content/Images/send.jpg")" style="width:250px;height:200px" class="center" />
+            </a>
+            <h6 style="text-align:center">
+                @Html.ActionLink("Check transfer status", "Index", "Transfer")
+            </h6>
+        </div>
+        <div class="col">
+            <a href='@Url.Action("Index", "User")'>
+                <img src="@Url.Content("~/Content/Images/users.png")" style="width:250px;height:200px" class="center" />
+            </a>
+            <h6 style="text-align:center">
+                @Html.ActionLink("Check user status", "Index", "User")
+            </h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href='@Url.Action("Index", "TaskList")'>
+                <img src="@Url.Content("~/Content/Images/task.jpg")" style="width:200px;height:200px" class="center" />
+            </a>
+            <h6 style="text-align:center">
+                @Html.ActionLink("Check task status", "Index", "TaskList")
+            </h6>
+        </div>
+        <div class="col">
+            <a href='@Url.Action("Index", "Log")'>
+                <img src="@Url.Content("~/Content/Images/log.png")" style="width:200px;height:200px" class="center" />
+            </a>
+            <h6 style="text-align:center">
+                @Html.ActionLink("Check logs", "Index", "Log")
+            </h6>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href='@Url.Action("Index", "Search")'>
+                <img src="@Url.Content("~/Content/Images/magnifier.jpg")" style="width:250px;height:200px" class="center" />
+            </a>
+            <h6 style="text-align:center">
+                @Html.ActionLink("Search", "Index", "Search")
+            </h6>
+        </div>
+        <div class="col">
+            <a href='@Url.Action("Index", "Admin")'>
+                <img src="@Url.Content("~/Content/Images/admin.jpg")" style="width:200px;height:200px" class="center" />
+            </a>
+            <h6 style="text-align:center">
+                @Html.ActionLink("Check Admin console", "Index", "Admin")
+            </h6>
+
+        </div>
+    </div>
+
+
+</div>

@@ -16,7 +16,7 @@ namespace Warehouse
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Laptop", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "StartPage", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
