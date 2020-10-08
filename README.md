@@ -1,5 +1,5 @@
 # Warehouse
-Warehouse - storage for notebooks made with Entity Framework.
+## Warehouse - storage for notebooks made with Entity Framework.
 
 **Options:**
 
@@ -23,6 +23,6 @@ Warehouse - storage for notebooks made with Entity Framework.
 
 ###### Search Notebooks, Stores and Transfers
 
-### For more check folder ~/Warehouse/Content/printscreen
+##### For more check folder ~/Warehouse/Content/printscreen
 
 Rosana
