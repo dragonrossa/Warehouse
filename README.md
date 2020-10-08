@@ -3,7 +3,7 @@ Warehouse - storage for notebooks made with Entity Framework.
 
 **Options:**
 
-Create, edit and delete Notebooks
+###### Create, edit and delete Notebooks
 
 Create, edit and delete Stores
 
