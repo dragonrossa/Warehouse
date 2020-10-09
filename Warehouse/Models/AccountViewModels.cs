@@ -11,7 +11,7 @@ namespace Warehouse.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Display(Name = "Hometown")]
+        [Display(Name = "town")]
         public string Hometown { get; set; }
     }
 

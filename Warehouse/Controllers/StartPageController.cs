@@ -14,9 +14,30 @@ namespace Warehouse.Controllers
         private ApplicationDbContext _db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            var username = User.Identity.Name;
-            var user = (from u in _db.UserModels where u.UserName == username select u).FirstOrDefault();
-            ViewBag.user = user.Name;
+
+            try
+            {
+                var username = User.Identity.Name;
+                var user = (from u in _db.UserModels where u.UserName == username select u).FirstOrDefault();
+                if (user == null)
+                {
+                    ViewBag.user = "new user";
+                }
+                else
+                {
+                    ViewBag.user = user.Name;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally 
+            {
+              
+            }
+          
             return View();
         }
     }
