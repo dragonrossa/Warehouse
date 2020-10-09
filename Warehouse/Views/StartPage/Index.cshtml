@@ -12,6 +12,10 @@
     </head>
 }
 
+@{ 
+    ViewBag.date = DateTime.Now;
+}
+
 <style>
     .center {
         display: block;
@@ -25,7 +29,7 @@
 <div class="container-fluid"  style="padding-top:20px">
     <h1>Warehouse options:</h1>
     <h4>@ViewBag.user, what do you want to do?</h4>
-  
+    <h6>Now is @ViewBag.date. </h6>
 </div>
 
 <div class="container-fluid" style="padding-top:30px">

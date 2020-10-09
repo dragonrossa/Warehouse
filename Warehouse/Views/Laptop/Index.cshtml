@@ -67,7 +67,7 @@
 
 
     <div class="container-fluid" style="padding-bottom:20px">
-        <button type="button" id="showDetails" onclick="showDetails()">Show details</button>
+        <button type="button" class="btn btn-primary" id="showDetails" onclick="showDetails()">Show details</button>
     </div>
 
     <div class="container-fluid" style="display:none" id="lapDetails" name="lapDetails">
@@ -78,7 +78,7 @@
                 <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false" onclick="myFunction2()">Info</a>
             </li>
             <li class="nav-item" role="presentation">
-                <a class="nav-link" id="article-tab" data-toggle="tab" href="#article" role="tab" aria-controls="article" aria-selected="false" onclick="myFunction3()">Article</a>
+                <a class="nav-link" id="savings-tab" data-toggle="tab" href="#savings" role="tab" aria-controls="savings" aria-selected="false" onclick="myFunction3()">Savings</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="quantity-tab" data-toggle="tab" href="#quantity" role="tab" aria-controls="quantity" aria-selected="false" onclick="myFunction4()">Quantity</a>
@@ -96,7 +96,7 @@
             <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
                 <p id="laptopInfo"></p>
             </div>
-            <div class="tab-pane fade" id="article" role="tabpanel" aria-labelledby="article-tab">
+            <div class="tab-pane fade" id="savings" role="tabpanel" aria-labelledby="savings-tab">
                 <p id="maxNumber"></p>
             </div>
             <div class="tab-pane fade" id="quantity" role="tabpanel" aria-labelledby="quantity-tab">
@@ -145,7 +145,7 @@
 
     function myFunction4() {
         var sumQuantity = "@ViewBag.sumQuantity";
-        document.getElementById("quantity").innerHTML = "There are " + sumQuantity + " of articles in this warehouse for now.";
+        document.getElementById("quantity").innerHTML = "There are total savings of " + sumQuantity + " from articles in warehouse.";
         $("#quantity").show();
         $("#quantity").css({ "color": "darkred", "font-size": "110%", "font-weight": "bold", "padding-top": "25px","text-align":"center" });
         $("#hideme").hide();

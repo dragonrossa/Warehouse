@@ -49,7 +49,7 @@ namespace Warehouse.Controllers
                     ViewBag.date = lastInput.Date;
                     ViewBag.quantity = lastInput.Quantity;
 
-                    var maxNumber = ListLaptop.Max(d => d.ID);
+                    var maxNumber = ListLaptop.Sum(d => d.Savings);
 
                     var sumQuantity = ListLaptop.Sum(d => d.Quantity);
 
