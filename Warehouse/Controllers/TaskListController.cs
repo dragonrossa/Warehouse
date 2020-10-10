@@ -164,48 +164,48 @@ namespace Warehouse.Controllers
             int id = Convert.ToInt32(form["ID"]);
             ViewBag.id = id;
             
-
             var task = (from t in _db.TaskListModels where t.ID==id select t).FirstOrDefault();
 
-            byte[] bytes;
-
-            using (BinaryReader br = new BinaryReader(postedFile.InputStream))
+            if (postedFile == null)
             {
-                bytes = br.ReadBytes(postedFile.ContentLength);
-
-            }
-
-            //TaskListModels taskList = new TaskListModels();
-            var str = System.Text.Encoding.Default.GetString(bytes);
-
-            task.UploadName = postedFile.FileName;
-            task.ContentType = postedFile.ContentType;
-            task.Data = bytes;
-            
-
-            //_db.TaskListModels.Add(taskList);
-
-            _db.SaveChanges();
-
-
-            if (!String.IsNullOrEmpty(assistantID1))
-            {
-                task.Assistant1 = assistantID1;
-                _db.SaveChanges();
-            }
-            else if (!String.IsNullOrEmpty(assistantID2))
-            {
-                task.Assistant2 = assistantID2;
-                _db.SaveChanges();
-            }
-            else if (!String.IsNullOrEmpty(assistantID3))
+                if (!String.IsNullOrEmpty(assistantID1))
                 {
-                task.Assistant3 = assistantID3;
-                _db.SaveChanges();
+                    task.Assistant1 = assistantID1;
+                    _db.SaveChanges();
+                }
+                else if (!String.IsNullOrEmpty(assistantID2))
+                {
+                    task.Assistant2 = assistantID2;
+                    _db.SaveChanges();
+                }
+                else if (!String.IsNullOrEmpty(assistantID3))
+                {
+                    task.Assistant3 = assistantID3;
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    return RedirectToAction("MyList");
+                }
+
             }
             else
             {
-                return RedirectToAction("MyList");
+                byte[] bytes;
+
+                using (BinaryReader br = new BinaryReader(postedFile.InputStream))
+                {
+                    bytes = br.ReadBytes(postedFile.ContentLength);
+
+                }
+
+                var str = System.Text.Encoding.Default.GetString(bytes);
+
+                task.UploadName = postedFile.FileName;
+                task.ContentType = postedFile.ContentType;
+                task.Data = bytes;
+
+                _db.SaveChanges();
             }
 
 
@@ -217,11 +217,24 @@ namespace Warehouse.Controllers
         [HandleError]
         public FileResult DownloadFile(int? FileId)
         {
-            TaskListModels taskList = new TaskListModels();
-            var file = _db.TaskListModels.ToList().Find(p => p.ID == FileId);
-            return File(file.Data, file.ContentType, file.UploadName);
+           
+                TaskListModels taskList = new TaskListModels();
+                var file = _db.TaskListModels.ToList().Find(p => p.ID == FileId);
+                return File(file.Data, file.ContentType, file.UploadName); 
         }
 
+        [HttpPost]
+        [HandleError]
+        public ActionResult DeleteFile(int? FileId2)
+        {
+            var id = FileId2;
+            var file = (from p in _db.TaskListModels where p.ID == id select p).FirstOrDefault();
+            file.UploadName = null;
+            file.ContentType = null;
+            file.Data = null;
+            _db.SaveChanges();
+            return RedirectToAction("MyList");
+        }
 
     }
 }

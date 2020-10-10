@@ -1,8 +1,5 @@
 ﻿@model Warehouse.Models.TaskListModels
 
-@*@model IEnumerable<Warehouse.Models.TaskListModels>*@
-
-
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 
@@ -12,6 +9,10 @@
 
     <style>
         #more {
+            display: none;
+        }
+
+        #more2 {
             display: none;
         }
     </style>
@@ -101,12 +102,13 @@
                 <input type="submit" value="Save" class="btn btn-primary" id="btnUpload" />
             </div>
 
-            @Html.ActionLink("Back to List", "MyList")
+
 
 
 
         }
 
+        <a class="nav-link active" id="documents" name="documents" data-toggle="documents" href="#documents" role="tab" aria-controls="assistants" aria-selected="true" onclick=hideAllInfo2() style="padding-left:0px">More documents</a>
 
 
     </div>
@@ -116,31 +118,61 @@
 
 @using (Html.BeginForm("DownloadFile", "TaskList", FormMethod.Post))
 {
-    <input type="hidden" id="hfFileId" name="FileId"/>
+    <input type="hidden" id="hfFileId" name="FileId" />
+    @*<input type="hidden" id="hfFileId2" name="FileId2" />*@
 
     <input type="submit" id="btnDownload" value="Download" style="display:none" />
+    @*<input type="submit" id="btnDelete" value="Delete" style="display:none" />*@
 }
-<hr />
-<table cellpadding="0" cellspacing="0">
-    <tr>
-        <td>
-            @Html.LabelFor(x => x.UploadName, new { style = "font-weight:bold;" }):
-            @Html.DisplayFor(x => x.UploadName)
-            <a href="javascript:;" onclick="DownloadFile(@TempData["id"])">Download</a>
-        </td>
-    </tr>
-</table>
+@*<hr />*@
+
+@using (Html.BeginForm("DeleteFile", "TaskList", FormMethod.Post))
+{
+    @*<input type="hidden" id="hfFileId" name="FileId" />*@
+    <input type="hidden" id="hfFileId2" name="FileId2" />
+
+    @*<input type="submit" id="btnDownload" value="Download" style="display:none" />*@
+    <input type="submit" id="btnDelete" value="Delete" style="display:none" />
+}
+
+
+
+<div class="container-fluid" style="padding-top:0px !important" id="more2" name="more2">
+    <div class="form-horizontal container-fluid">
+        <div class="form-group">
+            <h5>Document info:</h5>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        @Html.LabelFor(x => x.UploadName, new { style = "font-weight:bold;" }):
+                        @Html.DisplayFor(x => x.UploadName)
+                        <a href="javascript:;" onclick="DownloadFile(@TempData["id"])">Download</a> |
+                        <a href="javascript:;" onclick="DeleteFile(@TempData["id"])">Delete</a>
+                    </td>
+                </tr>
+            </table>
+            @Html.ActionLink("Back to List", "MyList", "", new { @class = "btn btn-primary" })
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     function DownloadFile(FileId) {
         $("#hfFileId").val(FileId);
         $("#btnDownload")[0].click();
     };
+    function DeleteFile(FileId2) {
+        $("#hfFileId2").val(FileId2);
+        $("#btnDelete")[0].click();
+    };
 </script>
 
 <script>
     function hideAllInfo() {
         $("#more").show();
+    }
+    function hideAllInfo2() {
+        $("#more2").show();
     }
 </script>
 
