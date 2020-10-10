@@ -22,6 +22,9 @@ namespace Warehouse.Controllers
                 var user = User.Identity.GetUserName();
                 UserModels userModels = (from k in _db.UserModels where k.Mail == user select k).First();
                 ViewBag.user = user;
+                ViewBag.date = DateTime.Now;
+                //userModels.DateModified = DateTime.Now;
+                //_db.SaveChanges();
                 return View(userModels);
             }
             catch (Exception e)
@@ -45,6 +48,8 @@ namespace Warehouse.Controllers
                 {
                     _db.Entry(userModels).State = EntityState.Modified;
                     _db.SaveChanges();
+                    //_db.Entry(userModels.DateModified=DateTime.Now).State = EntityState.Modified;
+                    //_db.SaveChanges();
                     return RedirectToAction("Index", "Manage");
                 }
                 return View(userModels);

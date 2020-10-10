@@ -142,8 +142,8 @@ namespace Warehouse.Controllers
                     {
                         Type = "2",
                         Description = "New transfer was inserted with transfer of laptop called " + transfer.LaptopName + " with quantity of " +
-                            transfer.LaptopQuantity + " on date " + laptopFind.Date + " with location to " + storeFind.Name + ", " + storeFind.Location + ".",
-                        Date = laptopFind.Date
+                            transfer.LaptopQuantity + " on date " + DateTime.Now + " with location to " + storeFind.Name + ", " + storeFind.Location + ".",
+                        Date = DateTime.Now
                     };
 
                     _db.LogModels.Add(log);
