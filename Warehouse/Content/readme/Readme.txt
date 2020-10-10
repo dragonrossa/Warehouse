@@ -79,3 +79,7 @@
 07.10 Task - add documents, pictures as blob to task
 
 08.10 StartPage for all other controllers, user has ability to choose from Menu what he/she wants to do
+
+09.10 Bux fix and minor visual changes
+
+10.10 Buf fix TaskList - Details, add option for Delete document when changing Task
