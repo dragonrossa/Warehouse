@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Warehouse.Models.ComputerListModels>
+
+<head>
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+</head>
+
+
+
+<div class="container-fluid">
+
+    <h1>Computer list</h1>
+    <h3>Add suppliers to various computers.</h3>
+
+    <p>
+        @Html.ActionLink("Create computer", "Create")
+    </p>
+
+    @using (Html.BeginForm("Index", "ComputerList", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>*@
+                <th>
+                    Add supplier
+                </th>
+            </tr>
+
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                       @Html.HiddenFor(modelItem => item.Name)
+                    </td>
+
+                   
+                     @*   @Html.DisplayFor(modelItem => item.Date)*@
+                      @*  @Html.HiddenFor(modelItem => item.Date)*@
+                  
+                    <td>
+                        @Html.DropDownList("Suppliers")
+                       @* @Html.HiddenFor("Suppliers")*@
+                        @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+        @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+        @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <div class="container-fluid">
+            <div class="row justify-content-md-center">
+                <div class="col">
+                    <div class="col-md col-md-1">
+                        <input type="submit" value="Save changes" class="btn btn-primary" />
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    }
+
+</div>

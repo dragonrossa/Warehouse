@@ -219,6 +219,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ComputerListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LaptopController.cs" />
     <Compile Include="Controllers\LogController.cs" />
@@ -227,11 +228,14 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StartPageController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\TaskListController.cs" />
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Models\AdminModels.cs" />
+    <Compile Include="Models\ComputerListModels.cs" />
     <Compile Include="Models\RolesModels.cs" />
+    <Compile Include="Models\SupplierModels.cs" />
     <Compile Include="Models\TaskListModels.cs" />
     <Compile Include="Models\UploadModels.cs" />
     <Compile Include="Web API\LogAPIController.cs" />
@@ -498,12 +502,14 @@
     <Content Include="Views\TaskList\Details.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\StartPage\Index.cshtml" />
+    <Content Include="Views\ComputerList\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
     <Folder Include="Content\printscreen\" />
     <Folder Include="Content\readme\" />
+    <Folder Include="Views\Supplier\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

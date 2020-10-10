@@ -6,16 +6,6 @@
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
 </head>
 
-@*@{*@
-   
-
-@*<div class="container-fluid">
-    <h4>Do you want to send those articles?</h4>
-</div>
-
-<div class="container-fluid">
-    @ViewBag.number x @ViewBag.name
-</div>*@
 
 @using (Html.BeginForm("Create", "Transfer", FormMethod.Post))
 {
@@ -36,7 +26,6 @@
 
     <input type="number" id="LaptopQuantity" name="LaptopQuantity" placeholder="0" pattern="0"><br>
 
-    @*@ViewBag.LaptopName[2].Value*@
 </div>
 
     <div class="container-fluid">

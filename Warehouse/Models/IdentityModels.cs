@@ -44,5 +44,8 @@ namespace Warehouse.Models
         public virtual DbSet<RolesModels> RolesModels { get; set; }
         public virtual DbSet<TaskListModels> TaskListModels { get; set; }
         public virtual DbSet<UploadModels> UploadModels { get; set; }
+
+        public virtual DbSet<SupplierModels> SupplierModels { get; set; }
+        public virtual DbSet<ComputerListModels> ComputerListModels { get; set; }
     }
 }

@@ -31,7 +31,7 @@
             //    new LaptopModels { Name = "Notebook Acer Aspire 1", Description= "NX.SHXEX.050",Quantity=105,Manufacturer="Acer",OS= "Windows 10",Price= 2554,OldPrice=3438, Date = DateTime.Now },
             //    new LaptopModels { Name = "Notebook ASUS X509JB-WB511T",Description= "i5-1035G1/8G/512G/MX110/15.6''FHD / W10",Quantity=55,Manufacturer="Asus",OS= "Windows 10",Price= 5998,OldPrice=7099, Date = DateTime.Now },
             //    new LaptopModels { Name = "Notebook Acer", Description= "A315-22-94Z2, NX.HE8EX.00Q",Quantity=15,Manufacturer="Acer",OS= "Linux",Price= 3100,OldPrice=3300, Date = DateTime.Now },
-            //    new LaptopModels { Name = "Notebook Acer Aspire 7", Description= "A715-72G-50M9, NH.GXCEX.024",Quantity=74,Manufacturer="Acer",OS= "Linux",Price= 5554,OldPrice=5755 },
+            //    new LaptopModels { Name = "Notebook Acer Aspire 7", Description= "A715-72G-50M9, NH.GXCEX.024",Quantity=74,Manufacturer="Acer",OS= "Linux",Price= 5554,OldPrice=5755, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook HP 255 G7",Description= "UMA 15.6 FHD/R5-3500U/8GB/256GB/W10Home, 2D231EA",Quantity= 18, Manufacturer="HP",OS= "Windows 10 Home",Price= 4776,OldPrice=4999, Date = DateTime.Now },
             //    new LaptopModels { Name = "Notebook Acer Aspire",Description= "A515-54G-52BJ, NX.HFUEX.002",Quantity= 8,Manufacturer="Acer",OS= "Linux",Price= 5221,OldPrice=6220, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook Acer Aspire 7",Description= "A715-72G-50M9, NH.GXCEX.024",Quantity=55,Manufacturer="Acer",OS= "Linux",Price= 5554,OldPrice=5770, Date = DateTime.Now},
@@ -84,11 +84,53 @@
             //    new TaskListModels{ Details="task1", User="rodjuga@gmail.com", Status=false}
             //};
 
+            //var supplier = new List<SupplierModels>
+            //{
+            //    new SupplierModels{ Name = "Chipoteka", Location = "Zagreb", Date = DateTime.Now},
+            //    new SupplierModels{ Name = "Instar Informatika", Location = "Zagreb", Date = DateTime.Now},
+            //    new SupplierModels{ Name = "HG Spot", Location = "Zagreb", Date = DateTime.Now},
+            //    new SupplierModels{ Name = "Mikronis", Location = "Zagreb", Date = DateTime.Now},
+            //    new SupplierModels{ Name = "Ronis", Location = "Zagreb",Date = DateTime.Now},
+            //    new SupplierModels{ Name = "Links", Location = "Zagreb", Date = DateTime.Now},
+            //    new SupplierModels{ Name = "Vacom", Location = "Zagreb", Date = DateTime.Now},
+            //};
+
+            //var computer = new List<ComputerListModels>
+            //{
+            //        new ComputerListModels { Name = "Notebook HP 250-G7", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook Acer Aspire 1",  Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook HP 250 G7", Date = DateTime.Now },
+            //        new ComputerListModels { Name = "Notebook Acer Aspire 1", Date = DateTime.Now },
+            //        new ComputerListModels { Name = "Notebook ASUS X509JB-WB511T", Date = DateTime.Now },
+            //        new ComputerListModels { Name = "Notebook Acer", Date = DateTime.Now },
+            //        new ComputerListModels { Name = "Notebook Acer Aspire 7", Date = DateTime.Now },
+            //        new ComputerListModels { Name = "Notebook HP 255 G7", Date = DateTime.Now },
+            //        new ComputerListModels { Name = "Notebook Acer Aspire", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook Acer Aspire 7", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook HP 255 G7", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook Acer Aspire", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook Asus X512DA-EJ564T", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook Acer Aspire 5",Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook HP Pavilion x360",Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook Lenovo V15", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook HP Pavilion x360", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook HP 250 G7", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook Acer Aspire 3", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook Acer Aspire 5", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook Lenovo IdeaPad 3", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook Asus X509JA", Date = DateTime.Now},
+            //        new ComputerListModels { Name = "Notebook HP 15s-eq1020nm 1N7Z9EA", Date = DateTime.Now}
+                
+            //};
+
             //context.LaptopModels.AddRange(laptop);
             //context.StoreModels.AddRange(store);
             //context.RolesModels.AddRange(roles);
             //context.TaskListModels.AddRange(task);
-            //context.SaveChanges();
+            //context.SupplierModels.AddRange(supplier);
+           // context.ComputerListModels.AddRange(computer);
+           // context.SaveChanges();
+
 
 
         }
