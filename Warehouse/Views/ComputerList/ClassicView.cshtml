@@ -1,0 +1,61 @@
+﻿@model Warehouse.Models.ComputerListModels
+
+<head>
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+</head>
+
+
+<h1>Choose computer and supplier</h1>
+
+<div class="container-fluid">
+
+    @using (Html.BeginForm("ClassicView", "ComputerList", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <table>
+
+            <tr>
+                <th>
+                    Name
+                </th>
+
+
+                <th>
+                    Add supplier
+                </th>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DropDownListFor(x => x.Name, Model.computers)
+                    @Html.HiddenFor(x => x.Name, Model.computers)
+                </td>
+                <td>
+                    @Html.DropDownListFor(x => x.SupplierName, Model.suppliers)
+                    @Html.HiddenFor(x => x.SupplierName, Model.suppliers)
+                </td>
+            </tr>
+
+        </table>
+
+        <br />
+
+
+
+
+        <input type="submit" value="Save changes" class="btn btn-primary" />
+
+
+
+
+
+    }
+
+</div>
+
+
+<div class="container-fluid">
+    @Html.ActionLink("Back", "Index", "ComputerList")
+</div>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,102 +15,107 @@ namespace Warehouse.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            List<ComputerListModels> computerListModels = new List<ComputerListModels>();
-            computerListModels = (from c in _db.ComputerListModels select c).ToList();
-            ViewData["Suppliers"] = _db.SupplierModels.ToList().Select(u => new SelectListItem
+            List<SelectListItem> computers = _db.ComputerListModels.ToList().Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.ID.ToString()
             }).ToList();
 
-            return View(computerListModels);
-        }
 
+            //Suppliers Select List Item
+            List<SelectListItem> suppliers = _db.SupplierModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.SupplierName,
+                Value = u.ID.ToString()
+            }).ToList();
+
+
+            return View(new ComputerListModels() { suppliers = suppliers, computers = computers });
+        }
 
 
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(FormCollection form, ComputerListModels computerListModels, string [] Name)
+        public ActionResult Index(FormCollection form)
         {
-            //foreach(var computer in form)
-            //{
-            //    //int storeID = Convert.ToInt32(form["Suppliers"].ToString());
-            //    computer.ToString();
-            //}
+            var computerName = form["item.Text"].ToString();
+            string supplierName = form["SupplierName"].ToString();
 
-            // int storeID = Convert.ToInt32(form["Suppliers"].ToString());
-
-            //foreach(var item in form)
-            //{
-            //    item.ToString();
-            //}
-
-            //List[] =
-
-            //foreach(var item in form["Suppliers"])
-            //{
-            //    item.ToString();
-            //}
-
-            //string[] suppliers;
-
-            // var suppliers = Convert.ToString(form["Suppliers"]);
+            string[] computers = computerName.Split(',');
 
 
-            //for (var i = 0; i < form.Count; i++)
-            //{
-            //    var supplier = form["Suppliers"][i].ToString();
-            //    //var name = form["item.Name"][i].ToString();
-            //}
 
-            List<ComputerListModels> computerLists = (from c in _db.ComputerListModels select c).ToList();
-
-            List<string> termsList = new List<string>();
+            string[] sup = supplierName.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
 
-           
-            foreach(var i in form["Suppliers"])
+            string comp;
+            string supName;
+
+
+
+            for (int i = 0; i < computers.Length; i++)
             {
-               
-                if (!(i.ToString() == ","))
-                {
-                    
-                
-                        string supplier = i.ToString();
-
-                          termsList.Add(supplier);
-
-
-                }
-
-                
-            }
-
-        
-        
-
-            var count = termsList.Count - computerLists.Count;
-
-            termsList.RemoveAt(termsList.Count - count);
-
-
-            for (int i = 1; i < termsList.Count; i++)
-            {
-                var compu = (from c in _db.ComputerListModels where c.ID==i select c).FirstOrDefault();
-                compu.SupplierID = termsList[i];
+                comp = computers[i];
+                supName = sup[i];
+                var computerFind = (from c in _db.ComputerListModels where c.Name == comp select c).FirstOrDefault();
+                computerFind.SupplierID = Convert.ToInt32(supName);
                 _db.SaveChanges();
             }
-            
 
-
-            
-
-            string name = form["item.Name"];
-            var store = form["Suppliers"];           
-
-             return RedirectToAction("Index");
+            return RedirectToAction("Index");
 
         }
+
+
+
+
+        public ActionResult ClassicView()
+        {
+
+            List<SelectListItem> computers = _db.ComputerListModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.ID.ToString()
+            }).ToList();
+
+
+            //Suppliers Select List Item
+            List<SelectListItem> suppliers = _db.SupplierModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.SupplierName,
+                Value = u.ID.ToString()
+            }).ToList();
+
+
+
+            return View(new ComputerListModels() { suppliers = suppliers, computers = computers });
+        }
+
+
+        [HttpPost]
+        public ActionResult ClassicView(FormCollection form)
+        {
+            var computerName = form["Name"].ToString();
+            var supplierName = form["SupplierName"].ToString();
+
+
+
+            int cName = Convert.ToInt32(computerName.Remove(computerName.Length - 1));
+            int sName = Convert.ToInt32(supplierName.Remove(supplierName.Length - 1));
+
+
+            ComputerListModels computerLists = (from e in _db.ComputerListModels
+                                                where e.ID == cName
+                                                select e).FirstOrDefault();
+            computerLists.SupplierID = sName;
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+
+
+
     }
-}
+}  

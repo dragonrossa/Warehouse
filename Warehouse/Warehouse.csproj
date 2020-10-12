@@ -503,6 +503,7 @@
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Views\StartPage\Index.cshtml" />
     <Content Include="Views\ComputerList\Index.cshtml" />
+    <Content Include="Views\ComputerList\ClassicView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
