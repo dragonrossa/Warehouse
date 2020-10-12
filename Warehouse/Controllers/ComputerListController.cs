@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
@@ -15,11 +16,10 @@ namespace Warehouse.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            List<SelectListItem> computers = _db.ComputerListModels.ToList().Select(u => new SelectListItem
-            {
-                Text = u.Name,
-                Value = u.ID.ToString()
-            }).ToList();
+
+            //Computers list - all details
+
+            List<ComputerListModels> computerLists = (from c in _db.ComputerListModels select c).ToList();
 
 
             //Suppliers Select List Item
@@ -29,8 +29,9 @@ namespace Warehouse.Controllers
                 Value = u.ID.ToString()
             }).ToList();
 
+    
 
-            return View(new ComputerListModels() { suppliers = suppliers, computers = computers });
+            return View(new ComputerListModels() { suppliers = suppliers, computersList=computerLists });
         }
 
 
@@ -39,7 +40,7 @@ namespace Warehouse.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(FormCollection form)
         {
-            var computerName = form["item.Text"].ToString();
+            var computerName = form["item.Name"].ToString();
             string supplierName = form["SupplierName"].ToString();
 
             string[] computers = computerName.Split(',');
@@ -51,6 +52,7 @@ namespace Warehouse.Controllers
 
             string comp;
             string supName;
+            int supi;
 
 
 
@@ -58,8 +60,11 @@ namespace Warehouse.Controllers
             {
                 comp = computers[i];
                 supName = sup[i];
+                supi = Convert.ToInt32(supName);
                 var computerFind = (from c in _db.ComputerListModels where c.Name == comp select c).FirstOrDefault();
+                var suppliersName = (from s in _db.SupplierModels where s.ID == supi select s).FirstOrDefault();
                 computerFind.SupplierID = Convert.ToInt32(supName);
+                computerFind.SupplierName = suppliersName.SupplierName;
                 _db.SaveChanges();
             }
 
@@ -73,6 +78,7 @@ namespace Warehouse.Controllers
         public ActionResult ClassicView()
         {
 
+            //Select list for all users
             List<SelectListItem> computers = _db.ComputerListModels.ToList().Select(u => new SelectListItem
             {
                 Text = u.Name,
@@ -108,7 +114,14 @@ namespace Warehouse.Controllers
             ComputerListModels computerLists = (from e in _db.ComputerListModels
                                                 where e.ID == cName
                                                 select e).FirstOrDefault();
+
+            var supplier = (from e in _db.SupplierModels
+                            where e.ID == sName
+                            select e).FirstOrDefault();
+
             computerLists.SupplierID = sName;
+            computerLists.SupplierName = supplier.SupplierName;
+
             _db.SaveChanges();
 
             return RedirectToAction("Index");

@@ -5,13 +5,18 @@
 </head>
 
 <h1>Choose computer and supplier</h1>
-<div class="container-fluid">
+<div class="container-fluid" style="padding-bottom:20px">
 
+
+    <h6>In this view you have opportunity to change various fields.</h6>
+    <h6>In classic view changes notebook suppleries one by one.</h6>
     @Html.ActionLink("Change to classic view", "ClassicView", "ComputerList", new { @style = "padding-bottom:20px;" })
+
 </div>
 
 <div class="container-fluid">
 
+  
 
     @using (Html.BeginForm("Index", "ComputerList", FormMethod.Post))
     {
@@ -19,34 +24,40 @@
 
 
 
-        <table class="table" style="padding-top:20px">
-            <tr>
-                <th>
-                    Name
-                </th>
+    <table class="table" style="padding-top:20px">
+        <tr>
+            <th>
+                Name
+            </th>
+
+            <th>
+                Add supplier
+            </th>
+            <th>Selected supplier</th>
+        </tr>
+
+       
+
+        @foreach (var item in Model.computersList)
+        {
+         <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+            @Html.HiddenFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DropDownListFor(x => x.SupplierName, Model.suppliers)
+            @Html.HiddenFor(x => x.SupplierName, Model.suppliers)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SupplierName)
+            @Html.HiddenFor(modelItem => item.SupplierName)
+        </td>
+          </tr>
+        }
 
 
-                <th>
-                    Add supplier
-                </th>
-            </tr>
-
-            @foreach (var item in Model.computers)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Text)
-                        @Html.HiddenFor(modelItem => item.Text)
-                    </td>
-                    <td>
-                        @Html.DropDownListFor(x => x.SupplierName, Model.suppliers)
-                        @Html.HiddenFor(x => x.SupplierName, Model.suppliers)
-                    </td>
-                </tr>
-            }
-
-
-        </table>
+    </table>
                 
         <input type="submit" value="Save changes" class="btn btn-primary" style="margin-left:10px"/>
                  

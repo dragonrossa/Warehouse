@@ -17,10 +17,13 @@ namespace Warehouse.Models
         [StringLength(50, ErrorMessage = "Name must be between 1 and 50 letters", MinimumLength = 1)]
         public string Name { get; set; }
         public string SupplierName { get; set; }
-        public IEnumerable<SelectListItem> computers { get; set; }
+
         public int SupplierID { get; set; }
         public DateTime? Date { get; set; }
-        //[NotMapped]
+        public string suppliersSele { get; set; }
+
+        public IEnumerable<SelectListItem> computers { get; set; }
         public IEnumerable<SelectListItem> suppliers { get; set; }
+        public IEnumerable<ComputerListModels> computersList { get; set; }
     }
 }
