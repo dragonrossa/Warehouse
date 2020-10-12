@@ -82,4 +82,6 @@
 
 09.10 Bux fix and minor visual changes
 
-10.10 Buf fix TaskList - Details, add option for Delete document when changing Task
+10.10 Buf fix TaskList - Details, add option for Delete document when changing Taskž
+
+10.10 Computer List + Suppliers, add Suppliers to computers
