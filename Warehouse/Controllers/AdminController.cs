@@ -239,6 +239,7 @@ namespace Warehouse.Controllers
             string storeAccess = form["item.StoreAccess"];
             string transferAccess = form["item.TransferAccess"];
             string taskAccess = form["item.TaskAccess"];
+            string supplierAccess = form["item.SupplierAccess"];
 
             
             var user = (from u in _db.AdminModels where u.ID == userID select u).FirstOrDefault();
@@ -251,11 +252,12 @@ namespace Warehouse.Controllers
             bool e = storeAccess == "true,false" ? user.StoreAccess = Convert.ToBoolean("true") : user.StoreAccess = Convert.ToBoolean("false");
             bool f = transferAccess == "true,false" ? user.TransferAccess = Convert.ToBoolean("true") : user.TransferAccess = Convert.ToBoolean("false");
             bool g = taskAccess == "true,false" ? user.TaskAccess = Convert.ToBoolean("true") : user.TaskAccess = Convert.ToBoolean("false");
+            bool h = supplierAccess == "true,false" ? user.SupplierAccess = Convert.ToBoolean("true") : user.SupplierAccess = Convert.ToBoolean("false");
 
 
-            string[] userAccess = { "Admin access", "Laptop access", " Log access", "Search access", "Store access", "Transfer access", "Task access" };
+            string[] userAccess = { "Admin access", "Laptop access", " Log access", "Search access", "Store access", "Transfer access", "Task access", "Supplier access" };
 
-            string[] rights = { Convert.ToString(a), Convert.ToString(b), Convert.ToString(c), Convert.ToString(d), Convert.ToString(e), Convert.ToString(f), Convert.ToString(g)};
+            string[] rights = { Convert.ToString(a), Convert.ToString(b), Convert.ToString(c), Convert.ToString(d), Convert.ToString(e), Convert.ToString(f), Convert.ToString(g), Convert.ToString(h)};
 
 
             for (int i = 0; i < userAccess.Length; i++) {

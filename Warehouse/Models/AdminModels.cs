@@ -28,6 +28,8 @@ namespace Warehouse.Models
 
         public bool TaskAccess { get; set; }
 
+        public bool SupplierAccess { get; set; }
+
         public IEnumerable<AdminModels> access { get; set; }
 
     }

@@ -1,0 +1,63 @@
+﻿@model Warehouse.Models.SupplierModels
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<head>
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+</head>
+
+
+<div class="container-fluid">
+    <h1>List of suppliers</h1>
+    <h6>Edit or delete suppliers info.</h6>
+</div>
+
+
+
+@using (Html.BeginForm("Edit", "Supplier"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+
+        <table>
+            <tr>
+                <td>
+                    @Html.Label("Supplier", new { @style = "font-weight:bold" })
+                </td>
+                <td>
+                    @Html.Label("Location", new { @style = "font-weight:bold" })
+                </td>
+            </tr>
+
+
+
+            @foreach (var item in Model.suppliers)
+            {
+                <tr>
+                    <th>
+                        @Html.EditorFor(modelitem => item.SupplierName)
+                        @Html.HiddenFor(modelitem => item.ID)
+                    </th>
+                    <th>
+                        @Html.EditorFor(modelitem => item.Location)
+                    </th>
+                    <th>@Html.ActionLink("Delete", "Delete", "Supplier", new { id = item.ID }, null)</th>
+                </tr>
+            }
+
+
+
+        </table>
+    </div>
+
+    <div class="container-fluid">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+
+}
+
+<div class="container-fluid">
+    @Html.ActionLink("Back", "Index", "ComputerList")
+</div>

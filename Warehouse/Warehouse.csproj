@@ -504,13 +504,15 @@
     <Content Include="Views\ComputerList\Index.cshtml" />
     <Content Include="Views\ComputerList\ClassicView.cshtml" />
     <Content Include="Views\Admin\Access2.cshtml" />
+    <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Supplier\Create.cshtml" />
+    <Content Include="Views\Supplier\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
     <Folder Include="Content\printscreen\" />
     <Folder Include="Content\readme\" />
-    <Folder Include="Views\Supplier\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

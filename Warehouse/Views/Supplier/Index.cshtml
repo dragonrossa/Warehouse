@@ -1,0 +1,50 @@
+﻿@model Warehouse.Models.SupplierModels
+
+<head>
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<div class="container-fluid">
+    <h1>List of suppliers and their locations in Croatia</h1>
+
+</div>
+
+
+
+<div class="container-fluid">
+    @Html.Label("Suppliers:", new { @style="font-weight:bold;" })
+</div>
+
+
+
+
+<div class="container-fluid">
+
+    @foreach (var item in Model.suppliers)
+    {
+        <table>
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelitem => item.SupplierName),
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Location)
+                </td>
+            </tr>
+        </table>
+
+
+    }
+
+</div>
+
+<div class="container-fluid">
+    @Html.ActionLink("Add new supplier", "Create", "Supplier")
+</div>
+
+<div class="container-fluid">
+    @Html.ActionLink("Back", "Index", "ComputerList")
+</div>
+
+

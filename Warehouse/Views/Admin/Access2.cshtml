@@ -21,7 +21,7 @@
             @Html.DisplayFor(modelitem => item.Username, new { username = "username" })
             <br />
 
-            @Html.Label("Give access to:" , new { @style ="font-weight:bold" })
+            @Html.Label("Give access to:", new { @style = "font-weight:bold" })
 
 
             @Html.HiddenFor(modelitem => item.ID)
@@ -82,6 +82,13 @@
 
 
             @Html.CheckBoxFor(modelitem => item.TaskAccess, new { id = "taskAccess" })
+        </div>
+
+        <div class="container-fluid">
+            @Html.Label("Supplier access")
+
+
+            @Html.CheckBoxFor(modelitem => item.SupplierAccess, new { id = "supplierAccess" })
         </div>
 
         <div class="container-fluid">
