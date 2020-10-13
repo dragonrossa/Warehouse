@@ -23,6 +23,8 @@
 
 ###### Search Notebooks, Stores and Transfers
 
+###### Suppliers for computers - add, update, delete
+
 ##### For more check folder ~/Warehouse/Content/printscreen
 
 Rosana
