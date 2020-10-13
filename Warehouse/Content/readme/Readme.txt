@@ -88,4 +88,6 @@
 
 12.10 Suppliers list, Computers list, change Suppliers for Computers
 
-13. New Access view for Admin
+13.10 New Access view for Admin
+
+13.10 Taskbar for every user - by access rights - needs to login to check
