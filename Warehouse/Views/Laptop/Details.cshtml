@@ -1,15 +1,15 @@
 ﻿@model Warehouse.Models.LaptopModels
 
-@section Scripts{
-    @Scripts.Render("~/bundles/knockout")
-    @Scripts.Render("~/bundles/app")
 
-    <head>
-
-        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
-
-    </head>
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
 }
+<head>
+
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+
 
 <div>
     <h4>Laptop</h4>
@@ -103,3 +103,7 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

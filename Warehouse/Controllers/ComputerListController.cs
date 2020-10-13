@@ -13,7 +13,7 @@ namespace Warehouse.Controllers
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
         // GET: ComputerList
-        [AllowAnonymous]
+        [HandleError]
         public ActionResult Index()
         {
 

@@ -4,6 +4,10 @@
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
 </head>
 
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+}
+
 
 <h1>Choose computer and supplier</h1>
 
@@ -59,3 +63,8 @@
 <div class="container-fluid">
     @Html.ActionLink("Back", "Index", "ComputerList")
 </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

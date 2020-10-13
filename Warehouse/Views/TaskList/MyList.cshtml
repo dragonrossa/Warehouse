@@ -3,6 +3,10 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+}
+
 <head>
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
@@ -54,8 +58,8 @@
     }
 
     <div class="container">
-      
-            @Html.ActionLink("Back", "Index","", new { @class = "btn btn-primary" })
-      
+
+        @Html.ActionLink("Back", "Index", "", new { @class = "btn btn-primary" })
+
     </div>
 </div>

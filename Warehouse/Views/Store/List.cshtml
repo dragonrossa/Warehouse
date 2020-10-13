@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<Warehouse.Models.StoreModels>
 
-@section Scripts{
-    @Scripts.Render("~/bundles/knockout")
-    @Scripts.Render("~/bundles/app")
-
-    <head>
-
-        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
-
-    </head>
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
 }
+
+<head>
+
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+
 
 <div class="container-fluid">
     <h4>List of Stores</h4>
@@ -80,3 +80,7 @@
         @Html.ActionLink("Back to List", "Index")
     </div>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,89 @@
+﻿@model Warehouse.Models.AdminModels
+
+@{
+    ViewBag.adminAccess = Model.Access;
+    ViewBag.laptopAccess = Model.LaptopAccess;
+    ViewBag.storeAccess = Model.StoreAccess;
+    ViewBag.transferAccess = Model.TransferAccess;
+    ViewBag.taskAccess = Model.TaskAccess;
+    ViewBag.logsAccess = Model.LogAccess;
+    ViewBag.searchAccess = Model.SearchAccess;
+    ViewBag.supplierAccess = Model.SupplierAccess;
+}
+
+
+@if (@ViewBag.adminAccess == true)
+{
+    <li> @Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, null)</li>
+}
+else
+{
+
+}
+
+@if (ViewBag.laptopAccess == true)
+{
+    <li>@Html.ActionLink("Laptop", "Index", "Laptop", new { area = "" }, null)</li>
+    <li>@Html.ActionLink("Send", "Send", "Laptop", new { area = "" }, null)</li>
+}
+else
+{
+
+}
+
+@if (ViewBag.storeAccess == true)
+{
+    <li>@Html.ActionLink("Store", "Index", "Store", new { area = "" }, null)</li>
+}
+else
+{
+
+}
+
+@if (ViewBag.transferAccess == true)
+{
+    <li>@Html.ActionLink("Transfer", "Index", "Transfer", new { area = "" }, null)</li>
+}
+else
+{
+
+}
+
+@if (ViewBag.taskAccess == true)
+{
+    <li> @Html.ActionLink("Task", "Index", "TaskList", new { area = "" }, null)</li>
+}
+else
+{
+
+}
+
+@if (ViewBag.logsAccess == true)
+{
+    <li>@Html.ActionLink("Logs", "Index", "Log", new { area = "" }, null)</li>
+}
+else
+{
+
+}
+
+@if (ViewBag.searchAccess == true)
+{
+    <li>@Html.ActionLink("Search", "Index", "Search", new { area = "" }, null)</li>
+}
+else
+{
+
+}
+
+@if (ViewBag.supplierAccess == true)
+{
+    <li> @Html.ActionLink("Supplier", "Index", "ComputerList", new { area = "" }, null)</li>
+   
+}
+else
+{
+   
+}
+
+

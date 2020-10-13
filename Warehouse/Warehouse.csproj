@@ -232,6 +232,7 @@
     <Compile Include="Controllers\TaskListController.cs" />
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="Controllers\UserRightsController.cs" />
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ComputerListModels.cs" />
     <Compile Include="Models\RolesModels.cs" />
@@ -453,7 +454,6 @@
     <Content Include="Views\Laptop\Edit.cshtml" />
     <Content Include="Views\Laptop\Index.cshtml" />
     <Content Include="Views\Laptop\List.cshtml" />
-    <Content Include="Views\Laptop\Result.cshtml" />
     <Content Include="Views\Store\Index.cshtml" />
     <Content Include="Views\Store\Create.cshtml" />
     <Content Include="Views\Store\List.cshtml" />
@@ -507,6 +507,8 @@
     <Content Include="Views\Supplier\Index.cshtml" />
     <Content Include="Views\Supplier\Create.cshtml" />
     <Content Include="Views\Supplier\Edit.cshtml" />
+    <Content Include="Views\Shared\Header.cshtml" />
+    <Content Include="Views\Shared\_LayoutApplication.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

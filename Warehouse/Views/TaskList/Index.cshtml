@@ -4,11 +4,14 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+}
 
 
 <div class="container-fluid">
 
-    @using (Html.BeginForm("Create","TaskList"))
+    @using (Html.BeginForm("Create", "TaskList"))
     {
         @Html.AntiForgeryToken()
 
@@ -26,7 +29,7 @@
                     Task creator:
                 </div>
                 <div class="col-md-10">
-                 
+
                     @Html.TextBoxFor(model => model.User, new { @Value = ViewBag.user })
                 </div>
             </div>
@@ -35,7 +38,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Details, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                   
+
                     @Html.TextAreaFor(m => m.Details, 10, 40, null)
                     @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
                 </div>

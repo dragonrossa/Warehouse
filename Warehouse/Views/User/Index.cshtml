@@ -3,16 +3,16 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 
-@section Scripts{
-    @Scripts.Render("~/bundles/knockout")
-    @Scripts.Render("~/bundles/app")
-
-    <head>
-
-        <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
-
-    </head>
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
 }
+
+<head>
+
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+
 
 
 @using (Html.BeginForm())
@@ -114,5 +114,9 @@
 }
 
 <div class="container-fluid">
-    @Html.ActionLink("Back to manage", "Index","Manage")
+    @Html.ActionLink("Back to manage", "Index", "Manage")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

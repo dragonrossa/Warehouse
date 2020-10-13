@@ -1,10 +1,9 @@
 ﻿@model List<Warehouse.Models.LaptopModels>
 
-
-@section Scripts{
-    @Scripts.Render("~/bundles/knockout")
-    @Scripts.Render("~/bundles/app")
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
 }
+
 
 <head>
 
@@ -97,7 +96,9 @@
 </script>
 
 
-
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 
 

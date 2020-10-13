@@ -3,6 +3,9 @@
 <head>
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
 </head>
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+}
 
 <h1>Choose computer and supplier</h1>
 <div class="container-fluid" style="padding-bottom:20px">
@@ -12,14 +15,14 @@
     <h6>In classic view changes notebook suppleries one by one.</h6>
     @Html.ActionLink("Change to classic view", "ClassicView", "ComputerList", new { @style = "padding-bottom:20px;" })
     <br />
-    @Html.ActionLink("Suppliers","Index","Supplier") |
-    @Html.ActionLink("Edit","Edit","Supplier")
+    @Html.ActionLink("Suppliers", "Index", "Supplier") |
+    @Html.ActionLink("Edit", "Edit", "Supplier")
 
 </div>
 
 <div class="container-fluid">
 
-  
+
 
     @using (Html.BeginForm("Index", "ComputerList", FormMethod.Post))
     {
@@ -27,45 +30,49 @@
 
 
 
-    <table class="table" style="padding-top:20px">
-        <tr>
-            <th>
-                Name
-            </th>
+        <table class="table" style="padding-top:20px">
+            <tr>
+                <th>
+                    Name
+                </th>
 
-            <th>
-                Add supplier
-            </th>
-            <th>Selected supplier</th>
-        </tr>
-
-       
-
-        @foreach (var item in Model.computersList)
-        {
-         <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-            @Html.HiddenFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DropDownListFor(x => x.SupplierName, Model.suppliers)
-            @Html.HiddenFor(x => x.SupplierName, Model.suppliers)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SupplierName)
-            @Html.HiddenFor(modelItem => item.SupplierName)
-        </td>
-          </tr>
-        }
+                <th>
+                    Add supplier
+                </th>
+                <th>Selected supplier</th>
+            </tr>
 
 
-    </table>
-                
-        <input type="submit" value="Save changes" class="btn btn-primary" style="margin-left:10px"/>
-                 
-              
+
+            @foreach (var item in Model.computersList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.HiddenFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(x => x.SupplierName, Model.suppliers)
+                        @Html.HiddenFor(x => x.SupplierName, Model.suppliers)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SupplierName)
+                        @Html.HiddenFor(modelItem => item.SupplierName)
+                    </td>
+                </tr>
+            }
+
+
+        </table>
+
+        <input type="submit" value="Save changes" class="btn btn-primary" style="margin-left:10px" />
+
+
 
     }
 
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

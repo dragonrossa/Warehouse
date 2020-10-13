@@ -1,13 +1,7 @@
 ﻿@model IEnumerable<Warehouse.Models.UserModels>
 
-
-@section Scripts{
-    @Scripts.Render("~/bundles/knockout")
-    @Scripts.Render("~/bundles/app")
-}
-
 @{
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
 }
 
 <head>
@@ -19,11 +13,11 @@
 </div>
 
 <div class="container-fluid">
-    <h3>Change roles for users</h3> 
+    <h3>Change roles for users</h3>
 </div>
 
 <div class="container-fluid">
-    <h4>List of users</h4>  
+    <h4>List of users</h4>
 </div>
 
 <div class="container-fluid">
@@ -45,28 +39,31 @@
 
         @foreach (var item in Model)
         {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Change role", "ChangeRole", new { id = item.ID })
-        </td>
-        <td>
-            @Html.ActionLink("Change details", "ChangeDetails", new { id = item.ID })
-        </td>
-        <td>
-            @Html.ActionLink("Access", "Access2", new { username = item.UserName })
-        </td>
-    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.ActionLink("Change role", "ChangeRole", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink("Change details", "ChangeDetails", new { id = item.ID })
+                </td>
+                <td>
+                    @Html.ActionLink("Access", "Access2", new { username = item.UserName })
+                </td>
+            </tr>
         }
 
     </table>
 </div>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

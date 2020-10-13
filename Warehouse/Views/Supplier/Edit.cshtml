@@ -1,7 +1,8 @@
 ﻿@model Warehouse.Models.SupplierModels
 
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jqueryval")
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+}
 
 <head>
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
@@ -61,3 +62,7 @@
 <div class="container-fluid">
     @Html.ActionLink("Back", "Index", "ComputerList")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

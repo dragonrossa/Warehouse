@@ -1,9 +1,8 @@
 ﻿@model List<Warehouse.Helpers.SearchIndex>
 
 
-@section Scripts{
-    @Scripts.Render("~/bundles/knockout")
-    @Scripts.Render("~/bundles/app")
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
 }
 
 <head>
@@ -26,3 +25,7 @@
 <div class="container">
     @Html.ActionLink("Back", "Index")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

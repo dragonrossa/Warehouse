@@ -3,6 +3,10 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+}
+
 
 <head>
 
@@ -47,7 +51,7 @@
 
     </table>
 
-   
-        @Html.ActionLink("Back to List", "MyList")
-  
+
+    @Html.ActionLink("Back to List", "MyList")
+
 </div>
