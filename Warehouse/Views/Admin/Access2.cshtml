@@ -1,0 +1,96 @@
+﻿@model Warehouse.Models.AdminModels
+
+
+<div class="container-fluid">
+    <h1>Manage user rights</h1>
+    <h5>Here is user with their options.</h5>
+    <h6>Check or uncheck the rights he/she needs.</h6>
+</div>
+
+
+@foreach (var item in Model.access)
+{
+    using (Html.BeginForm("Access2", "Admin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="container-fluid">
+
+
+            @Html.Label("User: ", new { @style = "font-weight:bold;padding-bottom:20px;" })
+
+            @Html.DisplayFor(modelitem => item.Username, new { username = "username" })
+            <br />
+
+            @Html.Label("Give access to:" , new { @style ="font-weight:bold" })
+
+
+            @Html.HiddenFor(modelitem => item.ID)
+
+        </div>
+
+        <div class="container-fluid">
+
+            @Html.Label("Admin access")
+
+
+            @Html.CheckBoxFor(modelitem => item.Access, new { id = "access" })
+
+        </div>
+
+        <div class="container-fluid">
+
+            @Html.Label("Laptop access")
+
+
+            @Html.CheckBoxFor(modelitem => item.LaptopAccess, new { id = "laptopAccess" })
+
+        </div>
+
+        <div class="container-fluid">
+
+            @Html.Label("Log access")
+
+
+            @Html.CheckBoxFor(modelitem => item.LogAccess, new { id = "logAccess" })
+        </div>
+
+        <div class="container-fluid">
+
+            @Html.Label("Search access")
+
+
+            @Html.CheckBoxFor(modelitem => item.SearchAccess, new { id = "searchAccess" })
+
+        </div>
+
+        <div class="container-fluid">
+            @Html.Label("Store access")
+
+
+            @Html.CheckBoxFor(modelitem => item.StoreAccess, new { id = "storeAccess" })
+        </div>
+
+        <div class="container-fluid">
+            @Html.Label("Transfer access")
+
+
+            @Html.CheckBoxFor(modelitem => item.TransferAccess, new { id = "transferAccess" })
+        </div>
+
+        <div class="container-fluid">
+            @Html.Label("Task access")
+
+
+            @Html.CheckBoxFor(modelitem => item.TaskAccess, new { id = "taskAccess" })
+        </div>
+
+        <div class="container-fluid">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+        <br />
+
+    }
+
+}
+

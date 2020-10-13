@@ -213,481 +213,66 @@ namespace Warehouse.Controllers
             return View();
         }
 
-        public ActionResult Access(int id)
+
+
+        //Access for all users
+
+        public ActionResult Access2( string username)
+
         {
-            try
-            {
-                TempData["UserID"] = id;
+            List<AdminModels> access = (from a in _db.AdminModels where a.Username==username select a).ToList();
 
-
-                var user = (from u in _db.UserModels where u.ID == id select u).FirstOrDefault();
-
-
-                if (ModelState.IsValid)
-                {
-
-                    AdminModels admin = (from a in _db.AdminModels where a.Username == user.UserName select a).FirstOrDefault();
-                    TempData["AdminID"] = admin.ID;
-                    return View(admin);
-                }
-            }
-
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
-
-            return View();
+            return View(new AdminModels { access = access });
         }
 
         [HttpPost]
-        [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult Access(AdminModels admin, FormCollection form, int id)
+        public ActionResult Access2(FormCollection form)
         {
-            try
-            {
-                string access = form["access"];
 
-                int adminID = id;
+            int userID = Convert.ToInt32(form["item.ID"]);
+            string username = form["item.Username"];
+            string access = form["item.Access"];
+            string laptopAccess = form["item.LaptopAccess"];
+            string logAccess = form["item.LogAccess"];
+            string searchAccess = form["item.SearchAccess"];
+            string storeAccess = form["item.StoreAccess"];
+            string transferAccess = form["item.TransferAccess"];
+            string taskAccess = form["item.TaskAccess"];
 
-                var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
+            
+            var user = (from u in _db.AdminModels where u.ID == userID select u).FirstOrDefault();
 
-                if (ModelState.IsValid)
+
+            bool a = access == "true,false" ? user.Access = Convert.ToBoolean("true") : user.Access = Convert.ToBoolean("false");
+            bool b = laptopAccess == "true,false" ? user.LaptopAccess = Convert.ToBoolean("true") : user.LaptopAccess = Convert.ToBoolean("false");
+            bool c = logAccess == "true,false" ? user.LogAccess = Convert.ToBoolean("true") : user.LogAccess = Convert.ToBoolean("false");
+            bool d = searchAccess == "true,false" ? user.SearchAccess = Convert.ToBoolean("true") : user.SearchAccess = Convert.ToBoolean("false");
+            bool e = storeAccess == "true,false" ? user.StoreAccess = Convert.ToBoolean("true") : user.StoreAccess = Convert.ToBoolean("false");
+            bool f = transferAccess == "true,false" ? user.TransferAccess = Convert.ToBoolean("true") : user.TransferAccess = Convert.ToBoolean("false");
+            bool g = taskAccess == "true,false" ? user.TaskAccess = Convert.ToBoolean("true") : user.TaskAccess = Convert.ToBoolean("false");
+
+
+            string[] userAccess = { "Admin access", "Laptop access", " Log access", "Search access", "Store access", "Transfer access", "Task access" };
+
+            string[] rights = { Convert.ToString(a), Convert.ToString(b), Convert.ToString(c), Convert.ToString(d), Convert.ToString(e), Convert.ToString(f), Convert.ToString(g)};
+
+
+            for (int i = 0; i < userAccess.Length; i++) {
+
+                LogModels log = new LogModels
                 {
+                    Type = "7",
+                    Description = "New change was made for user " + user.Username + " on date " + DateTime.Now + " granting access:" + rights[i] + " for " + userAccess[i] ,
+                    Date = DateTime.Now
+                };
 
-                    if (access == "true,false")
-                    {
-
-                        access = "true";
-                        adminUser.Access = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.Access + " for Admin access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-                    }
-                    else
-                    {
-                        access = "false";
-                        adminUser.Access = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.Access + " for Admin access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
-            finally
-            {
-
+                _db.LogModels.Add(log);
+                _db.SaveChanges();
             }
 
-            return View();
+            return RedirectToAction("Index","Admin");
         }
-
-        [HttpPost]
-        [HandleError]
-        [ValidateAntiForgeryToken]
-        public ActionResult LaptopAccess(AdminModels admin, FormCollection form, int id)
-        {
-            try
-            {
-                string access = form["laptopAccess"];
-
-                int adminID = id;
-
-                var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
-
-                if (ModelState.IsValid)
-                {
-
-                    if (access == "true,false")
-                    {
-
-                        access = "true";
-                        adminUser.LaptopAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.LaptopAccess + " for Laptop access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-                    }
-                    else
-                    {
-                        access = "false";
-                        adminUser.LaptopAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.LaptopAccess + " for Laptop access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
-            finally
-            {
-
-            }
-
-            return View();
-        }
-
-        [HttpPost]
-        [HandleError]
-        [ValidateAntiForgeryToken]
-        public ActionResult LogAccess(AdminModels admin, FormCollection form, int id)
-        {
-            try
-            {
-                string access = form["logAccess"];
-
-                int adminID = id;
-
-                var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
-
-                if (ModelState.IsValid)
-                {
-
-                    if (access == "true,false")
-                    {
-
-                        access = "true";
-                        adminUser.LogAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.LogAccess + " for Log access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-                    }
-                    else
-                    {
-                        access = "false";
-                        adminUser.LogAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.LogAccess + " for Log access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
-            finally
-            {
-
-            }
-
-            return View();
-        }
-
-     
-
-        [HttpPost]
-        [HandleError]
-        [ValidateAntiForgeryToken]
-        public ActionResult SearchAccess(AdminModels admin, FormCollection form, int id)
-        {
-            try
-            {
-                string access = form["searchAccess"];
-
-                int adminID = id;
-
-                var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
-
-                if (ModelState.IsValid)
-                {
-
-                    if (access == "true,false")
-                    {
-
-                        access = "true";
-                        adminUser.SearchAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.SearchAccess + " for Search access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-                    }
-                    else
-                    {
-                        access = "false";
-                        adminUser.SearchAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.SearchAccess + " for Search access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
-            finally
-            {
-
-            }
-            return View();
-        }
-
-        [HttpPost]
-        [HandleError]
-        [ValidateAntiForgeryToken]
-        public ActionResult StoreAccess(AdminModels admin, FormCollection form, int id)
-        {
-            try
-            {
-                string access = form["storeAccess"];
-
-                int adminID = id;
-
-                var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
-
-                if (ModelState.IsValid)
-                {
-
-                    if (access == "true,false")
-                    {
-
-                        access = "true";
-                        adminUser.StoreAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.StoreAccess + " for Store access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-                    }
-                    else
-                    {
-                        access = "false";
-                        adminUser.StoreAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.StoreAccess + " for Store access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
-            finally
-            {
-
-            }
-            return View();
-        }
-
-        [HttpPost]
-        [HandleError]
-        [ValidateAntiForgeryToken]
-        public ActionResult TransferAccess(AdminModels admin, FormCollection form, int id)
-        {
-            try
-            {
-
-
-                string access = form["transferAccess"];
-
-                int adminID = id;
-
-                var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
-
-                if (ModelState.IsValid)
-                {
-
-                    if (access == "true,false")
-                    {
-
-                        access = "true";
-                        adminUser.TransferAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.TransferAccess + " for Transfer access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-                    }
-                    else
-                    {
-                        access = "false";
-                        adminUser.TransferAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.TransferAccess + " for Transfer access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
-            finally
-            {
-
-            }
-            return View();
-        }
-
-
-
-
-        [HttpPost]
-        [HandleError]
-        [ValidateAntiForgeryToken]
-        public ActionResult TaskAccess(AdminModels admin, FormCollection form, int id)
-        {
-            try
-            {
-
-
-                string access = form["taskAccess"];
-
-                int adminID = id;
-
-                var adminUser = (from a in _db.AdminModels where a.ID == adminID select a).FirstOrDefault();
-
-                if (ModelState.IsValid)
-                {
-
-                    if (access == "true,false")
-                    {
-
-                        access = "true";
-                        adminUser.TaskAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.TaskAccess + " for Task access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-                    }
-                    else
-                    {
-                        access = "false";
-                        adminUser.TaskAccess = Convert.ToBoolean(access);
-                        LogModels log = new LogModels
-                        {
-                            Type = "7",
-                            Description = "New change was made for user " + admin.Username + " on date " + DateTime.Now + " granting access:" + adminUser.TaskAccess + " for Task access.",
-                            Date = DateTime.Now
-                        };
-
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index", "Admin", admin);
-
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("{0} Exception caught.", e);
-            }
-            finally
-            {
-
-            }
-            return View();
-        }
-
-
-
 
     }
 

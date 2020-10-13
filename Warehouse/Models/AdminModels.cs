@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Warehouse.Models
 {
@@ -26,6 +27,8 @@ namespace Warehouse.Models
         public bool TransferAccess { get; set; }
 
         public bool TaskAccess { get; set; }
- 
+
+        public IEnumerable<AdminModels> access { get; set; }
+
     }
 }
