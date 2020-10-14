@@ -32,7 +32,7 @@ And now...
 **How to test this app?**
 
 1. Download
-2. Execute code in Configuration.cs
+2. Uncomment and execute code in Configuration.cs (context in protect override Seed)
 3. Start app and register
 4. Have fun!
 
