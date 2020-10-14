@@ -27,4 +27,10 @@
 
 ##### For more check folder ~/Warehouse/Content/printscreen
 
+**How to test this app?**
+1. Download
+2. Execute code in Configuration.cs
+3. Start app and register
+4. Have fun!
+
 Rosana
