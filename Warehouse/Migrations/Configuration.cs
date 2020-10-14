@@ -1,9 +1,12 @@
 ﻿namespace Warehouse.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.EnterpriseServices.Internal;
     using System.Linq;
     using Warehouse.Models;
 
@@ -120,15 +123,17 @@
             //        new ComputerListModels { Name = "Notebook Lenovo IdeaPad 3", Date = DateTime.Now},
             //        new ComputerListModels { Name = "Notebook Asus X509JA", Date = DateTime.Now},
             //        new ComputerListModels { Name = "Notebook HP 15s-eq1020nm 1N7Z9EA", Date = DateTime.Now}
-                
+
             //};
+
+
 
             //context.LaptopModels.AddRange(laptop);
             //context.StoreModels.AddRange(store);
             //context.RolesModels.AddRange(roles);
             //context.TaskListModels.AddRange(task);
             //context.SupplierModels.AddRange(supplier);
-           // context.ComputerListModels.AddRange(computer);
+            // context.ComputerListModels.AddRange(computer);
             //context.SaveChanges();
 
 
