@@ -27,4 +27,13 @@
 
 ##### For more check folder ~/Warehouse/Content/printscreen
 
+And now...
+
+**How to test this app?**
+
+1. Download
+2. Uncomment and execute code in Configuration.cs (context in protect override Seed)
+3. Start app and register
+4. Have fun!
+
 Rosana
