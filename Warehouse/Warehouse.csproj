@@ -225,6 +225,7 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
+    <Compile Include="Controllers\ProcurementController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StartPageController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="Controllers\UserRightsController.cs" />
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ComputerListModels.cs" />
+    <Compile Include="Models\ProcurementModels.cs" />
     <Compile Include="Models\RolesModels.cs" />
     <Compile Include="Models\SupplierModels.cs" />
     <Compile Include="Models\TaskListModels.cs" />
@@ -509,6 +511,8 @@
     <Content Include="Views\Supplier\Edit.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Shared\_LayoutApplication.cshtml" />
+    <Content Include="Views\Procurement\Index.cshtml" />
+    <Content Include="Views\Procurement\Invoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

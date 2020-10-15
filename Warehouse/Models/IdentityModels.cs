@@ -47,6 +47,6 @@ namespace Warehouse.Models
 
         public virtual DbSet<SupplierModels> SupplierModels { get; set; }
         public virtual DbSet<ComputerListModels> ComputerListModels { get; set; }
-
+        public virtual DbSet<ProcurementModels> ProcurementModels { get; set; }
     }
 }

@@ -90,6 +90,20 @@ namespace Warehouse.Controllers
                     Value = u.ID.ToString()
                 }).ToList();
 
+                //int id = 279;
+
+                //int quantityTransferModels = (from s in _db.TransferModels where s.LaptopID == id select s.LaptopQuantity).Sum();
+                //int quantityLaptopModels = (from q in _db.LaptopModels where q.ID == id select q.Quantity).FirstOrDefault();
+
+
+                //int quantityLeft = quantityLaptopModels - quantityTransferModels;
+
+
+                //ViewData["number"] =
+                //    Enumerable.Range(1, quantityLeft).
+                //    Select(i => new SelectListItem
+                //    { Text = i.ToString(), Value = i.ToString() });
+
 
                 return View();
             }

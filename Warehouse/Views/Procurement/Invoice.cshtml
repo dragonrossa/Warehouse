@@ -1,0 +1,46 @@
+﻿@model Warehouse.Models.ProcurementModels
+
+@*@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+}*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<head>
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+</head>
+
+
+<div class="container-fluid">
+    <h1>New request was sent to @ViewBag.supplier </h1>
+</div>
+
+<div class="container-fluid">
+    @Html.LabelFor(m => m.InvoiceNo)
+    @Html.DisplayFor(m => m.InvoiceNo)
+</div>
+
+<div class="container-fluid">
+    @Html.LabelFor(m=>m.Quantity):
+    @Html.DisplayFor(m=>m.Quantity)
+</div>
+
+<div class="container-fluid">
+    @Html.LabelFor(m=>m.Computer):
+    @Html.DisplayFor(m=>m.Computer)
+</div>
+
+<div class="container-fluid">
+    @Html.LabelFor(m=>m.RequestDate):
+    @Html.DisplayFor(m=>m.RequestDate)
+</div>
+<div class="container-fluid">
+    <h6>Your request for procurement has been submited.</h6>    
+</div>
+
+
+<div class="container-fluid">
+    @Html.ActionLink("Back", "Index", "Procurement")
+</div>

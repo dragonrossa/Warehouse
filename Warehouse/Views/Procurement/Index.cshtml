@@ -1,0 +1,58 @@
+﻿@model Warehouse.Models.ProcurementModels
+
+@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<head>
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<div class="container-fluid">
+    <h1>Procurement request</h1>
+
+</div>
+
+<div class="container-fluid">
+    <h3>Hello @ViewBag.user, here you can create your order.</h3>
+</div>
+
+
+<div class="container-fluid">
+    <h5>What computer do you want to order?</h5>
+
+</div>
+
+@using (Html.BeginForm("Invoice", "Procurement", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        @Html.DropDownList("computers")
+    </div>
+
+    <div class="container-fluid">
+        <h5>
+            How much you want to order?
+        </h5>
+
+    </div>
+
+    <div class="container-fluid">
+        <input type="number" id="quantity" name="quantity" placeholder="0" pattern="0"><br>
+    </div>
+
+    <div class="container-fluid">
+        <input type="submit" value="Send request" class="btn btn-primary" />
+    </div>
+
+    <div class="container-fluid">
+        @Html.ActionLink("Back", "Index", "StartPage")
+    </div>
+
+
+}
