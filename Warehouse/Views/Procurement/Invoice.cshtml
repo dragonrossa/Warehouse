@@ -1,8 +1,8 @@
 ﻿@model Warehouse.Models.ProcurementModels
 
 @*@{
-    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
-}*@
+        Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+    }*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -23,22 +23,31 @@
 </div>
 
 <div class="container-fluid">
-    @Html.LabelFor(m=>m.Quantity):
-    @Html.DisplayFor(m=>m.Quantity)
+    @Html.LabelFor(m => m.Quantity):
+    @Html.DisplayFor(m => m.Quantity)
 </div>
 
 <div class="container-fluid">
-    @Html.LabelFor(m=>m.Computer):
-    @Html.DisplayFor(m=>m.Computer)
+    @Html.LabelFor(m => m.Computer):
+    @Html.DisplayFor(m => m.Computer)
 </div>
 
 <div class="container-fluid">
-    @Html.LabelFor(m=>m.RequestDate):
-    @Html.DisplayFor(m=>m.RequestDate)
+    @Html.LabelFor(m => m.RequestDate):
+    @Html.DisplayFor(m => m.RequestDate)
 </div>
 <div class="container-fluid">
-    <h6>Your request for procurement has been submited.</h6>    
+    <h6>Your request for procurement has been submited.</h6>
 </div>
+
+@using (Html.BeginForm("DownloadPDF", "Procurement", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid">
+        <input type="submit" value="Download document" class="btn btn-primary" />
+    </div>
+}
 
 
 <div class="container-fluid">

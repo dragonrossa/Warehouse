@@ -176,7 +176,9 @@ namespace Warehouse.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Hometown = model.Hometown };
 
-                var userAdmin = new AdminModels { Username = model.Email, Access = true, LaptopAccess = true, LogAccess = true, SearchAccess = true, StoreAccess = true, TransferAccess = true, TaskAccess = true, SupplierAccess = true };
+                var userAdmin = new AdminModels { Username = model.Email, Access = true, LaptopAccess = true, LogAccess = true, 
+                    SearchAccess = true, StoreAccess = true, TransferAccess = true, TaskAccess = true, SupplierAccess = true, ProcurementAccess=true };
+
                 _db.AdminModels.Add(userAdmin);
                 _db.SaveChanges();
 

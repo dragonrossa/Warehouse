@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 
 namespace Warehouse.Controllers
 {
@@ -59,6 +63,23 @@ namespace Warehouse.Controllers
             var file = _db.UploadModels.ToList().Find(p => p.ID == FileId);
             return File(file.test, file.ContentType, file.Name);
         }
+
+        public ActionResult CreateNewPdf()
+        {
+            PdfDocument pdf = new PdfDocument();
+            pdf.Info.Title = "My First PDF";
+            PdfPage pdfPage = pdf.AddPage();
+            XGraphics graph = XGraphics.FromPdfPage(pdfPage);
+            XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
+            graph.DrawString("This is my first PDF document", font, XBrushes.Black, new XRect(0, 0, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.Center);
+            string pdfFilename = "firstpage.pdf";
+            string path = Server.MapPath("~/PDFFiles/");
+            pdf.Save(path+pdfFilename);
+
+            return View();
+        }
+
+
 
 
     }

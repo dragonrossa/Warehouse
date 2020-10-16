@@ -30,6 +30,8 @@ namespace Warehouse.Models
 
         public bool SupplierAccess { get; set; }
 
+        public bool ProcurementAccess { get; set; }
+
         public IEnumerable<AdminModels> access { get; set; }
 
     }

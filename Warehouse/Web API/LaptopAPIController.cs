@@ -59,7 +59,7 @@ namespace Warehouse.Controllers
         public HttpResponseMessage GetLaptopByQuantity([FromUri] LaptopModels laptop)
         {
 
-            int quantity = laptop.Quantity;
+            int? quantity = laptop.Quantity;
             if (quantity == null)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");

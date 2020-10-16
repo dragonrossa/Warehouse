@@ -9,6 +9,7 @@
     ViewBag.logsAccess = Model.LogAccess;
     ViewBag.searchAccess = Model.SearchAccess;
     ViewBag.supplierAccess = Model.SupplierAccess;
+    ViewBag.procurementAccess = Model.ProcurementAccess;
 }
 
 
@@ -79,11 +80,21 @@ else
 @if (ViewBag.supplierAccess == true)
 {
     <li> @Html.ActionLink("Supplier", "Index", "ComputerList", new { area = "" }, null)</li>
-   
+
 }
 else
 {
-   
+
+}
+
+@if (ViewBag.procurementAccess == true)
+{
+    <li> @Html.ActionLink("Procurement", "Index", "Procurement", new { area = "" }, null)</li>
+
+}
+else
+{
+
 }
 
 

@@ -59,7 +59,7 @@ namespace Warehouse.Controllers
         public HttpResponseMessage GetLaptopByQuantity([FromUri] TransferModels transfer)
         {
 
-            int laptopquantity = transfer.LaptopQuantity;
+            int? laptopquantity = transfer.LaptopQuantity;
             if (laptopquantity == null)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
@@ -77,7 +77,7 @@ namespace Warehouse.Controllers
         public HttpResponseMessage GetStoreByID([FromUri] TransferModels transfer)
         {
 
-            int store = transfer.StoreID;
+            int? store = transfer.StoreID;
             if (store == null)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not found");
@@ -95,7 +95,7 @@ namespace Warehouse.Controllers
         public HttpResponseMessage GetLaptopByID([FromUri] TransferModels transfer)
         {
 
-            int laptopid = transfer.LaptopID;
+            int? laptopid = transfer.LaptopID;
 
             if (laptopid == null)
             {

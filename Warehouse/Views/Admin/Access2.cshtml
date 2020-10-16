@@ -94,6 +94,14 @@
             @Html.CheckBoxFor(modelitem => item.SupplierAccess, new { id = "supplierAccess" })
         </div>
 
+
+        <div class="container-fluid">
+            @Html.Label("Procurement access")
+
+
+            @Html.CheckBoxFor(modelitem => item.ProcurementAccess, new { id = "procurementAccess" })
+        </div>
+
         <div class="container-fluid">
             <input type="submit" value="Save" class="btn btn-primary" />
         </div>
