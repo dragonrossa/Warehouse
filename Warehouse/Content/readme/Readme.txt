@@ -91,3 +91,5 @@
 13.10 New Access view for Admin
 
 13.10 Taskbar for every user - by access rights - needs to login to check
+
+16.10 Procurement - on behalf of request create PDF and download it, example is in folder PDFfiles
