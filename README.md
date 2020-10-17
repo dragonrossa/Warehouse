@@ -25,6 +25,8 @@
 
 ###### Suppliers for computers - add, update, delete
 
+###### Procurement request - generate and download PDF documents
+
 ##### For more check folder ~/Warehouse/Content/printscreen
 
 And now...
