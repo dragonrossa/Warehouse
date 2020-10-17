@@ -11,6 +11,7 @@ using PdfSharp.Pdf;
 using System.Net;
 using System.IO;
 using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Warehouse.Controllers
 {
@@ -18,42 +19,38 @@ namespace Warehouse.Controllers
     {
         public ApplicationDbContext _db = new ApplicationDbContext();
         // GET: Procurement
-        public ActionResult Index()
+      
+
+        public ActionResult CreateInvoice()
         {
 
             var username = User.Identity.Name;
             var user = (from u in _db.UserModels where u.UserName == username select u).FirstOrDefault();
             ViewBag.user = user.Name;
-            
+
             ViewData["computers"] = _db.ComputerListModels.ToList().Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.ID.ToString()
             }).ToList();
-         
-            return View();
 
-        }
-
-
-        public ActionResult Invoice(ProcurementModels procurement)
-        {
-
-            
             return View();
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Invoice(FormCollection form)
+        public ActionResult CreateInvoice(FormCollection form)
         {
+
             int laptopID = Convert.ToInt32(form["computers"]);
 
             var laptopName = (from l in _db.ComputerListModels where l.ID == laptopID select l.Name).FirstOrDefault();
 
             var quantity = Convert.ToInt32(form["quantity"]);
+
+            TempData["quantity"] = quantity;
+            TempData["computer"] = laptopName;
+            TempData["date"] = DateTime.Now;
 
             int? id = (from p in _db.ProcurementModels orderby p.ID descending select p.ID).FirstOrDefault();
 
@@ -65,8 +62,11 @@ namespace Warehouse.Controllers
 
             string invoiceNo = "0000" + id;
 
-            ProcurementModels procurement = new ProcurementModels() { 
-                Computer = laptopName.ToString(), 
+            TempData["invoiceNo"] = invoiceNo;
+
+            ProcurementModels procurement = new ProcurementModels()
+            {
+                Computer = laptopName.ToString(),
                 Quantity = quantity,
                 InvoiceNo = invoiceNo,
                 RequestDate = DateTime.Today
@@ -99,10 +99,10 @@ namespace Warehouse.Controllers
                 new XRect(50, 100, 200, 0), XStringFormats.TopLeft);
 
             graph.DrawString(pdfFilename, font,
-                XBrushes.Black, 
+                XBrushes.Black,
                 new XRect(50, 130, 200, 0), XStringFormats.TopLeft);
 
-            graph.DrawString("Quantity: " + procurement.Quantity , font,
+            graph.DrawString("Quantity: " + procurement.Quantity, font,
                   XBrushes.Black,
                 new XRect(50, 160, 200, 0), XStringFormats.TopLeft);
 
@@ -126,20 +126,30 @@ namespace Warehouse.Controllers
             pdf.Save(path + pdfFilename);
             //TempData for DownloadPDF
             TempData["pdfFilename"] = pdfFilename;
-  
 
-            return View(procurement);
+
+
+            return RedirectToAction("DownloadInvoice");
         }
 
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DownloadPDF()
+        public ActionResult DownloadInvoice()
         {
 
+            //Uri myUri = new Uri(Request.Url.AbsoluteUri);
 
-             var pdfFilename = TempData["pdfFilename"];
-            
+            ViewBag.invoiceNo = TempData["invoiceNo"];
+            ViewBag.quantity = TempData["quantity"];
+            ViewBag.computer = TempData["computer"];
+            ViewBag.date = TempData["date"];
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DownloadInvoiceNo()
+        {
+            var pdfFilename = TempData["pdfFilename"];
+
             Response.Clear();
             Response.ClearContent();    // Add this line
             Response.ClearHeaders();
@@ -147,16 +157,12 @@ namespace Warehouse.Controllers
 
             Response.ContentType = "Application/pdf";
             Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", pdfFilename));
-            Response.TransmitFile(Server.MapPath("~/PDFFiles/"+ pdfFilename));
+            Response.TransmitFile(Server.MapPath("~/PDFFiles/" + pdfFilename));
 
             Response.End();
             Response.Flush();
-
-
-            return RedirectToAction("Index");
+            return View();
         }
-
-
         
     }
 }

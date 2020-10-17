@@ -27,7 +27,7 @@
 
 </div>
 
-@using (Html.BeginForm("Invoice", "Procurement", FormMethod.Post))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -51,7 +51,7 @@
     </div>
 
     <div class="container-fluid">
-        @Html.ActionLink("Back", "Index", "StartPage")
+      @Html.ActionLink("Back", "Index", "StartPage")
     </div>
 
 

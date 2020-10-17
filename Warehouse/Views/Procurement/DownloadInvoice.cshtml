@@ -1,8 +1,8 @@
 ﻿@model Warehouse.Models.ProcurementModels
 
-@*@{
+@{
         Layout = "~/Views/Shared/_LayoutApplication.cshtml";
-    }*@
+    }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -19,28 +19,28 @@
 
 <div class="container-fluid">
     @Html.LabelFor(m => m.InvoiceNo)
-    @Html.DisplayFor(m => m.InvoiceNo)
+    @ViewBag.invoiceNo
 </div>
 
 <div class="container-fluid">
     @Html.LabelFor(m => m.Quantity):
-    @Html.DisplayFor(m => m.Quantity)
+    @ViewBag.quantity
 </div>
 
 <div class="container-fluid">
     @Html.LabelFor(m => m.Computer):
-    @Html.DisplayFor(m => m.Computer)
+    @ViewBag.computer
 </div>
 
 <div class="container-fluid">
     @Html.LabelFor(m => m.RequestDate):
-    @Html.DisplayFor(m => m.RequestDate)
+    @ViewBag.date
 </div>
 <div class="container-fluid">
     <h6>Your request for procurement has been submited.</h6>
 </div>
 
-@using (Html.BeginForm("DownloadPDF", "Procurement", FormMethod.Post))
+@using (Html.BeginForm("DownloadInvoiceNo", "Procurement", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -51,5 +51,5 @@
 
 
 <div class="container-fluid">
-    @Html.ActionLink("Back", "Index", "Procurement")
+    @Html.ActionLink("Back", "CreateInvoice", "Procurement")
 </div>

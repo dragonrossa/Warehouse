@@ -517,10 +517,9 @@
     <Content Include="Views\Supplier\Edit.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Shared\_LayoutApplication.cshtml" />
-    <Content Include="Views\Procurement\Index.cshtml" />
-    <Content Include="Views\Procurement\Invoice.cshtml" />
     <Content Include="Views\Upload\CreateNewPdf.cshtml" />
-    <Content Include="Views\Procurement\DownloadPDF.cshtml" />
+    <Content Include="Views\Procurement\CreateInvoice.cshtml" />
+    <Content Include="Views\Procurement\DownloadInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
