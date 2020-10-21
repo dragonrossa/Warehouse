@@ -1,0 +1,283 @@
+﻿@model Warehouse.Models.UserModels
+
+
+@{
+    ViewBag.Title = "Test";
+}
+
+<title>@ViewBag.Title</title>
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<head><script src='https://kit.fontawesome.com/a076d05399.js'></script></head>
+
+<style>
+    .button {
+        background-color: #cc0e0e; /* DarkRed */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button1 {
+        border-radius: 2px;
+    }
+
+    .button2 {
+        border-radius: 4px;
+    }
+
+    .button3 {
+        border-radius: 8px;
+    }
+
+    .button4 {
+        border-radius: 12px;
+    }
+
+    .button5 {
+        border-radius: 50%;
+    }
+
+    tr:last-child {
+        background: #9acef4;
+    }
+</style>
+<div class="container-fluid">
+    <div class="container-fluid">
+        <h1>List of users</h1>
+        <h2>Details</h2>
+    </div>
+    <br />
+    <div class="container-fluid">
+        <button type="button" class="btn btn-light">@Html.ActionLink("Add partner", "NewPartner")</button>
+    </div>
+    <br />
+    <fieldset>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    @*<a href="@Url.Action("Action", "Controller")" class="btn btn-info">
+Your link text 
+<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+</a>*@
+
+
+
+                    <table class="table next">
+                        <tr>
+                            <th style="text-align:center">
+                                User details
+                            </th>
+
+                            <th>
+                               
+                                  
+                                  <a href="@Url.Action("DescModal","Upload")">  <i style='font-size:24px' class='fas'>&#xf107;</i> </a>
+                                
+                                <a href="@Url.Action("AscModal","Upload")"><i style='font-size:24px' class='fas'>&#xf106;</i></a>
+                            </th>
+                           
+                        </tr>
+                        @foreach (var item in Model.users)
+                        {
+                            <tr>
+                               
+                                <td class="userid" id="@item.ID">
+                                    
+                                        @item.Name,
+                                        @item.Address,
+                                        @item.ZipCode,
+                                        @item.Country,
+                                        @item.Telephone
+                                    
+
+
+
+                                </td>
+
+                                @*<td class="hide" style="display:none">
+                                    @item.Hometown
+                                </td>*@
+                                @Html.HiddenFor(modelitem => item.Hometown)
+                                @Html.HiddenFor(modalitem => item.Mail)
+
+                            </tr>
+
+                        }
+
+                    </table>
+
+
+
+
+                    @*<button id="btnShowModal" type="button"
+                                class="btn btn-sm btn-default pull-left col-lg-11 button button4 next">
+
+                            <span class="userid" id=@item.ID>
+
+                                @item.Name
+                                @item.Address
+                                @item.ZipCode
+                                @item.Country
+                                @item.Telephone
+
+
+                            </span>
+
+
+
+                        </button>*@
+
+
+                    <div class="modal fade" tabindex="-1" id="loginModal"
+                         data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        ×
+                                    </button>
+                                    <h4 class="modal-title" id="">
+                                        Details about
+                                    </h4>
+                                    <div class="user3"></div>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+
+
+                                        <div class="form-group">
+                                            <span>Details:</span>
+                                            <br />
+                                            <span>Full name:</span>
+                                            <div class="fullname"></div>
+                                            <span>Address:</span>
+                                            <div class="address"></div>
+                                            <span>Zipcode:</span>
+                                            <div class="zipcode"></div>
+                                            <span>Country:</span>
+                                            <div class="country"></div>
+                                            <span>Telephone:</span>
+                                            <div class="telephone"></div>
+                                            <span>Hometown:</span>
+                                            <div class="hometown"></div>
+                                            <span>Mail:</span>
+                                            <div class="mail"></div>
+                                        </div>
+
+
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+
+                                    <button type="button" id="btnHideModal" class="btn btn-primary button button4">
+                                        Hide
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+
+</script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //$("#btnShowModal").click(function () {
+        //    $("#loginModal").modal('show');
+        //});
+
+        $("#btnHideModal").click(function () {
+            $("#loginModal").modal('hide');
+        });
+        $(".next").click(function () {
+
+
+
+            $("#loginModal").modal('show');
+
+
+        });
+
+    
+
+
+
+
+        $('.userid').click(function () {
+            console.log(this.id);
+            var ID = this.id;
+            $('.user3').text(ID);
+
+          
+
+
+            var span_Text7 = document.getElementById(ID).innerText;
+
+
+            var short_description = span_Text7.split(' ').slice(0).join(' ');
+
+            var short2 = short_description.split(',');
+
+            var hometown = document.getElementById("item_Hometown").value;
+
+            var mail = document.getElementById("item_Mail").value;
+
+            //var home = document.getElementById("hide").innerText;
+
+            //$('.details').text(short_description);
+
+            $('.fullname').text(short2[0]);
+            $('.address').text(short2[1]);
+            $('.zipcode').text(short2[2]);
+            $('.country').text(short2[3]);
+            $('.telephone').text(short2[4]);
+            $('.hometown').text(hometown);
+            $('.mail').text(mail);
+
+
+
+           
+            console.log("details:" + span_Text7)
+            console.log("short" + short_description)
+            console.log("fullname: " + short2[0])
+            console.log("address:" + short2[1])
+            console.log("zipcode:" + short2[2]);
+            console.log("country:" + short2[3]);
+            console.log("telephone:" + short2[4]);
+
+            //console.log("home" + home);
+            console.log("hometown:" + hometown)
+            //console.log("hometown:" + hometown);
+
+          
+       
+
+        });
+
+
+
+
+
+
+    });
+</script>

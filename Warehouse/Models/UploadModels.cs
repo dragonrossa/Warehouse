@@ -15,5 +15,6 @@ namespace Warehouse.Models
         public string Data { get; set; }
         [MaxLength(2130702268)]
         public byte[] test { get; set; }
+
     }
 }

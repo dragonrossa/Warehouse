@@ -9,6 +9,7 @@ using Warehouse.Models;
 using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
+using System.Web.UI.WebControls;
 
 namespace Warehouse.Controllers
 {
@@ -79,7 +80,100 @@ namespace Warehouse.Controllers
             return View();
         }
 
+        public ActionResult ModalPopUp()
+        {
 
+           
+            //List<UserModels> users = _db.UserModels.ToList().Select(u => new UserModels
+            //{
+            //    ID = u.ID,
+            //    Name = u.Name + " " + u.LastName,
+            //    UserName = u.UserName,
+            //    Address = u.Address,
+            //    ZipCode = u.ZipCode,
+            //    Country = u.Country,
+            //    Telephone = u.Telephone,
+            //    Hometown = u.Hometown,
+            //    Mail = u.Mail
+            //}).ToList();
+
+
+            List<UserModels> users = _db.UserModels.ToList().OrderBy(u=>u.ID).Select(u => new UserModels
+            {
+                ID = u.ID,
+                Name = u.Name + " " + u.LastName,
+                UserName = u.UserName,
+                Address = u.Address,
+                ZipCode = u.ZipCode,
+                Country = u.Country,
+                Telephone = u.Telephone,
+                Hometown = u.Hometown,
+                Mail = u.Mail
+            }).ToList();
+
+
+
+
+            return View( new UserModels() { users = users });
+        }
+
+        public ActionResult NewPartner()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+        public ActionResult NewPartner(UserModels user)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.UserModels.Add(user);
+                _db.SaveChanges();
+                return RedirectToAction("ModalPopUp");
+            }
+            return View(user);
+        }
+
+
+    
+        public ActionResult DescModal()
+        {
+
+            List<UserModels> users = _db.UserModels.ToList().OrderByDescending(u => u.Name).Select(u => new UserModels
+            {
+                ID = u.ID,
+                Name = u.Name + " " + u.LastName,
+                UserName = u.UserName,
+                Address = u.Address,
+                ZipCode = u.ZipCode,
+                Country = u.Country,
+                Telephone = u.Telephone,
+                Hometown = u.Hometown,
+                Mail = u.Mail
+            }).ToList();
+            return View("ModalPopUp", new UserModels() { users = users });
+        }
+
+        public ActionResult AscModal()
+        {
+
+            List<UserModels> users = _db.UserModels.ToList().OrderBy(u => u.Name).Select(u => new UserModels
+            {
+                ID = u.ID,
+                Name = u.Name + " " + u.LastName,
+                UserName = u.UserName,
+                Address = u.Address,
+                ZipCode = u.ZipCode,
+                Country = u.Country,
+                Telephone = u.Telephone,
+                Hometown = u.Hometown,
+                Mail = u.Mail
+            }).ToList();
+            return View("ModalPopUp", new UserModels() { users = users });
+        }
 
 
     }

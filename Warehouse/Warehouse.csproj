@@ -520,6 +520,8 @@
     <Content Include="Views\Upload\CreateNewPdf.cshtml" />
     <Content Include="Views\Procurement\CreateInvoice.cshtml" />
     <Content Include="Views\Procurement\DownloadInvoice.cshtml" />
+    <Content Include="Views\Upload\ModalPopUp.cshtml" />
+    <Content Include="Views\Upload\NewPartner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

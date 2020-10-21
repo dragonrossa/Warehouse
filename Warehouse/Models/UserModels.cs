@@ -37,5 +37,9 @@ namespace Warehouse.Models
         public string Telephone { get; set; }
         [Display(Name = "Date modified")]
         public DateTime? DateModified { get; set; }
+
+        public IEnumerable<UserModels> users { get; set; }
+
+       
     }
 }

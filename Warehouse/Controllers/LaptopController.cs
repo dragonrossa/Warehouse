@@ -99,7 +99,6 @@ namespace Warehouse.Controllers
                 lastInput.Savings = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.OldPrice - k.Price).First(); // Savings per unit
                 lastInput.Date = DateTime.Now;  // add Date time now
                 _db.SaveChanges();
-                //  List<LogModels> logModels = (from l in _db.LogModels select l).ToList();
 
                 //Create new log
                 LogModels log = new LogModels {
