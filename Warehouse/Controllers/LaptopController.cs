@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using Warehouse.Models;
 using Warehouse.Helpers;
 using Microsoft.AspNet.Identity;
+using System.Diagnostics.Contracts;
 
 namespace Warehouse.Controllers
 {
@@ -23,22 +24,26 @@ namespace Warehouse.Controllers
         {
             var user = User.Identity.GetUserName();
 
-            bool access = (from a in _db.AdminModels where a.Username == user select a.LaptopAccess).FirstOrDefault();
+            //bool access = (from a in _db.AdminModels where a.Username == user select a.LaptopAccess).FirstOrDefault();
 
-            bool fal = false;
+            //bool fal = false;
 
-            if (access == fal)
-            {
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return RedirectToAction("Index", "Admin");
-            }
-            else
-            {
+            //if (access == fal)
+            //{
+            //    ModelState.AddModelError("", "Invalid login attempt.");
+            //    return RedirectToAction("Index", "Admin");
+            //}
+            //else
+            //{
                 try
                 {
-                    List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k)
-                                                  .OrderBy(x => x.Quantity)
-                                                  .ToList();
+                    //List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k)
+                    //                              .OrderBy(x => x.Quantity)
+                    //                              .ToList();
+
+                    //new
+
+                    List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
 
                     var lastInput = (from k in _db.LaptopModels
                                      select k)
@@ -49,16 +54,18 @@ namespace Warehouse.Controllers
                     ViewBag.date = lastInput.Date;
                     ViewBag.quantity = lastInput.Quantity;
 
-                    var maxNumber = ListLaptop.Sum(d => d.Savings);
+                    var maxNumber = laptop.Sum(d => d.Savings);
 
-                    var sumQuantity = ListLaptop.Sum(d => d.Quantity);
+                    var sumQuantity = laptop.Sum(d => d.Quantity);
 
-                    var sumFullPrice = ListLaptop.Sum(d => d.FullPrice);
+                    var sumFullPrice = laptop.Sum(d => d.FullPrice);
 
                     ViewBag.maxNumber = maxNumber;
                     ViewBag.sumQuantity = sumQuantity;
                     ViewBag.sumFullPrice = sumFullPrice;
-                    return View(ListLaptop);
+
+                    return View(new LaptopModels { laptop = laptop });
+                  //  return View(ListLaptop);
 
                 }
                 catch (Exception e)
@@ -66,10 +73,70 @@ namespace Warehouse.Controllers
                     Console.WriteLine("{0} Exception caught.", e);
                 }
 
-            }
+            //}
             return View();
            
         }
+
+
+        public ActionResult AscName()
+        {
+            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.Name).Select(u => u).ToList();
+
+            return View("Index", new LaptopModels { laptop = laptop});
+        }
+
+        public ActionResult DescName()
+        {
+            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderByDescending(u => u.Name).Select(u=>u).ToList();
+
+            return View("Index", new LaptopModels { laptop = laptop });
+        }
+
+
+        public ActionResult AscQuantity()
+        {
+            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.Quantity).Select(u => u).ToList();
+
+            return View("Index", new LaptopModels { laptop = laptop });
+        }
+
+        public ActionResult DescQuantity()
+        {
+            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderByDescending(u => u.Quantity).Select(u => u).ToList();
+
+            return View("Index", new LaptopModels { laptop = laptop });
+        }
+
+        public ActionResult AscPrice()
+        {
+            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.Price).Select(u => u).ToList();
+
+            return View("Index", new LaptopModels { laptop = laptop });
+        }
+
+        public ActionResult DescPrice()
+        {
+            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderByDescending(u => u.Price).Select(u => u).ToList();
+
+            return View("Index", new LaptopModels { laptop = laptop });
+        }
+
+
+        public ActionResult AscFullPrice()
+        {
+            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.FullPrice).Select(u => u).ToList();
+
+            return View("Index", new LaptopModels { laptop = laptop });
+        }
+
+        public ActionResult DescFullPrice()
+        {
+            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderByDescending(u => u.FullPrice).Select(u => u).ToList();
+
+            return View("Index", new LaptopModels { laptop = laptop });
+        }
+
 
         //GET: MasterData/Create
         public ActionResult Create()

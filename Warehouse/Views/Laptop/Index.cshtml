@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Warehouse.Models.LaptopModels>
+﻿@model  Warehouse.Models.LaptopModels
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
@@ -6,6 +6,8 @@
 <head>
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 </head>
 
@@ -27,22 +29,58 @@
     <table class="table">
         <tr>
             <th>
+
                 @Html.DisplayNameFor(model => model.Name)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescName","Laptop")"> 
+                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i> </a>
+
+                    <a href="@Url.Action("AscName","Laptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i></a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescQuantity","Laptop")">
+                        <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscQuantity","Laptop")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescPrice","Laptop")">
+                        <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscPrice","Laptop")">
+                        <i style='font-size:15px;color:black;' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FullPrice)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescFullPrice","Laptop")">
+                        <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscFullPrice","Laptop")">
+                        <i style='font-size:15px;color:black;' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
-            <th></th>
+            <th>Info</th>
         </tr>
 
-        @foreach (var item in Model)
-        {
+
+        @foreach(var item in Model.laptop)
+        { 
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)

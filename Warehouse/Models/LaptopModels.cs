@@ -57,5 +57,7 @@ namespace Warehouse.Models
         public decimal? Savings { get; set; }
         public DateTime? Date { get; set; }
 
+        public IEnumerable<LaptopModels> laptop { get; set;}
+
     }
 }
