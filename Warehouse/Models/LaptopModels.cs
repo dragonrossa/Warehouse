@@ -47,7 +47,7 @@ namespace Warehouse.Models
         //PlaceID
         public int? PlaceID { get; set; }
         //FullPrice
-       // [Range(1, 200000)]
+        // [Range(1, 200000)]
         [Column(TypeName = "money")]
         [Display(Name = "Full price")]
         public decimal? FullPrice { get; set; }

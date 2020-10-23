@@ -24,24 +24,9 @@ namespace Warehouse.Controllers
         {
             var user = User.Identity.GetUserName();
 
-            //bool access = (from a in _db.AdminModels where a.Username == user select a.LaptopAccess).FirstOrDefault();
-
-            //bool fal = false;
-
-            //if (access == fal)
-            //{
-            //    ModelState.AddModelError("", "Invalid login attempt.");
-            //    return RedirectToAction("Index", "Admin");
-            //}
-            //else
-            //{
+         
                 try
                 {
-                    //List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k)
-                    //                              .OrderBy(x => x.Quantity)
-                    //                              .ToList();
-
-                    //new
 
                     List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
 
@@ -73,7 +58,6 @@ namespace Warehouse.Controllers
                     Console.WriteLine("{0} Exception caught.", e);
                 }
 
-            //}
             return View();
            
         }
@@ -192,8 +176,8 @@ namespace Warehouse.Controllers
            
             try
             {
-                List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
-                return View(ListLaptop);
+                List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
+                return View(laptop);
             }
             catch (Exception e)
             {
@@ -209,8 +193,8 @@ namespace Warehouse.Controllers
 
             try
             {
-                List<LaptopModels> Laptop = (from k in _db.LaptopModels select k).ToList();
-                return View(Laptop);
+                List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
+                return View(laptop);
             }
             catch (Exception e)
             {
@@ -227,8 +211,8 @@ namespace Warehouse.Controllers
             
             try
             {
-                List<LaptopModels> Laptop = (from k in _db.LaptopModels select k).ToList();
-                return View(Laptop);
+                List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
+                return View(laptop);
             }
             catch (Exception e)
             {
@@ -388,10 +372,12 @@ namespace Warehouse.Controllers
             try
             {
                 var laptopID = id;
+
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
+
                 LaptopModels laptop = _db.LaptopModels.Find(id);
 
                 if (laptop == null)
@@ -405,7 +391,15 @@ namespace Warehouse.Controllers
                              where t.LaptopID == laptopID
                              select s.Name).SingleOrDefault();
 
-                ViewBag.storeName = query;
+
+                List<string> stores = (from t in _db.TransferModels
+                                       join s in _db.StoreModels on t.StoreID
+                                       equals s.ID
+                                       where t.LaptopID == laptopID
+                                       select s.Name).ToList();
+
+
+                ViewBag.storeName = query == null ? ViewBag.storeName = "No transfers for now" : ViewBag.storeName = query;
 
                 return View(laptop);
             }
@@ -468,8 +462,8 @@ namespace Warehouse.Controllers
             try
             {
 
-                List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
-                var newList = ListLaptop.Where(i => i.Quantity != 0).ToList();
+                List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
+                var newList = laptop.Where(i => i.Quantity != 0).ToList();
                 return View(newList);
             }
             catch (Exception e)
@@ -531,7 +525,6 @@ namespace Warehouse.Controllers
                     Value = u.ID.ToString()
                 }).ToList();
 
-                // ViewBag.poste_id = new SelectList(_db.StoreModels, "Name", "Name");
 
                 return View();
             }

@@ -28,29 +28,29 @@
 
             //var laptop = new List<LaptopModels>
             //{
-            //    new LaptopModels { Name = "Notebook HP 250-G7",Description = "UMA i3-8130U/15.6 FHD/8GB/256GB/W10H 7DC56EA", Quantity = 100, Manufacturer = "HP", OS = "Windows 10",Price = 4333, OldPrice = 7754, Date = DateTime.Now},
-            //    new LaptopModels { Name = "Notebook Acer Aspire 1", Description = "NX.GVZEX.010", Quantity = 23, Manufacturer = "Acer", OS = "Windows 10", Price = 2287, OldPrice = 3245, Date = DateTime.Now},
+            //   new LaptopModels { Name = "Notebook HP 250-G7",Description = "UMA i3-8130U/15.6 FHD/8GB/256GB/W10H 7DC56EA", Quantity = 100, Manufacturer = "HP", OS = "Windows 10",Price = 4333, OldPrice = 7754, Date = DateTime.Now},
+            //   new LaptopModels { Name = "Notebook Acer Aspire 1", Description = "NX.GVZEX.010", Quantity = 23, Manufacturer = "Acer", OS = "Windows 10", Price = 2287, OldPrice = 3245, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook HP 250 G7a", Description = "6MR38ES", Quantity = 88, Manufacturer = "HP", OS = "Windows 10", Price = 4443, OldPrice = 5552, Date = DateTime.Now },
-            //    new LaptopModels { Name = "Notebook Acer Aspire 1a", Description= "NX.SHXEX.050",Quantity=105,Manufacturer="Acer",OS= "Windows 10",Price= 2554,OldPrice=3438, Date = DateTime.Now },
+            //   new LaptopModels { Name = "Notebook Acer Aspire 1a", Description= "NX.SHXEX.050",Quantity=105,Manufacturer="Acer",OS= "Windows 10",Price= 2554,OldPrice=3438, Date = DateTime.Now },
             //    new LaptopModels { Name = "Notebook ASUS X509JB-WB511T",Description= "i5-1035G1/8G/512G/MX110/15.6''FHD / W10",Quantity=55,Manufacturer="Asus",OS= "Windows 10",Price= 5998,OldPrice=7099, Date = DateTime.Now },
             //    new LaptopModels { Name = "Notebook Acer", Description= "A315-22-94Z2, NX.HE8EX.00Q",Quantity=15,Manufacturer="Acer",OS= "Linux",Price= 3100,OldPrice=3300, Date = DateTime.Now },
             //    new LaptopModels { Name = "Notebook Acer Aspire 7", Description= "A715-72G-50M9, NH.GXCEX.024",Quantity=74,Manufacturer="Acer",OS= "Linux",Price= 5554,OldPrice=5755, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook HP 255 G7",Description= "UMA 15.6 FHD/R5-3500U/8GB/256GB/W10Home, 2D231EA",Quantity= 18, Manufacturer="HP",OS= "Windows 10 Home",Price= 4776,OldPrice=4999, Date = DateTime.Now },
             //    new LaptopModels { Name = "Notebook Acer Aspire",Description= "A515-54G-52BJ, NX.HFUEX.002",Quantity= 8,Manufacturer="Acer",OS= "Linux",Price= 5221,OldPrice=6220, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook Acer Aspire 7a",Description= "A715-72G-50M9, NH.GXCEX.024",Quantity=55,Manufacturer="Acer",OS= "Linux",Price= 5554,OldPrice=5770, Date = DateTime.Now},
-            //    new LaptopModels { Name = "Notebook HP 255 G7a",Description= "UMA 15.6 FHD/R5-3500U/8GB/256GB/W10Home, 2D231EA",Quantity=18,Manufacturer="HP",OS= "Windows 10 Home",Price= 4776,FullPrice=4996, Date = DateTime.Now},
+            //    new LaptopModels { Name = "Notebook HP 255 G7a",Description= "UMA 15.6 FHD/R5-3500U/8GB/256GB/W10Home, 2D231EA",Quantity=18,Manufacturer="HP",OS= "Windows 10 Home",Price= 4776,OldPrice=4996, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook Acer Aspire",Description= "A515-54G-52BJ, NX.HFUEX.002",Quantity=56,Manufacturer="Acer",OS= "Linux",Price= 5221,OldPrice=5321, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook Asus X512DA-EJ564T",Description= "15.6˝/FHD/AMD R5/12GB/512GB SSD/W10",Quantity=121,Manufacturer="Asus",OS= "Windows 10 Home",Price= 4599,OldPrice=4699, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook Acer Aspire 5",Description= "NX.HN2EX.004",Quantity=42,Manufacturer="Acer",OS= "Windows 10 Home",Price= 5099,OldPrice= 5665, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook HP Pavilion x360",Description= "14-dh1027nm 8NJ30EA",Quantity=15,Manufacturer="HP",OS= "Windows 10 Home",Price= 5554,OldPrice=5755, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook Lenovo V15", Description= "R3-3250U/8GB/256GB/15,6''FHD/W10H/3god",Quantity=10,Manufacturer="Lenovo",OS= "Windows 10 Home 64",Price= 3887,OldPrice=3999, Date = DateTime.Now},
             //    new LaptopModels { Name = "Notebook HP Pavilion x360a",Description= "14-dw0012nm, 3M710EA",Quantity=33,Manufacturer="HP",OS= "Windows 10 Home",Price= 5887,OldPrice=5997, Date = DateTime.Now},
-            //    new LaptopModels { Name = "Notebook HP 250 G7",Description= "3C139EA",Quantity=78,Manufacturer="HP",OS= "Windows 10 Home",Price= 4887,FullPrice=4997, Date = DateTime.Now},
-            //    new LaptopModels { Name = "Notebook Acer Aspire 3",Description= "NX.HS5EX.00E",Quantity=44,Manufacturer="Acer",OS= "Windows 10",Price= 3998,FullPrice=4125, Date = DateTime.Now},
-            //    new LaptopModels { Name = "Notebook Acer Aspire 5a",Description= "NX.HFNEX.002",Quantity=63,Manufacturer="Acer",OS= "Boot-up Linux",Price= 4443,FullPrice=4533, Date = DateTime.Now},
-            //    new LaptopModels { Name = "Notebook Lenovo IdeaPad 3",Description= "15IIL05, 81WE00HBSC",Quantity=34,Manufacturer="Lenovo",OS= "Windows 10 Home",Price= 3776,FullPrice=3996, Date = DateTime.Now},
-            //    new LaptopModels { Name = "Notebook Asus X509JA",Description= "X509JA-WB311 W10",Quantity=45,Manufacturer="Asus",OS= "Windows 10 Home HR",Price=4221,FullPrice=4331, Date = DateTime.Now},
-            //    new LaptopModels { Name = "Notebook HP 15s-eq1020nm 1N7Z9EA", Description = "AMD Ryzen 3 3250U 2.60GHz", Quantity = 87, OS = "Windows Home 10 Cro 64", Price = 4332, FullPrice = 4552, Date = DateTime.Now}
+            //    new LaptopModels { Name = "Notebook HP 250 G7",Description= "3C139EA",Quantity=78,Manufacturer="HP",OS= "Windows 10 Home",Price= 4887,OldPrice=4997, Date = DateTime.Now},
+            //    new LaptopModels { Name = "Notebook Acer Aspire 3",Description= "NX.HS5EX.00E",Quantity=44,Manufacturer="Acer",OS= "Windows 10",Price= 3998,OldPrice=4125, Date = DateTime.Now},
+            //    new LaptopModels { Name = "Notebook Acer Aspire 5a",Description= "NX.HFNEX.002",Quantity=63,Manufacturer="Acer",OS= "Boot-up Linux",Price= 4443,OldPrice=4533, Date = DateTime.Now},
+            //    new LaptopModels { Name = "Notebook Lenovo IdeaPad 3",Description= "15IIL05, 81WE00HBSC",Quantity=34,Manufacturer="Lenovo",OS= "Windows 10 Home",Price= 3776,OldPrice=3996, Date = DateTime.Now},
+            //    new LaptopModels { Name = "Notebook Asus X509JA",Description= "X509JA-WB311 W10",Quantity=45,Manufacturer="Asus",OS= "Windows 10 Home HR",Price=4221,OldPrice=4331, Date = DateTime.Now},
+            //    new LaptopModels { Name = "Notebook HP 15s-eq1020nm 1N7Z9EA", Description = "AMD Ryzen 3 3250U 2.60GHz", Quantity = 87, OS = "Windows Home 10 Cro 64", Price = 4332, OldPrice = 4552, Date = DateTime.Now}
             //};
 
             //var store = new List<StoreModels> {
