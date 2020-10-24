@@ -43,8 +43,10 @@ namespace Warehouse.Models
         [Display(Name = "Old price")]
         public decimal? OldPrice { get; set; }
         //UserID
+        [NotMapped]
         public int? UserID { get; set; }
         //PlaceID
+        [NotMapped]
         public int? PlaceID { get; set; }
         //FullPrice
         // [Range(1, 200000)]

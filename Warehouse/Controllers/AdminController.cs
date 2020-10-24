@@ -19,6 +19,13 @@ namespace Warehouse.Controllers
 
         //list of users + list of roles + check button for roles
 
+        public class UserNotFoundException : Exception
+        {
+            public UserNotFoundException() : base() { }
+            public UserNotFoundException(string message) : base(message) { }
+            public UserNotFoundException(string message, Exception innerException)
+                : base(message, innerException) { }
+        }
 
         public ActionResult Index()
         {
@@ -46,6 +53,17 @@ namespace Warehouse.Controllers
                 catch (Exception e)
                 {
                     Console.WriteLine("{0} Exception caught.", e);
+
+                    //redirect if there are no Laptopmodels in list
+                    if (e.Message == "Sequence contains no elements")
+                    {
+
+                        //throw new UserNotFoundException();
+                        // throw;
+                        return RedirectToAction("NotFound");
+
+                    }
+
                 }
                 finally
                 {
@@ -54,6 +72,14 @@ namespace Warehouse.Controllers
             }
             return View();
         }
+
+        //Exception - UserNotFound
+
+        public ActionResult NotFound()
+        {
+            return View();
+        }
+
 
         public ActionResult ChangeRole(int id)
         {

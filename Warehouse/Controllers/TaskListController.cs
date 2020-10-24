@@ -17,11 +17,47 @@ namespace Warehouse.Controllers
 
         private ApplicationDbContext _db = new ApplicationDbContext();
 
- 
+        public class UserNotFoundException : Exception
+        {
+            public UserNotFoundException() : base() { }
+            public UserNotFoundException(string message) : base(message) { }
+            public UserNotFoundException(string message, Exception innerException)
+                : base(message, innerException) { }
+        }
+
+
         public ActionResult Index()
         {
-           ViewBag.user = User.Identity.GetUserName();   
-           return View();
+
+
+            try
+            {
+                ViewBag.user = User.Identity.GetUserName();
+                return View();
+            }
+            catch (Exception e)
+            {
+
+                //redirect if there are no Laptopmodels in list
+                if (e.Message == "Sequence contains no elements")
+                {
+
+                    //throw new UserNotFoundException();
+                    // throw;
+                    return RedirectToAction("NotFound");
+
+                }
+            }
+
+            return View();
+          
+        }
+
+        //Exception - UserNotFound
+
+        public ActionResult NotFound()
+        {
+            return View();
         }
 
         [HttpPost]

@@ -13,22 +13,19 @@ namespace Warehouse.Controllers
     public class StoreController : Controller
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
+
+        public class UserNotFoundException : Exception
+        {
+            public UserNotFoundException() : base() { }
+            public UserNotFoundException(string message) : base(message) { }
+            public UserNotFoundException(string message, Exception innerException)
+                : base(message, innerException) { }
+        }
+
         // GET: MasterData
         public ActionResult Index()
         {
-            var user = User.Identity.GetUserName();
-
-            bool access = (from a in _db.AdminModels where a.Username == user select a.StoreAccess).FirstOrDefault();
-
-            bool fal = false;
-
-            if (access == fal)
-            {
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return RedirectToAction("Index", "Laptop");
-            }
-            else
-            {
+            
                 try
                 {
                     List<StoreModels> storeModels = (from k in _db.StoreModels select k)
@@ -49,12 +46,36 @@ namespace Warehouse.Controllers
                 catch (Exception e)
                 {
                     Console.WriteLine("{0} Exception caught.", e);
+
+                //redirect if there are no Laptopmodels in list
+                if (e.Message == "Sequence contains no elements")
+                {
+
+                    //throw new UserNotFoundException();
+                    // throw;
+                    return RedirectToAction("NotFound");
+
                 }
+
+
+            }
 
                 return View();
 
-            }
+            
         }
+
+
+
+        //Exception - UserNotFound
+
+        public ActionResult NotFound()
+        {
+            return View();
+        }
+
+
+
 
         //GET: MasterData/Create
         public ActionResult Create()

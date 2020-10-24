@@ -92,10 +92,20 @@
         <dt>
             Laptop transfered:
         </dt>
+    <dd>
+        @if (ViewBag.storeName != null)
+        {
+            foreach (var item in ViewBag.storeName)
+            {
+                <li>@item</li>
+            }
+        }
+        @if (Enumerable.Count(ViewBag.storeName) == 0)
+        {
+            <li>There are no transfers for now</li>
+        }
+    </dd>
 
-        <dd>
-            @ViewBag.storeName
-        </dd>
     </dl>
 </div>
 

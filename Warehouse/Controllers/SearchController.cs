@@ -15,6 +15,14 @@ namespace Warehouse.Controllers
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
+        public class UserNotFoundException : Exception
+        {
+            public UserNotFoundException() : base() { }
+            public UserNotFoundException(string message) : base(message) { }
+            public UserNotFoundException(string message, Exception innerException)
+                : base(message, innerException) { }
+        }
+
         // GET: Search
         //Search - Laptop
         //Search - Store
@@ -27,21 +35,34 @@ namespace Warehouse.Controllers
         {
             var user = User.Identity.GetUserName();
 
-            bool access = (from a in _db.AdminModels where a.Username == user select a.SearchAccess).FirstOrDefault();
-
-            bool fal = false;
-
-            if (access == fal)
+            try
             {
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return RedirectToAction("Index", "Laptop");
-            }
-            else
-            {
-
-
                 return View();
             }
+            catch (Exception e)
+            {
+                //redirect if there are no Laptopmodels in list
+                if (e.Message == "Sequence contains no elements")
+                {
+
+                    //throw new UserNotFoundException();
+                    // throw;
+                    return RedirectToAction("NotFound");
+
+                }
+
+            }
+
+                return View();
+            
+        }
+
+
+        //Exception - UserNotFound
+
+        public ActionResult NotFound()
+        {
+            return View();
         }
 
         [HttpPost]

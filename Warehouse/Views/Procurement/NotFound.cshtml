@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+}
+
+<head>
+
+    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+<div class="container-fluid">
+
+    <h1>List not found!</h1>
+
+</div>
+
+<div class="container-fluid">
+    <h4> I'm sorry there is no list yet...</h4>
+
+
+</div>
+
+<div class="container-fluid">
+
+    <h6> Do you want to create new invoice? </h6>
+</div>
+
+
+<div class="container-fluid">
+
+    <span>  @Html.ActionLink("Click here", "CreateInvoice", "Procurement") </span>
+</div>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Helpers;
@@ -14,22 +15,24 @@ namespace Warehouse.Controllers
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
+
+        //Custom Exception for UserNotFound
+
+        public class UserNotFoundException : Exception
+        {
+            public UserNotFoundException() : base() {}
+            public UserNotFoundException(string message) : base(message) { }
+            public UserNotFoundException(string message, Exception innerException)
+                : base(message, innerException) { }
+        }
+
+
         // GET: Index
         public ActionResult Index()
         {
             var user = User.Identity.GetUserName();
 
-            bool access = (from a in _db.AdminModels where a.Username == user select a.TransferAccess).FirstOrDefault();
-
-            bool fal = false;
-
-            if (access == fal)
-            {
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return RedirectToAction("Index", "Laptop");
-            }
-            else
-            {
+          
 
                 try
                 {
@@ -66,13 +69,28 @@ namespace Warehouse.Controllers
                     return View(index);
                 }
                 catch (Exception e)
-                {
+               {
                     Console.WriteLine("{0} Exception caught.", e);
-                }
 
-                return View();
+                if (e.Message =="Sequence contains no elements")
+                {
+
+                    //throw new UserNotFoundException();
+                    // throw;
+                    return RedirectToAction("NotFound");
+
+                }
+               
+              return View();
             }
         }
+
+
+        public ActionResult NotFound()
+        {
+            return View();
+        }
+
 
         public ActionResult Create()
         {

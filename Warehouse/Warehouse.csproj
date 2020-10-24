@@ -240,6 +240,10 @@
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserRightsController.cs" />
+    <Compile Include="Migrations\202010241213424_AddNewRate.cs" />
+    <Compile Include="Migrations\202010241213424_AddNewRate.Designer.cs">
+      <DependentUpon>202010241213424_AddNewRate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ComputerListModels.cs" />
     <Compile Include="Models\ProcurementModels.cs" />
@@ -522,6 +526,16 @@
     <Content Include="Views\Procurement\DownloadInvoice.cshtml" />
     <Content Include="Views\Upload\ModalPopUp.cshtml" />
     <Content Include="Views\Upload\NewPartner.cshtml" />
+    <Content Include="Views\Transfer\NotFound.cshtml" />
+    <Content Include="Views\Laptop\NotFound.cshtml" />
+    <Content Include="Views\ComputerList\NotFound.cshtml" />
+    <Content Include="Views\Admin\NotFound.cshtml" />
+    <Content Include="Views\Log\NotFound.cshtml" />
+    <Content Include="Views\Procurement\NotFound.cshtml" />
+    <Content Include="Views\Store\NotFound.cshtml" />
+    <Content Include="Views\Supplier\NotFound.cshtml" />
+    <Content Include="Views\TaskList\NotFound.cshtml" />
+    <Content Include="Views\User\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -539,6 +553,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202010241213424_AddNewRate.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

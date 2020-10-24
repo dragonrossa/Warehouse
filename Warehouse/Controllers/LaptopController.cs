@@ -19,47 +19,81 @@ namespace Warehouse.Controllers
     public class LaptopController : Controller
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
+
+
+        //Custom Exception for UserNotFound
+
+        public class UserNotFoundException : Exception
+        {
+            public UserNotFoundException() : base() { }
+            public UserNotFoundException(string message) : base(message) { }
+            public UserNotFoundException(string message, Exception innerException)
+                : base(message, innerException) { }
+        }
+
         // GET: MasterData
         public ActionResult Index()
         {
             var user = User.Identity.GetUserName();
 
-         
-                try
+
+            try
+            {
+
+                List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
+
+                var lastInput = (from k in _db.LaptopModels
+                                 select k)
+                                .OrderByDescending(k => k.ID)
+                                .First();
+
+                ViewBag.laptop = lastInput.Name;
+                ViewBag.date = lastInput.Date;
+                ViewBag.quantity = lastInput.Quantity;
+
+                var maxNumber = laptop.Sum(d => d.Savings);
+
+                var sumQuantity = laptop.Sum(d => d.Quantity);
+
+                var sumFullPrice = laptop.Sum(d => d.FullPrice);
+
+                ViewBag.maxNumber = maxNumber;
+                ViewBag.sumQuantity = sumQuantity;
+                ViewBag.sumFullPrice = sumFullPrice;
+
+                return View(new LaptopModels { laptop = laptop });
+                //  return View(ListLaptop);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+
+
+                //redirect if there are no Laptopmodels in list
+                if (e.Message == "Sequence contains no elements")
                 {
 
-                    List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
-
-                    var lastInput = (from k in _db.LaptopModels
-                                     select k)
-                                    .OrderByDescending(k => k.ID)
-                                    .First();
-
-                    ViewBag.laptop = lastInput.Name;
-                    ViewBag.date = lastInput.Date;
-                    ViewBag.quantity = lastInput.Quantity;
-
-                    var maxNumber = laptop.Sum(d => d.Savings);
-
-                    var sumQuantity = laptop.Sum(d => d.Quantity);
-
-                    var sumFullPrice = laptop.Sum(d => d.FullPrice);
-
-                    ViewBag.maxNumber = maxNumber;
-                    ViewBag.sumQuantity = sumQuantity;
-                    ViewBag.sumFullPrice = sumFullPrice;
-
-                    return View(new LaptopModels { laptop = laptop });
-                  //  return View(ListLaptop);
+                    //throw new UserNotFoundException();
+                    // throw;
+                    return RedirectToAction("NotFound");
 
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine("{0} Exception caught.", e);
-                }
+
+
+            }
 
             return View();
            
+        }
+
+
+
+        //Exception - UserNotFound
+
+        public ActionResult NotFound()
+        {
+            return View();
         }
 
 
@@ -386,20 +420,23 @@ namespace Warehouse.Controllers
                 }
 
 
-                var query = (from t in _db.TransferModels
-                             join s in _db.StoreModels on t.StoreID equals s.ID
-                             where t.LaptopID == laptopID
-                             select s.Name).SingleOrDefault();
+                //var query = (from t in _db.TransferModels
+                //             join s in _db.StoreModels on t.StoreID equals s.ID
+                //             where t.LaptopID == laptopID
+                //             select s.Name).SingleOrDefault();
 
 
-                List<string> stores = (from t in _db.TransferModels
+                //List of stores
+
+
+                var stores = (from t in _db.TransferModels
                                        join s in _db.StoreModels on t.StoreID
                                        equals s.ID
                                        where t.LaptopID == laptopID
                                        select s.Name).ToList();
 
-
-                ViewBag.storeName = query == null ? ViewBag.storeName = "No transfers for now" : ViewBag.storeName = query;
+                
+                ViewBag.storeName = stores.Count == 0 ? ViewBag.storeName = stores : ViewBag.storeName = stores;
 
                 return View(laptop);
             }

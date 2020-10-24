@@ -11,11 +11,46 @@ namespace Warehouse.Controllers
     {
         // GET: Supplier
 
+        public class UserNotFoundException : Exception
+        {
+            public UserNotFoundException() : base() { }
+            public UserNotFoundException(string message) : base(message) { }
+            public UserNotFoundException(string message, Exception innerException)
+                : base(message, innerException) { }
+        }
+
         public ApplicationDbContext _db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            List<SupplierModels> suppliers = (from s in _db.SupplierModels select s).ToList();
-            return View(new SupplierModels { suppliers = suppliers});
+
+            try
+            {
+                List<SupplierModels> suppliers = (from s in _db.SupplierModels select s).ToList();
+                return View(new SupplierModels { suppliers = suppliers });
+            }
+            catch (Exception e)
+            {
+                //redirect if there are no Laptopmodels in list
+                if (e.Message == "Sequence contains no elements")
+                {
+
+                    //throw new UserNotFoundException();
+                    // throw;
+                    return RedirectToAction("NotFound");
+
+                }
+
+            }
+
+            return View();
+           
+        }
+
+        //Exception - UserNotFound
+
+        public ActionResult NotFound()
+        {
+            return View();
         }
 
         public ActionResult Create()

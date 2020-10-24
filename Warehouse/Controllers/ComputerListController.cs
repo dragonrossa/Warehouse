@@ -1,5 +1,6 @@
 ﻿using Microsoft.Ajax.Utilities;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -12,27 +13,69 @@ namespace Warehouse.Controllers
     public class ComputerListController : Controller
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
+
+        public class UserNotFoundException : Exception
+        {
+            public UserNotFoundException() : base() { }
+            public UserNotFoundException(string message) : base(message) { }
+            public UserNotFoundException(string message, Exception innerException)
+                : base(message, innerException) { }
+        }
+
         // GET: ComputerList
         [HandleError]
         public ActionResult Index()
         {
 
-            //Computers list - all details
 
-            List<ComputerListModels> computerLists = (from c in _db.ComputerListModels select c).ToList();
-
-
-            //Suppliers Select List Item
-            List<SelectListItem> suppliers = _db.SupplierModels.ToList().Select(u => new SelectListItem
+            try
             {
-                Text = u.SupplierName,
-                Value = u.ID.ToString()
-            }).ToList();
 
-    
+                //Computers Select List Item
 
-            return View(new ComputerListModels() { suppliers = suppliers, computersList=computerLists });
+                List<ComputerListModels> computerLists = (from c in _db.ComputerListModels select c).ToList();
+
+
+                //Suppliers Select List Item
+                List<SelectListItem> suppliers = _db.SupplierModels.ToList().Select(u => new SelectListItem
+                {
+                    Text = u.SupplierName,
+                    Value = u.ID.ToString()
+                }).ToList();
+
+
+
+                return View(new ComputerListModels() { suppliers = suppliers, computersList = computerLists });
+            }
+            catch (Exception e)
+            {
+                //redirect if there are no Laptopmodels in list
+                if (e.Message == "Sequence contains no elements")
+                {
+
+                    //throw new UserNotFoundException();
+                    // throw;
+                    return RedirectToAction("NotFound");
+
+                }
+            }
+
+
+            return View();
+
+           
+
         }
+
+
+        //Exception - UserNotFound
+
+        public ActionResult NotFound()
+        {
+            return View();
+        }
+
+
 
 
         [HttpPost]
