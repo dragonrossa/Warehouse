@@ -248,6 +248,23 @@ namespace Warehouse.Controllers
         {
             List<AdminModels> access = (from a in _db.AdminModels where a.Username==username select a).ToList();
 
+            if (access.Count == 0)
+            {
+                AdminModels admin = new AdminModels();
+                admin.Username = username;
+                admin.Access = false;
+                admin.LaptopAccess = false;
+                admin.LogAccess = false;
+                admin.SearchAccess = false;
+                admin.StoreAccess = false;
+                admin.TransferAccess = false;
+                admin.TaskAccess = false;
+                admin.SupplierAccess = false;
+                admin.ProcurementAccess = false;
+                _db.AdminModels.Add(admin);
+                _db.SaveChanges();
+            }
+
             return View(new AdminModels { access = access });
         }
 
