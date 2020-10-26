@@ -23,5 +23,11 @@ namespace Warehouse.Controllers
             // Your user information in HeaderModel
             return PartialView("Header", admin);
         }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
+
     }
 }

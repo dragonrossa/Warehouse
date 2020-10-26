@@ -1,6 +1,11 @@
 ﻿@model Warehouse.Models.AdminModels
 
 @{
+
+    if (Model == null) {
+        Response.Redirect("~/UserRights/Error");
+    }
+
     ViewBag.adminAccess = Model.Access;
     ViewBag.laptopAccess = Model.LaptopAccess;
     ViewBag.storeAccess = Model.StoreAccess;
@@ -10,11 +15,13 @@
     ViewBag.searchAccess = Model.SearchAccess;
     ViewBag.supplierAccess = Model.SupplierAccess;
     ViewBag.procurementAccess = Model.ProcurementAccess;
+
+
 }
 
 
-@if (@ViewBag.adminAccess == true)
-{
+    @if (@ViewBag.adminAccess == true)
+    {
     <li> @Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, null)</li>
 }
 else

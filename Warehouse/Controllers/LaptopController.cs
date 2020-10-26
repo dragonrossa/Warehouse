@@ -21,7 +21,7 @@ namespace Warehouse.Controllers
         private ApplicationDbContext _db = new ApplicationDbContext();
 
 
-        //Custom Exception for UserNotFound
+      //  Custom Exception for UserNotFound
 
         public class UserNotFoundException : Exception
         {
@@ -40,29 +40,45 @@ namespace Warehouse.Controllers
             try
             {
 
-                List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
+                List<LaptopModels> laptop = _db.LaptopModels.ToList().
+                                            OrderBy(u => u.ID).
+                                            Select(u => u).ToList();
+
+                if(laptop == null)
+                {
+                    RedirectToAction("NotFound", "Laptop");
+                }
 
                 var lastInput = (from k in _db.LaptopModels
                                  select k)
                                 .OrderByDescending(k => k.ID)
-                                .First();
+                                .FirstOrDefault();
 
-                ViewBag.laptop = lastInput.Name;
-                ViewBag.date = lastInput.Date;
-                ViewBag.quantity = lastInput.Quantity;
+                //if no items in list redirect to NotFound
 
-                var maxNumber = laptop.Sum(d => d.Savings);
+                if (lastInput == null)
+                {
+                    RedirectToAction("NotFound", "Laptop");
+                }
+                else
+                {
 
-                var sumQuantity = laptop.Sum(d => d.Quantity);
+                    ViewBag.laptop = lastInput.Name;
+                    ViewBag.date = lastInput.Date;
+                    ViewBag.quantity = lastInput.Quantity;
 
-                var sumFullPrice = laptop.Sum(d => d.FullPrice);
+                    var maxNumber = laptop.Sum(d => d.Savings);
 
-                ViewBag.maxNumber = maxNumber;
-                ViewBag.sumQuantity = sumQuantity;
-                ViewBag.sumFullPrice = sumFullPrice;
+                    var sumQuantity = laptop.Sum(d => d.Quantity);
 
-                return View(new LaptopModels { laptop = laptop });
-                //  return View(ListLaptop);
+                    var sumFullPrice = laptop.Sum(d => d.FullPrice);
+
+                    ViewBag.maxNumber = maxNumber;
+                    ViewBag.sumQuantity = sumQuantity;
+                    ViewBag.sumFullPrice = sumFullPrice;
+
+                    return View(new LaptopModels { laptop = laptop });
+                }
 
             }
             catch (Exception e)
@@ -70,20 +86,26 @@ namespace Warehouse.Controllers
                 Console.WriteLine("{0} Exception caught.", e);
 
 
-                //redirect if there are no Laptopmodels in list
+                //redirect if there are no Laptps in list after catching exception
                 if (e.Message == "Sequence contains no elements")
                 {
 
                     //throw new UserNotFoundException();
-                    // throw;
                     return RedirectToAction("NotFound");
 
                 }
 
 
-            }
+                //  catch(UserNotFoundException abcd)
+                //{
+                //    Console.WriteLine("{0} User not found exception caught ", abcd);
+                //}
 
-            return View();
+               }
+
+
+                //if there are no Laptops in list
+                return View("NotFound");
            
         }
 

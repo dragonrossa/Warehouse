@@ -175,6 +175,11 @@ namespace Warehouse.Controllers
             return View("ModalPopUp", new UserModels() { users = users });
         }
 
+        public ActionResult Error()
+        {
+            return View();
+        }
+
 
     }
 }

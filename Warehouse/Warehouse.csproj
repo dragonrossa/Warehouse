@@ -240,6 +240,7 @@
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserRightsController.cs" />
+    <Compile Include="Helpers\CustomExceptions.cs" />
     <Compile Include="Migrations\202010241213424_AddNewRate.cs" />
     <Compile Include="Migrations\202010241213424_AddNewRate.Designer.cs">
       <DependentUpon>202010241213424_AddNewRate.cs</DependentUpon>
@@ -536,6 +537,7 @@
     <Content Include="Views\Supplier\NotFound.cshtml" />
     <Content Include="Views\TaskList\NotFound.cshtml" />
     <Content Include="Views\User\NotFound.cshtml" />
+    <Content Include="Views\Upload\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
