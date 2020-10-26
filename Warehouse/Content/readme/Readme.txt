@@ -98,3 +98,5 @@
 
 24.10 Exception - UserNotFound for all Controllers
 
+26.10 Exception - Index was outside the bound of the array - solved for ComputerList and Supplier
+
