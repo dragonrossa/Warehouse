@@ -538,6 +538,7 @@
     <Content Include="Views\TaskList\NotFound.cshtml" />
     <Content Include="Views\User\NotFound.cshtml" />
     <Content Include="Views\Upload\Error.cshtml" />
+    <Content Include="Views\ComputerList\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

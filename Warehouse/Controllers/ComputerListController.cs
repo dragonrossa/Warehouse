@@ -83,13 +83,28 @@ namespace Warehouse.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(FormCollection form)
         {
+            if(form.Count <= 1)
+            {
+                return RedirectToAction("Index", "Supplier");
+            }
+
+
+            if (form["item.Name"].ToString() == null)
+            {
+                return RedirectToAction("Create", "ComputerList");
+            }
+
+            if (form["SupplierName"].ToString() == null)
+            {
+                return RedirectToAction("Index", "Supplier");
+            }
+
+
             var computerName = form["item.Name"].ToString();
-            string supplierName = form["SupplierName"].ToString();
-
             string[] computers = computerName.Split(',');
+            
 
-
-
+            string supplierName = form["SupplierName"].ToString();
             string[] sup = supplierName.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
 
@@ -98,6 +113,11 @@ namespace Warehouse.Controllers
             int supi;
 
 
+            if (sup == null || sup.Length == 0)
+            {
+                return RedirectToAction("Index", "Supplier");
+            }
+               
 
             for (int i = 0; i < computers.Length; i++)
             {
@@ -165,6 +185,34 @@ namespace Warehouse.Controllers
             computerLists.SupplierID = sName;
             computerLists.SupplierName = supplier.SupplierName;
 
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+
+
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+
+
+        [HttpPost]
+        [HandleError]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult Create(FormCollection form)
+        {
+            string computerName = form["Name"];
+
+            ComputerListModels computer = new ComputerListModels();
+            computer.Name = computerName;
+            computer.Date = DateTime.Now;
+
+            _db.ComputerListModels.Add(computer);
             _db.SaveChanges();
 
             return RedirectToAction("Index");
