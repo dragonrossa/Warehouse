@@ -50,97 +50,9 @@
 
 
 
-
-        @*@foreach (var item in Model)
-            {*@
-        <tr>
-
-            @*<td>
-
-                    @Html.DisplayFor(model => model.LaptopName)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.LaptopQuantity)
-                </td>*@
-
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.LaptopName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LaptopQuantity)
-                </td>*@
-            @*<td>
-                    @foreach (var item2 in ViewData["storeList2"] as List<string>)
-                    {
-
-                        @item2 <br />
-                    }
-
-                </td>
-                <td>
-                    @foreach (var item2 in ViewData["storeList3"] as List<string>)
-                    {
-
-                        @item2 <br />
-                    }
-
-                </td>
-                <td>
-                    @foreach (var item2 in ViewData["storeList"] as List<string>)
-                    {
-
-                        @item2 <br />
-                    }
-
-                </td>*@
-
-        </tr>
-        @*}*@
+    
 
     </table>
-
-    @*@foreach (var item2 in ViewData["storeList4"] as List<Tra>)
-        {
-
-            @item2 <br />
-        }*@
-
-
-
-
-
-
-
-
-    @*@foreach (var std in (IEnumerable<string>)ViewData["storeList"])
-        {
-            @std
-            @:&nbsp;
-            @:<br />
-        }
-
-
-        @foreach (var item2 in ViewData["storeList"] as List<string>)
-        {
-
-            @item2
-
-
-        }*@
-
-    @*@foreach (var item in Model.Concat(ViewData["storeList"] as IEnumerable<string>))
-        {
-            //TODO: Real code goes here
-        }*@
-
-    @*@foreach (var item2 in ViewData["storeList"] as List<string>)
-        {
-
-            @item2
-
-        }*@
-
-
 
 
 
@@ -148,6 +60,10 @@
     <p id="laptopInfo"></p>
 
 
+</div>
+
+<div class="container-fluid">
+    @Html.ActionLink("Go back","Index","StartPage")
 </div>
 
 
@@ -168,3 +84,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
