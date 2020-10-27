@@ -85,7 +85,7 @@ namespace Warehouse.Controllers
 
             var laptopName = (from l in _db.ComputerListModels where l.ID == laptopID select l.Name).FirstOrDefault();
 
-            var quantity = Convert.ToInt32(form["quantity"]);
+            var quantity = Convert.ToInt32(form["Quantity"]);
 
             TempData["quantity"] = quantity;
             TempData["computer"] = laptopName;
@@ -202,6 +202,12 @@ namespace Warehouse.Controllers
             Response.Flush();
             return View();
         }
+
+
+
+
+
+
         
     }
 }

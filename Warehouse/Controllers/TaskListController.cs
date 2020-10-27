@@ -61,14 +61,15 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
-        [HandleError]
+        //[HandleError]
         public ActionResult Create(TaskListModels task, System.Web.Mvc.FormCollection form)
         {
             task.Details = form["Details"];
             task.User = User.Identity.GetUserName();
             _db.TaskListModels.Add(task);
             _db.SaveChanges();
-            return View(task);
+            return RedirectToAction("MyList");
+            //return View(task);
         }
 
         public ActionResult MyList()

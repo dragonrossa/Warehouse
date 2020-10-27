@@ -7,6 +7,12 @@
     <title>Warehouse</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+   @* @Scripts.Render("~/Content/unobtrusive")*@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -20,19 +26,9 @@
                 <span class="text-muted">
                     <ul class="nav navbar-nav">
 
-                        
+                        <li>@Html.ActionLink("Home", "Index", "StartPage", new { area = "" }, null)</li>
+                    
                         @{Html.RenderAction("Header", "UserRights");}
-                        
-                        @* <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>*@
-                        @*<li>@Html.ActionLink("Laptop", "Index", "Laptop", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Store", "Index", "Store", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Send", "Send", "Laptop", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Transfer", "Index", "Transfer", new { area = "" }, null)</li>
-                        <li> @Html.ActionLink("Task", "Index", "TaskList", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Logs", "Index", "Log", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink("Search", "Index", "Search", new { area = "" }, null)</li>
-                        <li> @Html.ActionLink("Supplier", "Index", "ComputerList", new { area = "" }, null)</li>
-                        <li> @Html.ActionLink("Admin", "Index", "Admin", new { area = "" }, null)</li>*@
 
                     </ul>
                 </span>

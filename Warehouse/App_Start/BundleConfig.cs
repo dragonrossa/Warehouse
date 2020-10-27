@@ -40,6 +40,12 @@ namespace Warehouse
             bundles.Add(new StyleBundle("~/Content/css").Include(
                  "~/Content/bootstrap.css",
                  "~/Content/Site.css"));
+
+            bundles.Add(new ScriptBundle("~/Content/unobtrusive").Include(
+                 "~/Content/unobtrusive/jquery.min.js",
+                 "~/Content/unobtrusive/jquery.validate.min.js",
+                 "~/Content/unobtrusive/jquery.validate.unobtrusive.min.js"
+                 ));
         }
     }
 }

@@ -241,10 +241,6 @@
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserRightsController.cs" />
     <Compile Include="Helpers\CustomExceptions.cs" />
-    <Compile Include="Migrations\202010241213424_AddNewRate.cs" />
-    <Compile Include="Migrations\202010241213424_AddNewRate.Designer.cs">
-      <DependentUpon>202010241213424_AddNewRate.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ComputerListModels.cs" />
     <Compile Include="Models\ProcurementModels.cs" />
@@ -556,9 +552,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202010241213424_AddNewRate.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -250,6 +250,10 @@ namespace Warehouse.Controllers
             try
             {
                 List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
+
+
+                //Console.WriteLine("Your amount = {0:C}", y);
+
                 return View(laptop);
             }
             catch (Exception e)
