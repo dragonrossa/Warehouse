@@ -100,3 +100,5 @@
 
 26.10 Exception - Index was outside the bound of the array - solved for ComputerList and Supplier
 
+27.10 Fixed validation on client, added Regex Expression on some models
+
