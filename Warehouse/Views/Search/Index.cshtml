@@ -49,6 +49,11 @@
 
         @using (Html.BeginForm("Result", "Search"))
         {
+
+            @Html.AntiForgeryToken()
+
+
+
             <div class="container-fluid">
 
 

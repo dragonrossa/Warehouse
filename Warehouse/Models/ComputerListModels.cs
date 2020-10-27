@@ -14,7 +14,7 @@ namespace Warehouse.Models
         public int ID { get; set; }
         //Name - required
         [Required]
-        [StringLength(50, ErrorMessage = "Name must be between 1 and 50 letters", MinimumLength = 1)]
+        [RegularExpression(@"^[a-zA-Z0-9 .]{1,50}$", ErrorMessage = "Name must have min 1 and max 50 letters")]
         public string Name { get; set; }
         public string SupplierName { get; set; }
 

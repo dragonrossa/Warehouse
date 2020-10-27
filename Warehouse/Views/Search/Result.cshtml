@@ -1,8 +1,8 @@
 ﻿@model List<Warehouse.Models.LaptopModels>
 
-@{
+@*@{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
-}
+}*@
 
 
 <head>
@@ -94,6 +94,10 @@
         }
     }
 </script>
+
+<div class="container-fluid">
+    @Html.ActionLink("Go back","Index","Search")
+</div>
 
 
 @section Scripts {

@@ -13,9 +13,10 @@ namespace Warehouse.Models
         public int ID { get; set; }
         //Name - required
         [Required]
-        [StringLength(50, ErrorMessage = "Name must be between 1 and 50 letters", MinimumLength = 1)]
+        [RegularExpression(@"^[a-zA-Z. ]{1,50}$", ErrorMessage = "Supplier name must have min 1 and max 50 letters")]
         [Display(Name ="Supplier")]
         public string SupplierName { get; set; }
+        [RegularExpression(@"^[a-zA-Z. ]{1,30}$", ErrorMessage = "Location must have min 1 and max 30 letters")]
         //Location - not required
         public string Location { get; set; }
       

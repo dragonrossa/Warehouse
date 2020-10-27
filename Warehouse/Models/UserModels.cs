@@ -15,24 +15,23 @@ namespace Warehouse.Models
         public string LastName { get; set; }
         [Display(Name = "Username")]
         public string UserName { get; set; }
-        [StringLength(80, ErrorMessage = "Address must be between 1 and 80 characters.",MinimumLength=1)]
+        [RegularExpression(@"^[a-zA-Z.]{2,80}$", ErrorMessage = "Address must have min 2 and max 80 letters")]
 
         public string Address { get; set; }
-        [StringLength(60, ErrorMessage = "Hometown must be between 1 and 60 characters",MinimumLength=1)]
+        [RegularExpression(@"^[a-zA-Z.]{2,60}$", ErrorMessage = "Hometown must have min 2 and max 60 letters")]
 
         public string Hometown { get; set; }
-        //[RegularExpression(@"^\d{5}(?:[-\s]\d{4})?$)")] //check if zipcode is 5 or 4 letters
-        [StringLength(20, ErrorMessage = "Zipcode must be between 1 and 20 characters",MinimumLength=1)]
+        [RegularExpression(@"\d{5}$", ErrorMessage = "Zipcode has 5 digits")]
         [Display(Name = "Zip code")]
         public string ZipCode { get; set; }
-        [StringLength(30, ErrorMessage = "Country must be between 1 and 30 characters",MinimumLength =1)]
+        [RegularExpression(@"^[a-zA-Z.]{2,30}$", ErrorMessage = "Country must have min 2 and max 30 letters")]
 
         public string Country { get; set; }
-        [StringLength(40, ErrorMessage = "Mail must be between 1 and 40 characters",MinimumLength=1)]
+        [RegularExpression(@"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$", ErrorMessage = "This is not valid email address!")]
 
         public string Mail { get; set; }
 
-        [StringLength(30, ErrorMessage = "Telephone must be between 1 and 30 characters",MinimumLength=1)]
+        [RegularExpression(@"\d{9,10}$", ErrorMessage = "Telephone number can have 9 or 10 digits")]
 
         public string Telephone { get; set; }
         [Display(Name = "Date modified")]

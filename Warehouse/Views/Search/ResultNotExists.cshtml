@@ -1,9 +1,9 @@
 ﻿@model List<Warehouse.Helpers.SearchIndex>
 
 
-@{
+@*@{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
-}
+}*@
 
 <head>
 
@@ -22,9 +22,11 @@
     </p>
 </div>
 
-<div class="container">
-    @Html.ActionLink("Back", "Index")
+<div class="container-fluid">
+    @Html.ActionLink("Go back", "Index", "Search")
 </div>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
