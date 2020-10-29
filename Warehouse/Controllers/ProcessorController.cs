@@ -18,6 +18,11 @@ namespace Warehouse.Controllers
 
         private List<ProcessorModels> _proc;
 
+        ProcessorModels processor1 = new ProcessorModels();
+
+
+        //One processor
+
         public ProcessorModels processorsList
         {
             get
@@ -30,13 +35,14 @@ namespace Warehouse.Controllers
             }
         }
 
+        // List with all processors
         public List<ProcessorModels> AllProcessors
         {
             get
             {
                 _proc = (from l in _db.ProccessorModels select l).ToList();
                 return _proc;
-                //return AllProcessors;
+               
             }
             private set
             {
@@ -60,10 +66,13 @@ namespace Warehouse.Controllers
             return View(AllProcessors);
         }
 
+        //using interface
         public ActionResult List2()
         {
 
             ProcessorModels processor = new ProcessorModels();
+
+            TempData["processor"] = processor;
 
             List<ProcessorModels> listOfProcessors = processor.Child;
                 
@@ -72,6 +81,19 @@ namespace Warehouse.Controllers
 
 
             return View(listOfProcessors);
+        }
+
+        public ActionResult Ascending()
+        {
+            List<ProcessorModels> ascendingList = processor1.Ascending;
+
+            return View(ascendingList);
+        }
+
+        public ActionResult Descending()
+        {
+            List<ProcessorModels> descendingList = processor1.Descending;
+            return View(descendingList);
         }
     }
 }

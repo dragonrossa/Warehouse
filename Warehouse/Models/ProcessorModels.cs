@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Results;
+using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Warehouse.Models;
 
 namespace Warehouse.Models
@@ -19,16 +22,18 @@ namespace Warehouse.Models
 
         string Details { get; set; }
         int Quantity { get; set; }
-        void getInfo();
-
+       
     }
-
 
 
     interface IElement<T>
     {
         List<T> Child { get; }
+        List<T> Ascending { get; }
+        List<T> Descending { get; }
     }
+
+ 
 
     interface ISupplier
     {
@@ -54,15 +59,32 @@ namespace Warehouse.Models
         [NotMapped]
         public List<ProcessorModels> Child { 
             get 
-            { 
-                return (from i in _db.ProccessorModels select i).ToList(); 
-            } }
+            {
+                return 
+                    (from i in _db.ProccessorModels
+                        select i).ToList(); 
+            } 
+        }
 
-        void IEquipment.getInfo()
+        [NotMapped]
+        public List<ProcessorModels> Ascending
         {
-            
-         List<ProcessorModels> obj = (from i in _db.ProccessorModels select i).ToList();
-         return;
+            get
+            {
+                //Ascening list
+                return _db.ProccessorModels.OrderBy(x => x.ID).ToList();
+            }
+         }
+
+        [NotMapped]
+        public List<ProcessorModels> Descending
+        {
+            get
+            {
+                //Descening list
+                return _db.ProccessorModels.OrderByDescending(x => x.ID).ToList();
+                
+            }
         }
 
     }

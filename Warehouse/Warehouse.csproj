@@ -540,6 +540,8 @@
     <Content Include="Views\Processor\Index.cshtml" />
     <Content Include="Views\Processor\List.cshtml" />
     <Content Include="Views\Processor\List2.cshtml" />
+    <Content Include="Views\Processor\Ascending.cshtml" />
+    <Content Include="Views\Processor\Descending.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
