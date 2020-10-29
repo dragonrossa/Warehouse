@@ -670,6 +670,24 @@
 
             //};
 
+            //var processor = new List<ProcessorModels> {
+
+            //new ProcessorModels { 
+            //    Name = "AMD Ryzen 5", 
+            //    Details = "Best CPU", 
+            //    Quantity = 50, 
+            //    SupplierAddress = "Xiao Jon 15",
+            //    SupplierLocation = "China" } ,
+            //new ProcessorModels
+            //{
+            //    Name="Intel i7",
+            //    Details="Best CPU 2",
+            //    Quantity = 100,
+            //    SupplierAddress = "Xiao Jon 16",
+            //    SupplierLocation = "China"
+            //}
+            //};
+
 
 
             //context.LaptopModels.AddRange(laptop);
@@ -678,6 +696,7 @@
             //context.TaskListModels.AddRange(task);
             //context.SupplierModels.AddRange(supplier);
             // context.ComputerListModels.AddRange(computer);
+            //context.ProccessorModels.AddRange(processor);
             //context.SaveChanges();
 
 

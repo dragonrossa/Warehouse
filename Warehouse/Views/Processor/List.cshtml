@@ -1,0 +1,11 @@
+﻿@model List<Warehouse.Models.ProcessorModels>
+
+
+@foreach(var item in Model)
+{
+    @item.ID <br />
+    @item.Details <br />
+    @item.Name <br />
+    @item.SupplierAddress<br />
+    @item.SupplierLocation<br />
+}

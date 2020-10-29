@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
@@ -48,6 +49,7 @@ namespace Warehouse.Models
         public virtual DbSet<SupplierModels> SupplierModels { get; set; }
         public virtual DbSet<ComputerListModels> ComputerListModels { get; set; }
         public virtual DbSet<ProcurementModels> ProcurementModels { get; set; }
+        public virtual DbSet<ProcessorModels> ProccessorModels { get; set; }
 
     }
 }

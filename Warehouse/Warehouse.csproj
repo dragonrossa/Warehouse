@@ -231,6 +231,7 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
+    <Compile Include="Controllers\ProcessorController.cs" />
     <Compile Include="Controllers\ProcurementController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StartPageController.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="Helpers\CustomExceptions.cs" />
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ComputerListModels.cs" />
+    <Compile Include="Models\ProcessorModels.cs" />
     <Compile Include="Models\ProcurementModels.cs" />
     <Compile Include="Models\RolesModels.cs" />
     <Compile Include="Models\SupplierModels.cs" />
@@ -535,6 +537,9 @@
     <Content Include="Views\User\NotFound.cshtml" />
     <Content Include="Views\Upload\Error.cshtml" />
     <Content Include="Views\ComputerList\Create.cshtml" />
+    <Content Include="Views\Processor\Index.cshtml" />
+    <Content Include="Views\Processor\List.cshtml" />
+    <Content Include="Views\Processor\List2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -10,6 +10,8 @@ using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System.Web.UI.WebControls;
+using Warehouse.Helpers;
+using System.Diagnostics;
 
 namespace Warehouse.Controllers
 {
