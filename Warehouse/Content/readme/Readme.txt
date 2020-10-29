@@ -102,3 +102,5 @@
 
 27.10 Fixed validation on client, added Regex Expression on some models
 
+29. Interface Equipment for Processor and implementation
+
