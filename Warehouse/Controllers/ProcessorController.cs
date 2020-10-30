@@ -72,7 +72,6 @@ namespace Warehouse.Controllers
 
             ProcessorModels processor = new ProcessorModels();
 
-            TempData["processor"] = processor;
 
             List<ProcessorModels> listOfProcessors = processor.Child;
                 

@@ -7,8 +7,10 @@ using System.Web;
 
 namespace Warehouse.Models
 {
-    public class LaptopModels
+    public class LaptopModels:IEquipment, IElement<LaptopModels>
     {
+        private ApplicationDbContext _db = new ApplicationDbContext();
+
         //ID
         [Key]
         public int ID { get; set; }
@@ -19,8 +21,10 @@ namespace Warehouse.Models
         //Description
         [Required]
         [Column(TypeName = "text")]
+        //[StringLength(100, ErrorMessage = "The Description must be between 3 and 100 characters.", MinimumLength = 3)]
+        //public string Description { get; set; }
         [StringLength(100, ErrorMessage = "The Description must be between 3 and 100 characters.", MinimumLength = 3)]
-        public string Description { get; set; }
+        public virtual string Details { get; set; }
         //Quantity
         [Required]
         public int Quantity { get; set; }
@@ -60,6 +64,78 @@ namespace Warehouse.Models
         public DateTime? Date { get; set; }
 
         public IEnumerable<LaptopModels> laptop { get; set;}
+
+        [NotMapped]
+        public List<LaptopModels> Child
+        {
+            get
+            {
+                return
+                    (from i in _db.LaptopModels
+                     select i).ToList();
+            }
+        }
+
+        [NotMapped]
+        public LaptopModels lastInput
+        {
+            get
+            {
+                return (from k in _db.LaptopModels
+                        select k)
+                                .OrderByDescending(k => k.ID)
+                                .FirstOrDefault();
+            }
+        }
+
+
+        [NotMapped]
+        public List<LaptopModels> Ascending
+        {
+            get
+            {
+                //Ascening list
+                return _db.LaptopModels.OrderBy(x => x.ID).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<LaptopModels> Descending
+        {
+            get
+            {
+                //Descening list
+                return _db.LaptopModels.OrderByDescending(x => x.ID).ToList();
+
+            }
+        }
+
+        [NotMapped]
+        public decimal? maxNumber
+        {
+            get
+            {
+                return Child.Sum(d => d.Savings);
+            }
+        }
+
+        [NotMapped]
+        public int sumQuantity
+        {
+            get
+            {
+                return Child.Sum(d => d.Quantity);
+            }
+        }
+
+        [NotMapped]
+        public decimal? sumFullPrice
+        {
+            get
+            {
+                return Child.Sum(d => d.FullPrice);
+            }
+        }
 
     }
 }

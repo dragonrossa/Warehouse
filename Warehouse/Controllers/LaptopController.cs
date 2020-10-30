@@ -40,44 +40,36 @@ namespace Warehouse.Controllers
             try
             {
 
-                List<LaptopModels> laptop = _db.LaptopModels.ToList().
-                                            OrderBy(u => u.ID).
-                                            Select(u => u).ToList();
 
-                if(laptop == null)
+                LaptopModels laptop1 = new LaptopModels();
+                List<LaptopModels> listOfLaptops = laptop1.Child;
+
+
+                if (listOfLaptops == null)
                 {
                     RedirectToAction("NotFound", "Laptop");
                 }
 
-                var lastInput = (from k in _db.LaptopModels
-                                 select k)
-                                .OrderByDescending(k => k.ID)
-                                .FirstOrDefault();
-
+ 
                 //if no items in list redirect to NotFound
 
-                if (lastInput == null)
+                if (laptop1.lastInput == null)
                 {
                     RedirectToAction("NotFound", "Laptop");
                 }
                 else
                 {
 
-                    ViewBag.laptop = lastInput.Name;
-                    ViewBag.date = lastInput.Date;
-                    ViewBag.quantity = lastInput.Quantity;
+                  
+                    ViewBag.laptop = laptop1.lastInput.Name;
+                    ViewBag.date = laptop1.lastInput.Date;
+                    ViewBag.quantity = laptop1.lastInput.Quantity;
+                    ViewBag.maxNumber = laptop1.maxNumber;
+                    ViewBag.sumQuantity = laptop1.sumQuantity;
+                    ViewBag.sumFullPrice = laptop1.sumFullPrice;
 
-                    var maxNumber = laptop.Sum(d => d.Savings);
 
-                    var sumQuantity = laptop.Sum(d => d.Quantity);
-
-                    var sumFullPrice = laptop.Sum(d => d.FullPrice);
-
-                    ViewBag.maxNumber = maxNumber;
-                    ViewBag.sumQuantity = sumQuantity;
-                    ViewBag.sumFullPrice = sumFullPrice;
-
-                    return View(new LaptopModels { laptop = laptop });
+                    return View(new LaptopModels { laptop = listOfLaptops });
                 }
 
             }
