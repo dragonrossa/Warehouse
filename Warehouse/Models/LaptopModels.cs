@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
-    public class LaptopModels:IEquipment, IElement<LaptopModels>
+    
+    public class LaptopModels:IEquipment, ListOrderBy<LaptopModels>
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
@@ -77,6 +79,27 @@ namespace Warehouse.Models
         }
 
         [NotMapped]
+        public List<LaptopModels> ChildByID
+        {
+            get
+            {
+                return _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<LaptopModels> ChildByIDIfNotZeroQuantity
+        {
+            get
+            {
+                var list = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
+                var newList = list.Where(i => i.Quantity != 0).ToList();
+                return newList;
+            }
+        }
+
+
+        [NotMapped]
         public LaptopModels lastInput
         {
             get
@@ -90,25 +113,140 @@ namespace Warehouse.Models
 
 
         [NotMapped]
-        public List<LaptopModels> Ascending
+        public decimal? lastInputFullPrice
         {
             get
             {
-                //Ascening list
-                return _db.LaptopModels.OrderBy(x => x.ID).ToList();
+                return (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).First();
             }
         }
 
         [NotMapped]
-        public List<LaptopModels> Descending
+        public decimal? lastInputSavings
+        {
+            get
+            {
+                return (from k in _db.LaptopModels where k.ID == lastInput.ID select k.OldPrice - k.Price).First();
+            }
+        }
+
+        [NotMapped]
+        public DateTime lastInputDate
+        {
+            get
+            {
+                return DateTime.Now;
+            }
+        }
+
+        //public LaptopModels laptopFind(int ID)
+        //{
+            
+        //        return (from k in _db.LaptopModels where k.ID == ID select k).FirstOrDefault();
+        //}
+
+
+        //public decimal? laptopFindSavings(int ID)
+        //{
+           
+        //        return (from k in _db.LaptopModels where k.ID == ID select k.OldPrice - k.Price).FirstOrDefault();
+            
+        //}
+
+        //public decimal? laptopFindFullPrice(int ID)
+        //{
+            
+        //       return (from k in _db.LaptopModels where k.ID == ID select k.OldPrice - k.Price).FirstOrDefault();
+            
+        //}
+
+
+        [NotMapped]
+        public List<LaptopModels> AscendingByName
+        {
+            get
+            {
+                //Ascening list
+                return _db.LaptopModels.OrderBy(x => x.Name).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<LaptopModels> DescendingByName
         {
             get
             {
                 //Descening list
-                return _db.LaptopModels.OrderByDescending(x => x.ID).ToList();
+                return _db.LaptopModels.OrderByDescending(x => x.Name).ToList();
 
             }
         }
+
+        [NotMapped]
+        public List<LaptopModels> AscendingByQuantity
+        {
+            get
+            {
+                //Ascening list
+                return _db.LaptopModels.OrderBy(x => x.Quantity).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<LaptopModels> DescendingByQuantity
+        {
+            get
+            {
+                //Descening list
+                return _db.LaptopModels.OrderByDescending(x => x.Quantity).ToList();
+
+            }
+        }
+
+        [NotMapped]
+        public List<LaptopModels> AscendingByPrice
+        {
+            get
+            {
+                //Ascening list
+                return _db.LaptopModels.OrderBy(x => x.Price).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<LaptopModels> DescendingByPrice
+        {
+            get
+            {
+                //Descening list
+                return _db.LaptopModels.OrderByDescending(x => x.Price).ToList();
+
+            }
+        }
+
+        [NotMapped]
+        public List<LaptopModels> AscendingByFullPrice
+        {
+            get
+            {
+                //Ascening list
+                return _db.LaptopModels.OrderBy(x => x.FullPrice).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<LaptopModels> DescendingByFullPrice
+        {
+            get
+            {
+                //Descening list
+                return _db.LaptopModels.OrderByDescending(x => x.FullPrice).ToList();
+
+            }
+        }
+
+
+
 
         [NotMapped]
         public decimal? maxNumber
@@ -135,6 +273,24 @@ namespace Warehouse.Models
             {
                 return Child.Sum(d => d.FullPrice);
             }
+        }
+
+    
+
+        public LogModels CreateLog(string name, DateTime? date, int quantity)
+        {
+            LogModels log = new LogModels
+            {
+                Type = "0",
+                Description = "New laptop was inserted with name " + name + " on date " + date + " with quantity of " + quantity + ".",
+                Date = lastInput.Date
+            };
+
+            _db.LogModels.Add(log);
+            _db.SaveChanges();
+
+            return log;
+
         }
 
     }

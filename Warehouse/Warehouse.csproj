@@ -242,6 +242,7 @@
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserRightsController.cs" />
     <Compile Include="Helpers\CustomExceptions.cs" />
+    <Compile Include="Helpers\IEquipment.cs" />
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ComputerListModels.cs" />
     <Compile Include="Models\ProcessorModels.cs" />

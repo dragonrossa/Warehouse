@@ -20,8 +20,54 @@ namespace Warehouse.Controllers
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
+        LaptopModels laptop1 = new LaptopModels();
 
-      //  Custom Exception for UserNotFound
+        List<LaptopModels> listOfLaptops = new List<LaptopModels>();
+
+        public LaptopModels laptopFind(int ID)
+        {
+
+            return (from k in _db.LaptopModels where k.ID == ID select k).FirstOrDefault();
+        }
+
+
+        public decimal? laptopFindSavings(int ID)
+        {
+
+            return (from k in _db.LaptopModels where k.ID == ID select k.OldPrice - k.Price).FirstOrDefault();
+
+        }
+
+        public decimal? laptopFindFullPrice(int ID)
+        {
+
+            return (from k in _db.LaptopModels where k.ID == ID select k.Price * k.Quantity).FirstOrDefault();
+
+        }
+
+        public List<string> stores(int? laptopID)
+        {
+
+           
+                var stores = (from t in _db.TransferModels
+                                 join s in _db.StoreModels on t.StoreID
+                                 equals s.ID
+                                 where t.LaptopID == laptopID
+                                 select s.Name).ToList();
+
+
+            return ViewBag.storeName = stores.Count == 0 ? ViewBag.storeName = stores : ViewBag.storeName = stores;
+           
+        }
+
+        public StoreModels storeFind(int storeID)
+        {
+            return (from s in _db.StoreModels where s.ID == storeID select s).First();
+        }
+
+
+
+        //  Custom Exception for UserNotFound
 
         public class UserNotFoundException : Exception
         {
@@ -40,9 +86,7 @@ namespace Warehouse.Controllers
             try
             {
 
-
-                LaptopModels laptop1 = new LaptopModels();
-                List<LaptopModels> listOfLaptops = laptop1.Child;
+                listOfLaptops = laptop1.Child;
 
 
                 if (listOfLaptops == null)
@@ -113,60 +157,61 @@ namespace Warehouse.Controllers
 
         public ActionResult AscName()
         {
-            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.Name).Select(u => u).ToList();
+           
+             listOfLaptops = laptop1.AscendingByName;
 
-            return View("Index", new LaptopModels { laptop = laptop});
+            return View("Index", new LaptopModels { laptop = listOfLaptops });
         }
 
         public ActionResult DescName()
         {
-            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderByDescending(u => u.Name).Select(u=>u).ToList();
-
-            return View("Index", new LaptopModels { laptop = laptop });
+            listOfLaptops = laptop1.DescendingByName;
+ 
+            return View("Index", new LaptopModels { laptop = listOfLaptops });
         }
 
 
         public ActionResult AscQuantity()
         {
-            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.Quantity).Select(u => u).ToList();
+            listOfLaptops = laptop1.AscendingByQuantity;
 
-            return View("Index", new LaptopModels { laptop = laptop });
+            return View("Index", new LaptopModels { laptop = listOfLaptops });
         }
 
         public ActionResult DescQuantity()
         {
-            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderByDescending(u => u.Quantity).Select(u => u).ToList();
+            listOfLaptops = laptop1.DescendingByQuantity;
 
-            return View("Index", new LaptopModels { laptop = laptop });
+            return View("Index", new LaptopModels { laptop = listOfLaptops });
         }
 
         public ActionResult AscPrice()
         {
-            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.Price).Select(u => u).ToList();
+            listOfLaptops = laptop1.AscendingByPrice;
 
-            return View("Index", new LaptopModels { laptop = laptop });
+            return View("Index", new LaptopModels { laptop = listOfLaptops });
         }
 
         public ActionResult DescPrice()
         {
-            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderByDescending(u => u.Price).Select(u => u).ToList();
+            listOfLaptops = laptop1.DescendingByPrice;
 
-            return View("Index", new LaptopModels { laptop = laptop });
+            return View("Index", new LaptopModels { laptop = listOfLaptops });
         }
 
 
         public ActionResult AscFullPrice()
         {
-            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.FullPrice).Select(u => u).ToList();
+            listOfLaptops = laptop1.AscendingByFullPrice;
 
-            return View("Index", new LaptopModels { laptop = laptop });
+            return View("Index", new LaptopModels { laptop = listOfLaptops });
         }
 
         public ActionResult DescFullPrice()
         {
-            List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderByDescending(u => u.FullPrice).Select(u => u).ToList();
+            listOfLaptops = laptop1.DescendingByFullPrice;
 
-            return View("Index", new LaptopModels { laptop = laptop });
+            return View("Index", new LaptopModels { laptop = listOfLaptops });
         }
 
 
@@ -188,26 +233,17 @@ namespace Warehouse.Controllers
                 _db.LaptopModels.Add(laptop);
                 _db.SaveChanges();
 
-                var lastInput = (from k in _db.LaptopModels
-                                 select k)
-                           .OrderByDescending(k => k.ID)
-                           .First();
+                //Last input in database
+                var lastInput = laptop1.lastInput;
 
-              
-                lastInput.FullPrice = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).First(); //Full price of products
-                lastInput.Savings = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.OldPrice - k.Price).First(); // Savings per unit
-                lastInput.Date = DateTime.Now;  // add Date time now
+                lastInput.FullPrice = laptop1.lastInputFullPrice;
+                lastInput.Savings = laptop1.lastInputSavings;
+                lastInput.Date = laptop1.lastInputDate;
                 _db.SaveChanges();
 
                 //Create new log
-                LogModels log = new LogModels {
-                    Type="0",
-                    Description = "New laptop was inserted with name " + lastInput.Name + " on date " + lastInput.Date + " with quantity of " + lastInput.Quantity + ".",
-                    Date = lastInput.Date
-                    };
 
-                _db.LogModels.Add(log);
-                _db.SaveChanges();
+                laptop1.CreateLog(lastInput.Name, lastInput.Date, lastInput.Quantity);
                 
 
                 return RedirectToAction("Index");
@@ -224,8 +260,9 @@ namespace Warehouse.Controllers
            
             try
             {
-                List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
-                return View(laptop);
+             
+                listOfLaptops = laptop1.ChildByID;
+                return View(listOfLaptops);
             }
             catch (Exception e)
             {
@@ -241,12 +278,9 @@ namespace Warehouse.Controllers
 
             try
             {
-                List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
+                listOfLaptops = laptop1.ChildByID;
 
-
-                //Console.WriteLine("Your amount = {0:C}", y);
-
-                return View(laptop);
+                return View(listOfLaptops);
             }
             catch (Exception e)
             {
@@ -263,8 +297,8 @@ namespace Warehouse.Controllers
             
             try
             {
-                List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
-                return View(laptop);
+                listOfLaptops = laptop1.ChildByID;
+                return View(listOfLaptops);
             }
             catch (Exception e)
             {
@@ -291,18 +325,9 @@ namespace Warehouse.Controllers
 
                 TempData["id"] = idUser;
 
-                //Update Full price if price changed in meanwhile
-
-                var result = (from k in _db.LaptopModels where k.ID == idUser select k.Price * k.Quantity).First(); //select price
-
-                var savings = (from k in _db.LaptopModels where k.ID == idUser select k.OldPrice - k.Price).First();
-
-                var laptopFind = (from k in _db.LaptopModels where k.ID == idUser select k).First(); //select laptop
-
-                laptopFind.FullPrice = Convert.ToDecimal(result); // update FullPrice
-
-                laptopFind.Savings = Convert.ToDecimal(savings);
-
+                //If price changed FullPrice and Savings have to change too
+                laptop1.lastInput.FullPrice = laptop1.lastInput.lastInputFullPrice;
+                laptop1.lastInput.Savings = laptop1.lastInput.lastInputSavings;
                 _db.SaveChanges();
 
                 if (laptop == null)
@@ -337,17 +362,13 @@ namespace Warehouse.Controllers
                     _db.Entry(laptop).State = EntityState.Modified;
                     _db.SaveChanges();
 
-                    var id = Convert.ToInt32(TempData["id"]);
+                    var ID = Convert.ToInt32(TempData["id"]);
 
-                    var savings = (from k in _db.LaptopModels where k.ID == id select k.OldPrice - k.Price).First(); //calculate saving
+                    //find last ID and save new Savings and FullPrice
 
-                    var result = (from k in _db.LaptopModels where k.ID == id select k.Price * k.Quantity).First(); //calculate new full price
+                    laptopFind(ID).Savings = laptopFindSavings(ID);
+                    laptopFind(ID).FullPrice = laptopFindFullPrice(ID);
 
-                    var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
-
-                    laptopFind.Savings = Convert.ToDecimal(savings); //EF Savings
-
-                    laptopFind.FullPrice = Convert.ToDecimal(result);
 
                     _db.SaveChanges();
 
@@ -438,23 +459,11 @@ namespace Warehouse.Controllers
                 }
 
 
-                //var query = (from t in _db.TransferModels
-                //             join s in _db.StoreModels on t.StoreID equals s.ID
-                //             where t.LaptopID == laptopID
-                //             select s.Name).SingleOrDefault();
+
+                stores(laptopID);
 
 
-                //List of stores
 
-
-                var stores = (from t in _db.TransferModels
-                                       join s in _db.StoreModels on t.StoreID
-                                       equals s.ID
-                                       where t.LaptopID == laptopID
-                                       select s.Name).ToList();
-
-                
-                ViewBag.storeName = stores.Count == 0 ? ViewBag.storeName = stores : ViewBag.storeName = stores;
 
                 return View(laptop);
             }
@@ -517,9 +526,7 @@ namespace Warehouse.Controllers
             try
             {
 
-                List<LaptopModels> laptop = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
-                var newList = laptop.Where(i => i.Quantity != 0).ToList();
-                return View(newList);
+                return View(laptop1.ChildByIDIfNotZeroQuantity);
             }
             catch (Exception e)
             {
@@ -606,17 +613,21 @@ namespace Warehouse.Controllers
                 string name = TempData["name"].ToString();
                 int quantity = Convert.ToInt32(TempData["number"]);
                 int storeID = Convert.ToInt32(form["ddlList"].ToString());
+
+                //Create new Transfer
                 transfer.LaptopID = id;
                 transfer.LaptopName = name;
                 transfer.LaptopQuantity = quantity;
                 transfer.StoreID = storeID;
                 transfer.Date = DateTime.Now;// add if any field you want insert
                 _db.TransferModels.Add(transfer);           // pass the table object 
-                var laptopFind = (from k in _db.LaptopModels where k.ID == id select k).First(); //select laptop
-                laptopFind.Quantity = 0;  //put quantity to 0
-                var storeFind = (from s in _db.StoreModels where s.ID == storeID select s).First(); //select store, change Qop
-                storeFind.QoP = storeFind.QoP - quantity; // reduce QoP for quantity number
+
+                //set laptop quantity to zero
+                laptopFind(id).Quantity = 0;
+               //reduce QoP of store for quantity number
+                storeFind(storeID).QoP -= quantity;
                 _db.SaveChanges();
+
                 return RedirectToAction("Index", "Transfer", new { });
             }
             catch (Exception e)

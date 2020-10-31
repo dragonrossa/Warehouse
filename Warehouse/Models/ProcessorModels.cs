@@ -8,41 +8,11 @@ using System.Web;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using Warehouse.Helpers;
 using Warehouse.Models;
 
 namespace Warehouse.Models
 {
-    interface IEquipment
-    {
-
-        [Key]
-        int ID { get; set; }
-
-        string Name { get; set; }
-
-        string Details { get; set; }
-        int Quantity { get; set; }
-       
-    }
-
-
-    interface IElement<T>
-    {
-        List<T> Child { get; }
-        List<T> Ascending { get; }
-        List<T> Descending { get; }
-    }
-
- 
-
-    interface ISupplier
-    {
-        int ID { get; set; }
-        string SupplierAddress { get; set; }
-
-        string SupplierLocation { get; set; }
-    }
-
 
     public class ProcessorModels: IEquipment, IElement<ProcessorModels>, ISupplier
     {
