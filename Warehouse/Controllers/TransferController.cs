@@ -15,6 +15,57 @@ namespace Warehouse.Controllers
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
+        TransferIndex result = new TransferIndex();
+        List<TransferIndex> index = new List<TransferIndex>();
+
+        public List<LaptopModels> ListLaptop()
+        {
+
+            return (from k in _db.LaptopModels select k).ToList();
+        }
+
+        public object callResult()
+        {
+            return (from t in _db.TransferModels join s in _db.StoreModels on t.StoreID equals s.ID select new { s.Name, t.LaptopName, t.LaptopQuantity }).ToList();
+        }
+
+        public List<SelectListItem> StoreName()
+        {
+            return _db.StoreModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.ID.ToString()
+            }).ToList();
+        }
+
+        public List<SelectListItem> LaptopName()
+        {
+            return _db.LaptopModels.Where(u => u.Quantity != 0).ToList().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.ID.ToString()
+            }).ToList();
+
+        }
+
+        public int possibleCount(int LaptopID)
+        {
+            return (from k in _db.LaptopModels where k.ID == LaptopID select k.Quantity).First();
+        }
+
+        public string laptop(int LaptopID)
+        {
+            return (from k in _db.LaptopModels where k.ID == LaptopID select k.Name).First();
+        }
+
+        public StoreModels storeFind(int storeID){
+            return (from s in _db.StoreModels where s.ID == storeID select s).First();
+         }
+
+        public LaptopModels laptopFind(int TransferLaptopID)
+        {
+            return (from k in _db.LaptopModels where k.ID == TransferLaptopID select k).First();
+        }
 
         //Custom Exception for UserNotFound
 
@@ -36,37 +87,32 @@ namespace Warehouse.Controllers
 
                 try
                 {
-                    List<LaptopModels> ListLaptop = (from k in _db.LaptopModels select k).ToList();
+               
 
+                    //New list
 
                     var results = (from t in _db.TransferModels
                                    join s in _db.StoreModels on t.StoreID equals s.ID
                                    select new { s.Name, t.LaptopName, t.LaptopQuantity }).ToList();
 
-                    TransferIndex result = new TransferIndex();
-                    List<TransferIndex> index = new List<TransferIndex>();
+
 
                     foreach (var res in results)
                     {
-                        var LaptopName = res.LaptopName;
-                        var LaptopQuantity = res.LaptopQuantity;
-                        var StoreName = res.Name;
-
-                        index.Add(new TransferIndex() { LaptopName = LaptopName, LaptopQuantity = LaptopQuantity, StoreName = StoreName });
+                    
+                        index.Add(new TransferIndex() { 
+                            LaptopName = res.LaptopName,
+                            LaptopQuantity = res.LaptopQuantity, 
+                            StoreName = res.Name });
                     }
 
+                TransferModels transfer = new TransferModels();
 
-                    var lastInput = (from k in _db.TransferModels
-                                     select k)
-                               .OrderByDescending(k => k.ID)
-                               .First();
-
-                    ViewBag.laptop = lastInput.LaptopName;
-                    ViewBag.date = lastInput.Date;
-                    ViewBag.quantity = lastInput.LaptopQuantity;
-
-
-                    return View(index);
+                ViewBag.laptop = transfer.lastInput.LaptopName;
+                ViewBag.date = transfer.lastInput.Date;
+                ViewBag.quantity = transfer.lastInput.LaptopQuantity;
+               
+                return View(index);
                 }
                 catch (Exception e)
                {
@@ -96,32 +142,8 @@ namespace Warehouse.Controllers
         {
             try
             {
-                ViewData["StoreName"] = _db.StoreModels.ToList().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.ID.ToString()
-                }).ToList();
-
-                ViewData["LaptopName"] = _db.LaptopModels.Where(u => u.Quantity != 0).ToList().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.ID.ToString()
-                }).ToList();
-
-                //int id = 279;
-
-                //int quantityTransferModels = (from s in _db.TransferModels where s.LaptopID == id select s.LaptopQuantity).Sum();
-                //int quantityLaptopModels = (from q in _db.LaptopModels where q.ID == id select q.Quantity).FirstOrDefault();
-
-
-                //int quantityLeft = quantityLaptopModels - quantityTransferModels;
-
-
-                //ViewData["number"] =
-                //    Enumerable.Range(1, quantityLeft).
-                //    Select(i => new SelectListItem
-                //    { Text = i.ToString(), Value = i.ToString() });
-
+                ViewData["StoreName"] = StoreName();
+                ViewData["LaptopName"] = LaptopName();
 
                 return View();
             }
@@ -147,39 +169,24 @@ namespace Warehouse.Controllers
                 int LaptopID = Convert.ToInt32(form["LaptopName"].ToString());
                 int LaptopQuantity = Convert.ToInt32(form["LaptopQuantity"].ToString());
 
-                var possibleCount = (from k in _db.LaptopModels where k.ID == LaptopID select k.Quantity).First();
-
-                if (possibleCount > 0)
+                if (possibleCount(LaptopID) > 0)
                 {
 
-                    var laptop = (from k in _db.LaptopModels where k.ID == LaptopID select k.Name).First();
                     transfer.StoreID = storeID;
                     transfer.LaptopID = LaptopID;
-                    transfer.LaptopName = laptop;
+                    transfer.LaptopName = laptop(LaptopID);
                     transfer.LaptopQuantity = LaptopQuantity;
                     transfer.Date = DateTime.Now;// add if any field you want insert
                     _db.TransferModels.Add(transfer);
                     _db.SaveChanges();
+
                     //get Laptop
-                    var storeFind = (from s in _db.StoreModels where s.ID == storeID select s).First(); //select store, change Qop
-                    storeFind.QoP = storeFind.QoP - LaptopQuantity; // reduce QoP for quantity number
+                    storeFind(storeID).QoP -= LaptopQuantity; // reduce QoP for quantity number
                     _db.SaveChanges();
-                    var laptopFind = (from k in _db.LaptopModels where k.ID == transfer.LaptopID select k).First(); //select laptop
-                    laptopFind.Quantity = laptopFind.Quantity - LaptopQuantity;  // reduce LaptopQuantity from Quantity
+                    laptopFind(transfer.LaptopID).Quantity -= LaptopQuantity;  // reduce LaptopQuantity from Quantity
                     _db.SaveChanges();
 
-
-                    //Create new log
-                    LogModels log = new LogModels
-                    {
-                        Type = "2",
-                        Description = "New transfer was inserted with transfer of laptop called " + transfer.LaptopName + " with quantity of " +
-                            transfer.LaptopQuantity + " on date " + DateTime.Now + " with location to " + storeFind.Name + ", " + storeFind.Location + ".",
-                        Date = DateTime.Now
-                    };
-
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
+                    transfer.logs(transfer.LaptopName, transfer.LaptopQuantity, storeFind(storeID).Name, storeFind(storeID).Location);
 
                 }
 
