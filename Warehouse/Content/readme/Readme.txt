@@ -102,5 +102,9 @@
 
 27.10 Fixed validation on client, added Regex Expression on some models
 
-29. Interface Equipment for Processor and implementation
+29.10 Interface Equipment for Processor and implementation
+
+30.10 Implementation of interface for LaptopModels
+
+01.11 Implementation of interface for TransferModels
 
