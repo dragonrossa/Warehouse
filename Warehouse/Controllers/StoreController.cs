@@ -14,6 +14,44 @@ namespace Warehouse.Controllers
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
+        StoreModels store = new StoreModels();
+
+        public StoreModels result()
+        {
+            return (from k in _db.StoreModels select k)
+                             .OrderByDescending(k => k.ID)
+                             .First();
+        }
+
+        public StoreModels createStore(StoreModels store)
+        {
+            _db.StoreModels.Add(store);
+            _db.SaveChanges();
+            return store;
+        }
+
+        public StoreModels editStore(StoreModels store)
+        {
+            _db.Entry(store).State = EntityState.Modified;
+            _db.SaveChanges();
+            return store;
+        }
+
+        public StoreModels findStore(int? id)
+        {
+            StoreModels store = _db.StoreModels.Find(id);
+            return store;
+        }
+
+        public StoreModels deleteStore(int? id)
+        {
+            StoreModels store = _db.StoreModels.Find(id);
+            _db.StoreModels.Remove(store);
+            _db.SaveChanges();
+            return store;
+        }
+        
+
         public class UserNotFoundException : Exception
         {
             public UserNotFoundException() : base() { }
@@ -28,20 +66,12 @@ namespace Warehouse.Controllers
             
                 try
                 {
-                    List<StoreModels> storeModels = (from k in _db.StoreModels select k)
-                    .OrderBy(x => x.QoP)
-                    .ToList();
 
-                    var lastInput = (from k in _db.StoreModels
-                                     select k)
-                               .OrderByDescending(k => k.ID)
-                               .First();
+                    ViewBag.store = store.lastInput.Name;
+                    ViewBag.date = store.lastInput.Date;
+                    ViewBag.location = store.lastInput.Location;
 
-                    ViewBag.store = lastInput.Name;
-                    ViewBag.date = lastInput.Date;
-                    ViewBag.location = lastInput.Location;
-
-                    return View(storeModels);
+                    return View(store.Child);
                 }
                 catch (Exception e)
                 {
@@ -102,26 +132,16 @@ namespace Warehouse.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _db.StoreModels.Add(store);
-                    _db.SaveChanges();
+                    //Add new store
 
-                    var result = (from k in _db.StoreModels
-                                  select k)
-                              .OrderByDescending(k => k.ID)
-                              .First();
-                    result.Date = DateTime.Now;
+                    createStore(store);
+
+                    //Add date on last input
+                    result().Date = DateTime.Now;
                     _db.SaveChanges();
 
                     //Create new log
-                    LogModels log = new LogModels
-                    {
-                        Type = "1",
-                        Description = "New store was inserted with name " + result.Name + " on date " + result.Date + " with location on " + result.Location + ".",
-                        Date = result.Date
-                    };
-
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
+                    store.log(result().Name, result().Date, result().Location);
 
                     return RedirectToAction("Index");
                 }
@@ -145,8 +165,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                List<StoreModels> storeModels = (from k in _db.StoreModels select k).ToList();
-                return View(storeModels);
+                return View(store.childOrderByID);
             }
             catch (Exception e)
             {
@@ -162,8 +181,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                List<StoreModels> storeModels = (from k in _db.StoreModels select k).ToList();
-                return View(storeModels);
+                return View(store.childOrderByID);
             }
             catch (Exception e)
             {
@@ -179,8 +197,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                List<StoreModels> storeModels = (from k in _db.StoreModels select k).ToList();
-                return View(storeModels);
+              return View(store.childOrderByID);
             }
             catch (Exception e)
             {
@@ -199,15 +216,15 @@ namespace Warehouse.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                StoreModels store = _db.StoreModels.Find(id);
 
-                if (store == null)
+                //Find store
+                if (findStore(id) == null)
                 {
                     return HttpNotFound();
                 }
 
 
-                return View(store);
+                return View(findStore(id));
             }
             catch (Exception e)
             {
@@ -229,10 +246,9 @@ namespace Warehouse.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _db.Entry(store).State = EntityState.Modified;
-                    _db.SaveChanges();
+                    //Modify store, return store
 
-
+                    editStore(store);
 
                     return RedirectToAction("Index");
                 }
@@ -257,13 +273,13 @@ namespace Warehouse.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                StoreModels store = _db.StoreModels.Find(id);
+                //StoreModels store = _db.StoreModels.Find(id);
 
-                if (store == null)
+                if (findStore(id) == null)
                 {
                     return HttpNotFound();
                 }
-                return View(store);
+                return View(findStore(id));
             }
             catch (Exception e)
             {
@@ -280,9 +296,11 @@ namespace Warehouse.Controllers
 
             try
             {
-                StoreModels store = _db.StoreModels.Find(id);
-                _db.StoreModels.Remove(store);
-                _db.SaveChanges();
+               
+                //Delete Store
+
+                deleteStore(id);
+
                 return RedirectToAction("Index");
 
             }
@@ -306,7 +324,8 @@ namespace Warehouse.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                StoreModels store = _db.StoreModels.Find(id);
+                findStore(id);
+                //StoreModels store = _db.StoreModels.Find(id);
 
                 if (store == null)
                 {

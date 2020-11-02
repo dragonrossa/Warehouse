@@ -1,24 +1,28 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
-    public class StoreModels
+    public class StoreModels:IElement<StoreModels>
     {
+        private ApplicationDbContext _db = new ApplicationDbContext();
+
         //ID - required
         [Key]
         public int ID { get; set; }
         //Name - required
         [Required]
-        [RegularExpression(@"^[a-zA-Z.]{2,30}$", ErrorMessage = "Name must have min 2 and max 30 letters")]
+        [RegularExpression(@"^[a-zA-Z.0-9 ]{2,30}$", ErrorMessage = "Name must have min 2 and max 30 letters")]
         public string Name { get; set; }
         [Required]
-        [RegularExpression(@"^[a-zA-Z.]{2,50}$", ErrorMessage = "Location must have min 2 and max 50 letters")]
+        [RegularExpression(@"^[a-zA-Z.0-9 ]{2,50}$", ErrorMessage = "Location must have min 2 and max 50 letters")]
         //Location - required
         public string Location { get; set; }
         [RegularExpression(@"\d{5}$", ErrorMessage = "Zipcode has 5 digits")]
@@ -26,7 +30,7 @@ namespace Warehouse.Models
         [Display(Name = "Zip code")]
         public int? ZipCode { get; set; }
         //Address - not required
-        [RegularExpression(@"^[a-zA-Z.]{5,100}$", ErrorMessage = "Address must have min 5 and max 100 letters")]
+        [RegularExpression(@"^[a-zA-Z.0-9 ]{5,100}$", ErrorMessage = "Address must have min 5 and max 100 letters")]
         public string Address { get; set; }
         //Quantity of Products - not required
         [Range(1, 500,ErrorMessage ="Quantity cant be bigger from 500")]
@@ -48,5 +52,71 @@ namespace Warehouse.Models
         public string WorkingTime { get; set; }
         //input - DateTime
         public DateTime? Date { get; set; }
+
+        [NotMapped]
+        public List<StoreModels> Child
+        {
+            get
+            {
+                return (from k in _db.StoreModels select k)
+                    .OrderBy(x => x.QoP)
+                    .ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<StoreModels> Ascending
+        {
+            get
+            {
+                return _db.StoreModels.OrderBy(x => x.ID).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<StoreModels> Descending
+        {
+            get
+            {
+                return _db.StoreModels.OrderByDescending(x => x.ID).ToList();
+            }
+        }
+
+        [NotMapped]
+        public StoreModels lastInput
+        {
+            get
+            {
+                return (from k in _db.StoreModels
+                        select k)
+                               .OrderByDescending(k => k.ID)
+                               .First();
+            }
+        }
+
+        [NotMapped]
+
+        public List<StoreModels> childOrderByID
+        {
+            get
+            {
+                return (from k in _db.StoreModels orderby k.ID select k).ToList();
+            }
+        }
+
+        public LogModels log(string ResultName, DateTime? ResultDate, string ResultLocation)
+        {
+            LogModels log = new LogModels
+            {
+                Type = "1",
+                Description = "New store was inserted with name " + ResultName + " on date " + ResultDate + " with location on " + ResultLocation + ".",
+                Date = ResultDate
+            };
+
+            _db.LogModels.Add(log);
+            _db.SaveChanges();
+            return log;
+        }
+
     }
 }
