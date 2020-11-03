@@ -16,14 +16,46 @@ namespace Warehouse.Controllers
         // GET: TaskList
 
         private ApplicationDbContext _db = new ApplicationDbContext();
+        TaskListModels taskListModels = new TaskListModels();
 
-        public class UserNotFoundException : Exception
+        //Username of this user
+
+        public string user()
         {
-            public UserNotFoundException() : base() { }
-            public UserNotFoundException(string message) : base(message) { }
-            public UserNotFoundException(string message, Exception innerException)
-                : base(message, innerException) { }
+            var user = User.Identity.GetUserName();
+            return user;
         }
+
+        //Create task after submiting form
+        public TaskListModels createTask(TaskListModels task, System.Web.Mvc.FormCollection form)
+        {
+            task.Details = form["Details"];
+            task.User = User.Identity.GetUserName();
+            _db.TaskListModels.Add(task);
+            _db.SaveChanges();
+            return task;
+        }
+
+        //Get back list of false tasks to user
+        public List<TaskListModels> listOfFalseTasks()
+        {
+            bool status = false;
+            var list = (from l in _db.TaskListModels where l.Status == status select l).ToList();
+            return list;
+        }
+
+        //Change status after clicking on checkbox
+        public TaskListModels changeStatus(System.Web.Mvc.FormCollection form, int id)
+        {
+            var task = (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
+            string status = form["status"];
+            task.Status = Convert.ToBoolean(form["status"]);
+            _db.SaveChanges();
+            return task;
+        }
+
+
+   
 
 
         public ActionResult Index()
@@ -32,7 +64,7 @@ namespace Warehouse.Controllers
 
             try
             {
-                ViewBag.user = User.Identity.GetUserName();
+                ViewBag.user = user();
                 return View();
             }
             catch (Exception e)
@@ -64,23 +96,17 @@ namespace Warehouse.Controllers
         //[HandleError]
         public ActionResult Create(TaskListModels task, System.Web.Mvc.FormCollection form)
         {
-            task.Details = form["Details"];
-            task.User = User.Identity.GetUserName();
-            _db.TaskListModels.Add(task);
-            _db.SaveChanges();
+
+            createTask(task, form);
             return RedirectToAction("MyList");
-            //return View(task);
         }
 
         public ActionResult MyList()
         {
             try
             {
-                var user = User.Identity.GetUserName();
-                bool status = false;
-                var list = (from l in _db.TaskListModels where l.Status==status select l).ToList();
-                
-                return View(list);
+              
+                return View(listOfFalseTasks());
             }
             catch (Exception)
             {
@@ -102,10 +128,8 @@ namespace Warehouse.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var task = (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
-                    string status = form["status"];
-                    task.Status = Convert.ToBoolean(form["status"]);
-                    _db.SaveChanges();
+                    changeStatus(form, id);
+
                     return RedirectToAction("Index");
                 }
                 
@@ -121,11 +145,9 @@ namespace Warehouse.Controllers
 
         public ActionResult List()
         {
-            List<TaskListModels> taskListModels = new List<TaskListModels>();
+            
 
-            taskListModels = (from t in _db.TaskListModels select t).ToList();
-
-            return View(taskListModels);
+            return View(taskListModels.Child);
         }
 
         public ActionResult Details(int id)
@@ -134,7 +156,7 @@ namespace Warehouse.Controllers
             {
                 TaskListModels task = new TaskListModels();
 
-               task = (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
+                task = (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
 
                 TempData["assistant1"] = task.Assistant1;
 

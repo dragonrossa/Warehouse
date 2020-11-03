@@ -6,11 +6,14 @@ using System.Linq;
 using System.Web;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
+using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
-    public class TaskListModels
+    public class TaskListModels:IElement<TaskListModels>
     {
+        private ApplicationDbContext _db = new ApplicationDbContext();
+
         [Key]
         public int ID { get; set; }
         [RegularExpression(@"^[a-zA-Z.]{5,50}$", ErrorMessage = "Details must have min 5 and max 50 letters")]
@@ -34,7 +37,29 @@ namespace Warehouse.Models
         [MaxLength(2130702268)]
         public byte[] Data { get; set; }
 
+        public List<TaskListModels> Child
+        {
+            get
+            {
+                return (from t in _db.TaskListModels select t).ToList();
+            }
+        }
 
+        public List<TaskListModels> Ascending
+        {
+            get
+            {
+                return _db.TaskListModels.OrderBy(x => x.ID).ToList();
+            }
+        }
+
+        public List<TaskListModels> Descending
+        {
+            get
+            {
+                return _db.TaskListModels.OrderByDescending(x => x.ID).ToList();
+            }
+        }
 
 
     }
