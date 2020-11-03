@@ -110,3 +110,5 @@
 
 02.11 Implementation of interface for StoreModels
 
+03.11 Implementation of interface for UserModels
+
