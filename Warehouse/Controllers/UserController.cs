@@ -14,6 +14,30 @@ namespace Warehouse.Controllers
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
+        //Username of this user
+        public string user()
+        {
+            var user = User.Identity.GetUserName();
+            return user;
+        }
+
+        //Users list of details
+        public UserModels userModels(string user)
+        {
+            UserModels userModels = (from k in _db.UserModels where k.Mail == user select k).First();
+            return userModels;
+        }
+
+        //Save this users details after editing
+
+        public UserModels saveUser(UserModels userModels)
+        {
+            _db.Entry(userModels).State = EntityState.Modified;
+            userModels.DateModified = DateTime.Now;
+            _db.SaveChanges();
+            return userModels;
+        }
+
         public class UserNotFoundException : Exception
         {
             public UserNotFoundException() : base() { }
@@ -22,6 +46,7 @@ namespace Warehouse.Controllers
                 : base(message, innerException) { }
         }
 
+        
 
         // GET: User
         public ActionResult Index()
@@ -29,13 +54,11 @@ namespace Warehouse.Controllers
 
             try
             {
-                var user = User.Identity.GetUserName();
-                UserModels userModels = (from k in _db.UserModels where k.Mail == user select k).First();
-                ViewBag.user = user;
+                //Find and send users info to view
+                userModels(user());
+                ViewBag.user = user();
                 ViewBag.date = DateTime.Now;
-                //userModels.DateModified = DateTime.Now;
-                //_db.SaveChanges();
-                return View(userModels);
+                return View(userModels(user()));
             }
             catch (Exception e)
             {
@@ -75,13 +98,11 @@ namespace Warehouse.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _db.Entry(userModels).State = EntityState.Modified;
-                    _db.SaveChanges();
-                    //_db.Entry(userModels.DateModified=DateTime.Now).State = EntityState.Modified;
-                    //_db.SaveChanges();
+
+                    saveUser(userModels);
                     return RedirectToAction("Index", "Manage");
                 }
-                return View(userModels);
+                return View(saveUser(userModels));
             }
             catch (Exception e)
             {
