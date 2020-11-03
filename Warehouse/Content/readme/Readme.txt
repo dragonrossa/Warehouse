@@ -108,3 +108,5 @@
 
 01.11 Implementation of interface for TransferModels
 
+02.11 Implementation of interface for StoreModels
+
