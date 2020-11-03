@@ -112,3 +112,5 @@
 
 03.11 Implementation of interface for UserModels
 
+03.11 Implementation of interface for TaskListModels
+
