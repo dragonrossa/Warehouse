@@ -54,8 +54,73 @@ namespace Warehouse.Controllers
             return task;
         }
 
+        //Find task by ID
+        public TaskListModels findTask(int id)
+        {
+            return (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
+        }
 
-   
+        //Select list for Assistant 1
+
+        public List<SelectListItem> assistant1()
+        {
+            return _db.UserModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.UserName,
+                Value = u.UserName
+            }).ToList();
+        }
+
+        //Select list for Assistant 2
+        public List<SelectListItem> assistant2()
+        {
+            return _db.UserModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.UserName,
+                Value = u.UserName
+            }).ToList();
+        }
+
+        //Select list for Assistant2
+        public List<SelectListItem> assistant3()
+        {
+            return _db.UserModels.ToList().Select(u => new SelectListItem
+                {
+                    Text = u.UserName,
+                    Value = u.UserName
+                }).ToList();
+        }
+
+        public object getAssistant1Info(int id)
+        {
+            if (String.IsNullOrEmpty(findTask(id).Assistant1))
+            {
+                TempData["assistant1"] = "not assigned yet";
+            }
+
+            
+            return TempData["assistant1"];
+        }
+
+        public object getAssistant2Info(int id)
+        {
+            if (String.IsNullOrEmpty(findTask(id).Assistant2))
+            {
+                TempData["assistant2"] = "not assigned yet";
+            }
+            return TempData["assistant2"];
+        }
+
+        public object getAssistant3Info(int id)
+        {
+           
+            if (String.IsNullOrEmpty(findTask(id).Assistant3))
+            {
+                TempData["assistant3"] = "not assigned yet";
+            }
+            return TempData["assistant3"];
+        }
+
 
 
         public ActionResult Index()
@@ -154,53 +219,26 @@ namespace Warehouse.Controllers
         {
             try
             {
-                TaskListModels task = new TaskListModels();
+         
+                TempData["assistant1"] = findTask(id).Assistant1;
 
-                task = (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
+                TempData["assistant2"] = findTask(id).Assistant2;
 
-                TempData["assistant1"] = task.Assistant1;
+                TempData["assistant3"] = findTask(id).Assistant3;
 
-                TempData["assistant2"] = task.Assistant2;
-
-                TempData["assistant3"] = task.Assistant3;
-
-                TempData["id"] = task.ID;
-
-                if (String.IsNullOrEmpty(task.Assistant1))
-                {
-                    TempData["assistant1"] = "not assigned yet";
-                }
-
-                if (String.IsNullOrEmpty(task.Assistant2))
-                {
-                    TempData["assistant2"] = "not assigned yet";
-                }
-
-                if (String.IsNullOrEmpty(task.Assistant3))
-                {
-                    TempData["assistant3"] = "not assigned yet";
-                }
-
-                ViewData["assistant1"] = _db.UserModels.ToList().Select(u => new SelectListItem
-                {
-                    Text = u.UserName,
-                    Value = u.UserName
-                }).ToList();
-
-                ViewData["assistant2"] = _db.UserModels.ToList().Select(u => new SelectListItem
-                {
-                    Text = u.UserName,
-                    Value = u.UserName
-                }).ToList();
-
-                ViewData["assistant3"] = _db.UserModels.ToList().Select(u => new SelectListItem
-                {
-                    Text = u.UserName,
-                    Value = u.UserName
-                }).ToList();
+                TempData["id"] = findTask(id).ID;
 
 
-                return View(task);
+                //Get info if there are assistants checked from before
+                getAssistant1Info(id);
+                getAssistant2Info(id);
+                getAssistant3Info(id);
+
+                ViewData["assistant1"] = assistant1();
+                ViewData["assistant2"] = assistant2();
+                ViewData["assistant3"] = assistant3();
+                
+                return View(findTask(id));
 
             }
             catch (Exception)

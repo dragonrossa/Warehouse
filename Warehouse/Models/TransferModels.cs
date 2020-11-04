@@ -65,6 +65,7 @@ namespace Warehouse.Models
             }
         }
 
+
         public LogModels logs(string LaptopName, int LaptopQuantity, string StoreFindName, string StoreFindLocation)
         {
             LogModels log = new LogModels

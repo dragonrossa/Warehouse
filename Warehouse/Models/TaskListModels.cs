@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Microsoft.Ajax.Utilities;
@@ -37,6 +38,7 @@ namespace Warehouse.Models
         [MaxLength(2130702268)]
         public byte[] Data { get; set; }
 
+        [NotMapped]
         public List<TaskListModels> Child
         {
             get
@@ -45,6 +47,7 @@ namespace Warehouse.Models
             }
         }
 
+        [NotMapped]
         public List<TaskListModels> Ascending
         {
             get
@@ -53,6 +56,7 @@ namespace Warehouse.Models
             }
         }
 
+        [NotMapped]
         public List<TaskListModels> Descending
         {
             get
