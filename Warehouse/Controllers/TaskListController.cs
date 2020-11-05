@@ -58,7 +58,9 @@ namespace Warehouse.Controllers
         public TaskListModels findTask(int id)
         {
             return (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
+
         }
+
 
         //Select list for Assistant 1
 
@@ -85,10 +87,10 @@ namespace Warehouse.Controllers
         public List<SelectListItem> assistant3()
         {
             return _db.UserModels.ToList().Select(u => new SelectListItem
-                {
-                    Text = u.UserName,
-                    Value = u.UserName
-                }).ToList();
+            {
+                Text = u.UserName,
+                Value = u.UserName
+            }).ToList();
         }
 
         public object getAssistant1Info(int id)
@@ -98,7 +100,7 @@ namespace Warehouse.Controllers
                 TempData["assistant1"] = "not assigned yet";
             }
 
-            
+
             return TempData["assistant1"];
         }
 
@@ -113,13 +115,111 @@ namespace Warehouse.Controllers
 
         public object getAssistant3Info(int id)
         {
-           
+
             if (String.IsNullOrEmpty(findTask(id).Assistant3))
             {
                 TempData["assistant3"] = "not assigned yet";
             }
             return TempData["assistant3"];
         }
+
+        public string setAssistant1(int id, string assistantID1)
+        {
+
+
+            if (!String.IsNullOrEmpty(assistantID1))
+            {
+                findTask(id).Assistant1 = assistantID1;
+                _db.SaveChanges();
+
+            }
+            else
+            {
+
+            }
+
+            return findTask(id).Assistant1;
+        }
+
+        public string setAssistant2(int id, string assistantID2)
+        {
+
+
+            if (!String.IsNullOrEmpty(assistantID2))
+            {
+                findTask(id).Assistant2 = assistantID2;
+                _db.SaveChanges();
+            }
+            else
+            {
+
+            }
+            return findTask(id).Assistant2;
+        }
+
+        public string setAssistant3(int id, string assistantID3)
+        {
+
+            if (!String.IsNullOrEmpty(assistantID3))
+            {
+                findTask(id).Assistant3 = assistantID3;
+                _db.SaveChanges();
+            }
+            else
+            {
+
+            }
+            return findTask(id).Assistant2;
+        }
+
+        //Upload file in Details section
+
+        public byte[] uploadFile(int id, HttpPostedFileBase postedFile)
+        {
+            byte[] bytes;
+
+            using (BinaryReader br = new BinaryReader(postedFile.InputStream))
+            {
+                bytes = br.ReadBytes(postedFile.ContentLength);
+
+            }
+
+            var str = System.Text.Encoding.Default.GetString(bytes);
+
+            findTask(id).UploadName = postedFile.FileName;
+            findTask(id).ContentType = postedFile.ContentType;
+            findTask(id).Data = bytes;
+
+            _db.SaveChanges();
+
+            return bytes;
+
+
+        }
+
+
+        //Download previously uploaded file
+
+        public FileContentResult downloadFile(int? FileId)
+        {
+            TaskListModels taskList = new TaskListModels();
+            var file = _db.TaskListModels.ToList().Find(p => p.ID == FileId);
+            return File(file.Data, file.ContentType, file.UploadName);
+        }
+
+        //Delete uploaded file
+
+        public TaskListModels deleteFile(int? FileId2)
+        {
+
+            var file = (from p in _db.TaskListModels where p.ID == FileId2 select p).FirstOrDefault();
+            file.UploadName = null;
+            file.ContentType = null;
+            file.Data = null;
+            _db.SaveChanges();
+            return file;
+        }
+
 
 
 
@@ -255,54 +355,35 @@ namespace Warehouse.Controllers
 
         public ActionResult Details(System.Web.Mvc.FormCollection form, HttpPostedFileBase postedFile)
         {
+            //Get Assistants from form
             string assistantID1 = form["assistant1"].ToString();
             string assistantID2 = form["assistant2"].ToString();
             string assistantID3 = form["assistant3"].ToString();
+
+            //Send to ViewBag
             int id = Convert.ToInt32(form["ID"]);
             ViewBag.id = id;
-            
-            var task = (from t in _db.TaskListModels where t.ID==id select t).FirstOrDefault();
 
             if (postedFile == null)
             {
-                if (!String.IsNullOrEmpty(assistantID1))
-                {
-                    task.Assistant1 = assistantID1;
-                    _db.SaveChanges();
-                }
-                else if (!String.IsNullOrEmpty(assistantID2))
-                {
-                    task.Assistant2 = assistantID2;
-                    _db.SaveChanges();
-                }
-                else if (!String.IsNullOrEmpty(assistantID3))
-                {
-                    task.Assistant3 = assistantID3;
-                    _db.SaveChanges();
-                }
-                else
-                {
-                    return RedirectToAction("MyList");
-                }
+
+                //Set assistants to user
+
+                setAssistant1(id, assistantID1);
+                setAssistant2(id, assistantID2);
+                setAssistant3(id, assistantID3);
 
             }
             else
             {
-                byte[] bytes;
 
-                using (BinaryReader br = new BinaryReader(postedFile.InputStream))
-                {
-                    bytes = br.ReadBytes(postedFile.ContentLength);
+                //Set assistants
+                setAssistant1(id, assistantID1);
+                setAssistant2(id, assistantID2);
+                setAssistant3(id, assistantID3);
 
-                }
-
-                var str = System.Text.Encoding.Default.GetString(bytes);
-
-                task.UploadName = postedFile.FileName;
-                task.ContentType = postedFile.ContentType;
-                task.Data = bytes;
-
-                _db.SaveChanges();
+                //Save uploaded file
+                uploadFile(id, postedFile);
             }
 
 
@@ -314,22 +395,16 @@ namespace Warehouse.Controllers
         [HandleError]
         public FileResult DownloadFile(int? FileId)
         {
-           
-                TaskListModels taskList = new TaskListModels();
-                var file = _db.TaskListModels.ToList().Find(p => p.ID == FileId);
-                return File(file.Data, file.ContentType, file.UploadName); 
+
+           return downloadFile(FileId);
         }
 
         [HttpPost]
         [HandleError]
         public ActionResult DeleteFile(int? FileId2)
         {
-            var id = FileId2;
-            var file = (from p in _db.TaskListModels where p.ID == id select p).FirstOrDefault();
-            file.UploadName = null;
-            file.ContentType = null;
-            file.Data = null;
-            _db.SaveChanges();
+           
+            deleteFile(FileId2);
             return RedirectToAction("MyList");
         }
 
