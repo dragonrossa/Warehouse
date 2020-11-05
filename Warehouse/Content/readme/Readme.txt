@@ -118,3 +118,5 @@
 
 05.11 Implementation of Interface for LogModels and functions for LogController
 
+05.11 Functions for ActionResults in SearchController
+
