@@ -116,3 +116,5 @@
 
 05.11 Implementation of Interface and various functions in controller for TaskList
 
+05.11 Implementation of Interface for LogModels and functions for LogController
+
