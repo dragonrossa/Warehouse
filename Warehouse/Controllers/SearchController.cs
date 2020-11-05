@@ -46,6 +46,14 @@ namespace Warehouse.Controllers
 
         }
 
+        public List<StoreModels> findSearchLocation(SearchIndex search)
+        {
+
+            List<StoreModels> stores = (from k in _db.StoreModels where k.Location == search.Name select k).ToList();
+            return stores;
+
+        }
+
         public LaptopModels searchName(SearchIndex search)
         {
             return (from k in _db.LaptopModels where k.Name == search.Name select k).FirstOrDefault();
@@ -54,6 +62,16 @@ namespace Warehouse.Controllers
         public int? calculateQuantity(SearchIndex search)
         {
             return (from k in _db.LaptopModels where k.Name == search.Name select (int?)k.Quantity).Sum();
+        }
+
+        public int? calculateStoreQuantity(SearchIndex search)
+        {
+            return (from k in _db.StoreModels where k.Name == search.Name select (int?)k.QoP).Sum();
+        }
+
+        public int? calculateLocationQuantity(SearchIndex search)
+        {
+            return (from k in _db.StoreModels where k.Location == search.Name select (int?)k.QoP).Sum();
         }
 
         public LaptopModels searchManufacturer(SearchIndex search)
@@ -66,6 +84,23 @@ namespace Warehouse.Controllers
             return (from k in _db.LaptopModels where k.OS == search.Name select k).FirstOrDefault();
         }
 
+        public StoreModels searchStores(SearchIndex search)
+        {
+            return (from k in _db.StoreModels where k.Name == search.Name select k).FirstOrDefault();
+        }
+
+        public List<StoreModels> storeList(SearchIndex search)
+        {
+            return (from k in _db.StoreModels where k.Name == search.Name select k).ToList();
+        }
+
+
+        public StoreModels searchLocation(SearchIndex search)
+        {
+            return (from k in _db.StoreModels where k.Location == search.Name select k).FirstOrDefault();
+        }
+
+        //Create new log
         public LogModels log3()
         {
             LogModels log = new LogModels
@@ -80,6 +115,8 @@ namespace Warehouse.Controllers
             return log;
         }
 
+
+        //Create new log
         public LogModels log4()
         {
             LogModels log = new LogModels
@@ -271,45 +308,29 @@ namespace Warehouse.Controllers
 
         public ActionResult SearchStore(FormCollection form)
         {
-            SearchIndex search = new SearchIndex();
-         
+                     
 
            if (form["storeName"] != null){
 
                 search.Name = form["storeName"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchName = (from k in _db.StoreModels where k.Name == search.Name select k).FirstOrDefault();
-                List<StoreModels> stores = (from k in _db.StoreModels where k.Name == search.Name select k).ToList();
-                ViewBag.quantity = (from k in _db.StoreModels where k.Name == search.Name select (int?)k.QoP).Sum();
+                ViewBag.searchName = searchStores(search);
+                ViewBag.quantity = calculateStoreQuantity(search);
 
                 if (ViewBag.searchName == null)
                 {
-                    LogModels log = new LogModels
-                    {
-                        Type = "4",
-                        Description = "There was new search in Transfer section for " + search.Name + ".",
-                        Date = DateTime.Now
-                    };
-
-                    _db.LogModels.Add(log);
+                    //Create new log
+                    log4();
                     _db.SaveChanges();
                     return View("ResultNotExists");
                 }
                 else
                 {
-                  
-                    //Create new log
-                    LogModels log = new LogModels
-                    {
-                        Type = "3",
-                        Description = "There was new search in Store section for " + search.Name + ".",
-                        Date = DateTime.Now
-                    };
 
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
-                    return View("ResultStore",stores);
+                    //Create new log
+                    log3();
+                    return View("ResultStore", storeList(search));
                 }
             }
             return View();
@@ -326,37 +347,24 @@ namespace Warehouse.Controllers
                 search.Name = form["storeLocation"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchName = (from k in _db.StoreModels where k.Location == search.Name select k).FirstOrDefault();
-                List<StoreModels> stores = (from k in _db.StoreModels where k.Location == search.Name select k).ToList();
-                ViewBag.quantity = (from k in _db.StoreModels where k.Location == search.Name select (int?)k.QoP).Sum();
-
+                ViewBag.searchName = searchLocation(search);
+                ViewBag.quantity = calculateLocationQuantity(search);
+               
                 if (ViewBag.searchName == null)
                 {
-                    LogModels log = new LogModels
-                    {
-                        Type = "4",
-                        Description = "There was new search in Transfer section for " + search.Name + ".",
-                        Date = DateTime.Now
-                    };
+                    //Create new log
 
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
+                    log4();
                     return View("ResultNotExists");
                 }
                 else
                 {
 
                     //Create new log
-                    LogModels log = new LogModels
-                    {
-                        Type = "3",
-                        Description = "There was new search in Store section for " + search.Name + ".",
-                        Date = DateTime.Now
-                    };
 
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
-                    return View("ResultStore", stores);
+                    log3();
+                    
+                    return View("ResultStore", findSearchLocation(search));
                 }
             }
             return View();
