@@ -14,14 +14,90 @@ namespace Warehouse.Controllers
     public class SearchController : Controller
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
+        SearchIndex search = new SearchIndex();
+        List<SearchIndex> index = new List<SearchIndex>();
 
-        public class UserNotFoundException : Exception
+        public string userInfo()
         {
-            public UserNotFoundException() : base() { }
-            public UserNotFoundException(string message) : base(message) { }
-            public UserNotFoundException(string message, Exception innerException)
-                : base(message, innerException) { }
+            var user = User.Identity.GetUserName();
+            return user;
         }
+
+
+
+        public List<LaptopModels> findSearch(SearchIndex search)
+        {
+
+            int QuantityOfAllProducts = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).Count();
+            search.QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
+            List<LaptopModels> laptops = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).ToList();
+            return laptops;
+
+        }
+
+        public List<LaptopModels> findSearchOS(SearchIndex search)
+        {
+
+          
+            int QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
+            search.QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
+            List<LaptopModels> laptops = (from k in _db.LaptopModels where k.OS == search.Name select k).ToList();
+            return laptops;
+
+        }
+
+        public LaptopModels searchName(SearchIndex search)
+        {
+            return (from k in _db.LaptopModels where k.Name == search.Name select k).FirstOrDefault();
+        }
+
+        public int? calculateQuantity(SearchIndex search)
+        {
+            return (from k in _db.LaptopModels where k.Name == search.Name select (int?)k.Quantity).Sum();
+        }
+
+        public LaptopModels searchManufacturer(SearchIndex search)
+        {
+            return (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).FirstOrDefault();
+        }
+
+        public LaptopModels searchOS(SearchIndex search)
+        {
+            return (from k in _db.LaptopModels where k.OS == search.Name select k).FirstOrDefault();
+        }
+
+        public LogModels log3()
+        {
+            LogModels log = new LogModels
+            {
+                Type = "3",
+                Description = "There was new search in Laptop section for " + search.Name + ".",
+                Date = DateTime.Now
+            };
+
+            _db.LogModels.Add(log);
+            _db.SaveChanges();
+            return log;
+        }
+
+        public LogModels log4()
+        {
+            LogModels log = new LogModels
+            {
+                Type = "4",
+                Description = "There was new search in Transfer section for " + search.Name + ".",
+                Date = DateTime.Now
+            };
+
+            _db.LogModels.Add(log);
+            _db.SaveChanges();
+            return log;
+        }
+
+    
+
+
+        
 
         // GET: Search
         //Search - Laptop
@@ -33,7 +109,7 @@ namespace Warehouse.Controllers
         //Example 3. search for Notebook HP 250-G7 in Transfers
         public ActionResult Index()
         {
-            var user = User.Identity.GetUserName();
+            
 
             try
             {
@@ -70,8 +146,7 @@ namespace Warehouse.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Result(FormCollection form)
         {
-            SearchIndex search = new SearchIndex();
-            List<SearchIndex> index = new List<SearchIndex>();
+          
 
             //Search for Laptop
 
@@ -82,43 +157,27 @@ namespace Warehouse.Controllers
                 search.Name = form["name"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchname = (from k in _db.LaptopModels where k.Name == search.Name select k).FirstOrDefault();
-                int QuantityOfAllProducts = (from k in _db.LaptopModels where k.Name == search.Name select k).Count();
-                List<LaptopModels> laptops = (from k in _db.LaptopModels where k.Name == search.Name select k).ToList();
-                search.QuantityOfAllProducts = (from k in _db.LaptopModels where k.Name == search.Name select k).Count();
-                ViewBag.quantity = (from k in _db.LaptopModels where k.Name == search.Name select (int?)k.Quantity).Sum();
-
+                ViewBag.searchname = searchName(search);
+                ViewBag.quantity = calculateQuantity(search);
+                findSearch(search);
 
                 if (ViewBag.searchname == null)
                 {
-                    LogModels log = new LogModels
-                    {
-                        Type = "4",
-                        Description = "There was new search in Transfer section for " + search.Name + ".",
-                        Date = DateTime.Now
-                    };
+                    //Create new log
 
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
+                    log4();
                     return View("ResultNotExists");
                 }
 
                 else
                 {
-                   
+
 
                     //Create new log
-                    LogModels log = new LogModels
-                    {
-                        Type = "3",
-                        Description = "There was new search in Laptop section for " + search.Name + ".",
-                        Date = DateTime.Now
-                    };
+                    
+                    log3();
 
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
-
-                    return View(laptops);
+                    return View(findSearch(search));
                 }
             }
 
@@ -130,55 +189,37 @@ namespace Warehouse.Controllers
 
         public ActionResult SearchByManufacturer(FormCollection form)
         {
-            SearchIndex search = new SearchIndex();
-         
+   
 
             if (form["manufacturer"] != null)
             {
 
+
                 search.Name = form["manufacturer"];
-                ViewBag.Name = form["manufacturer"];
+                ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchname = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).FirstOrDefault();
-                int QuantityOfAllProducts = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).Count();
-                search.QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
-                List<LaptopModels> laptops = (from k in _db.LaptopModels where k.Manufacturer == search.Name select k).ToList();
-                ViewBag.quantity = (from k in _db.LaptopModels where k.Manufacturer == search.Name select (int?)k.Quantity).Sum();
+                ViewBag.searchname = searchManufacturer(search);
+                ViewBag.quantity = calculateQuantity(search);
+                findSearch(search);
 
-                //int count = _db.LaptopModels.Where(x => x.Manufacturer == search.Name).Count();
-
-                //log for Search if not exists
 
                 if (ViewBag.searchname == null)
                 {
-                    LogModels log = new LogModels
-                    {
-                        Type = "4",
-                        Description = "There was new search in Transfer section for " + search.Name + ".",
-                        Date = DateTime.Now
-                    };
+                    //Create new log
 
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
+                    log4();
                     return View("ResultNotExists");
                 }
 
                 else
                 {
-                  
+
 
                     //Create new log
-                    LogModels log = new LogModels
-                    {
-                        Type = "3",
-                        Description = "There was new search in Laptop section for " + search.Name + ".",
-                        Date = DateTime.Now
-                    };
+ 
+                    log3();
 
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
-
-                    return View(laptops);
+                    return View(findSearch(search));
                 }
             }
 
@@ -188,59 +229,38 @@ namespace Warehouse.Controllers
 
         public ActionResult SearchByOS(FormCollection form)
         {
-            SearchIndex search = new SearchIndex();
-           // List<SearchIndex> index = new List<SearchIndex>();
-            
+           
 
             if (form["os"] != null)
             {
 
+          
                 search.Name = form["os"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchName = (from k in _db.LaptopModels where k.OS == search.Name select k).FirstOrDefault();
-                int QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
-                search.QuantityOfAllProducts = (from k in _db.LaptopModels where k.OS == search.Name select k).Count();
-                ViewBag.quantity = (from k in _db.LaptopModels where k.OS == search.Name select (int?)k.Quantity).Sum();
-
-                List<LaptopModels> laptops = (from k in _db.LaptopModels where k.OS == search.Name select k).ToList();
+                ViewBag.searchname = searchOS(search);
+                ViewBag.quantity = calculateQuantity(search);
+                findSearchOS(search);
 
                 //log for Search if not exists
 
                 if (ViewBag.searchname == null)
                 {
-                    LogModels log = new LogModels
-                    {
-                        Type = "4",
-                        Description = "There was new search in Transfer section for " + search.Name + ".",
-                        Date = DateTime.Now
-                    };
+                    //Create new log
 
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
+                    log4();
                     return View("ResultNotExists");
                 }
 
                 else
                 {
-                    //Create Laptop object
                     
 
-                    //Add laptop object to list
-
-        
                     //Create new log
-                    LogModels log = new LogModels
-                    {
-                        Type = "3",
-                        Description = "There was new search in Laptop section for " + search.Name + ".",
-                        Date = DateTime.Now
-                    };
+                 
+                    log3();
 
-                    _db.LogModels.Add(log);
-                    _db.SaveChanges();
-
-                    return View(laptops);
+                    return View(findSearchOS(search));
                 }
             }
 
