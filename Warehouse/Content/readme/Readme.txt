@@ -122,3 +122,5 @@
 
 06.11 Created functions for SearchControllers ActionResults
 
+07.11 Implementation of Interface for AdminModels and functions for AdminController
+
