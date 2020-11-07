@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
-    public class AdminModels
+    public class AdminModels:IElement<AdminModels>
     {
+        private ApplicationDbContext _db = new ApplicationDbContext();
+
         [Key]
         public int ID { get; set; }
 
@@ -33,6 +37,35 @@ namespace Warehouse.Models
         public bool ProcurementAccess { get; set; }
 
         public IEnumerable<AdminModels> access { get; set; }
+
+        [NotMapped]
+
+        public List<AdminModels> Child
+        {
+            get
+            {
+                return (from k in _db.AdminModels select k).ToList();
+            }
+        }
+
+       
+        [NotMapped]
+        public List<AdminModels> Ascending
+        {
+            get
+            {
+                return _db.AdminModels.OrderBy(x => x.ID).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<AdminModels> Descending
+        {
+            get
+            {
+                return _db.AdminModels.OrderByDescending(x => x.ID).ToList();
+            }
+        }
 
     }
 }

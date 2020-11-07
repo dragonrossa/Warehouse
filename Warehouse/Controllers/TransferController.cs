@@ -16,6 +16,7 @@ namespace Warehouse.Controllers
         private ApplicationDbContext _db = new ApplicationDbContext();
 
         TransferIndex result = new TransferIndex();
+
         List<TransferIndex> index = new List<TransferIndex>();
 
         public List<LaptopModels> ListLaptop()

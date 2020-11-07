@@ -15,40 +15,73 @@ namespace Warehouse.Controllers
     public class AdminController : Controller
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
+        List<AdminModels> user = new List<AdminModels>();
+        AdminModels admin = new AdminModels();
+
         // GET: Admin
 
-        //list of users + list of roles + check button for roles
 
-        public class UserNotFoundException : Exception
+        //Return list of users
+        public List<UserModels> users()
         {
-            public UserNotFoundException() : base() { }
-            public UserNotFoundException(string message) : base(message) { }
-            public UserNotFoundException(string message, Exception innerException)
-                : base(message, innerException) { }
+            return (from u in _db.UserModels
+                    select u).ToList();
         }
+
+        public UserModels findUser(int id)
+        {
+            var user = (from u in _db.UserModels
+                        where u.ID == id
+                        select u).FirstOrDefault();
+            return user;
+        }
+
+        // Current role for some user
+        public string currentRole(UserModels user)
+        {
+            return (from r in _db.RolesModels
+                    join a in _db.AdminModels
+                    on r.ID equals a.RoleID
+                    where a.Username == user.UserName
+                    select r.Role).SingleOrDefault();
+        }
+
+        //Dropdown with list of possible roles
+        public object listOfRoles()
+        {
+            return ViewData["Roles"] = _db.RolesModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.Role,
+                Value = u.ID.ToString()
+            }).ToList();
+        }
+
+        //Logs
+
+        public LogModels log6(string userUsername, object tempdataCurrentRole)
+        {
+            LogModels log = new LogModels
+            {
+                Type = "6",
+                Description = "New change was made for user " + userUsername + " on date " + DateTime.Now + " for role " + tempdataCurrentRole + ".",
+                Date = DateTime.Now
+            };
+
+            _db.LogModels.Add(log);
+            _db.SaveChanges();
+            return log;
+        }
+
+     
+
 
         public ActionResult Index()
         {
 
-            var user = User.Identity.GetUserName();
-
-            bool access = (from a in _db.AdminModels where a.Username == user select a.Access).FirstOrDefault();
-
-            bool fal = false;
-
-            if (access == fal)
-            {
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return RedirectToAction("Index","Laptop");
-            }
-            else
-            {
-
                 try
                 {
-                    List<UserModels> users = (from u in _db.UserModels
-                                              select u).ToList();
-                    return View(users);
+
+                    return View(users());
                 }
                 catch (Exception e)
                 {
@@ -69,7 +102,7 @@ namespace Warehouse.Controllers
                 {
 
                 }
-            }
+          
             return View();
         }
 
@@ -83,33 +116,17 @@ namespace Warehouse.Controllers
 
         public ActionResult ChangeRole(int id)
         {
-            int UserID = id;
 
-            TempData["UserID"] = UserID;
-
-            var user = (from u in _db.UserModels
-                        where u.ID==UserID
-                        select u).FirstOrDefault();
-
-            ViewBag.user = user.Name + " " + user.LastName;
-            ViewBag.username = user.UserName;
-            ViewBag.currentRole = (from r in _db.RolesModels 
-                                   join a in _db.AdminModels
-                                   on r.ID equals a.RoleID
-                                   where a.Username == user.UserName
-                                   select r.Role).SingleOrDefault();
-
+            TempData["UserID"] = id;                
+            ViewBag.user = findUser(id).Name + " " + findUser(id).LastName;
+            ViewBag.username = findUser(id).UserName;
+            ViewBag.currentRole = currentRole(findUser(id));
             TempData["currentRole"] = ViewBag.currentRole;
-
             TempData["username"] = ViewBag.username;
+            //List of available roles
+            listOfRoles();
 
-            ViewData["Roles"] = _db.RolesModels.ToList().Select(u => new SelectListItem
-            {
-                Text = u.Role,
-                Value = u.ID.ToString()
-            }).ToList();
-
-            return View(user);
+            return View(findUser(id));
         }
 
         [HttpPost]
@@ -118,7 +135,7 @@ namespace Warehouse.Controllers
         public ActionResult ChangeRole(FormCollection form)
         {
           
-            AdminModels admin = new AdminModels();
+           // AdminModels admin = new AdminModels();
 
             try
             {
@@ -143,15 +160,18 @@ namespace Warehouse.Controllers
 
                         //Create new log
 
-                        LogModels log = new LogModels
-                        {
-                            Type = "6",
-                            Description = "New change was made for user " + user.Username + " on date " + DateTime.Now + " for role " + TempData["currentRole"] + ".",
-                            Date = DateTime.Now
-                        };
+                        //LogModels log = new LogModels
+                        //{
+                        //    Type = "6",
+                        //    Description = "New change was made for user " + user.Username + " on date " + DateTime.Now + " for role " + TempData["currentRole"] + ".",
+                        //    Date = DateTime.Now
+                        //};
 
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
+                        //_db.LogModels.Add(log);
+                        //_db.SaveChanges();
+                        var currentRole = TempData["currentRole"];
+
+                        log6(user.Username, currentRole);
                     }
                     else
                     {
