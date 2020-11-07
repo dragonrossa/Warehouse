@@ -120,3 +120,5 @@
 
 05.11 Functions for ActionResults in SearchController
 
+06.11 Created functions for SearchControllers ActionResults
+
