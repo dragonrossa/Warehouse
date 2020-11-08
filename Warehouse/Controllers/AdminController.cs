@@ -72,8 +72,66 @@ namespace Warehouse.Controllers
             return log;
         }
 
+        public string findUsername(AdminModels admin)
+        {
+            return (from u in _db.AdminModels where u.Username == admin.Username select u.Username).FirstOrDefault();
+        }
+
+        public  AdminModels user1 (AdminModels admin){
+        return (from u in _db.AdminModels where u.Username == admin.Username select u).FirstOrDefault();
+         }
+
+        public string getCurrentRole(int userRoleID)
+        {
+            return (from r in _db.RolesModels where r.ID == userRoleID select r.Role).FirstOrDefault();
+        }
      
 
+        //Find Access for user
+        public List<AdminModels> access(string username)
+        {
+            return (from a in _db.AdminModels where a.Username == username select a).ToList();
+        }
+
+
+
+        public AdminModels adminListOfAccess(string username)
+        {
+            AdminModels admin = new AdminModels();
+            admin.Username = username;
+            admin.Access = false;
+            admin.LaptopAccess = false;
+            admin.LogAccess = false;
+            admin.SearchAccess = false;
+            admin.StoreAccess = false;
+            admin.TransferAccess = false;
+            admin.TaskAccess = false;
+            admin.SupplierAccess = false;
+            admin.ProcurementAccess = false;
+            _db.AdminModels.Add(admin);
+            _db.SaveChanges();
+            return admin;
+        }
+
+
+        public AdminModels adminUser(int userID)
+        {
+            return (from u in _db.AdminModels where u.ID == userID select u).FirstOrDefault();
+        }
+
+        public LogModels log7(string adminUserIDUsername, string[] rights, string[] userAccess, int i)
+        {
+            LogModels log = new LogModels
+            {
+                Type = "7",
+                Description = "New change was made for user " + adminUserIDUsername + " on date " + DateTime.Now + " granting access:" + rights[i] + " for " + userAccess[i],
+                Date = DateTime.Now
+            };
+
+            _db.LogModels.Add(log);
+            _db.SaveChanges();
+            return log;
+        }
 
         public ActionResult Index()
         {
@@ -135,23 +193,22 @@ namespace Warehouse.Controllers
         public ActionResult ChangeRole(FormCollection form)
         {
           
-           // AdminModels admin = new AdminModels();
 
             try
             {
 
                 if (ModelState.IsValid)
                 {
-                    string roleID = form["Roles"]; //1 for Chief
+                    string roleID = form["Roles"]; 
                     admin.RoleID = Convert.ToInt32(roleID);
                     admin.Username = TempData["username"].ToString();
 
                     //if username is already in table update
                     //if username is not already in table create record
 
-                    var username = (from u in _db.AdminModels where u.Username == admin.Username select u.Username).FirstOrDefault();
-                    var user = (from u in _db.AdminModels where u.Username == admin.Username select u).FirstOrDefault();
-
+                    var username = findUsername(admin);
+                    var user = user1(admin);
+                    
                     if (admin.Username == username)
                     {
 
@@ -160,16 +217,7 @@ namespace Warehouse.Controllers
 
                         //Create new log
 
-                        //LogModels log = new LogModels
-                        //{
-                        //    Type = "6",
-                        //    Description = "New change was made for user " + user.Username + " on date " + DateTime.Now + " for role " + TempData["currentRole"] + ".",
-                        //    Date = DateTime.Now
-                        //};
-
-                        //_db.LogModels.Add(log);
-                        //_db.SaveChanges();
-                        var currentRole = TempData["currentRole"];
+                        var currentRole = getCurrentRole(user.RoleID);
 
                         log6(user.Username, currentRole);
                     }
@@ -178,16 +226,10 @@ namespace Warehouse.Controllers
                         _db.AdminModels.Add(admin);
                         _db.SaveChanges();
 
+                        //Create log
 
-                        LogModels log = new LogModels
-                        {
-                            Type = "6",
-                            Description = "Change was made for user " + user.Username + " on date " + DateTime.Now + " for role " + admin.RoleID + ".",
-                            Date = DateTime.Now
-                        };
+                        log6(user.Username, admin.RoleID);
 
-                        _db.LogModels.Add(log);
-                        _db.SaveChanges();
                         return RedirectToAction("Index", "Admin", new { });
                     }
                 }
@@ -266,26 +308,17 @@ namespace Warehouse.Controllers
         public ActionResult Access2( string username)
 
         {
-            List<AdminModels> access = (from a in _db.AdminModels where a.Username==username select a).ToList();
+           // List<AdminModels> access = (from a in _db.AdminModels where a.Username==username select a).ToList();
 
-            if (access.Count == 0)
+          //  access
+
+            if (access(username).Count == 0)
             {
-                AdminModels admin = new AdminModels();
-                admin.Username = username;
-                admin.Access = false;
-                admin.LaptopAccess = false;
-                admin.LogAccess = false;
-                admin.SearchAccess = false;
-                admin.StoreAccess = false;
-                admin.TransferAccess = false;
-                admin.TaskAccess = false;
-                admin.SupplierAccess = false;
-                admin.ProcurementAccess = false;
-                _db.AdminModels.Add(admin);
-                _db.SaveChanges();
+               
+                adminListOfAccess(username);
             }
 
-            return View(new AdminModels { access = access });
+            return View(new AdminModels { access = access(username) });
         }
 
         [HttpPost]
@@ -306,18 +339,20 @@ namespace Warehouse.Controllers
             string procurementAccess = form["item.ProcurementAccess"];
 
             
-            var user = (from u in _db.AdminModels where u.ID == userID select u).FirstOrDefault();
+           // var user = (from u in _db.AdminModels where u.ID == userID select u).FirstOrDefault();
+
+            //findUser(userID)
 
 
-            bool a = access == "true,false" ? user.Access = Convert.ToBoolean("true") : user.Access = Convert.ToBoolean("false");
-            bool b = laptopAccess == "true,false" ? user.LaptopAccess = Convert.ToBoolean("true") : user.LaptopAccess = Convert.ToBoolean("false");
-            bool c = logAccess == "true,false" ? user.LogAccess = Convert.ToBoolean("true") : user.LogAccess = Convert.ToBoolean("false");
-            bool d = searchAccess == "true,false" ? user.SearchAccess = Convert.ToBoolean("true") : user.SearchAccess = Convert.ToBoolean("false");
-            bool e = storeAccess == "true,false" ? user.StoreAccess = Convert.ToBoolean("true") : user.StoreAccess = Convert.ToBoolean("false");
-            bool f = transferAccess == "true,false" ? user.TransferAccess = Convert.ToBoolean("true") : user.TransferAccess = Convert.ToBoolean("false");
-            bool g = taskAccess == "true,false" ? user.TaskAccess = Convert.ToBoolean("true") : user.TaskAccess = Convert.ToBoolean("false");
-            bool h = supplierAccess == "true,false" ? user.SupplierAccess = Convert.ToBoolean("true") : user.SupplierAccess = Convert.ToBoolean("false");
-            bool j = procurementAccess == "true,false" ? user.ProcurementAccess = Convert.ToBoolean("true") : user.ProcurementAccess = Convert.ToBoolean("false");
+            bool a = access == "true,false" ? adminUser(userID).Access = Convert.ToBoolean("true") : adminUser(userID).Access = Convert.ToBoolean("false");
+            bool b = laptopAccess == "true,false" ? adminUser(userID).LaptopAccess = Convert.ToBoolean("true") : adminUser(userID).LaptopAccess = Convert.ToBoolean("false");
+            bool c = logAccess == "true,false" ? adminUser(userID).LogAccess = Convert.ToBoolean("true") : adminUser(userID).LogAccess = Convert.ToBoolean("false");
+            bool d = searchAccess == "true,false" ? adminUser(userID).SearchAccess = Convert.ToBoolean("true") : adminUser(userID).SearchAccess = Convert.ToBoolean("false");
+            bool e = storeAccess == "true,false" ? adminUser(userID).StoreAccess = Convert.ToBoolean("true") : adminUser(userID).StoreAccess = Convert.ToBoolean("false");
+            bool f = transferAccess == "true,false" ? adminUser(userID).TransferAccess = Convert.ToBoolean("true") : adminUser(userID).TransferAccess = Convert.ToBoolean("false");
+            bool g = taskAccess == "true,false" ? adminUser(userID).TaskAccess = Convert.ToBoolean("true") : adminUser(userID).TaskAccess = Convert.ToBoolean("false");
+            bool h = supplierAccess == "true,false" ? adminUser(userID).SupplierAccess = Convert.ToBoolean("true") : adminUser(userID).SupplierAccess = Convert.ToBoolean("false");
+            bool j = procurementAccess == "true,false" ? adminUser(userID).ProcurementAccess = Convert.ToBoolean("true") : adminUser(userID).ProcurementAccess = Convert.ToBoolean("false");
 
             string[] userAccess = { "Admin access", "Laptop access", " Log access", "Search access", "Store access", "Transfer access", "Task access", "Supplier access", "Procurement access" };
 
@@ -330,12 +365,14 @@ namespace Warehouse.Controllers
                 LogModels log = new LogModels
                 {
                     Type = "7",
-                    Description = "New change was made for user " + user.Username + " on date " + DateTime.Now + " granting access:" + rights[i] + " for " + userAccess[i] ,
+                    Description = "New change was made for user " + adminUser(userID).Username + " on date " + DateTime.Now + " granting access:" + rights[i] + " for " + userAccess[i] ,
                     Date = DateTime.Now
                 };
 
                 _db.LogModels.Add(log);
                 _db.SaveChanges();
+
+              //  log7(adminUser(userID).Username, rights[], userAccess[], i);
             }
 
             return RedirectToAction("Index","Admin");
