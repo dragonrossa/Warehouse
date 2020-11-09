@@ -14,13 +14,83 @@ namespace Warehouse.Controllers
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
-        public class UserNotFoundException : Exception
+        ComputerListModels computer = new ComputerListModels();
+
+
+        //Return List of computers
+        public List<ComputerListModels> computerLists()
         {
-            public UserNotFoundException() : base() { }
-            public UserNotFoundException(string message) : base(message) { }
-            public UserNotFoundException(string message, Exception innerException)
-                : base(message, innerException) { }
+            return (from c in _db.ComputerListModels select c).ToList();
         }
+
+
+        //List of suppliers
+        public List<SelectListItem> suppliers()
+        {
+            return _db.SupplierModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.SupplierName,
+                Value = u.ID.ToString()
+            }).ToList();
+
+        }
+
+        //Select list for all computers
+
+        public List<SelectListItem> computers()
+        {
+            return _db.ComputerListModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.ID.ToString()
+            }).ToList();
+
+        }
+
+        //Select list for all suppliers
+        public List<SelectListItem> suppliersforClassicView()
+        {
+            return _db.SupplierModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.SupplierName,
+                Value = u.ID.ToString()
+            }).ToList();
+        }
+
+
+        //Create new Computer
+        public ComputerListModels createNewComputer(FormCollection form)
+        {
+            computer.Name = form["Name"]; ;
+            computer.Date = DateTime.Now;
+
+            _db.ComputerListModels.Add(computer);
+            _db.SaveChanges();
+
+            return computer;
+
+        }
+
+        //List of computers on Index page
+        public string [] computers(FormCollection form)
+        {
+            var computerName = form["item.Name"].ToString();
+            string[] computers = computerName.Split(',');
+            return computers;
+
+        }
+
+        //List of suppliers on Index page
+
+        public string[] suppliers(FormCollection form)
+        {
+
+            string supplierName = form["SupplierName"].ToString();
+            string[] sup = supplierName.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            return sup;
+        }
+
+
 
         // GET: ComputerList
         [HandleError]
@@ -31,21 +101,8 @@ namespace Warehouse.Controllers
             try
             {
 
-                //Computers Select List Item
 
-                List<ComputerListModels> computerLists = (from c in _db.ComputerListModels select c).ToList();
-
-
-                //Suppliers Select List Item
-                List<SelectListItem> suppliers = _db.SupplierModels.ToList().Select(u => new SelectListItem
-                {
-                    Text = u.SupplierName,
-                    Value = u.ID.ToString()
-                }).ToList();
-
-
-
-                return View(new ComputerListModels() { suppliers = suppliers, computersList = computerLists });
+                return View(new ComputerListModels() { suppliers = suppliers(), computersList = computerLists() });
             }
             catch (Exception e)
             {
@@ -141,24 +198,8 @@ namespace Warehouse.Controllers
         public ActionResult ClassicView()
         {
 
-            //Select list for all users
-            List<SelectListItem> computers = _db.ComputerListModels.ToList().Select(u => new SelectListItem
-            {
-                Text = u.Name,
-                Value = u.ID.ToString()
-            }).ToList();
 
-
-            //Suppliers Select List Item
-            List<SelectListItem> suppliers = _db.SupplierModels.ToList().Select(u => new SelectListItem
-            {
-                Text = u.SupplierName,
-                Value = u.ID.ToString()
-            }).ToList();
-
-
-
-            return View(new ComputerListModels() { suppliers = suppliers, computers = computers });
+            return View(new ComputerListModels() { suppliers = suppliersforClassicView(), computers = computers() });
         }
 
 
@@ -206,14 +247,10 @@ namespace Warehouse.Controllers
 
         public ActionResult Create(FormCollection form)
         {
-            string computerName = form["Name"];
+            
+            //Create new Computer object
 
-            ComputerListModels computer = new ComputerListModels();
-            computer.Name = computerName;
-            computer.Date = DateTime.Now;
-
-            _db.ComputerListModels.Add(computer);
-            _db.SaveChanges();
+            createNewComputer(form);
 
             return RedirectToAction("Index");
         }
