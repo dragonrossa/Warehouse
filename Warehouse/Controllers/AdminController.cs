@@ -28,6 +28,7 @@ namespace Warehouse.Controllers
                     select u).ToList();
         }
 
+        //Find exact user
         public UserModels findUser(int id)
         {
             var user = (from u in _db.UserModels
@@ -72,15 +73,19 @@ namespace Warehouse.Controllers
             return log;
         }
 
+        //Find user by username
+
         public string findUsername(AdminModels admin)
         {
             return (from u in _db.AdminModels where u.Username == admin.Username select u.Username).FirstOrDefault();
         }
 
+        //Get user object
         public  AdminModels user1 (AdminModels admin){
         return (from u in _db.AdminModels where u.Username == admin.Username select u).FirstOrDefault();
          }
 
+        //Find current role for some user
         public string getCurrentRole(int userRoleID)
         {
             return (from r in _db.RolesModels where r.ID == userRoleID select r.Role).FirstOrDefault();
@@ -94,6 +99,7 @@ namespace Warehouse.Controllers
         }
 
 
+        //Create list of access for users who dont have record in AdminModels
 
         public AdminModels adminListOfAccess(string username)
         {
@@ -114,23 +120,68 @@ namespace Warehouse.Controllers
         }
 
 
+        //Find user in AdminModels
         public AdminModels adminUser(int userID)
         {
             return (from u in _db.AdminModels where u.ID == userID select u).FirstOrDefault();
         }
 
-        public LogModels log7(string adminUserIDUsername, string[] rights, string[] userAccess, int i)
-        {
-            LogModels log = new LogModels
-            {
-                Type = "7",
-                Description = "New change was made for user " + adminUserIDUsername + " on date " + DateTime.Now + " granting access:" + rights[i] + " for " + userAccess[i],
-                Date = DateTime.Now
-            };
 
-            _db.LogModels.Add(log);
+        //Create new log
+        public string log7(FormCollection form, int userID, string adminUserIDUsername)
+        {
+
+            //Get info from from
+            string access = form["item.Access"];
+            string laptopAccess = form["item.LaptopAccess"];
+            string logAccess = form["item.LogAccess"];
+            string searchAccess = form["item.SearchAccess"];
+            string storeAccess = form["item.StoreAccess"];
+            string transferAccess = form["item.TransferAccess"];
+            string taskAccess = form["item.TaskAccess"];
+            string supplierAccess = form["item.SupplierAccess"];
+            string procurementAccess = form["item.ProcurementAccess"];
+
+            //Check if true or false for every of them and save changes
+
+
+            bool a = access == "true,false" ? adminUser(userID).Access = Convert.ToBoolean("true") : adminUser(userID).Access = Convert.ToBoolean("false");
+            bool b = laptopAccess == "true,false" ? adminUser(userID).LaptopAccess = Convert.ToBoolean("true") : adminUser(userID).LaptopAccess = Convert.ToBoolean("false");
+            bool c = logAccess == "true,false" ? adminUser(userID).LogAccess = Convert.ToBoolean("true") : adminUser(userID).LogAccess = Convert.ToBoolean("false");
+            bool d = searchAccess == "true,false" ? adminUser(userID).SearchAccess = Convert.ToBoolean("true") : adminUser(userID).SearchAccess = Convert.ToBoolean("false");
+            bool e = storeAccess == "true,false" ? adminUser(userID).StoreAccess = Convert.ToBoolean("true") : adminUser(userID).StoreAccess = Convert.ToBoolean("false");
+            bool f = transferAccess == "true,false" ? adminUser(userID).TransferAccess = Convert.ToBoolean("true") : adminUser(userID).TransferAccess = Convert.ToBoolean("false");
+            bool g = taskAccess == "true,false" ? adminUser(userID).TaskAccess = Convert.ToBoolean("true") : adminUser(userID).TaskAccess = Convert.ToBoolean("false");
+            bool h = supplierAccess == "true,false" ? adminUser(userID).SupplierAccess = Convert.ToBoolean("true") : adminUser(userID).SupplierAccess = Convert.ToBoolean("false");
+            bool j = procurementAccess == "true,false" ? adminUser(userID).ProcurementAccess = Convert.ToBoolean("true") : adminUser(userID).ProcurementAccess = Convert.ToBoolean("false");
+
             _db.SaveChanges();
-            return log;
+
+            string[] userAccess = { "Admin access", "Laptop access", " Log access", "Search access", "Store access", "Transfer access", "Task access", "Supplier access", "Procurement access" };
+
+            string[] rights = { Convert.ToString(a), Convert.ToString(b), Convert.ToString(c), Convert.ToString(d), Convert.ToString(e),
+                Convert.ToString(f), Convert.ToString(g), Convert.ToString(h), Convert.ToString(j)};
+
+
+            // Create log for changes
+
+            for (int i = 0; i < userAccess.Length; i++)
+            {
+
+                LogModels log = new LogModels
+                {
+                    Type = "7",
+                    Description = "New change was made for user " + adminUserIDUsername + " on date " + DateTime.Now + " granting access:" + rights[i] + " for " + userAccess[i],
+                    Date = DateTime.Now
+                };
+
+                _db.LogModels.Add(log);
+                _db.SaveChanges();
+                
+            }
+
+            return "Done";
+
         }
 
         public ActionResult Index()
@@ -327,53 +378,11 @@ namespace Warehouse.Controllers
         {
 
             int userID = Convert.ToInt32(form["item.ID"]);
-            string username = form["item.Username"];
-            string access = form["item.Access"];
-            string laptopAccess = form["item.LaptopAccess"];
-            string logAccess = form["item.LogAccess"];
-            string searchAccess = form["item.SearchAccess"];
-            string storeAccess = form["item.StoreAccess"];
-            string transferAccess = form["item.TransferAccess"];
-            string taskAccess = form["item.TaskAccess"];
-            string supplierAccess = form["item.SupplierAccess"];
-            string procurementAccess = form["item.ProcurementAccess"];
-
             
-           // var user = (from u in _db.AdminModels where u.ID == userID select u).FirstOrDefault();
-
-            //findUser(userID)
-
-
-            bool a = access == "true,false" ? adminUser(userID).Access = Convert.ToBoolean("true") : adminUser(userID).Access = Convert.ToBoolean("false");
-            bool b = laptopAccess == "true,false" ? adminUser(userID).LaptopAccess = Convert.ToBoolean("true") : adminUser(userID).LaptopAccess = Convert.ToBoolean("false");
-            bool c = logAccess == "true,false" ? adminUser(userID).LogAccess = Convert.ToBoolean("true") : adminUser(userID).LogAccess = Convert.ToBoolean("false");
-            bool d = searchAccess == "true,false" ? adminUser(userID).SearchAccess = Convert.ToBoolean("true") : adminUser(userID).SearchAccess = Convert.ToBoolean("false");
-            bool e = storeAccess == "true,false" ? adminUser(userID).StoreAccess = Convert.ToBoolean("true") : adminUser(userID).StoreAccess = Convert.ToBoolean("false");
-            bool f = transferAccess == "true,false" ? adminUser(userID).TransferAccess = Convert.ToBoolean("true") : adminUser(userID).TransferAccess = Convert.ToBoolean("false");
-            bool g = taskAccess == "true,false" ? adminUser(userID).TaskAccess = Convert.ToBoolean("true") : adminUser(userID).TaskAccess = Convert.ToBoolean("false");
-            bool h = supplierAccess == "true,false" ? adminUser(userID).SupplierAccess = Convert.ToBoolean("true") : adminUser(userID).SupplierAccess = Convert.ToBoolean("false");
-            bool j = procurementAccess == "true,false" ? adminUser(userID).ProcurementAccess = Convert.ToBoolean("true") : adminUser(userID).ProcurementAccess = Convert.ToBoolean("false");
-
-            string[] userAccess = { "Admin access", "Laptop access", " Log access", "Search access", "Store access", "Transfer access", "Task access", "Supplier access", "Procurement access" };
-
-            string[] rights = { Convert.ToString(a), Convert.ToString(b), Convert.ToString(c), Convert.ToString(d), Convert.ToString(e), 
-                Convert.ToString(f), Convert.ToString(g), Convert.ToString(h), Convert.ToString(j)};
-
-
-            for (int i = 0; i < userAccess.Length; i++) {
-
-                LogModels log = new LogModels
-                {
-                    Type = "7",
-                    Description = "New change was made for user " + adminUser(userID).Username + " on date " + DateTime.Now + " granting access:" + rights[i] + " for " + userAccess[i] ,
-                    Date = DateTime.Now
-                };
-
-                _db.LogModels.Add(log);
-                _db.SaveChanges();
-
-              //  log7(adminUser(userID).Username, rights[], userAccess[], i);
-            }
+            //Save changes for user and create new log 
+            
+            log7(form, userID, adminUser(userID).Username);
+ 
 
             return RedirectToAction("Index","Admin");
         }
