@@ -132,3 +132,5 @@
 
 10.11 Functions for ComputerListController
 
+10.11 Interface and functions for SupplierModels / SupplierController
+
