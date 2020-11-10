@@ -9,24 +9,67 @@ namespace Warehouse.Controllers
 {
     public class SupplierController : Controller
     {
-        // GET: Supplier
+        private ApplicationDbContext _db = new ApplicationDbContext();
 
-        public class UserNotFoundException : Exception
+        //Create new supplier object
+        SupplierModels supplier = new SupplierModels();
+
+        //Create Supplier
+        public SupplierModels newSupplier(SupplierModels supplier)
         {
-            public UserNotFoundException() : base() { }
-            public UserNotFoundException(string message) : base(message) { }
-            public UserNotFoundException(string message, Exception innerException)
-                : base(message, innerException) { }
+
+            if (ModelState.IsValid)
+            {
+                _db.SupplierModels.Add(supplier);
+                _db.SaveChanges();
+            }
+
+            return supplier;
         }
 
-        public ApplicationDbContext _db = new ApplicationDbContext();
+
+
+    //Edit Supplier
+    void editSupplier(FormCollection form)
+        {
+            var supplierName = form["item.SupplierName"];
+            var location = form["item.Location"];
+            string[] suppliers = supplierName.Split(',');
+            string[] suppliersLocation = location.Split(',');
+
+            string supName;
+
+            for (int i = 0; i < suppliers.Length; i++)
+            {
+                supName = suppliers[i];
+                var suppliers1 = (from s in _db.SupplierModels where s.SupplierName == supName select s).FirstOrDefault();
+                suppliers1.SupplierName = suppliers[i];
+                suppliers1.Location = suppliersLocation[i];
+                _db.SaveChanges();
+            }
+
+        }
+
+        //Delete Supplier
+        void deleteSupplier(int? id)
+        {
+
+            var supplier = (from s in _db.SupplierModels
+                            where s.ID == id
+                            select s).FirstOrDefault();
+
+            _db.SupplierModels.Remove(supplier);
+            _db.SaveChanges();
+        }
+
+
+       // GET: Supplier
         public ActionResult Index()
         {
 
             try
             {
-                List<SupplierModels> suppliers = (from s in _db.SupplierModels select s).ToList();
-                return View(new SupplierModels { suppliers = suppliers });
+                return View(new SupplierModels { suppliers = supplier.Child });
             }
             catch (Exception e)
             {
@@ -62,44 +105,25 @@ namespace Warehouse.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(SupplierModels supplier)
         {
+            //Create new supplier
 
-            if (ModelState.IsValid)
-            {
-                _db.SupplierModels.Add(supplier);
-                _db.SaveChanges();
-            }
+            newSupplier(supplier);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Edit()
         {
-            List<SupplierModels> suppliers = (from s in _db.SupplierModels select s).ToList();
-            return View(new SupplierModels { suppliers = suppliers });
+            return View(new SupplierModels { suppliers = supplier.Child });
         }
+     
 
         [HttpPost]
         public ActionResult Edit(FormCollection form)
         {
-           
-            var supplierName = form["item.SupplierName"];
-            var location = form["item.Location"];
+            //Save new informations for Suppliers
+            editSupplier(form);
 
-           
-            string[] suppliers = supplierName.Split(',');
-            string[] suppliersLocation = location.Split(',');
-
-            string supName;
-
-            for (int i = 0; i < suppliers.Length; i++)
-            {
-                supName = suppliers[i];
-                var suppliers1 = (from s in _db.SupplierModels where s.SupplierName==supName select s).FirstOrDefault();
-                suppliers1.SupplierName = suppliers[i];
-                suppliers1.Location = suppliersLocation[i];
-                _db.SaveChanges();
-            }
-            
             return RedirectToAction("Index","ComputerList");
         }
 
@@ -107,12 +131,8 @@ namespace Warehouse.Controllers
         public ActionResult Delete(int? id)
         {
 
-            var supplier = (from s in _db.SupplierModels
-                            where s.ID == id 
-                            select s).FirstOrDefault();
-
-            _db.SupplierModels.Remove(supplier);
-            _db.SaveChanges();
+            //Delete Supplier
+            deleteSupplier(id);
 
             return RedirectToAction("Index", "ComputerList");
         }
