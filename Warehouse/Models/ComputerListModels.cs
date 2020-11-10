@@ -23,8 +23,6 @@ namespace Warehouse.Models
 
         public int SupplierID { get; set; }
         public DateTime? Date { get; set; }
-        public string suppliersSele { get; set; }
-
         public IEnumerable<SelectListItem> computers { get; set; }
         public IEnumerable<SelectListItem> suppliers { get; set; }
         public IEnumerable<ComputerListModels> computersList { get; set; }
