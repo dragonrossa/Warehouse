@@ -17,62 +17,34 @@ namespace Warehouse.Controllers
 {
     public class ProcurementController : Controller
     {
-        public ApplicationDbContext _db = new ApplicationDbContext();
+        private ApplicationDbContext _db = new ApplicationDbContext();
         // GET: Procurement
 
-        public ActionResult CreateInvoice()
+
+        //Get username
+        public UserModels username()
         {
-
-
-            try
-            {
-                var username = User.Identity.Name;
-                var user = (from u in _db.UserModels where u.UserName == username select u).FirstOrDefault();
-                ViewBag.user = user.Name;
-
-                ViewData["computers"] = _db.ComputerListModels.ToList().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.ID.ToString()
-                }).ToList();
-                return View();
-            }
-            catch (Exception e)
-            {
-
-                //redirect if there are no Laptopmodels in list
-                if (e.Message == "Sequence contains no elements")
-                {
-
-                    //throw new UserNotFoundException();
-                    // throw;
-                    return RedirectToAction("NotFound");
-
-                }
-
-            }
-
-          
-
-            return View();
+            var username = User.Identity.Name;
+            var user = (from u in _db.UserModels where u.UserName == username select u).FirstOrDefault();
+            return user;
         }
 
 
-
-
-        //Exception - UserNotFound
-
-        public ActionResult NotFound()
+        //Get Viewdata for computers
+        public object computers()
         {
-            return View();
+            return ViewData["computers"] = _db.ComputerListModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.ID.ToString()
+            }).ToList();
+            
         }
 
+        //Create PDF document
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateInvoice(FormCollection form)
+        public object createPdf(FormCollection form)
         {
-
             int laptopID = Convert.ToInt32(form["computers"]);
 
             var laptopName = (from l in _db.ComputerListModels where l.ID == laptopID select l.Name).FirstOrDefault();
@@ -158,7 +130,75 @@ namespace Warehouse.Controllers
             //TempData for DownloadPDF
             TempData["pdfFilename"] = pdfFilename;
 
+            return TempData["pdfFilename"];
+        }
 
+        //Download PDF file
+        void downloadPDF()
+        {
+            var pdfFilename = TempData["pdfFilename"];
+
+            //Clear all
+            Response.Clear();
+            Response.ClearContent();    
+            Response.ClearHeaders();
+
+            //Find PDF Files in particular folder and send response to user
+            Response.ContentType = "Application/pdf";
+            Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", pdfFilename));
+            Response.TransmitFile(Server.MapPath("~/PDFFiles/" + pdfFilename));
+
+            Response.End();
+            Response.Flush();
+        }
+
+        public ActionResult CreateInvoice()
+        {
+
+            try
+            {
+                //Find user
+                ViewBag.user = username().Name;
+
+                //ViewData computers
+                computers();
+
+                return View();
+            }
+            catch (Exception e)
+            {
+
+                //redirect if there are no Laptopmodels in list
+                if (e.Message == "Sequence contains no elements")
+                {
+
+                    //throw new UserNotFoundException();
+                    // throw;
+                    return RedirectToAction("NotFound");
+
+                }
+
+            }
+            return View();
+        }
+
+
+
+
+        //Exception - UserNotFound
+
+        public ActionResult NotFound()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateInvoice(FormCollection form)
+        {
+            //Create PDF
+            createPdf(form);
 
             return RedirectToAction("DownloadInvoice");
         }
@@ -166,7 +206,6 @@ namespace Warehouse.Controllers
         public ActionResult DownloadInvoice()
         {
 
-            //Uri myUri = new Uri(Request.Url.AbsoluteUri);
 
             ViewBag.invoiceNo = TempData["invoiceNo"];
             ViewBag.quantity = TempData["quantity"];
@@ -179,27 +218,10 @@ namespace Warehouse.Controllers
         [HttpPost]
         public ActionResult DownloadInvoiceNo()
         {
-            var pdfFilename = TempData["pdfFilename"];
-
-            Response.Clear();
-            Response.ClearContent();    // Add this line
-            Response.ClearHeaders();
-
-
-            Response.ContentType = "Application/pdf";
-            Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", pdfFilename));
-            Response.TransmitFile(Server.MapPath("~/PDFFiles/" + pdfFilename));
-
-            Response.End();
-            Response.Flush();
+            //Download PDF 
+            downloadPDF();
             return View();
         }
-
-
-
-
-
-
         
     }
 }
