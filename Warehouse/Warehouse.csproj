@@ -243,7 +243,9 @@
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserRightsController.cs" />
     <Compile Include="Helpers\CustomExceptions.cs" />
+    <Compile Include="Helpers\HelperAdmin.cs" />
     <Compile Include="Helpers\IEquipment.cs" />
+    <Compile Include="Helpers\OrangePeel.cs" />
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ComputerListModels.cs" />
     <Compile Include="Models\ProcessorModels.cs" />
@@ -278,6 +280,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Web API\LaptopAPIController.cs" />
+    <Compile Include="Web API\AdminAPIController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

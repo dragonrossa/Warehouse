@@ -68,7 +68,10 @@ namespace Warehouse.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound,"Not found");
             }
 
-            var storeSearch = CatchStores().FirstOrDefault((p) => p.Name == name);
+            
+            var storeSearch = store.Child.FirstOrDefault((p) => p.Name == name);
+
+          // var abcd = store.Ascending;
 
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, storeSearch);
 

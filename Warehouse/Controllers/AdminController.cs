@@ -18,6 +18,7 @@ namespace Warehouse.Controllers
         List<AdminModels> user = new List<AdminModels>();
         AdminModels admin = new AdminModels();
 
+
         // GET: Admin
 
 

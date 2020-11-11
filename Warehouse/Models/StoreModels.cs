@@ -30,7 +30,7 @@ namespace Warehouse.Models
         [Display(Name = "Zip code")]
         public int? ZipCode { get; set; }
         //Address - not required
-        [RegularExpression(@"^[a-zA-Z.0-9 ]{5,100}$", ErrorMessage = "Address must have min 5 and max 100 letters")]
+       // [RegularExpression(@"^[a-zA-Z.0-9 ]{5,100}$", ErrorMessage = "Address must have min 5 and max 100 letters")]
         public string Address { get; set; }
         //Quantity of Products - not required
         [Range(1, 500,ErrorMessage ="Quantity cant be bigger from 500")]

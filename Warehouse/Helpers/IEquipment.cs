@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Warehouse.Models;
 
 namespace Warehouse.Helpers
 {
@@ -56,6 +57,14 @@ namespace Warehouse.Helpers
         List<T> AscendingByFullPrice { get; }
         List<T> DescendingByFullPrice { get; }
 
+    }
+
+  
+     abstract class User<T>
+    {
+        public abstract List<T> Child { get; }
+        public abstract List<T> Ascending { get; }
+        public abstract List<T> Descending { get; }
     }
 
 

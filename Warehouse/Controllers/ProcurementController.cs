@@ -19,7 +19,7 @@ namespace Warehouse.Controllers
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
         // GET: Procurement
-
+        
 
         //Get username
         public UserModels username()
