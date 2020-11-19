@@ -140,5 +140,7 @@
 
 19.11 Repository folder with Repository interface and Repository class for AdminController
 
-19.11 19.11 Repository folder with Repository interface and Repository class for ComputerListController
+19.11 Repository folder with Repository interface and Repository class for ComputerListController
+
+19.11. Repository folder with Repository interface and Repository class for LogController
 
