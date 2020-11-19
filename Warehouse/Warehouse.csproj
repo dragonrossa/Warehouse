@@ -255,7 +255,9 @@
     <Compile Include="Models\TaskListModels.cs" />
     <Compile Include="Models\UploadModels.cs" />
     <Compile Include="Repository\AdminRepository.cs" />
+    <Compile Include="Repository\ComputerListRepository.cs" />
     <Compile Include="Repository\IAdminRepository.cs" />
+    <Compile Include="Repository\IComputerListRepository.cs" />
     <Compile Include="Web API\LogAPIController.cs" />
     <Compile Include="Web API\TransferAPIController .cs" />
     <Compile Include="Web API\StoreAPIController.cs" />

@@ -16,17 +16,12 @@ namespace Warehouse.Controllers
     public class AdminController : Controller
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
-
-        //public ApplicationDbContext data()
-        //{
-            
-        //    return _db;
-        // }
-
-        AdminModels admin = new AdminModels();
-
+    
         //Get Admin Repository
         AdminRepository adminRepository = new AdminRepository();
+
+        //Create Admin object
+        AdminModels admin = new AdminModels();
 
 
         // GET: Admin
@@ -192,7 +187,6 @@ namespace Warehouse.Controllers
             if (ModelState.IsValid)
             {
 
-               // _db.Entry(user).State = EntityState.Modified;
 
                     adminRepository.Data(_db).Entry(user).State = EntityState.Modified;
 
@@ -218,9 +212,9 @@ namespace Warehouse.Controllers
         public ActionResult Access2( string username)
 
         {
-           // List<AdminModels> access = (from a in _db.AdminModels where a.Username==username select a).ToList();
+           
 
-          //  access
+          // Check access
 
             if (adminRepository.access(username).Count == 0)
             {
