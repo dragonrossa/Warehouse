@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Warehouse.Helpers;
 using Warehouse.Models;
+using Warehouse.Repository;
 
 namespace Warehouse.Controllers
 {

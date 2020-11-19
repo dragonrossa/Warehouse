@@ -12,6 +12,7 @@ using PdfSharp.Pdf;
 using System.Web.UI.WebControls;
 using Warehouse.Helpers;
 using System.Diagnostics;
+using Warehouse.Repository;
 
 namespace Warehouse.Controllers
 {

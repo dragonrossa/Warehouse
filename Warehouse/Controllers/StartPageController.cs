@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Warehouse.Models;
+using Warehouse.Repository;
 
 namespace Warehouse.Controllers
 {

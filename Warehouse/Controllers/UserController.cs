@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Warehouse.Models;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
+using Warehouse.Repository;
 
 namespace Warehouse.Controllers
 {

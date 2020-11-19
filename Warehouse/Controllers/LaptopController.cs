@@ -13,6 +13,7 @@ using Warehouse.Models;
 using Warehouse.Helpers;
 using Microsoft.AspNet.Identity;
 using System.Diagnostics.Contracts;
+using Warehouse.Repository;
 
 namespace Warehouse.Controllers
 {
