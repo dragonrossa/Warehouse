@@ -259,7 +259,9 @@
     <Compile Include="Repository\IAdminRepository.cs" />
     <Compile Include="Repository\IComputerListRepository.cs" />
     <Compile Include="Repository\ILogRepository.cs" />
+    <Compile Include="Repository\IProcessorRepository.cs" />
     <Compile Include="Repository\LogRepository.cs" />
+    <Compile Include="Repository\ProcessorRepository.cs" />
     <Compile Include="Web API\LogAPIController.cs" />
     <Compile Include="Web API\TransferAPIController .cs" />
     <Compile Include="Web API\StoreAPIController.cs" />
