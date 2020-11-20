@@ -256,12 +256,16 @@
     <Compile Include="Models\UploadModels.cs" />
     <Compile Include="Repository\AdminRepository.cs" />
     <Compile Include="Repository\ComputerListRepository.cs" />
+    <Compile Include="Repository\DatabaseRepository.cs" />
     <Compile Include="Repository\IAdminRepository.cs" />
     <Compile Include="Repository\IComputerListRepository.cs" />
+    <Compile Include="Repository\IDatabaseRepository.cs" />
     <Compile Include="Repository\ILogRepository.cs" />
     <Compile Include="Repository\IProcessorRepository.cs" />
+    <Compile Include="Repository\IProcurementRepository.cs" />
     <Compile Include="Repository\LogRepository.cs" />
     <Compile Include="Repository\ProcessorRepository.cs" />
+    <Compile Include="Repository\ProcurementRepository.cs" />
     <Compile Include="Web API\LogAPIController.cs" />
     <Compile Include="Web API\TransferAPIController .cs" />
     <Compile Include="Web API\StoreAPIController.cs" />

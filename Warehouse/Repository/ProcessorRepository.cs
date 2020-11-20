@@ -24,8 +24,6 @@ namespace Warehouse.Repository
             return _db;
         }
 
-       // private ApplicationDbContext _db = new ApplicationDbContext();
-
         //One processor
 
         public ProcessorModels processorsList()

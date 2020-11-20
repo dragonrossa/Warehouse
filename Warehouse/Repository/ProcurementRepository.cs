@@ -14,16 +14,31 @@ using System.Collections;
 using System.Security.Cryptography.X509Certificates;
 using Warehouse.Repository;
 
-namespace Warehouse.Controllers
+namespace Warehouse.Repository
 {
-    public class ProcurementController : Controller
+    public class ProcurementRepository: Controller,IProcurementRepository 
     {
-        //Get DB Context
         private ApplicationDbContext _db = new ApplicationDbContext();
+        // GET: Procurement
 
-        //Get Procurement Repository
+        //Get username
+        public UserModels username(string username)
+        {
+            var user = (from u in _db.UserModels where u.UserName == username select u).FirstOrDefault();
+            return user;
+        }
 
-        ProcurementRepository procurementRepository = new ProcurementRepository();
+
+        //Get Viewdata for computers
+        public object computers()
+        {
+            return _db.ComputerListModels.ToList().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.ID.ToString()
+            }).ToList();
+
+        }
 
         //Create PDF document
 
@@ -118,7 +133,7 @@ namespace Warehouse.Controllers
         }
 
         //Download PDF file
-        void downloadPDF()
+        public void downloadPDF()
         {
             var pdfFilename = TempData["pdfFilename"];
 
@@ -136,79 +151,7 @@ namespace Warehouse.Controllers
             Response.Flush();
         }
 
-        //// GET: Procurement
-        public ActionResult CreateInvoice()
-        {
-
-            try
-            {
-                //Find user
-                ViewBag.user = procurementRepository.username(User.Identity.Name);
-
-                //ViewData computers
-                ViewData["computers"] = procurementRepository.computers();
-
-                return View();
-            }
-            catch (Exception e)
-            {
-
-                //redirect if there are no Laptopmodels in list
-                if (e.Message == "Sequence contains no elements")
-                {
-
-                    //throw new UserNotFoundException();
-                    // throw;
-                    return RedirectToAction("NotFound");
-
-                }
-
-            }
-            return View();
-        }
 
 
-
-
-        //Exception - UserNotFound
-
-        public ActionResult NotFound()
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateInvoice(FormCollection form)
-        {
-            //Create PDF
-            //procurementRepository.
-                createPdf(form);
-
-            return RedirectToAction("DownloadInvoice");
-        }
-
-        public ActionResult DownloadInvoice()
-        {
-
-
-            ViewBag.invoiceNo = TempData["invoiceNo"];
-            ViewBag.quantity = TempData["quantity"];
-            ViewBag.computer = TempData["computer"];
-            ViewBag.date = TempData["date"];
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult DownloadInvoiceNo()
-        {
-            //Download PDF 
-           // procurementRepository.
-                downloadPDF();
-            return View();
-        }
-        
     }
 }

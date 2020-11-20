@@ -18,44 +18,6 @@ namespace Warehouse.Controllers
 
         ProcessorModels processor1 = new ProcessorModels();
 
-        //private ApplicationDbContext _db = new ApplicationDbContext();
-
-        //private ProcessorModels _processor;
-
-        //private List<ProcessorModels> _proc;
-
-        //ProcessorModels processor1 = new ProcessorModels();
-
-
-        ////One processor
-
-        //public ProcessorModels processorsList
-        //{
-        //    get
-        //    {
-        //        return _processor = (from l in _db.ProccessorModels where l.ID==1 select l).FirstOrDefault();
-        //    }
-        //    private set
-        //    {
-        //        _processor = value;
-        //    }
-        //}
-
-        //// List with all processors
-        //public List<ProcessorModels> AllProcessors
-        //{
-        //    get
-        //    {
-        //        _proc = (from l in _db.ProccessorModels select l).ToList();
-        //        return _proc;
-
-        //    }
-        //    private set
-        //    {
-        //        _proc = value;
-        //    }
-        //}
-
 
         // GET: Proccessor
         public ActionResult Index()
@@ -76,29 +38,17 @@ namespace Warehouse.Controllers
         public ActionResult List2()
         {
 
-            ProcessorModels processor = new ProcessorModels();
-
-
-            List<ProcessorModels> listOfProcessors = processor.Child;
-                
-
-            Debug.WriteLine(listOfProcessors);
-
-
-            return View(listOfProcessors);
+            return View(processor1.Child);
         }
 
         public ActionResult Ascending()
         {
-            List<ProcessorModels> ascendingList = processor1.Ascending;
-
-            return View(ascendingList);
+            return View(processor1.Ascending);
         }
 
         public ActionResult Descending()
         {
-            List<ProcessorModels> descendingList = processor1.Descending;
-            return View(descendingList);
+            return View(processor1.Descending);
         }
     }
 }
