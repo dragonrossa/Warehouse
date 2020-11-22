@@ -15,238 +15,14 @@ namespace Warehouse.Controllers
 {
     public class SearchController : Controller
     {
-        //Call database
-        private ApplicationDbContext _db = new ApplicationDbContext();
+
+        //Get Search Repository
+        SearchRepository searchRepository = new SearchRepository();
 
         //Create class object
         SearchIndex search = new SearchIndex();
 
-        //Initialize new Search List
-        List<SearchIndex> index = new List<SearchIndex>();
-
-
-        //If needed, user info
-        public string userInfo()
-        {
-            var user = User.Identity.GetUserName();
-            return user;
-        }
-
         
-        public List<LaptopModels> findSearch(SearchIndex search)
-        {
-
-            int QuantityOfAllProducts = (from k in _db.LaptopModels
-                                         where k.Manufacturer == search.Name 
-                                         select k).Count();
-            search.QuantityOfAllProducts = (from k in _db.LaptopModels 
-                                            where k.OS == search.Name 
-                                            select k).Count();
-            List<LaptopModels> laptops = (from k in _db.LaptopModels 
-                                          where k.Manufacturer == search.Name 
-                                          select k).ToList();
-            return laptops;
-
-        }
-
-        public List<LaptopModels> findSearchOS(SearchIndex search)
-        {
-
-
-            int QuantityOfAllProducts = (from k in _db.LaptopModels 
-                                         where k.OS == search.Name 
-                                         select k).Count();
-            search.QuantityOfAllProducts = (from k in _db.LaptopModels 
-                                            where k.OS == search.Name 
-                                            select k).Count();
-            List<LaptopModels> laptops = (from k in _db.LaptopModels 
-                                          where k.OS == search.Name 
-                                          select k).ToList();
-            return laptops;
-
-        }
-
-        public List<StoreModels> findSearchLocation(SearchIndex search)
-        {
-
-            List<StoreModels> stores = (from k in _db.StoreModels 
-                                        where k.Location == search.Name 
-                                        select k).ToList();
-            return stores;
-
-        }
-
-
-
-        public LaptopModels searchName(SearchIndex search)
-        {
-            return (from k in _db.LaptopModels 
-                    where k.Name == search.Name 
-                    select k).FirstOrDefault();
-        }
-
-
-        //Quantity for Laptop
-        public int? calculateQuantity(SearchIndex search)
-        {
-            return (from k in _db.LaptopModels 
-                    where k.Name == search.Name 
-                    select (int?)k.Quantity).Sum();
-        }
-
-        //Quantity for Store
-        public int? calculateStoreQuantity(SearchIndex search)
-        {
-            return (from k in _db.StoreModels 
-                    where k.Name == search.Name 
-                    select (int?)k.QoP).Sum();
-        }
-
-        //Quantitiy for Location
-        public int? calculateLocationQuantity(SearchIndex search)
-        {
-            return (from k in _db.StoreModels 
-                    where k.Location == search.Name 
-                    select (int?)k.QoP).Sum();
-        }
-
-        //Quantity for ZipCode
-        public int? calculateZipCodeQuantity(int? test)
-        {
-            return (from k in _db.StoreModels 
-                    where k.ZipCode == test 
-                    select (int?)k.QoP).Sum();
-        }
-
-        //Quantity for Transfer
-        public int? calculateTransferQuantity(SearchIndex search)
-        {
-            return (from k in _db.TransferModels 
-                    where k.LaptopName == search.Name 
-                    select (int?)k.LaptopQuantity).Sum();
-        }
-
-        //Quantity for Transfer Store Quantity
-        public int? calculateTransferStoreQuantity(int store)
-        {
-            return (from t in _db.TransferModels 
-                    where t.StoreID == store 
-                    select (int?)t.LaptopQuantity).Sum();
-        }
-
-        public LaptopModels searchManufacturer(SearchIndex search)
-        {
-            return (from k in _db.LaptopModels 
-                    where k.Manufacturer == search.Name 
-                    select k).FirstOrDefault();
-        }
-
-        public LaptopModels searchOS(SearchIndex search)
-        {
-            return (from k in _db.LaptopModels 
-                    where k.OS == search.Name 
-                    select k).FirstOrDefault();
-        }
-
-        public StoreModels searchStores(SearchIndex search)
-        {
-            return (from k in _db.StoreModels 
-                    where k.Name == search.Name 
-                    select k).FirstOrDefault();
-        }
-
-        public StoreModels searchZipCode(int? test)
-        {
-            return (from k in _db.StoreModels 
-                    where k.ZipCode == test 
-                    select k).FirstOrDefault();
-        }
-
-        public TransferModels searchStore(int store)
-        {
-            return (from t in _db.TransferModels 
-                    where t.StoreID == store 
-                    select t).FirstOrDefault();
-        }
-
-        public List<StoreModels> storeList(SearchIndex search)
-        {
-            return (from k in _db.StoreModels 
-                    where k.Name == search.Name 
-                    select k).ToList();
-        }
-
-        public List<StoreModels> storeListByZipCode(int? test)
-        {
-            return (from k in _db.StoreModels 
-                    where k.ZipCode == test 
-                    select k).ToList();
-        }
-
-
-        public StoreModels searchLocation(SearchIndex search)
-        {
-            return (from k in _db.StoreModels 
-                    where k.Location == search.Name 
-                    select k).FirstOrDefault();
-        }
-
-        public List<TransferModels> searchTransferByLaptopName(SearchIndex search)
-        {
-            return (from k in _db.TransferModels 
-                    where k.LaptopName == search.Name 
-                    select k).ToList();
-        }
-
-
-        public int storeID(SearchIndex search)
-        {
-            return (from s in _db.StoreModels
-                    where s.Name == search.Name
-                    select s.ID).SingleOrDefault();
-
-        }
-
-        public List<TransferModels> transfer(int store)
-        {
-            return (from t in _db.TransferModels
-                    where t.StoreID == store
-                    select t).ToList();
-        }
-
-        //Create new log
-        public LogModels log3()
-        {
-            LogModels log = new LogModels
-            {
-                Type = "3",
-                Description = "There was new search in Laptop section for " + search.Name + ".",
-                Date = DateTime.Now
-            };
-
-            _db.LogModels.Add(log);
-            _db.SaveChanges();
-            return log;
-        }
-
-
-        //Create new log
-        public LogModels log4()
-        {
-            LogModels log = new LogModels
-            {
-                Type = "4",
-                Description = "There was new search in Transfer section for " + search.Name + ".",
-                Date = DateTime.Now
-            };
-
-            _db.LogModels.Add(log);
-            _db.SaveChanges();
-            return log;
-        }
-
-
-
         // GET: Search
         //Search - Laptop
         //Search - Store
@@ -305,15 +81,15 @@ namespace Warehouse.Controllers
                 search.Name = form["name"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchname = searchName(search);
-                ViewBag.quantity = calculateQuantity(search);
-                findSearch(search);
+                ViewBag.searchname = searchRepository.searchName(search);
+                ViewBag.quantity = searchRepository.calculateQuantity(search);
+                searchRepository.findSearch(search);
 
                 if (ViewBag.searchname == null)
                 {
                     //Create new log
 
-                    log4();
+                    searchRepository.log4(search);
                     return View("ResultNotExists");
                 }
 
@@ -322,10 +98,10 @@ namespace Warehouse.Controllers
 
 
                     //Create new log
-                    
-                    log3();
 
-                    return View(findSearch(search));
+                    searchRepository.log3(search);
+
+                    return View(searchRepository.findSearch(search));
                 }
             }
 
@@ -346,16 +122,16 @@ namespace Warehouse.Controllers
                 search.Name = form["manufacturer"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchname = searchManufacturer(search);
-                ViewBag.quantity = calculateQuantity(search);
-                findSearch(search);
+                ViewBag.searchname = searchRepository.searchManufacturer(search);
+                ViewBag.quantity = searchRepository.calculateQuantity(search);
+                searchRepository.findSearch(search);
 
 
                 if (ViewBag.searchname == null)
                 {
                     //Create new log
 
-                    log4();
+                    searchRepository.log4(search);
                     return View("ResultNotExists");
                 }
 
@@ -364,10 +140,10 @@ namespace Warehouse.Controllers
 
 
                     //Create new log
- 
-                    log3();
 
-                    return View(findSearch(search));
+                    searchRepository.log3(search);
+
+                    return View(searchRepository.findSearch(search));
                 }
             }
 
@@ -386,9 +162,9 @@ namespace Warehouse.Controllers
                 search.Name = form["os"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchname = searchOS(search);
-                ViewBag.quantity = calculateQuantity(search);
-                findSearchOS(search);
+                ViewBag.searchname = searchRepository.searchOS(search);
+                ViewBag.quantity = searchRepository.calculateQuantity(search);
+                searchRepository.findSearchOS(search);
 
                 //log for Search if not exists
 
@@ -396,19 +172,19 @@ namespace Warehouse.Controllers
                 {
                     //Create new log
 
-                    log4();
+                    searchRepository.log4(search);
                     return View("ResultNotExists");
                 }
 
                 else
                 {
-                    
+
 
                     //Create new log
-                 
-                    log3();
 
-                    return View(findSearchOS(search));
+                    searchRepository.log3(search);
+
+                    return View(searchRepository.findSearchOS(search));
                 }
             }
 
@@ -426,22 +202,22 @@ namespace Warehouse.Controllers
                 search.Name = form["storeName"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchName = searchStores(search);
-                ViewBag.quantity = calculateStoreQuantity(search);
+                ViewBag.searchName = searchRepository.searchStores(search);
+                ViewBag.quantity = searchRepository.calculateStoreQuantity(search);
 
                 if (ViewBag.searchName == null)
                 {
                     //Create new log
-                    log4();
-                    _db.SaveChanges();
+                    searchRepository.log4(search);
+                    searchRepository.SaveData();
                     return View("ResultNotExists");
                 }
                 else
                 {
 
                     //Create new log
-                    log3();
-                    return View("ResultStore", storeList(search));
+                    searchRepository.log3(search);
+                    return View("ResultStore", searchRepository.storeList(search));
                 }
             }
             return View();
@@ -458,14 +234,14 @@ namespace Warehouse.Controllers
                 search.Name = form["storeLocation"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchName = searchLocation(search);
-                ViewBag.quantity = calculateLocationQuantity(search);
+                ViewBag.searchName = searchRepository.searchLocation(search);
+                ViewBag.quantity = searchRepository.calculateLocationQuantity(search);
                
                 if (ViewBag.searchName == null)
                 {
                     //Create new log
 
-                    log4();
+                    searchRepository.log4(search);
                     return View("ResultNotExists");
                 }
                 else
@@ -473,9 +249,9 @@ namespace Warehouse.Controllers
 
                     //Create new log
 
-                    log3();
+                    searchRepository.log3(search);
                     
-                    return View("ResultStore", findSearchLocation(search));
+                    return View("ResultStore", searchRepository.findSearchLocation(search));
                 }
             }
             return View();
@@ -494,21 +270,21 @@ namespace Warehouse.Controllers
                 int? test = Convert.ToInt32(search.Name);
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchName = searchZipCode(test);
-                ViewBag.quantity = calculateZipCodeQuantity(test);
+                ViewBag.searchName = searchRepository.searchZipCode(test);
+                ViewBag.quantity = searchRepository.calculateZipCodeQuantity(test);
 
                 if (ViewBag.searchName == null)
                 {
                     //Create new log
-                    log4();
+                    searchRepository.log4(search);
                     return View("ResultNotExists");
                 }
                 else
                 {
 
                     //Create new log
-                    log3();
-                    return View("ResultStore", storeListByZipCode(test));
+                    searchRepository.log3(search);
+                    return View("ResultStore", searchRepository.storeListByZipCode(test));
                 }
             }
 
@@ -526,12 +302,12 @@ namespace Warehouse.Controllers
                 search.Name = form["laptopName"];
                 ViewBag.Name = search.Name;
                 TempData["searchName"] = ViewBag.Name;
-                ViewBag.searchname = searchTransferByLaptopName(search);
-                ViewBag.quantity = calculateTransferQuantity(search);
+                ViewBag.searchname = searchRepository.searchTransferByLaptopName(search);
+                ViewBag.quantity = searchRepository.calculateTransferQuantity(search);
                 if (ViewBag.searchname == null && ViewBag.quantity == null)
                 {
                     //Create new log
-                    log4();
+                    searchRepository.log4(search);
                     return View("ResultNotExists");
                 }
                 else
@@ -539,8 +315,8 @@ namespace Warehouse.Controllers
 
                     //Add store object to list
 
-                    log3();
-                    return View("ResultTransfer", searchTransferByLaptopName(search));
+                    searchRepository.log3(search);
+                    return View("ResultTransfer", searchRepository.searchTransferByLaptopName(search));
                 }
             }
          
@@ -560,25 +336,25 @@ namespace Warehouse.Controllers
 
                 //check by storeName
 
-                int store = storeID(search);
+                int store = searchRepository.storeID(search);
 
-                ViewBag.searchname = searchStore(store);
+                ViewBag.searchname = searchRepository.searchStore(store);
               
-                ViewBag.quantity = calculateTransferStoreQuantity(store);
+                ViewBag.quantity = searchRepository.calculateTransferStoreQuantity(store);
                    
 
                 if (ViewBag.searchname == null && ViewBag.quantity == null)
                 {
                     //Create new log
-                    log4();
+                    searchRepository.log4(search);
                     return View("ResultNotExists");
                 }
                 else
                 {
 
                     //Create new log
-                    log3();
-                    return View("ResultTransfer", transfer(store));
+                    searchRepository.log3(search);
+                    return View("ResultTransfer", searchRepository.transfer(store));
                 }
             }
 

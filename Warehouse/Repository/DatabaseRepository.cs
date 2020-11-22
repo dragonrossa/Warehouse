@@ -6,7 +6,7 @@ using Warehouse.Models;
 
 namespace Warehouse.Repository
 {
-    public class DatabaseRepository:IDatabaseRepository
+    public abstract class DatabaseRepository:IDatabaseRepository
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
