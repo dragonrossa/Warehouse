@@ -144,3 +144,5 @@
 
 19.11. Repository folder with Repository interface and Repository class for LogController
 
+22.11 Procurement Repository fix
+
