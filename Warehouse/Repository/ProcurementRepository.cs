@@ -16,7 +16,7 @@ using Warehouse.Repository;
 
 namespace Warehouse.Repository
 {
-    public class ProcurementRepository: Controller,IProcurementRepository 
+    public class ProcurementRepository: Controller, IProcurementRepository 
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
         // GET: Procurement
@@ -40,20 +40,35 @@ namespace Warehouse.Repository
 
         }
 
-        //Create PDF document
-
-        public object createPdf(FormCollection form)
+        //Get computer name
+        public object getComputerPDF(FormCollection form)
         {
             int laptopID = Convert.ToInt32(form["computers"]);
-
             var laptopName = (from l in _db.ComputerListModels where l.ID == laptopID select l.Name).FirstOrDefault();
+            TempData["computer"] = laptopName;
+            return TempData["computer"];
+        }
 
+        //Get computer quantity
+
+        public object getComputerQuantity(FormCollection form)
+        {
             var quantity = Convert.ToInt32(form["Quantity"]);
 
             TempData["quantity"] = quantity;
-            TempData["computer"] = laptopName;
-            TempData["date"] = DateTime.Now;
+            return TempData["quantity"];
+        }
 
+        //Get date
+        public object getDate()
+        {
+            TempData["date"] = DateTime.Now;
+            return TempData["date"];
+        }
+
+        //Get invoice numbere
+        public object getInvoiceNo()
+        {
             int? id = (from p in _db.ProcurementModels orderby p.ID descending select p.ID).FirstOrDefault();
 
             if (id == null)
@@ -61,16 +76,48 @@ namespace Warehouse.Repository
                 id = 0;
             }
 
+            id = id + 1;
+
 
             string invoiceNo = "0000" + id;
 
             TempData["invoiceNo"] = invoiceNo;
 
+            return TempData["invoiceNo"];
+        }
+
+        //Get current invoice number
+
+        public object getInvoiceNo2()
+        {
+            int? id = (from p in _db.ProcurementModels orderby p.ID descending select p.ID).FirstOrDefault();
+            string invoiceNo = "0000" + id;
+
+            TempData["invoiceNo"] = invoiceNo;
+
+            return TempData["invoiceNo"];
+        }
+
+        //Get PDFFileName
+        public object getPDFFileName(string getInvoiceNO)
+        {
+            string pdfFilename = "Invoice_" + getInvoiceNO + ".pdf";
+            TempData["pdfFilename"] = pdfFilename;
+            return TempData["pdfFilename"];
+        }
+
+        //Create PDF document
+
+        public object createPdf(FormCollection form, string path)
+        {
+           
+            //Create new procurement object 
+
             ProcurementModels procurement = new ProcurementModels()
             {
-                Computer = laptopName.ToString(),
-                Quantity = quantity,
-                InvoiceNo = invoiceNo,
+                Computer = getComputerPDF(form).ToString(),
+                Quantity = Convert.ToInt32(getComputerQuantity(form)),
+                InvoiceNo = getInvoiceNo().ToString(),
                 RequestDate = DateTime.Today
             };
 
@@ -86,7 +133,6 @@ namespace Warehouse.Repository
             pdf.Info.Title = procurement.InvoiceNo;
             PdfPage pdfPage = pdf.AddPage();
             string pdfFilename = "Invoice_" + procurement.InvoiceNo + ".pdf";
-            string path = Server.MapPath("~/PDFFiles/");
 
             XGraphics graph = XGraphics.FromPdfPage(pdfPage);
             XFont font = new XFont("Verdana", 10, XFontStyle.Bold);
@@ -125,33 +171,12 @@ namespace Warehouse.Repository
               new XRect(50, 280, 200, 0), XStringFormats.TopLeft);
 
 
-            pdf.Save(path + pdfFilename);
-            //TempData for DownloadPDF
-            TempData["pdfFilename"] = pdfFilename;
+            pdf.Save(path + getPDFFileName(procurement.InvoiceNo));
 
+            //TempData for DownloadPDF
+            TempData["pdfFilename"] = getPDFFileName(procurement.InvoiceNo);
             return TempData["pdfFilename"];
         }
-
-        //Download PDF file
-        public void downloadPDF()
-        {
-            var pdfFilename = TempData["pdfFilename"];
-
-            //Clear all
-            Response.Clear();
-            Response.ClearContent();
-            Response.ClearHeaders();
-
-            //Find PDF Files in particular folder and send response to user
-            Response.ContentType = "Application/pdf";
-            Response.AddHeader("Content-Disposition", string.Format("attachment;filename={0}", pdfFilename));
-            Response.TransmitFile(Server.MapPath("~/PDFFiles/" + pdfFilename));
-
-            Response.End();
-            Response.Flush();
-        }
-
-
-
+        
     }
 }
