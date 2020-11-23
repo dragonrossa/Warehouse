@@ -267,6 +267,7 @@
     <Compile Include="Repository\IStartPageRepository.cs" />
     <Compile Include="Repository\IStoreRepository.cs" />
     <Compile Include="Repository\ISupplierRepository.cs" />
+    <Compile Include="Repository\ITaskListRepository.cs" />
     <Compile Include="Repository\LogRepository.cs" />
     <Compile Include="Repository\ProcessorRepository.cs" />
     <Compile Include="Repository\ProcurementRepository.cs" />
@@ -274,6 +275,7 @@
     <Compile Include="Repository\StartPageRepository.cs" />
     <Compile Include="Repository\StoreRepository.cs" />
     <Compile Include="Repository\SupplierRepository.cs" />
+    <Compile Include="Repository\TaskListRepository.cs" />
     <Compile Include="Web API\LogAPIController.cs" />
     <Compile Include="Web API\TransferAPIController .cs" />
     <Compile Include="Web API\StoreAPIController.cs" />
