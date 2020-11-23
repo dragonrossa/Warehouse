@@ -11,18 +11,17 @@ namespace Warehouse.Controllers
 {
     public class UserRightsController : Controller
     {
-        public ApplicationDbContext _db = new ApplicationDbContext();
+      
+        //Get User Rights Repository
+        UserRightsRepository userRightsRepository = new UserRightsRepository();
+
         // GET: UserRights
         [HttpGet]
         public ActionResult Header()
         {
-            AdminModels admin = new AdminModels();
-
-            var user = User.Identity.GetUserName();
-            admin = (from a in _db.AdminModels where a.Username == user select a).FirstOrDefault();
-
+           
             // Your user information in HeaderModel
-            return PartialView("Header", admin);
+            return PartialView("Header", userRightsRepository.admin(User.Identity.GetUserName()));
         }
 
         public ActionResult Error()
