@@ -157,3 +157,5 @@
 23.11 Repository folder with Repository interface and Repository class for TaskListController
 
 23.11 Repository folder with Repository interface and Repository class for TransferController
+
+23.11 Repository folder with Repository interface and Repository class for UserController
