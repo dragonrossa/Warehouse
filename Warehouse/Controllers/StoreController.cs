@@ -13,53 +13,13 @@ namespace Warehouse.Controllers
 {
     public class StoreController : Controller
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+
+        //Get Store Repository
+        StoreRepository storeRepository = new StoreRepository();
+
+        //Get Store object
 
         StoreModels store = new StoreModels();
-
-        public StoreModels result()
-        {
-            return (from k in _db.StoreModels select k)
-                             .OrderByDescending(k => k.ID)
-                             .First();
-        }
-
-        public StoreModels createStore(StoreModels store)
-        {
-            _db.StoreModels.Add(store);
-            _db.SaveChanges();
-            return store;
-        }
-
-        public StoreModels editStore(StoreModels store)
-        {
-            _db.Entry(store).State = EntityState.Modified;
-            _db.SaveChanges();
-            return store;
-        }
-
-        public StoreModels findStore(int? id)
-        {
-            StoreModels store = _db.StoreModels.Find(id);
-            return store;
-        }
-
-        public StoreModels deleteStore(int? id)
-        {
-            StoreModels store = _db.StoreModels.Find(id);
-            _db.StoreModels.Remove(store);
-            _db.SaveChanges();
-            return store;
-        }
-        
-
-        public class UserNotFoundException : Exception
-        {
-            public UserNotFoundException() : base() { }
-            public UserNotFoundException(string message) : base(message) { }
-            public UserNotFoundException(string message, Exception innerException)
-                : base(message, innerException) { }
-        }
 
         // GET: MasterData
         public ActionResult Index()
@@ -135,14 +95,14 @@ namespace Warehouse.Controllers
                 {
                     //Add new store
 
-                    createStore(store);
+                    storeRepository.createStore(store);
 
                     //Add date on last input
-                    result().Date = DateTime.Now;
-                    _db.SaveChanges();
+                    storeRepository.result().Date = DateTime.Now;
+                    storeRepository.SaveData();
 
                     //Create new log
-                    store.log(result().Name, result().Date, result().Location);
+                    store.log(storeRepository.result().Name, storeRepository.result().Date, storeRepository.result().Location);
 
                     return RedirectToAction("Index");
                 }
@@ -193,7 +153,7 @@ namespace Warehouse.Controllers
             
         }
 
-        ////GET: MasterData/DeleteList
+        //GET: MasterData/DeleteList
         public ActionResult DeleteList()
         {
             try
@@ -219,13 +179,13 @@ namespace Warehouse.Controllers
                 }
 
                 //Find store
-                if (findStore(id) == null)
+                if (storeRepository.findStore(id) == null)
                 {
                     return HttpNotFound();
                 }
 
 
-                return View(findStore(id));
+                return View(storeRepository.findStore(id));
             }
             catch (Exception e)
             {
@@ -249,7 +209,7 @@ namespace Warehouse.Controllers
                 {
                     //Modify store, return store
 
-                    editStore(store);
+                    storeRepository.editStore(store);
 
                     return RedirectToAction("Index");
                 }
@@ -276,11 +236,11 @@ namespace Warehouse.Controllers
                 }
                 //StoreModels store = _db.StoreModels.Find(id);
 
-                if (findStore(id) == null)
+                if (storeRepository.findStore(id) == null)
                 {
                     return HttpNotFound();
                 }
-                return View(findStore(id));
+                return View(storeRepository.findStore(id));
             }
             catch (Exception e)
             {
@@ -297,10 +257,10 @@ namespace Warehouse.Controllers
 
             try
             {
-               
+
                 //Delete Store
 
-                deleteStore(id);
+                storeRepository.deleteStore(id);
 
                 return RedirectToAction("Index");
 
@@ -325,8 +285,7 @@ namespace Warehouse.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                findStore(id);
-                //StoreModels store = _db.StoreModels.Find(id);
+                storeRepository.findStore(id);
 
                 if (store == null)
                 {

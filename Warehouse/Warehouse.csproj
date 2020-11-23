@@ -265,11 +265,13 @@
     <Compile Include="Repository\IProcurementRepository.cs" />
     <Compile Include="Repository\ISearchRepository.cs" />
     <Compile Include="Repository\IStartPageRepository.cs" />
+    <Compile Include="Repository\IStoreRepository.cs" />
     <Compile Include="Repository\LogRepository.cs" />
     <Compile Include="Repository\ProcessorRepository.cs" />
     <Compile Include="Repository\ProcurementRepository.cs" />
     <Compile Include="Repository\SearchRepository.cs" />
     <Compile Include="Repository\StartPageRepository.cs" />
+    <Compile Include="Repository\StoreRepository.cs" />
     <Compile Include="Web API\LogAPIController.cs" />
     <Compile Include="Web API\TransferAPIController .cs" />
     <Compile Include="Web API\StoreAPIController.cs" />
