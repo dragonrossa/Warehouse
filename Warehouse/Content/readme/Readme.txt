@@ -146,3 +146,5 @@
 
 22.11 Procurement Repository fix
 
+22.11 Repository folder with Repository interface and Repository class for SearchController
+
