@@ -10,61 +10,15 @@ namespace Warehouse.Controllers
 {
     public class SupplierController : Controller
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+
+        //Get Supplier Repository
+        SupplierRepository supplierRepository = new SupplierRepository();
 
         //Create new supplier object
         SupplierModels supplier = new SupplierModels();
 
-        //Create Supplier
-        public SupplierModels newSupplier(SupplierModels supplier)
-        {
 
-            if (ModelState.IsValid)
-            {
-                _db.SupplierModels.Add(supplier);
-                _db.SaveChanges();
-            }
-
-            return supplier;
-        }
-
-
-
-    //Edit Supplier
-    void editSupplier(FormCollection form)
-        {
-            var supplierName = form["item.SupplierName"];
-            var location = form["item.Location"];
-            string[] suppliers = supplierName.Split(',');
-            string[] suppliersLocation = location.Split(',');
-
-            string supName;
-
-            for (int i = 0; i < suppliers.Length; i++)
-            {
-                supName = suppliers[i];
-                var suppliers1 = (from s in _db.SupplierModels where s.SupplierName == supName select s).FirstOrDefault();
-                suppliers1.SupplierName = suppliers[i];
-                suppliers1.Location = suppliersLocation[i];
-                _db.SaveChanges();
-            }
-
-        }
-
-        //Delete Supplier
-        void deleteSupplier(int? id)
-        {
-
-            var supplier = (from s in _db.SupplierModels
-                            where s.ID == id
-                            select s).FirstOrDefault();
-
-            _db.SupplierModels.Remove(supplier);
-            _db.SaveChanges();
-        }
-
-
-       // GET: Supplier
+        // GET: Supplier
         public ActionResult Index()
         {
 
@@ -108,7 +62,7 @@ namespace Warehouse.Controllers
         {
             //Create new supplier
 
-            newSupplier(supplier);
+            supplierRepository.newSupplier(supplier);
 
             return RedirectToAction("Index");
         }
@@ -123,7 +77,8 @@ namespace Warehouse.Controllers
         public ActionResult Edit(FormCollection form)
         {
             //Save new informations for Suppliers
-            editSupplier(form);
+
+            supplierRepository.editSupplier(form);
 
             return RedirectToAction("Index","ComputerList");
         }
@@ -133,7 +88,8 @@ namespace Warehouse.Controllers
         {
 
             //Delete Supplier
-            deleteSupplier(id);
+
+            supplierRepository.deleteSupplier(id);
 
             return RedirectToAction("Index", "ComputerList");
         }
