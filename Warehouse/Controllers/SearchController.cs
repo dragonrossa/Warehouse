@@ -22,7 +22,6 @@ namespace Warehouse.Controllers
         //Create class object
         SearchIndex search = new SearchIndex();
 
-        
         // GET: Search
         //Search - Laptop
         //Search - Store

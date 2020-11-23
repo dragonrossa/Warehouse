@@ -11,22 +11,23 @@ namespace Warehouse.Controllers
 {
     public class StartPageController : Controller
     {
+        //Get StartPage Repository
+        StartPageRepository startPageRepository = new StartPageRepository();
+
         // GET: StartPage
-        private ApplicationDbContext _db = new ApplicationDbContext();
         public ActionResult Index()
         {
 
             try
             {
-                var username = User.Identity.Name;
-                var user = (from u in _db.UserModels where u.UserName == username select u).FirstOrDefault();
-                if (user == null)
+                
+                if (startPageRepository.user(User.Identity.Name) == null)
                 {
                     ViewBag.user = "new user";
                 }
                 else
                 {
-                    ViewBag.user = user.Name;
+                    ViewBag.user = startPageRepository.user(User.Identity.Name).Name;
                 }
             }
             catch (Exception)
