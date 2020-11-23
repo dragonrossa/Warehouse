@@ -270,6 +270,7 @@
     <Compile Include="Repository\ISupplierRepository.cs" />
     <Compile Include="Repository\ITaskListRepository.cs" />
     <Compile Include="Repository\ITransferRepository.cs" />
+    <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\LogRepository.cs" />
     <Compile Include="Repository\ProcessorRepository.cs" />
     <Compile Include="Repository\ProcurementRepository.cs" />
@@ -279,6 +280,7 @@
     <Compile Include="Repository\SupplierRepository.cs" />
     <Compile Include="Repository\TaskListRepository.cs" />
     <Compile Include="Repository\TransferRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Web API\LogAPIController.cs" />
     <Compile Include="Web API\TransferAPIController .cs" />
     <Compile Include="Web API\StoreAPIController.cs" />
@@ -289,7 +291,6 @@
     </Compile>
     <Compile Include="Helpers\Company.cs" />
     <Compile Include="Helpers\SearchIndex.cs" />
-    <Compile Include="Helpers\TransferIndex.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
