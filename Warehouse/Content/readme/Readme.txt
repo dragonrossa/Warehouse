@@ -148,3 +148,5 @@
 
 22.11 Repository folder with Repository interface and Repository class for SearchController
 
+23.11 Repository folder with Repository interface and Repository class for StartPageRepository
+
