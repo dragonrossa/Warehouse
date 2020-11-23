@@ -10,7 +10,10 @@ namespace Warehouse.Repository
     {
         //Get context
         ApplicationDbContext Data(ApplicationDbContext _db);
- 
+
+        //Add to database
+        void addToDatabase(TransferModels transfer);
+   
         //Save data
         object SaveData();
     }

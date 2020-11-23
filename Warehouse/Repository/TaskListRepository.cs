@@ -13,7 +13,7 @@ namespace Warehouse.Repository
         // GET: TaskList
 
          private ApplicationDbContext _db = new ApplicationDbContext();
-        TaskListModels taskListModels = new TaskListModels();
+      //  TaskListModels taskListModels = new TaskListModels();
 
         //Username of this user
 
@@ -216,9 +216,6 @@ namespace Warehouse.Repository
             _db.SaveChanges();
             return file;
         }
-
-
-
 
     }
 }

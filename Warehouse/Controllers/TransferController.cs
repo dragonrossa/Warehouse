@@ -14,107 +14,26 @@ namespace Warehouse.Controllers
 {
     public class TransferController : Controller
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        //Get Transfer Repository
+        TransferRepository transferRepository = new TransferRepository();
+     
+        //Get transfer object
+        TransferModels transfer = new TransferModels();
 
-        TransferIndex result = new TransferIndex();
-
-        List<TransferIndex> index = new List<TransferIndex>();
-
-        public List<LaptopModels> ListLaptop()
-        {
-
-            return (from k in _db.LaptopModels select k).ToList();
-        }
-
-        public object callResult()
-        {
-            return (from t in _db.TransferModels join s in _db.StoreModels on t.StoreID equals s.ID select new { s.Name, t.LaptopName, t.LaptopQuantity }).ToList();
-        }
-
-        public List<SelectListItem> StoreName()
-        {
-            return _db.StoreModels.ToList().Select(u => new SelectListItem
-            {
-                Text = u.Name,
-                Value = u.ID.ToString()
-            }).ToList();
-        }
-
-        public List<SelectListItem> LaptopName()
-        {
-            return _db.LaptopModels.Where(u => u.Quantity != 0).ToList().Select(u => new SelectListItem
-            {
-                Text = u.Name,
-                Value = u.ID.ToString()
-            }).ToList();
-
-        }
-
-        public int possibleCount(int LaptopID)
-        {
-            return (from k in _db.LaptopModels where k.ID == LaptopID select k.Quantity).First();
-        }
-
-        public string laptop(int LaptopID)
-        {
-            return (from k in _db.LaptopModels where k.ID == LaptopID select k.Name).First();
-        }
-
-        public StoreModels storeFind(int storeID){
-            return (from s in _db.StoreModels where s.ID == storeID select s).First();
-         }
-
-        public LaptopModels laptopFind(int TransferLaptopID)
-        {
-            return (from k in _db.LaptopModels where k.ID == TransferLaptopID select k).First();
-        }
-
-        //Custom Exception for UserNotFound
-
-        public class UserNotFoundException : Exception
-        {
-            public UserNotFoundException() : base() {}
-            public UserNotFoundException(string message) : base(message) { }
-            public UserNotFoundException(string message, Exception innerException)
-                : base(message, innerException) { }
-        }
-
-
+      
         // GET: Index
         public ActionResult Index()
         {
-            var user = User.Identity.GetUserName();
-
           
 
                 try
                 {
-               
-
-                    //New list
-
-                    var results = (from t in _db.TransferModels
-                                   join s in _db.StoreModels on t.StoreID equals s.ID
-                                   select new { s.Name, t.LaptopName, t.LaptopQuantity }).ToList();
-
-
-
-                    foreach (var res in results)
-                    {
-                    
-                        index.Add(new TransferIndex() { 
-                            LaptopName = res.LaptopName,
-                            LaptopQuantity = res.LaptopQuantity, 
-                            StoreName = res.Name });
-                    }
-
-                TransferModels transfer = new TransferModels();
 
                 ViewBag.laptop = transfer.lastInput.LaptopName;
                 ViewBag.date = transfer.lastInput.Date;
                 ViewBag.quantity = transfer.lastInput.LaptopQuantity;
                
-                return View(index);
+                return View(transferRepository.storeResult());
                 }
                 catch (Exception e)
                {
@@ -144,8 +63,8 @@ namespace Warehouse.Controllers
         {
             try
             {
-                ViewData["StoreName"] = StoreName();
-                ViewData["LaptopName"] = LaptopName();
+                ViewData["StoreName"] = transferRepository.StoreName();
+                ViewData["LaptopName"] = transferRepository.LaptopName();
 
                 return View();
             }
@@ -167,32 +86,13 @@ namespace Warehouse.Controllers
             try
             {
 
-                int storeID = Convert.ToInt32(form["StoreName"].ToString());
+               
                 int LaptopID = Convert.ToInt32(form["LaptopName"].ToString());
-                int LaptopQuantity = Convert.ToInt32(form["LaptopQuantity"].ToString());
+               
+               transferRepository. createTransfer( form,  transfer,  transferRepository);
 
-                if (possibleCount(LaptopID) > 0)
-                {
 
-                    transfer.StoreID = storeID;
-                    transfer.LaptopID = LaptopID;
-                    transfer.LaptopName = laptop(LaptopID);
-                    transfer.LaptopQuantity = LaptopQuantity;
-                    transfer.Date = DateTime.Now;// add if any field you want insert
-                    _db.TransferModels.Add(transfer);
-                    _db.SaveChanges();
-
-                    //get Laptop
-                    storeFind(storeID).QoP -= LaptopQuantity; // reduce QoP for quantity number
-                    _db.SaveChanges();
-                    laptopFind(transfer.LaptopID).Quantity -= LaptopQuantity;  // reduce LaptopQuantity from Quantity
-                    _db.SaveChanges();
-
-                    transfer.logs(transfer.LaptopName, transfer.LaptopQuantity, storeFind(storeID).Name, storeFind(storeID).Location);
-
-                }
-
-                else
+                if (transferRepository.possibleCount(LaptopID) == 0)
                 {
                     return RedirectToAction("Index", "Laptop", new { });
                 }
