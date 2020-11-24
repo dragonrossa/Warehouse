@@ -261,6 +261,7 @@
     <Compile Include="Repository\IAdminRepository.cs" />
     <Compile Include="Repository\IComputerListRepository.cs" />
     <Compile Include="Repository\IDatabaseRepository.cs" />
+    <Compile Include="Repository\ILaptopRepository.cs" />
     <Compile Include="Repository\ILogRepository.cs" />
     <Compile Include="Repository\IProcessorRepository.cs" />
     <Compile Include="Repository\IProcurementRepository.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Repository\ITransferRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IUserRightsRepository.cs" />
+    <Compile Include="Repository\LaptopRepository.cs" />
     <Compile Include="Repository\LogRepository.cs" />
     <Compile Include="Repository\ProcessorRepository.cs" />
     <Compile Include="Repository\ProcurementRepository.cs" />

@@ -19,78 +19,32 @@ namespace Warehouse.Controllers
 {
     public class LaptopController : Controller
     {
+        //Get DB Context
+
         private ApplicationDbContext _db = new ApplicationDbContext();
+
+        //Get LaptopModels object
 
         LaptopModels laptop1 = new LaptopModels();
 
+        //Get LaptopModels list
+
         List<LaptopModels> listOfLaptops = new List<LaptopModels>();
 
-        public LaptopModels laptopFind(int ID)
-        {
+        //Get Laptop Repository
 
-            return (from k in _db.LaptopModels where k.ID == ID select k).FirstOrDefault();
-        }
+        LaptopRepository laptopRepository = new LaptopRepository();
 
-
-        public decimal? laptopFindSavings(int ID)
-        {
-
-            return (from k in _db.LaptopModels where k.ID == ID select k.OldPrice - k.Price).FirstOrDefault();
-
-        }
-
-        public decimal? laptopFindFullPrice(int ID)
-        {
-
-            return (from k in _db.LaptopModels where k.ID == ID select k.Price * k.Quantity).FirstOrDefault();
-
-        }
-
-        public List<string> stores(int? laptopID)
-        {
-
-           
-                var stores = (from t in _db.TransferModels
-                                 join s in _db.StoreModels on t.StoreID
-                                 equals s.ID
-                                 where t.LaptopID == laptopID
-                                 select s.Name).ToList();
-
-
-            return ViewBag.storeName = stores.Count == 0 ? ViewBag.storeName = stores : ViewBag.storeName = stores;
-           
-        }
-
-        public StoreModels storeFind(int storeID)
-        {
-            return (from s in _db.StoreModels where s.ID == storeID select s).First();
-        }
-
-
-
-        //  Custom Exception for UserNotFound
-
-        public class UserNotFoundException : Exception
-        {
-            public UserNotFoundException() : base() { }
-            public UserNotFoundException(string message) : base(message) { }
-            public UserNotFoundException(string message, Exception innerException)
-                : base(message, innerException) { }
-        }
+       
 
         // GET: MasterData
         public ActionResult Index()
         {
-            var user = User.Identity.GetUserName();
-
-
+         
             try
             {
 
-                listOfLaptops = laptop1.Child;
-
-
-                if (listOfLaptops == null)
+                if (laptop1.Child == null)
                 {
                     RedirectToAction("NotFound", "Laptop");
                 }
@@ -114,7 +68,7 @@ namespace Warehouse.Controllers
                     ViewBag.sumFullPrice = laptop1.sumFullPrice;
 
 
-                    return View(new LaptopModels { laptop = listOfLaptops });
+                    return View(new LaptopModels { laptop = laptop1.Child });
                 }
 
             }
@@ -131,15 +85,7 @@ namespace Warehouse.Controllers
                     return RedirectToAction("NotFound");
 
                 }
-
-
-                //  catch(UserNotFoundException abcd)
-                //{
-                //    Console.WriteLine("{0} User not found exception caught ", abcd);
-                //}
-
                }
-
 
                 //if there are no Laptops in list
                 return View("NotFound");
@@ -159,60 +105,44 @@ namespace Warehouse.Controllers
         public ActionResult AscName()
         {
            
-             listOfLaptops = laptop1.AscendingByName;
-
-            return View("Index", new LaptopModels { laptop = listOfLaptops });
+          return View("Index", new LaptopModels { laptop = laptop1.AscendingByName });
         }
 
         public ActionResult DescName()
         {
-            listOfLaptops = laptop1.DescendingByName;
- 
-            return View("Index", new LaptopModels { laptop = listOfLaptops });
+          return View("Index", new LaptopModels { laptop = laptop1.DescendingByName });
         }
 
 
         public ActionResult AscQuantity()
         {
-            listOfLaptops = laptop1.AscendingByQuantity;
-
-            return View("Index", new LaptopModels { laptop = listOfLaptops });
+          return View("Index", new LaptopModels { laptop = laptop1.AscendingByQuantity });
         }
 
         public ActionResult DescQuantity()
         {
-            listOfLaptops = laptop1.DescendingByQuantity;
-
-            return View("Index", new LaptopModels { laptop = listOfLaptops });
+          return View("Index", new LaptopModels { laptop = laptop1.DescendingByQuantity });
         }
 
         public ActionResult AscPrice()
         {
-            listOfLaptops = laptop1.AscendingByPrice;
-
-            return View("Index", new LaptopModels { laptop = listOfLaptops });
+          return View("Index", new LaptopModels { laptop = laptop1.AscendingByPrice });
         }
 
         public ActionResult DescPrice()
         {
-            listOfLaptops = laptop1.DescendingByPrice;
-
-            return View("Index", new LaptopModels { laptop = listOfLaptops });
+          return View("Index", new LaptopModels { laptop = laptop1.DescendingByPrice });
         }
 
 
         public ActionResult AscFullPrice()
         {
-            listOfLaptops = laptop1.AscendingByFullPrice;
-
-            return View("Index", new LaptopModels { laptop = listOfLaptops });
+          return View("Index", new LaptopModels { laptop = laptop1.AscendingByFullPrice });
         }
 
         public ActionResult DescFullPrice()
         {
-            listOfLaptops = laptop1.DescendingByFullPrice;
-
-            return View("Index", new LaptopModels { laptop = listOfLaptops });
+         return View("Index", new LaptopModels { laptop = laptop1.DescendingByFullPrice });
         }
 
 
@@ -231,22 +161,23 @@ namespace Warehouse.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.LaptopModels.Add(laptop);
-                _db.SaveChanges();
+                //_db.LaptopModels.Add(laptop);
+                //_db.SaveChanges();
 
-                //Last input in database
-                var lastInput = laptop1.lastInput;
+                ////Last input in database
+                //var lastInput = laptop1.lastInput;
 
-                lastInput.FullPrice = laptop1.lastInputFullPrice;
-                lastInput.Savings = laptop1.lastInputSavings;
-                lastInput.Date = laptop1.lastInputDate;
-                _db.SaveChanges();
+                //lastInput.FullPrice = laptop1.lastInputFullPrice;
+                //lastInput.Savings = laptop1.lastInputSavings;
+                //lastInput.Date = laptop1.lastInputDate;
+                //_db.SaveChanges();
 
-                //Create new log
+                ////Create new log
 
-                laptop1.CreateLog(lastInput.Name, lastInput.Date, lastInput.Quantity);
-                
+                //laptop1.CreateLog(lastInput.Name, lastInput.Date, lastInput.Quantity);
 
+                //Save in database and create new log
+                laptopRepository.createLaptop(laptop, laptop1);
                 return RedirectToAction("Index");
             }
 
@@ -262,8 +193,7 @@ namespace Warehouse.Controllers
             try
             {
              
-                listOfLaptops = laptop1.ChildByID;
-                return View(listOfLaptops);
+               return View(laptop1.ChildByID);
             }
             catch (Exception e)
             {
@@ -279,9 +209,7 @@ namespace Warehouse.Controllers
 
             try
             {
-                listOfLaptops = laptop1.ChildByID;
-
-                return View(listOfLaptops);
+               return View(laptop1.ChildByID);
             }
             catch (Exception e)
             {
@@ -298,8 +226,7 @@ namespace Warehouse.Controllers
             
             try
             {
-                listOfLaptops = laptop1.ChildByID;
-                return View(listOfLaptops);
+              return View(laptop1.ChildByID);
             }
             catch (Exception e)
             {
@@ -312,32 +239,29 @@ namespace Warehouse.Controllers
         //GET: MasterData/Edit/5
         public ActionResult Edit(int? id)
         {
-
             try
             {
-
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                LaptopModels laptop = _db.LaptopModels.Find(id);
+                //LaptopModels laptop = _db.LaptopModels.Find(id);
 
-                var idUser = Convert.ToInt32(id);
+                //var idUser = Convert.ToInt32(id);
 
-                TempData["id"] = idUser;
+                TempData["id"] = Convert.ToInt32(id);
 
                 //If price changed FullPrice and Savings have to change too
                 laptop1.lastInput.FullPrice = laptop1.lastInput.lastInputFullPrice;
                 laptop1.lastInput.Savings = laptop1.lastInput.lastInputSavings;
                 _db.SaveChanges();
-
-                if (laptop == null)
+                
+                if (laptopRepository.getLaptop(id) == null)
                 {
                     return HttpNotFound();
                 }
 
-
-                return View(laptop);
+                return View(laptopRepository.getLaptop(id));
             }
             catch (Exception e)
             {
@@ -360,15 +284,16 @@ namespace Warehouse.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _db.Entry(laptop).State = EntityState.Modified;
-                    _db.SaveChanges();
+                   
+                    //Save changes
+                    laptopRepository.editLaptop(laptop);
 
                     var ID = Convert.ToInt32(TempData["id"]);
 
                     //find last ID and save new Savings and FullPrice
-
-                    laptopFind(ID).Savings = laptopFindSavings(ID);
-                    laptopFind(ID).FullPrice = laptopFindFullPrice(ID);
+                    laptopRepository.
+                    laptopFind(ID).Savings = laptopRepository.laptopFindSavings(ID);
+                    laptopRepository.laptopFind(ID).FullPrice = laptopRepository.laptopFindFullPrice(ID);
 
 
                     _db.SaveChanges();
@@ -398,13 +323,15 @@ namespace Warehouse.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                LaptopModels laptop = _db.LaptopModels.Find(id);
+                //LaptopModels laptop = _db.LaptopModels.Find(id);
 
-                if (laptop == null)
+                //laptopRepository.getLaptop(id);
+
+                if (laptopRepository.getLaptop(id) == null)
                 {
                     return HttpNotFound();
                 }
-                return View(laptop);
+                return View(laptopRepository.getLaptop(id));
             }
             catch (Exception e)
             {
@@ -424,9 +351,12 @@ namespace Warehouse.Controllers
 
             try
             {
-                LaptopModels laptop = _db.LaptopModels.Find(id);
-                _db.LaptopModels.Remove(laptop);
-                _db.SaveChanges();
+                //LaptopModels laptop = _db.LaptopModels.Find(id);
+                //_db.LaptopModels.Remove(laptop);
+                //_db.SaveChanges();
+
+                //Delete laptop
+                laptopRepository.deleteLaptop(id);
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -452,21 +382,19 @@ namespace Warehouse.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                LaptopModels laptop = _db.LaptopModels.Find(id);
+                //LaptopModels laptop = _db.LaptopModels.Find(id);
 
-                if (laptop == null)
+                if (laptopRepository.getLaptop(id) == null)
                 {
                     return HttpNotFound();
                 }
 
 
 
-                stores(laptopID);
+                ViewBag.storeName = laptopRepository.stores(laptopID);
 
 
-
-
-                return View(laptop);
+                return View(laptopRepository.getLaptop(id));
             }
             catch (Exception e)
             {
@@ -548,13 +476,13 @@ namespace Warehouse.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                LaptopModels laptop = _db.LaptopModels.Find(id);
+                //LaptopModels laptop = _db.LaptopModels.Find(id);
 
-                if (laptop == null)
+                if (laptopRepository.getLaptop(id) == null)
                 {
                     return HttpNotFound();
                 }
-                return View(laptop);
+                return View(laptopRepository.getLaptop(id));
             }
             catch (Exception e)
             {
@@ -582,11 +510,12 @@ namespace Warehouse.Controllers
                 TempData["number"] = quantity;
 
 
-                ViewData["ddlList"] = _db.StoreModels.ToList().Select(u => new SelectListItem
-                {
-                    Text = u.Name,
-                    Value = u.ID.ToString()
-                }).ToList();
+                ViewData["ddlList"] = laptopRepository.ddlList();
+                //    _db.StoreModels.ToList().Select(u => new SelectListItem
+                //{
+                //    Text = u.Name,
+                //    Value = u.ID.ToString()
+                //}).ToList();
 
 
                 return View();
@@ -624,9 +553,9 @@ namespace Warehouse.Controllers
                 _db.TransferModels.Add(transfer);           // pass the table object 
 
                 //set laptop quantity to zero
-                laptopFind(id).Quantity = 0;
+                laptopRepository.laptopFind(id).Quantity = 0;
                //reduce QoP of store for quantity number
-                storeFind(storeID).QoP -= quantity;
+                laptopRepository.storeFind(storeID).QoP -= quantity;
                 _db.SaveChanges();
 
                 return RedirectToAction("Index", "Transfer", new { });
