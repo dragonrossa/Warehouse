@@ -161,3 +161,5 @@
 23.11 Repository folder with Repository interface and Repository class for UserController
 
 23.11 Repository folder with Repository interface and Repository class for UserRightsController
+
+26.11 Repository fix for LaptopModels
