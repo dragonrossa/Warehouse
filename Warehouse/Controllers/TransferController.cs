@@ -29,9 +29,9 @@ namespace Warehouse.Controllers
                 try
                 {
 
-                ViewBag.laptop = transfer.lastInput.LaptopName;
-                ViewBag.date = transfer.lastInput.Date;
-                ViewBag.quantity = transfer.lastInput.LaptopQuantity;
+                ViewBag.laptop = transferRepository.lastInput.LaptopName;
+                ViewBag.date = transferRepository.lastInput.Date;
+                ViewBag.quantity = transferRepository.lastInput.LaptopQuantity;
                
                 return View(transferRepository.storeResult());
                 }

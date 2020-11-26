@@ -81,42 +81,5 @@ namespace Warehouse.Models
                 return _db.StoreModels.OrderByDescending(x => x.ID).ToList();
             }
         }
-
-        [NotMapped]
-        public StoreModels lastInput
-        {
-            get
-            {
-                return (from k in _db.StoreModels
-                        select k)
-                               .OrderByDescending(k => k.ID)
-                               .First();
-            }
-        }
-
-        [NotMapped]
-
-        public List<StoreModels> childOrderByID
-        {
-            get
-            {
-                return (from k in _db.StoreModels orderby k.ID select k).ToList();
-            }
-        }
-
-        public LogModels log(string ResultName, DateTime? ResultDate, string ResultLocation)
-        {
-            LogModels log = new LogModels
-            {
-                Type = "1",
-                Description = "New store was inserted with name " + ResultName + " on date " + ResultDate + " with location on " + ResultLocation + ".",
-                Date = ResultDate
-            };
-
-            _db.LogModels.Add(log);
-            _db.SaveChanges();
-            return log;
-        }
-
     }
 }

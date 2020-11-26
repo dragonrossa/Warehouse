@@ -101,7 +101,7 @@ namespace Warehouse.Repository
                 transfer.LaptopName = transferRepository.laptop(LaptopID);
                 transfer.LaptopQuantity = LaptopQuantity;
                 transfer.Date = DateTime.Now;
-                transferRepository.addToDatabase(transfer);
+                _db.TransferModels.Add(transfer);
                 _db.SaveChanges();
 
                 //get Laptop
@@ -110,17 +110,37 @@ namespace Warehouse.Repository
                 transferRepository.laptopFind(transfer.LaptopID).Quantity -= LaptopQuantity;  // reduce LaptopQuantity from Quantity
                 _db.SaveChanges();
 
-                transfer.logs(transfer.LaptopName, transfer.LaptopQuantity, transferRepository.storeFind(storeID).Name, transferRepository.storeFind(storeID).Location);
+               // transfer.logs(transfer.LaptopName, transfer.LaptopQuantity, transferRepository.storeFind(storeID).Name, transferRepository.storeFind(storeID).Location);
+
+
+                LogModels log = new LogModels
+                {
+                    Type = "2",
+                    Description = "New transfer was inserted with transfer of laptop called " + transfer.LaptopName + " with quantity of " +
+                           transfer.LaptopQuantity + " on date " + DateTime.Now + " with location to " + transferRepository.storeFind(storeID).Name + ", " + transferRepository.storeFind(storeID).Location + ".",
+                    Date = DateTime.Now
+                };
+
+                _db.LogModels.Add(log);
+                _db.SaveChanges();
+              //  return log;
+
+
             }
         }
 
-        //Custom Exception for UserNotFound
-        public class UserNotFoundException : Exception
+        //Properties
+
+        public TransferModels lastInput
         {
-            public UserNotFoundException() : base() { }
-            public UserNotFoundException(string message) : base(message) { }
-            public UserNotFoundException(string message, Exception innerException)
-                : base(message, innerException) { }
+            get
+            {
+                return (from k in _db.TransferModels
+                        select k)
+                               .OrderByDescending(k => k.ID)
+                               .First();
+            }
         }
+
     }
 }

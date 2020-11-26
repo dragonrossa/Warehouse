@@ -28,9 +28,9 @@ namespace Warehouse.Controllers
                 try
                 {
 
-                    ViewBag.store = store.lastInput.Name;
-                    ViewBag.date = store.lastInput.Date;
-                    ViewBag.location = store.lastInput.Location;
+                    ViewBag.store = storeRepository.lastInput.Name;
+                    ViewBag.date = storeRepository.lastInput.Date;
+                    ViewBag.location = storeRepository.lastInput.Location;
 
                     return View(store.Child);
                 }
@@ -102,7 +102,7 @@ namespace Warehouse.Controllers
                     storeRepository.SaveData();
 
                     //Create new log
-                    store.log(storeRepository.result().Name, storeRepository.result().Date, storeRepository.result().Location);
+                    storeRepository.log(storeRepository.result().Name, storeRepository.result().Date, storeRepository.result().Location);
 
                     return RedirectToAction("Index");
                 }
@@ -126,7 +126,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                return View(store.childOrderByID);
+                return View(storeRepository.childOrderByID);
             }
             catch (Exception e)
             {
@@ -142,7 +142,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                return View(store.childOrderByID);
+                return View(storeRepository.childOrderByID);
             }
             catch (Exception e)
             {
@@ -158,7 +158,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-              return View(store.childOrderByID);
+              return View(storeRepository.childOrderByID);
             }
             catch (Exception e)
             {

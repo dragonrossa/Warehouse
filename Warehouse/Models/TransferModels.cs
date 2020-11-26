@@ -53,17 +53,17 @@ namespace Warehouse.Models
             }
         }
 
-        [NotMapped]
-        public TransferModels lastInput
-        {
-            get
-            {
-                return (from k in _db.TransferModels
-                        select k)
-                               .OrderByDescending(k => k.ID)
-                               .First();
-            }
-        }
+        //[NotMapped]
+        //public TransferModels lastInput
+        //{
+        //    get
+        //    {
+        //        return (from k in _db.TransferModels
+        //                select k)
+        //                       .OrderByDescending(k => k.ID)
+        //                       .First();
+        //    }
+        //}
 
 
         public LogModels logs(string LaptopName, int LaptopQuantity, string StoreFindName, string StoreFindLocation)

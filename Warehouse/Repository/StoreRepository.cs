@@ -53,14 +53,40 @@ namespace Warehouse.Repository
             return store;
         }
 
-        //Exception
+        
+        //Property
 
-        public class UserNotFoundException : Exception
+        public StoreModels lastInput
         {
-            public UserNotFoundException() : base() { }
-            public UserNotFoundException(string message) : base(message) { }
-            public UserNotFoundException(string message, Exception innerException)
-                : base(message, innerException) { }
+            get
+            {
+                return (from k in _db.StoreModels
+                        select k)
+                               .OrderByDescending(k => k.ID)
+                               .First();
+            }
+        }
+
+        public List<StoreModels> childOrderByID
+        {
+            get
+            {
+                return (from k in _db.StoreModels orderby k.ID select k).ToList();
+            }
+        }
+
+        public LogModels log(string ResultName, DateTime? ResultDate, string ResultLocation)
+        {
+            LogModels log = new LogModels
+            {
+                Type = "1",
+                Description = "New store was inserted with name " + ResultName + " on date " + ResultDate + " with location on " + ResultLocation + ".",
+                Date = ResultDate
+            };
+
+            _db.LogModels.Add(log);
+            _db.SaveChanges();
+            return log;
         }
     }
 }

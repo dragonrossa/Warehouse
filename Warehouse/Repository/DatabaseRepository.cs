@@ -19,13 +19,7 @@ namespace Warehouse.Repository
             return _db;
         }
 
-        //Add to database - override if neccesary
-        public void addToDatabase(TransferModels transfer)
-        {
-            _db.TransferModels.Add(transfer);
-        }
-
-
+      
         //Save DB
         public object SaveData()
         {
