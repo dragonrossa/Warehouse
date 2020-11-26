@@ -78,89 +78,7 @@ namespace Warehouse.Models
             }
         }
 
-        [NotMapped]
-        public List<LaptopModels> ChildByID
-        {
-            get
-            {
-                return _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
-            }
-        }
-
-        [NotMapped]
-        public List<LaptopModels> ChildByIDIfNotZeroQuantity
-        {
-            get
-            {
-                var list = _db.LaptopModels.ToList().OrderBy(u => u.ID).Select(u => u).ToList();
-                var newList = list.Where(i => i.Quantity != 0).ToList();
-                return newList;
-            }
-        }
-
-
-        [NotMapped]
-        public LaptopModels lastInput
-        {
-            get
-            {
-                return (from k in _db.LaptopModels
-                        select k)
-                                .OrderByDescending(k => k.ID)
-                                .FirstOrDefault();
-            }
-        }
-
-
-        [NotMapped]
-        public decimal? lastInputFullPrice
-        {
-            get
-            {
-                return (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).First();
-            }
-        }
-
-        [NotMapped]
-        public decimal? lastInputSavings
-        {
-            get
-            {
-                return (from k in _db.LaptopModels where k.ID == lastInput.ID select k.OldPrice - k.Price).First();
-            }
-        }
-
-        [NotMapped]
-        public DateTime lastInputDate
-        {
-            get
-            {
-                return DateTime.Now;
-            }
-        }
-
-        //public LaptopModels laptopFind(int ID)
-        //{
-            
-        //        return (from k in _db.LaptopModels where k.ID == ID select k).FirstOrDefault();
-        //}
-
-
-        //public decimal? laptopFindSavings(int ID)
-        //{
-           
-        //        return (from k in _db.LaptopModels where k.ID == ID select k.OldPrice - k.Price).FirstOrDefault();
-            
-        //}
-
-        //public decimal? laptopFindFullPrice(int ID)
-        //{
-            
-        //       return (from k in _db.LaptopModels where k.ID == ID select k.OldPrice - k.Price).FirstOrDefault();
-            
-        //}
-
-
+       
         [NotMapped]
         public List<LaptopModels> AscendingByName
         {
@@ -243,55 +161,7 @@ namespace Warehouse.Models
                 return _db.LaptopModels.OrderByDescending(x => x.FullPrice).ToList();
 
             }
-        }
-
-
-
-
-        [NotMapped]
-        public decimal? maxNumber
-        {
-            get
-            {
-                return Child.Sum(d => d.Savings);
-            }
-        }
-
-        [NotMapped]
-        public int sumQuantity
-        {
-            get
-            {
-                return Child.Sum(d => d.Quantity);
-            }
-        }
-
-        [NotMapped]
-        public decimal? sumFullPrice
-        {
-            get
-            {
-                return Child.Sum(d => d.FullPrice);
-            }
-        }
-
-    
-
-        public LogModels CreateLog(string name, DateTime? date, int quantity)
-        {
-            LogModels log = new LogModels
-            {
-                Type = "0",
-                Description = "New laptop was inserted with name " + name + " on date " + date + " with quantity of " + quantity + ".",
-                Date = lastInput.Date
-            };
-
-            _db.LogModels.Add(log);
-            _db.SaveChanges();
-
-            return log;
-
-        }
+        }  
 
     }
 }
