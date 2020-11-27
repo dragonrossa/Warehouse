@@ -163,3 +163,5 @@
 23.11 Repository folder with Repository interface and Repository class for UserRightsController
 
 26.11 Repository fix for LaptopModels
+
+27.11 Catch and store global errors
