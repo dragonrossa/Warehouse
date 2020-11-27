@@ -99,49 +99,6 @@ namespace Warehouse.Controllers
         }
 
 
-        public ActionResult AscName()
-        {
-           
-          return View("Index", new LaptopModels { laptop = laptop.AscendingByName });
-        }
-
-        public ActionResult DescName()
-        {
-          return View("Index", new LaptopModels { laptop = laptop.DescendingByName });
-        }
-
-
-        public ActionResult AscQuantity()
-        {
-          return View("Index", new LaptopModels { laptop = laptop.AscendingByQuantity });
-        }
-
-        public ActionResult DescQuantity()
-        {
-          return View("Index", new LaptopModels { laptop = laptop.DescendingByQuantity });
-        }
-
-        public ActionResult AscPrice()
-        {
-          return View("Index", new LaptopModels { laptop = laptop.AscendingByPrice });
-        }
-
-        public ActionResult DescPrice()
-        {
-          return View("Index", new LaptopModels { laptop = laptop.DescendingByPrice });
-        }
-
-
-        public ActionResult AscFullPrice()
-        {
-          return View("Index", new LaptopModels { laptop = laptop.AscendingByFullPrice });
-        }
-
-        public ActionResult DescFullPrice()
-        {
-         return View("Index", new LaptopModels { laptop = laptop.DescendingByFullPrice });
-        }
-
 
         //GET: MasterData/Create
         public ActionResult Create()
@@ -176,7 +133,7 @@ namespace Warehouse.Controllers
             try
             {
              
-               return View(laptopRepository.ChildByID);
+               return View(new LaptopModels { laptop = laptopRepository.ChildByID });
             }
             catch (Exception e)
             {
@@ -209,7 +166,7 @@ namespace Warehouse.Controllers
             
             try
             {
-              return View(laptopRepository.ChildByID);
+              return View(new LaptopModels { laptop = laptopRepository.ChildByID });
             }
             catch (Exception e)
             {

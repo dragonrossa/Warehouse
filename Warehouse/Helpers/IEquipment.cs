@@ -57,6 +57,9 @@ namespace Warehouse.Helpers
         List<T> AscendingByFullPrice { get; }
         List<T> DescendingByFullPrice { get; }
 
+        List<T> AscendingByOS { get; }
+        List<T> DescendingByOS { get; }
+
     }
 
   

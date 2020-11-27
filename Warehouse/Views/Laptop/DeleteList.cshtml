@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Warehouse.Models.LaptopModels>
+﻿@model Warehouse.Models.LaptopModels
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
@@ -6,15 +6,10 @@
 <head>
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 </head>
 
-
-<head>
-
-    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
-
-</head>
 
 <div class="container-fluid">
     <p>
@@ -25,17 +20,44 @@
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
+            <label style="padding-left:10px;">
+                <a href="@Url.Action("DescNameDelete","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                </a>
+
+                <a href="@Url.Action("AscNameDelete","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                </a>
+            </label>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Quantity)
+            <label style="padding-left:10px;">
+                <a href="@Url.Action("DescQuantityDelete","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                </a>
+
+                <a href="@Url.Action("AscQuantityDelete","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                </a>
+            </label>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Price)
+            <label style="padding-left:10px;">
+                <a href="@Url.Action("DescPriceDelete","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                </a>
+
+                <a href="@Url.Action("AscPriceDelete","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                </a>
+            </label>
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.laptop)
     {
         <tr>
             <td>

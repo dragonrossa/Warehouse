@@ -163,5 +163,25 @@ namespace Warehouse.Models
             }
         }  
 
+
+      
+        [NotMapped]
+        public List<LaptopModels> AscendingByOS
+        {
+            get
+            {
+                return _db.LaptopModels.OrderBy(x => x.OS).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<LaptopModels> DescendingByOS
+        {
+            get
+            {
+                return _db.LaptopModels.OrderByDescending(x => x.OS).ToList();
+            }
+        }
+
     }
 }
