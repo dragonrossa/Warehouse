@@ -51,7 +51,7 @@ namespace Warehouse.Controllers
             try
             {
                 //Find user
-                ViewBag.user = procurementRepository.username(User.Identity.Name);
+                ViewBag.user = procurementRepository.username(User.Identity.Name).Name;
 
                 //ViewData computers
                 ViewData["computers"] = procurementRepository.computers();

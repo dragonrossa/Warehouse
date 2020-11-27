@@ -52,33 +52,5 @@ namespace Warehouse.Models
                 return _db.TransferModels.OrderByDescending(x => x.ID).ToList();
             }
         }
-
-        //[NotMapped]
-        //public TransferModels lastInput
-        //{
-        //    get
-        //    {
-        //        return (from k in _db.TransferModels
-        //                select k)
-        //                       .OrderByDescending(k => k.ID)
-        //                       .First();
-        //    }
-        //}
-
-
-        public LogModels logs(string LaptopName, int LaptopQuantity, string StoreFindName, string StoreFindLocation)
-        {
-            LogModels log = new LogModels
-            {
-                Type = "2",
-                Description = "New transfer was inserted with transfer of laptop called " + LaptopName + " with quantity of " +
-                            LaptopQuantity + " on date " + DateTime.Now + " with location to " + StoreFindName + ", " + StoreFindLocation + ".",
-                Date = DateTime.Now
-            };
-
-            _db.LogModels.Add(log);
-            _db.SaveChanges();
-            return log;
-        }
     }
 }

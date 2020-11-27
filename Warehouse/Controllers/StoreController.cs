@@ -21,6 +21,24 @@ namespace Warehouse.Controllers
 
         StoreModels store = new StoreModels();
 
+        //Override OnException
+
+        //protected override void OnException(ExceptionContext filterContext)
+        //{
+
+        //    Exception ex = filterContext.Exception;
+        //    filterContext.ExceptionHandled = true;
+
+        //    var model = new HandleErrorInfo(filterContext.Exception, "Store", "Index");
+
+        //    filterContext.Result = new ViewResult()
+        //    {
+        //        ViewName = "ErrorMessage",
+        //        ViewData = new ViewDataDictionary(model)
+        //    };
+        //}
+
+
         // GET: MasterData
         public ActionResult Index()
         {
@@ -56,12 +74,15 @@ namespace Warehouse.Controllers
             
         }
 
+        
 
 
         //Exception - UserNotFound
 
         public ActionResult NotFound()
         {
+
+
             return View();
         }
 

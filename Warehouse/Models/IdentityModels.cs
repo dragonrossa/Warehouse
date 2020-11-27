@@ -45,11 +45,11 @@ namespace Warehouse.Models
         public virtual DbSet<RolesModels> RolesModels { get; set; }
         public virtual DbSet<TaskListModels> TaskListModels { get; set; }
         public virtual DbSet<UploadModels> UploadModels { get; set; }
-
         public virtual DbSet<SupplierModels> SupplierModels { get; set; }
         public virtual DbSet<ComputerListModels> ComputerListModels { get; set; }
         public virtual DbSet<ProcurementModels> ProcurementModels { get; set; }
         public virtual DbSet<ProcessorModels> ProccessorModels { get; set; }
+        public virtual DbSet<GlobalErrorsModels> GlobalErrorsModels { get; set; }
 
     }
 }

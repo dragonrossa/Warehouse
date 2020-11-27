@@ -110,9 +110,6 @@ namespace Warehouse.Repository
                 transferRepository.laptopFind(transfer.LaptopID).Quantity -= LaptopQuantity;  // reduce LaptopQuantity from Quantity
                 _db.SaveChanges();
 
-               // transfer.logs(transfer.LaptopName, transfer.LaptopQuantity, transferRepository.storeFind(storeID).Name, transferRepository.storeFind(storeID).Location);
-
-
                 LogModels log = new LogModels
                 {
                     Type = "2",
@@ -123,8 +120,6 @@ namespace Warehouse.Repository
 
                 _db.LogModels.Add(log);
                 _db.SaveChanges();
-              //  return log;
-
 
             }
         }
