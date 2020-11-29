@@ -165,3 +165,5 @@
 26.11 Repository fix for LaptopModels
 
 27.11 Catch and store global errors
+
+27.11 Sort for LaptopModels
