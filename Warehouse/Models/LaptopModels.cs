@@ -9,7 +9,7 @@ using Warehouse.Helpers;
 namespace Warehouse.Models
 {
     
-    public class LaptopModels:IEquipment, ListOrderBy<LaptopModels>
+    public class LaptopModels:IEquipment, ListOrderByLaptop<LaptopModels>
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 

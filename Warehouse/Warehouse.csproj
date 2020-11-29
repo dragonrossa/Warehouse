@@ -258,6 +258,7 @@
     <Compile Include="Models\TaskListModels.cs" />
     <Compile Include="Models\UploadModels.cs" />
     <Compile Include="OrderBy\OrderByLaptopController.cs" />
+    <Compile Include="OrderBy\OrderByStoreController.cs" />
     <Compile Include="Repository\AdminRepository.cs" />
     <Compile Include="Repository\ComputerListRepository.cs" />
     <Compile Include="Repository\DatabaseRepository.cs" />
@@ -588,6 +589,7 @@
     <Folder Include="Content\printscreen\" />
     <Folder Include="Content\readme\" />
     <Folder Include="Views\OrderByLaptop\" />
+    <Folder Include="Views\OrderByStore\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

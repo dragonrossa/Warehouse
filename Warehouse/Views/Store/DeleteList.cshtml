@@ -2,6 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 }
 
 <head>
@@ -19,9 +20,27 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescName","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscName","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Location)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescName","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscName","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ZipCode)

@@ -45,7 +45,7 @@ namespace Warehouse.Helpers
 
 
     //Interface for LaptopModels - sorting out
-    interface ListOrderBy<T>
+    interface ListOrderByLaptop<T>
     {
         List<T> AscendingByName { get; }
         List<T> DescendingByName { get; }
@@ -60,6 +60,20 @@ namespace Warehouse.Helpers
         List<T> AscendingByOS { get; }
         List<T> DescendingByOS { get; }
 
+    }
+
+
+    //Interface for StoreModels - sorting out
+    interface ListOrderbyStore<T>
+    {
+        List<T> AscendingByName { get; }
+        List<T> DescendingByName { get; }
+        List<T> AscendingByLocation { get; }
+        List<T> DescendingByLocation { get; }
+        List<T> AscendingByZipcode { get; }
+        List<T> DescendingByZipcode { get; }
+        List<T> AscendingByQuantityOfProducts { get; }
+        List<T> DescendingByQuantityOfProducts { get; }
     }
 
   

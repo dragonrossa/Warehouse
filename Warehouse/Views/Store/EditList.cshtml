@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Warehouse.Models.StoreModels>
+﻿@model Warehouse.Models.StoreModels
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
@@ -7,16 +7,10 @@
 <head>
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 </head>
 
-
-
-<head>
-
-    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
-
-</head>
 
 <div class="container-fluid">
     <h4>Edit</h4>
@@ -26,12 +20,39 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescNameEdit","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscNameEdit","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Location)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescLocationEdit","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscLocationEdit","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ZipCode)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescZipcodeEdit","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscZipcodeEdit","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Address)
@@ -48,40 +69,41 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.store)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ZipCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telephone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkingTime)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })
-                </td>
-            </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ZipCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telephone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkingTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+        </td>
+      @*  @Html.ActionLink("Home", "Index", "Invoice", null, new { id = "homelink" })*@
+    </tr>
         }
 
     </table>
 
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "Index","Store")
     </div>
 </div>
 

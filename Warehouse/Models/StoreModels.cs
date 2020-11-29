@@ -10,7 +10,7 @@ using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
-    public class StoreModels:IElement<StoreModels>
+    public class StoreModels:IElement<StoreModels>, ListOrderbyStore<StoreModels>
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
@@ -53,6 +53,8 @@ namespace Warehouse.Models
         //input - DateTime
         public DateTime? Date { get; set; }
 
+        public IEnumerable<StoreModels> store { get; set; }
+
         [NotMapped]
         public List<StoreModels> Child
         {
@@ -79,6 +81,75 @@ namespace Warehouse.Models
             get
             {
                 return _db.StoreModels.OrderByDescending(x => x.ID).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<StoreModels> AscendingByName
+        {
+            get
+            {
+                return _db.StoreModels.OrderBy(x => x.Name).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<StoreModels> DescendingByName
+        {
+            get
+            {
+                return _db.StoreModels.OrderByDescending(x => x.Name).ToList();
+            }
+        }
+        [NotMapped]
+        public List<StoreModels> AscendingByLocation
+        {
+            get
+            {
+                return _db.StoreModels.OrderBy(x => x.Location).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<StoreModels> DescendingByLocation
+        {
+            get
+            {
+                return _db.StoreModels.OrderByDescending(x => x.Location).ToList();
+            }
+        }
+        [NotMapped]
+        public List<StoreModels> AscendingByZipcode
+        {
+            get
+            {
+                return _db.StoreModels.OrderBy(x => x.ZipCode).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<StoreModels> DescendingByZipcode
+        {
+            get
+            {
+                return _db.StoreModels.OrderByDescending(x => x.ZipCode).ToList();
+            }
+        }
+        [NotMapped]
+        public List<StoreModels> AscendingByQuantityOfProducts
+        {
+            get
+            {
+                return _db.StoreModels.OrderBy(x => x.QoP).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<StoreModels> DescendingByQuantityOfProducts
+        {
+            get
+            {
+                return _db.StoreModels.OrderByDescending(x => x.QoP).ToList();
             }
         }
     }

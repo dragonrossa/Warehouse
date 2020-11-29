@@ -50,7 +50,7 @@ namespace Warehouse.Controllers
                     ViewBag.date = storeRepository.lastInput.Date;
                     ViewBag.location = storeRepository.lastInput.Location;
 
-                    return View(store.Child);
+                    return View( new StoreModels { store = store.Child });
                 }
                 catch (Exception e)
                 {
@@ -147,7 +147,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                return View(storeRepository.childOrderByID);
+                return View( new StoreModels { store = storeRepository.childOrderByID });
             }
             catch (Exception e)
             {
@@ -163,7 +163,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                return View(storeRepository.childOrderByID);
+                return View( new StoreModels { store = storeRepository.childOrderByID });
             }
             catch (Exception e)
             {

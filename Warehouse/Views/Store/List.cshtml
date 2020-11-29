@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Warehouse.Models.StoreModels>
+﻿@model Warehouse.Models.StoreModels
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
@@ -7,6 +7,7 @@
 <head>
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 </head>
 
@@ -19,12 +20,39 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescNameList","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscNameList","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Location)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescLocationList","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscLocationList","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ZipCode)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescZipcodeList","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscZipcodeList","OrderByStore")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Address)
@@ -43,7 +71,7 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.store)
         {
             <tr>
                 <td>
@@ -77,7 +105,7 @@
     </table>
 
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "Index","Store")
     </div>
 </div>
 
