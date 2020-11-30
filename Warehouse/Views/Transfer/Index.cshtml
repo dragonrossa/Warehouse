@@ -1,4 +1,4 @@
-﻿@model List<Warehouse.Helpers.TransferResult>
+﻿@model Warehouse.Helpers.TransferResult
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
@@ -7,6 +7,7 @@
 <head>
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 </head>
 
@@ -24,16 +25,44 @@
         <tr>
             <th>
                 Name
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescName","OrderByTransfer")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscName","OrderByTransfer")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 Quantity
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescQuantity","OrderByTransfer")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscQuantity","OrderByTransfer")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
-            <th>Place</th>
+            <th>Place
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescLocation","OrderByTransfer")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscLocation","OrderByTransfer")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label></th>
             <th></th>
         </tr>
 
 
-        @foreach (var item in Model)
+
+        @foreach (var item in Model.result)
         {
             <tr>
                 <td>

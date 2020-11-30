@@ -25,6 +25,8 @@ namespace Warehouse.Models
         public int StoreID { get; set; }
         public DateTime? Date { get; set; }
 
+        IEnumerable <TransferModels> transfer { get; }
+
         [NotMapped]
 
         public List<TransferModels> Child
@@ -52,5 +54,7 @@ namespace Warehouse.Models
                 return _db.TransferModels.OrderByDescending(x => x.ID).ToList();
             }
         }
+        
+
     }
 }

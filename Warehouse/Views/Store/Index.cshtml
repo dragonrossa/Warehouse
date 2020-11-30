@@ -81,7 +81,7 @@
                     @Html.DisplayFor(modelItem => item.QoP)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "List", new { id = item.ID })
+                    @Html.ActionLink("Details", "List", "Store", new { id = item.ID }, null)
                 </td>
             </tr>
         }

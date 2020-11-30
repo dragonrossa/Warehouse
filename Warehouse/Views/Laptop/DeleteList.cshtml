@@ -70,7 +70,7 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Delete", "Delete","Laptop", new { id = item.ID }, null)
             </td>
         </tr>
     }
@@ -78,7 +78,7 @@
 </table>
 
 <div class="container">
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", "Laptop")
 </div>
 
 

@@ -179,7 +179,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-              return View(storeRepository.childOrderByID);
+              return View( new StoreModels { store = storeRepository.childOrderByID });
             }
             catch (Exception e)
             {

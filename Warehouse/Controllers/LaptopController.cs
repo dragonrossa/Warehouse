@@ -149,7 +149,7 @@ namespace Warehouse.Controllers
 
             try
             {
-               return View(laptopRepository.ChildByID);
+               return View(new LaptopModels { laptop = laptopRepository.ChildByID });
             }
             catch (Exception e)
             {

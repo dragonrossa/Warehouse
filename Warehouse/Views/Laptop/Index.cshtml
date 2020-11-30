@@ -97,7 +97,7 @@
                     @Html.DisplayFor(modelItem => item.FullPrice)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.ID })
+                    @Html.ActionLink("Details", "Details", "Laptop", new { id = item.ID }, null)
                 </td>
             </tr>
         }

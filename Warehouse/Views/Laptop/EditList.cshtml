@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Warehouse.Models.LaptopModels>
+﻿@model Warehouse.Models.LaptopModels
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
@@ -7,30 +7,60 @@
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
 
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 </head>
 
 
 
 <div class="container-fluid">
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Create new", "Create")
     </p>
 </div>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
+            <label style="padding-left:10px;">
+                <a href="@Url.Action("DescNameEditList","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                </a>
+
+                <a href="@Url.Action("AscNameEditList","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                </a>
+            </label>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Quantity)
+            <label style="padding-left:10px;">
+                <a href="@Url.Action("DescQuantityEditList","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                </a>
+
+                <a href="@Url.Action("AscQuantityEditList","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                </a>
+            </label>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Price)
+            <label style="padding-left:10px;">
+                <a href="@Url.Action("DescPriceEditList","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                </a>
+
+                <a href="@Url.Action("AscPriceEditList","OrderByLaptop")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                </a>
+            </label>
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+
+    @foreach (var item in Model.laptop)
     {
         <tr>
             <td>
@@ -43,7 +73,7 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                @Html.ActionLink("Edit", "Edit","Laptop", new { id = item.ID }, null)
             </td>
         </tr>
     }
@@ -51,7 +81,7 @@
 </table>
 
 <div class="container">
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", "Laptop")
 </div>
 
 @section Scripts {

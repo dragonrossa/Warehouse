@@ -103,9 +103,9 @@
             </td>
 
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Edit", "Edit", "Laptop", new { id = item.ID }, null) |
+                @Html.ActionLink("Details", "Details","Laptop", new { id = item.ID }, null) |
+                @Html.ActionLink("Delete", "Delete", "Laptop", new { id = item.ID }, null)
             </td>
         </tr>
     }
@@ -114,7 +114,7 @@
 
 
 <div class="container">
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index","Laptop")
 </div>
 
 @section Scripts {

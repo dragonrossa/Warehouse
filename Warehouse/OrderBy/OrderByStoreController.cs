@@ -120,5 +120,39 @@ namespace Warehouse.OrderBy
         {
             return View("~/Views/Store/EditList.cshtml", new StoreModels { store = store.DescendingByZipcode });
         }
+
+        //Store - Delete - Name, Location, Zip code
+
+        public ActionResult AscNameDelete()
+        {
+
+            return View("~/Views/Store/DeleteList.cshtml", new StoreModels { store = store.AscendingByName });
+        }
+
+        public ActionResult DescNameDelete()
+        {
+            return View("~/Views/Store/DeleteList.cshtml", new StoreModels { store = store.DescendingByName });
+        }
+
+
+        public ActionResult AscLocationDelete()
+        {
+            return View("~/Views/Store/DeleteList.cshtml", new StoreModels { store = store.AscendingByLocation });
+        }
+
+        public ActionResult DescLocationDelete()
+        {
+            return View("~/Views/Store/DeleteList.cshtml", new StoreModels { store = store.DescendingByLocation });
+        }
+
+        public ActionResult AscZipcodeDelete()
+        {
+            return View("~/Views/Store/DeleteList.cshtml", new StoreModels { store = store.AscendingByZipcode });
+        }
+
+        public ActionResult DescZipcodeDelete()
+        {
+            return View("~/Views/Store/DeleteList.cshtml", new StoreModels { store = store.DescendingByZipcode });
+        }
     }
 }

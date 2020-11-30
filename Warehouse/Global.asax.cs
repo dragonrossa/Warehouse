@@ -21,23 +21,23 @@ namespace Warehouse
 
         //Store global errors
 
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        //private ApplicationDbContext _db = new ApplicationDbContext();
 
-        protected void Application_Error(object sender, EventArgs e)
-        {
-            GlobalErrorsModels error = new GlobalErrorsModels();
+        //protected void Application_Error(object sender, EventArgs e)
+        //{
+        //    GlobalErrorsModels error = new GlobalErrorsModels();
 
-            Exception exception = Server.GetLastError();
+        //    Exception exception = Server.GetLastError();
 
-            error.Description = exception.ToString();
+        //    error.Description = exception.ToString();
 
-            //Save global error
-            _db.GlobalErrorsModels.Add(error);
-            _db.SaveChanges();
+        //    //Save global error
+        //    _db.GlobalErrorsModels.Add(error);
+        //    _db.SaveChanges();
 
-             Server.ClearError();
+        //     Server.ClearError();
 
-            Response.Redirect("~/GlobalErrors/Index");
-        }
+        //    Response.Redirect("~/GlobalErrors/Index");
+        //}
     }
 }

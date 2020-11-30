@@ -33,7 +33,8 @@ namespace Warehouse.Controllers
                 ViewBag.date = transferRepository.lastInput.Date;
                 ViewBag.quantity = transferRepository.lastInput.LaptopQuantity;
                
-                return View(transferRepository.storeResult());
+                return View( new TransferResult { result = transferRepository.storeResult() }
+                    );
                 }
                 catch (Exception e)
                {

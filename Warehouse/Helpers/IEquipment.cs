@@ -76,6 +76,17 @@ namespace Warehouse.Helpers
         List<T> DescendingByQuantityOfProducts { get; }
     }
 
+    //Interface for TransferModels - sorting out
+    interface ListOrderbyTransfer<T>
+    {
+        List<T> AscendingByName { get; }
+        List<T> DescendingByName { get; }
+        List<T> AscendingByQuantity { get; }
+        List<T> DescendingByQuantity{ get; }
+        List<T> AscendingByPlace { get; }
+        List<T> DescendingByPlace { get; }
+    }
+
   
      abstract class User<T>
     {
