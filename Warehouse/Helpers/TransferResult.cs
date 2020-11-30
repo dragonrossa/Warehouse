@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Warehouse.Models;
+using Warehouse.Repository;
 
 namespace Warehouse.Helpers
 {
@@ -14,12 +15,14 @@ namespace Warehouse.Helpers
         public int LaptopQuantity { get; set; }
         public IEnumerable<TransferResult> result { get; set; }
 
+        TransferRepository repository = new TransferRepository();
+
         [NotMapped]
         public List<TransferResult> AscendingByName
         {
             get
             {
-                return result.OrderBy(x => x.LaptopName).ToList();
+                return repository.storeResult().OrderBy(x => x.LaptopName).ToList();
             }
         }
         [NotMapped]
@@ -27,7 +30,7 @@ namespace Warehouse.Helpers
         {
             get
             {
-                return result.OrderByDescending(x => x.LaptopName).ToList();
+                return repository.storeResult().OrderByDescending(x => x.LaptopName).ToList();
             }
         }
 
@@ -36,7 +39,7 @@ namespace Warehouse.Helpers
         {
             get
             {
-                return result.OrderBy(x => x.LaptopQuantity).ToList();
+                return repository.storeResult().OrderBy(x => x.LaptopQuantity).ToList();
             }
         }
         [NotMapped]
@@ -44,7 +47,7 @@ namespace Warehouse.Helpers
         {
             get
             {
-                return result.OrderByDescending(x => x.LaptopQuantity).ToList();
+                return repository.storeResult().OrderByDescending(x => x.LaptopQuantity).ToList();
             }
         }
         [NotMapped]
@@ -52,7 +55,7 @@ namespace Warehouse.Helpers
         {
             get
             {
-                return result.OrderBy(x => x.StoreName).ToList();
+                return repository.storeResult().OrderBy(x => x.StoreName).ToList();
             }
         }
         [NotMapped]
@@ -60,7 +63,7 @@ namespace Warehouse.Helpers
         {
             get
             {
-                return result.OrderByDescending(x => x.StoreName).ToList();
+                return repository.storeResult().OrderByDescending(x => x.StoreName).ToList();
             }
         }
     }
