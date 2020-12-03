@@ -70,7 +70,7 @@ namespace Warehouse.Controllers
             try
             {
               
-                return View(taskListRepository.listOfFalseTasks());
+                return View(new TaskListModels { task = taskListRepository.listOfFalseTasks() });
             }
             catch (Exception)
             {
@@ -111,7 +111,12 @@ namespace Warehouse.Controllers
         {
             
 
-            return View(taskListModels.Child);
+            return View(
+                new TaskListModels
+            {
+                task =
+                taskListModels.Child
+            });
         }
 
         public ActionResult Details(int id)

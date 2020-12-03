@@ -87,6 +87,16 @@ namespace Warehouse.Helpers
         List<T> DescendingByPlace { get; }
     }
 
+    //Interface for TaskListModels - soting out
+
+    interface ListOrderByTask<T>
+    {
+        List<T> AscendingByID { get; }
+        List<T> DescendingByID { get; }
+        List<T> AscendingByStatus { get; }
+        List<T> DescendingByStatus { get; }
+    }
+
   
      abstract class User<T>
     {

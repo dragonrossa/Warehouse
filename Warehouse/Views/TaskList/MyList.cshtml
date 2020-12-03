@@ -1,10 +1,11 @@
-﻿@model IEnumerable<Warehouse.Models.TaskListModels>
+﻿@model Warehouse.Models.TaskListModels
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 }
 
 <head>
@@ -20,18 +21,53 @@
     <bt></bt>
     <h4>List of tasks that needs to be done</h4>
     <h6>Click on Task to see more details.</h6>
-    <h4> @Html.ActionLink("All tasks", "List") </h4>
+    <h4> @Html.ActionLink("All tasks", "List", "TaskList") </h4>
 
-    @foreach (var item in Model)
-    {
-        using (Html.BeginForm("MyList", "TaskList", new { id = item.ID }, FormMethod.Post))
+
+
+
+    <table class="table">
+        <th>
+            @Html.DisplayNameFor(model => model.ID)
+            <label style="padding-left:10px;">
+                <a href="@Url.Action("DescID","OrderByTask")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                </a>
+
+                <a href="@Url.Action("AscID","OrderByTask")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                </a>
+            </label>
+
+        </th>
+
+        <th>
+            @Html.Label("List")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User)
+        </th>
+
+        <th></th>
+
+        <th> @Html.Label("Status", new { @style = "padding-left:15px" })</th>
+
+
+
+        @foreach (var item in Model.task)
         {
-            @Html.AntiForgeryToken()
+
+
+            using (Html.BeginForm("MyList", "TaskList", new { id = item.ID }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
 
 
 
-            <table class="table">
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
                     <td>
                         @Html.ActionLink("Task", "Details", "TaskList", new { Id = item.ID }, null)
                     </td>
@@ -49,16 +85,16 @@
 
                 </tr>
 
-            </table>
 
 
 
+
+            }
         }
-    }
-
+    </table>
     <div class="container">
 
-        @Html.ActionLink("Back", "Index", "", new { @class = "btn btn-primary" })
+        @Html.ActionLink("Back", "Index", "TaskList", null, new { @class = "btn btn-primary" })
 
     </div>
 </div>

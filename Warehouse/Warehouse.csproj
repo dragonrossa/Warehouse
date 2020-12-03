@@ -259,6 +259,7 @@
     <Compile Include="Models\UploadModels.cs" />
     <Compile Include="OrderBy\OrderByLaptopController.cs" />
     <Compile Include="OrderBy\OrderByStoreController.cs" />
+    <Compile Include="OrderBy\OrderByTaskController.cs" />
     <Compile Include="OrderBy\OrderByTransferController.cs" />
     <Compile Include="Repository\AdminRepository.cs" />
     <Compile Include="Repository\ComputerListRepository.cs" />
@@ -591,6 +592,7 @@
     <Folder Include="Content\readme\" />
     <Folder Include="Views\OrderByLaptop\" />
     <Folder Include="Views\OrderByStore\" />
+    <Folder Include="Views\OrderByTask\" />
     <Folder Include="Views\OrderByTransfer\" />
   </ItemGroup>
   <ItemGroup>

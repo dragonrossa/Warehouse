@@ -11,7 +11,7 @@ using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
-    public class TaskListModels:IElement<TaskListModels>
+    public class TaskListModels:IElement<TaskListModels>, ListOrderByTask<TaskListModels>
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
@@ -38,6 +38,8 @@ namespace Warehouse.Models
         [MaxLength(2130702268)]
         public byte[] Data { get; set; }
 
+        public IEnumerable <TaskListModels> task { get; set; }
+
         [NotMapped]
         public List<TaskListModels> Child
         {
@@ -62,6 +64,41 @@ namespace Warehouse.Models
             get
             {
                 return _db.TaskListModels.OrderByDescending(x => x.ID).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<TaskListModels> AscendingByID
+        {
+            get
+            {
+                return _db.TaskListModels.OrderBy(x => x.ID).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<TaskListModels> DescendingByID
+        {
+            get
+            {
+                return _db.TaskListModels.OrderByDescending(x => x.ID).ToList();
+            }
+        }
+
+        public List<TaskListModels> AscendingByStatus
+        {
+            get
+            {
+                return _db.TaskListModels.OrderBy(x => x.Status).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<TaskListModels> DescendingByStatus
+        {
+            get
+            {
+                return _db.TaskListModels.OrderByDescending(x => x.Status).ToList();
             }
         }
 

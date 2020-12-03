@@ -1,10 +1,11 @@
-﻿@model IEnumerable<Warehouse.Models.TaskListModels>
+﻿@model Warehouse.Models.TaskListModels
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 }
 
 
@@ -18,10 +19,22 @@
 <div class="container-fluid">
     <h1>List of all tasks</h1>
     <p>
-        @Html.ActionLink("Create New", "Index")
+        @Html.ActionLink("Create New", "Index","TaskList")
     </p>
     <table class="table">
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescIDList","OrderByTask")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscIDList","OrderByTask")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Details)
             </th>
@@ -30,13 +43,23 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
+                <a href="@Url.Action("DescStatusList","OrderByTask")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                </a>
+
+                <a href="@Url.Action("AscStatusList","OrderByTask")">
+                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                </a>
             </th>
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
+        @foreach(var item in Model.task)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelitem => item.ID)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Details)
                 </td>
@@ -52,6 +75,6 @@
     </table>
 
 
-    @Html.ActionLink("Back to List", "MyList")
+    @Html.ActionLink("Back to List", "MyList","TaskList")
 
 </div>
