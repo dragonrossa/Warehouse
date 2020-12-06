@@ -23,10 +23,18 @@ namespace Warehouse.Controllers
             try
             {
 
-
-                return View(logRepository.logsList());
-
-
+                return View(
+                    new LogModels
+                    {
+                        logs1 = logRepository.logLaptop(),
+                        logs2 = logRepository.logStore(),
+                        logs3 = logRepository.logTransfer(),
+                        logs4 = logRepository.logSearch(),
+                        logs5 = logRepository.logSearchNotFound(),
+                        logs6 = logRepository.logNewUser(),
+                        logs7 = logRepository.logAdmin(),
+                        logs8 = logRepository.logAccess()
+                    }); 
             }
             catch (Exception e)
             {

@@ -258,6 +258,7 @@
     <Compile Include="Models\TaskListModels.cs" />
     <Compile Include="Models\UploadModels.cs" />
     <Compile Include="OrderBy\OrderByLaptopController.cs" />
+    <Compile Include="OrderBy\OrderByLogController.cs" />
     <Compile Include="OrderBy\OrderByStoreController.cs" />
     <Compile Include="OrderBy\OrderByTaskController.cs" />
     <Compile Include="OrderBy\OrderByTransferController.cs" />
@@ -591,6 +592,7 @@
     <Folder Include="Content\printscreen\" />
     <Folder Include="Content\readme\" />
     <Folder Include="Views\OrderByLaptop\" />
+    <Folder Include="Views\OrderByLog\" />
     <Folder Include="Views\OrderByStore\" />
     <Folder Include="Views\OrderByTask\" />
     <Folder Include="Views\OrderByTransfer\" />

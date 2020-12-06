@@ -2,6 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 }
 <head>
 
@@ -59,11 +60,21 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Date)
+                        <label style="padding-left:10px;">
+                            <a href="@Url.Action("DescDate1","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                            </a>
+
+                            <a href="@Url.Action("AscDate1","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                            </a>
+                        </label>
+
                     </th>
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.log)
+                @foreach (var item in Model.logs1)
                 {
                     <tr>
                         <td>
@@ -74,6 +85,7 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Date)
+
                         </td>
                     </tr>
                 }
@@ -100,11 +112,20 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Date)
+                        <label style="padding-left:10px;">
+                            <a href="@Url.Action("DescDate2","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                            </a>
+
+                            <a href="@Url.Action("AscDate2","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                            </a>
+                        </label>
                     </th>
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.log1)
+                @foreach (var item in Model.logs2)
                 {
                     <tr>
                         <td>
@@ -138,11 +159,20 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Date)
+                        <label style="padding-left:10px;">
+                            <a href="@Url.Action("DescDate3","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                            </a>
+
+                            <a href="@Url.Action("AscDate3","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                            </a>
+                        </label>
                     </th>
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.log2)
+                @foreach (var item in Model.logs3)
                 {
                     <tr>
                         <td>
@@ -173,11 +203,20 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Date)
+                        <label style="padding-left:10px;">
+                            <a href="@Url.Action("DescDate4","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                            </a>
+
+                            <a href="@Url.Action("AscDate4","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                            </a>
+                        </label>
                     </th>
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.log3)
+                @foreach (var item in Model.logs4)
                 {
                     <tr>
                         <td>
@@ -208,11 +247,20 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Date)
+                        <label style="padding-left:10px;">
+                            <a href="@Url.Action("DescDate5","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                            </a>
+
+                            <a href="@Url.Action("AscDate5","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                            </a>
+                        </label>
                     </th>
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.log4)
+                @foreach (var item in Model.logs5)
                 {
                     <tr>
                         <td>
@@ -243,11 +291,20 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Date)
+                        <label style="padding-left:10px;">
+                            <a href="@Url.Action("DescDate6","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                            </a>
+
+                            <a href="@Url.Action("AscDate6","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                            </a>
+                        </label>
                     </th>
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.log5)
+                @foreach (var item in Model.logs6)
                 {
                     <tr>
                         <td>
@@ -258,6 +315,7 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Date)
+
                         </td>
                     </tr>
                 }
@@ -279,11 +337,20 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Date)
+                        <label style="padding-left:10px;">
+                            <a href="@Url.Action("DescDate7","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                            </a>
+
+                            <a href="@Url.Action("AscDate7","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                            </a>
+                        </label>
                     </th>
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.log6)
+                @foreach (var item in Model.logs7)
                 {
                     <tr>
                         <td>
@@ -315,11 +382,20 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Date)
+                        <label style="padding-left:10px;">
+                            <a href="@Url.Action("DescDate8","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                            </a>
+
+                            <a href="@Url.Action("AscDate8","OrderByLog")">
+                                <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                            </a>
+                        </label>
                     </th>
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.log7)
+                @foreach (var item in Model.logs8)
                 {
                     <tr>
                         <td>
@@ -343,7 +419,7 @@
 
 
 <div class="container-fluid" style="margin-left:15px">
-    @Html.ActionLink("Go back","Index","StartPage")
+    @Html.ActionLink("Go back", "Index", "StartPage")
 </div>
 
 <script>

@@ -9,7 +9,7 @@ using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
-    public class LogModels:IElement<LogModels>
+    public class LogModels:IElement<LogModels>, ListOrderByLog<LogModels>
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
@@ -42,6 +42,20 @@ namespace Warehouse.Models
         public List<LogModels> log6 { get; set; }
         [NotMapped]
         public List<LogModels> log7 { get; set; }
+
+        public IEnumerable<LogModels> logs1 { get; set; }
+
+        public IEnumerable<LogModels> logs2 { get; set; }
+
+        public IEnumerable<LogModels> logs3 { get; set; }
+        public IEnumerable<LogModels> logs4 { get; set; }
+
+        public IEnumerable<LogModels> logs5 { get; set; }
+        public IEnumerable<LogModels> logs6 { get; set; }
+        public IEnumerable<LogModels> logs7 { get; set; }
+
+        public IEnumerable<LogModels> logs8 { get; set; }
+
 
         //All logs
         [NotMapped]
@@ -76,6 +90,28 @@ namespace Warehouse.Models
             }
         }
 
-      
+        //Logs ordered by Desc
+
+        [NotMapped]
+        public List<LogModels> AscendingByDate
+        {
+            get
+            {
+                return _db.LogModels.OrderBy(x => x.Date).ToList();
+            }
+        }
+
+        //Logs ordered by Desc
+
+        [NotMapped]
+        public List<LogModels> DescendingByDate
+        {
+            get
+            {
+                return _db.LogModels.OrderByDescending(x => x.Date).ToList();
+            }
+        }
+
+
     }
 }

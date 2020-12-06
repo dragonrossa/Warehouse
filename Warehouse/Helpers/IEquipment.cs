@@ -87,7 +87,7 @@ namespace Warehouse.Helpers
         List<T> DescendingByPlace { get; }
     }
 
-    //Interface for TaskListModels - soting out
+    //Interface for TaskListModels - sosting out
 
     interface ListOrderByTask<T>
     {
@@ -95,6 +95,14 @@ namespace Warehouse.Helpers
         List<T> DescendingByID { get; }
         List<T> AscendingByStatus { get; }
         List<T> DescendingByStatus { get; }
+    }
+
+    //Interface for LogModels - sorting out
+
+    interface ListOrderByLog<T>
+    {
+        List<T> AscendingByDate { get; }
+        List<T> DescendingByDate { get; }
     }
 
   
