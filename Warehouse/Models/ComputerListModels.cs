@@ -9,7 +9,7 @@ using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
-    public class ComputerListModels : IElement<ComputerListModels>
+    public class ComputerListModels : IElement<ComputerListModels>, ListOrderByComputerList<ComputerListModels>
     {
         private ApplicationDbContext _db = new ApplicationDbContext();
 
@@ -54,6 +54,26 @@ namespace Warehouse.Models
             {
                return  _db.ComputerListModels.ToList().OrderByDescending(u => u.ID).Select(u => u).ToList();
                
+            }
+        }
+
+        [NotMapped]
+        public List<ComputerListModels> AscendingByName
+        {
+            get
+            {
+                return _db.ComputerListModels.OrderBy(u => u.Name).Select(u => u).ToList();
+
+            }
+        }
+
+        [NotMapped]
+        public List<ComputerListModels> DescendingByName
+        {
+            get
+            {
+                return _db.ComputerListModels.OrderByDescending(u => u.Name).Select(u => u).ToList();
+
             }
         }
     }

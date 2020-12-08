@@ -257,11 +257,13 @@
     <Compile Include="Models\SupplierModels.cs" />
     <Compile Include="Models\TaskListModels.cs" />
     <Compile Include="Models\UploadModels.cs" />
+    <Compile Include="OrderBy\OrderByComputerListController.cs" />
     <Compile Include="OrderBy\OrderByLaptopController.cs" />
     <Compile Include="OrderBy\OrderByLogController.cs" />
     <Compile Include="OrderBy\OrderByStoreController.cs" />
     <Compile Include="OrderBy\OrderByTaskController.cs" />
     <Compile Include="OrderBy\OrderByTransferController.cs" />
+    <Compile Include="OrderBy\OrderByUserController.cs" />
     <Compile Include="Repository\AdminRepository.cs" />
     <Compile Include="Repository\ComputerListRepository.cs" />
     <Compile Include="Repository\DatabaseRepository.cs" />
@@ -591,11 +593,13 @@
     <Folder Include="Content\Images\" />
     <Folder Include="Content\printscreen\" />
     <Folder Include="Content\readme\" />
+    <Folder Include="Views\OrderByComputerList\" />
     <Folder Include="Views\OrderByLaptop\" />
     <Folder Include="Views\OrderByLog\" />
     <Folder Include="Views\OrderByStore\" />
     <Folder Include="Views\OrderByTask\" />
     <Folder Include="Views\OrderByTransfer\" />
+    <Folder Include="Views\OrderByUser\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

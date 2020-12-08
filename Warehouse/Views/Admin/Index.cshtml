@@ -1,7 +1,8 @@
-﻿@model IEnumerable<Warehouse.Models.UserModels>
+﻿@model Warehouse.Models.UserModels
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 }
 
 <head>
@@ -25,19 +26,46 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescName","OrderByUser")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscName","OrderByUser")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescLastName","OrderByUser")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscLastName","OrderByUser")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.UserName)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescUserName","OrderByUser")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscUserName","OrderByUser")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
             </th>
             <th></th>
             <th></th>
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
+        @foreach(var item in Model.users)
         {
             <tr>
                 <td>
@@ -50,13 +78,13 @@
                     @Html.DisplayFor(modelItem => item.UserName)
                 </td>
                 <td>
-                    @Html.ActionLink("Change role", "ChangeRole", new { id = item.ID })
+                    @Html.ActionLink("Change role", "ChangeRole", "Admin", new { id = item.ID } , null)
                 </td>
                 <td>
-                    @Html.ActionLink("Change details", "ChangeDetails", new { id = item.ID })
+                    @Html.ActionLink("Change details", "ChangeDetails", "Admin",new { id = item.ID }, null)
                 </td>
                 <td>
-                    @Html.ActionLink("Access", "Access2", new { username = item.UserName })
+                    @Html.ActionLink("Access", "Access2", "Admin", new { username = item.UserName }, null)
                 </td>
             </tr>
         }
@@ -65,7 +93,7 @@
 </div>
 
 <div class="container-fluid">
-    @Html.ActionLink("Go back","Index","StartPage")
+    @Html.ActionLink("Go back", "Index", "StartPage")
 </div>
 
 @section Scripts {

@@ -106,6 +106,28 @@ namespace Warehouse.Helpers
     }
 
   
+    //Interface for UserModels - sorting out
+
+    interface ListOrderByUser<T>
+    {
+        List<T> AscendingByName { get; }
+        List<T> DescendingByName { get; }
+
+        List<T> AscendingByLastName { get; }
+        List<T> DescendingByLastName { get; }
+        List<T> AscendingByUserName { get; }
+        List<T> DescendingByUserName { get; }
+    }
+
+    //Interface for ComputerList - sorting out
+
+    interface ListOrderByComputerList<T>
+    {
+        List<T> AscendingByName { get; }
+        List<T> DescendingByName { get; }
+    }
+
+
      abstract class User<T>
     {
         public abstract List<T> Child { get; }

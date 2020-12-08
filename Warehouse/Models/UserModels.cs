@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
-    public class UserModels
+    public class UserModels : ListOrderByUser<UserModels>
     {
+        private ApplicationDbContext _db = new ApplicationDbContext();
+
         [Key]
         public int ID { get; set; }
         public string Name { get; set; }
@@ -39,6 +43,65 @@ namespace Warehouse.Models
 
         public IEnumerable<UserModels> users { get; set; }
 
-       
+
+        [NotMapped]
+        public List<UserModels> AscendingByName
+        {
+            get
+            {
+                return _db.UserModels.OrderBy(x => x.Name).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<UserModels> DescendingByName
+        {
+            get
+            {
+                return _db.UserModels.OrderByDescending(x => x.Name).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<UserModels> AscendingByLastName
+        {
+            get
+            {
+                return _db.UserModels.OrderBy(x => x.LastName).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<UserModels> DescendingByLastName
+        {
+            get
+            {
+                return _db.UserModels.OrderByDescending(x => x.LastName).ToList();
+            }
+        }
+
+
+
+        [NotMapped]
+        public List<UserModels> AscendingByUserName
+        {
+            get
+            {
+                return _db.UserModels.OrderBy(x => x.Mail).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<UserModels> DescendingByUserName
+        {
+            get
+            {
+                return _db.UserModels.OrderByDescending(x => x.Mail).ToList();
+            }
+        }
+
+
+
+
     }
 }

@@ -23,6 +23,9 @@ namespace Warehouse.Controllers
         //Create Admin object
         AdminModels admin = new AdminModels();
 
+        //Create User object
+        UserModels user = new UserModels();
+
 
         // GET: Admin
         public ActionResult Index()
@@ -30,7 +33,9 @@ namespace Warehouse.Controllers
 
                 try
                 {
-                return View(adminRepository.users());
+                return View( new UserModels { 
+                    users = adminRepository.users()}
+                );
                   //  return View(users());
                 }
                 catch (Exception e)

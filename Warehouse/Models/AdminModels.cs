@@ -14,8 +14,7 @@ namespace Warehouse.Models
 
     public class AdminModels
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
-
+        
         [Key]
         public int ID { get; set; }
 
@@ -42,36 +41,6 @@ namespace Warehouse.Models
 
         //Interface implementation
 
-        //[NotMapped]
-        //public List<AdminModels> Child
-        //{
-        //    get
-        //    {
-        //        return (from k in _db.AdminModels select k).ToList();
-        //    }
-        //}
-
-        ////Interface implementation
-
-        //[NotMapped]
-        //public List<AdminModels> Ascending
-        //{
-        //    get
-        //    {
-        //        return _db.AdminModels.OrderBy(x => x.ID).ToList();
-        //    }
-        //}
-
-        ////Interface implementation
-
-        //[NotMapped]
-        //public List<AdminModels> Descending
-        //{
-        //    get
-        //    {
-        //        return _db.AdminModels.OrderByDescending(x => x.ID).ToList();
-        //    }
-        //}
 
         //Constructor for Admin Models
         //public AdminModels(int ID, int RoleID, string Username, bool Access)
@@ -80,9 +49,8 @@ namespace Warehouse.Models
         //    this.RoleID = RoleID;
         //    this.Username= Username;
         //    this.Access = Access;
-
-
         //}
+
 
     }
 }

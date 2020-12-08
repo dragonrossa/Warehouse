@@ -5,6 +5,7 @@
 </head>
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 }
 
 <h1>Choose computer and supplier</h1>
@@ -13,12 +14,12 @@
 
     <h6>In this view you have opportunity to change various fields.</h6>
     <h6>In classic view changes notebook suppleries one by one.</h6>
-    @Html.ActionLink("Change to classic view", "ClassicView", "ComputerList", new { @style = "padding-bottom:20px;" })
+    @Html.ActionLink("Change to classic view", "ClassicView", "ComputerList", new { @style = "padding-bottom:20px;" }, null)
     <br />
     @Html.ActionLink("Suppliers", "Index", "Supplier") |
     @Html.ActionLink("Edit", "Edit", "Supplier")
     <br />
-    @Html.ActionLink("Computers","Create","ComputerList")
+    @Html.ActionLink("Computers", "Create", "ComputerList")
 
 </div>
 
@@ -36,6 +37,15 @@
             <tr>
                 <th>
                     Name
+                    <label style="padding-left:10px;">
+                        <a href="@Url.Action("DescName","OrderByComputerList")">
+                            <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                        </a>
+
+                        <a href="@Url.Action("AscName","OrderByComputerList")">
+                            <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                        </a>
+                    </label>
                 </th>
 
                 <th>
