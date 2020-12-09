@@ -19,10 +19,10 @@ namespace Warehouse.Models
         public int ID { get; set; }
         //Name - required
         [Required]
-        [RegularExpression(@"^[a-zA-Z.0-9 ]{2,30}$", ErrorMessage = "Name must have min 2 and max 30 letters")]
+        [RegularExpression(@"^[a-zA-Z  ]{2,50}$", ErrorMessage = "Name must have min 2 and max 50 letters")]
         public string Name { get; set; }
         [Required]
-        [RegularExpression(@"^[a-zA-Z.0-9 ]{2,50}$", ErrorMessage = "Location must have min 2 and max 50 letters")]
+        [RegularExpression(@"^[a-zA-Z0-9 .-]{2,100}$", ErrorMessage = "Location must have min 2 and max 100 letters")]
         //Location - required
         public string Location { get; set; }
         [RegularExpression(@"\d{5}$", ErrorMessage = "Zipcode has 5 digits")]

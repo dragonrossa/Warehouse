@@ -17,10 +17,9 @@ namespace Warehouse.Models
         public int ID { get; set; }
         //Name - required
         [Required]
-        [RegularExpression(@"^[a-zA-Z0-9 .]{1,50}$", ErrorMessage = "Name must have min 1 and max 50 letters")]
+        [RegularExpression(@"^[a-zA-Z0-9 .-]{1,50}$", ErrorMessage = "Name must have min 1 and max 50 letters")]
         public string Name { get; set; }
         public string SupplierName { get; set; }
-
         public int SupplierID { get; set; }
         public DateTime? Date { get; set; }
         public IEnumerable<SelectListItem> computers { get; set; }

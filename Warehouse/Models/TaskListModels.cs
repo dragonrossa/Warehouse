@@ -17,7 +17,7 @@ namespace Warehouse.Models
 
         [Key]
         public int ID { get; set; }
-        [RegularExpression(@"^[a-zA-Z. ]{5,50}$", ErrorMessage = "Details must have min 5 and max 50 letters")]
+        [RegularExpression(@"^[a-zA-Z0-9 .-]{1,50}$", ErrorMessage = "Details must have min 1 and max 50 letters")]
         public string Details { get; set; }
 
         public string User { get; set; }
@@ -85,6 +85,7 @@ namespace Warehouse.Models
             }
         }
 
+        [NotMapped]
         public List<TaskListModels> AscendingByStatus
         {
             get
@@ -92,6 +93,7 @@ namespace Warehouse.Models
                 return _db.TaskListModels.OrderBy(x => x.Status).ToList();
             }
         }
+
 
         [NotMapped]
         public List<TaskListModels> DescendingByStatus
