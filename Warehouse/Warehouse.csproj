@@ -246,7 +246,6 @@
     <Compile Include="Helpers\CustomExceptions.cs" />
     <Compile Include="Helpers\HelperAdmin.cs" />
     <Compile Include="Helpers\IEquipment.cs" />
-    <Compile Include="Helpers\OrangePeel.cs" />
     <Compile Include="Helpers\TransferResult.cs" />
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ComputerListModels.cs" />
