@@ -693,14 +693,14 @@
 
             //Add to database and save context
 
-            context.LaptopModels.AddRange(laptop);
-            context.StoreModels.AddRange(store);
-            context.RolesModels.AddRange(roles);
-            context.TaskListModels.AddRange(task);
-            context.SupplierModels.AddRange(supplier);
-            context.ComputerListModels.AddRange(computer);
-            context.ProccessorModels.AddRange(processor);
-            context.SaveChanges();
+            //context.LaptopModels.AddRange(laptop);
+            //context.StoreModels.AddRange(store);
+            //context.RolesModels.AddRange(roles);
+            //context.TaskListModels.AddRange(task);
+            //context.SupplierModels.AddRange(supplier);
+            //context.ComputerListModels.AddRange(computer);
+            //context.ProccessorModels.AddRange(processor);
+            //context.SaveChanges();
 
 
 
