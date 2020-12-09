@@ -175,3 +175,5 @@
 03.12 Sort for TaskListModels
 
 06.12 Sort for LogModels
+
+08.12 Sort for UserModels and ComputerList, changes ILogRepository
