@@ -182,6 +182,30 @@ namespace Warehouse.Repository
             }
         }
 
+        decimal PDV = 25;
+
+        //Find last Input PDV
+        public decimal? lastInputPDV
+        {
+            get
+            {
+                return (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity * (PDV / 100)).First();
+            }
+            
+        }
+
+        //Find last Input FullPriceWithPDV
+
+        public decimal? lastInputFullPriceWithPDV
+        {
+            get
+            {
+
+                return (from k in _db.LaptopModels where k.ID == lastInput.ID select (k.Price * k.Quantity * (PDV / 100)) + (k.Price * k.Quantity)).First();
+            }
+            
+        }
+
         //List of models that have more t
 
         public List<LaptopModels> ChildByIDIfNotZeroQuantity
@@ -207,11 +231,13 @@ namespace Warehouse.Repository
         //Find and save changes to edited laptop
         public void laptopFindAndSaveChanges(int? ID)
         {
+            decimal? PDV = 24;
             var laptopFind = (from k in _db.LaptopModels where k.ID == ID select k).FirstOrDefault();
-
             laptopFind.Savings = (from k in _db.LaptopModels where k.ID == ID select k.OldPrice - k.Price).FirstOrDefault();
             _db.SaveChanges();
             laptopFind.FullPrice = (from k in _db.LaptopModels where k.ID == ID select k.Price * k.Quantity).FirstOrDefault();
+            laptopFind.PDV = (from k in _db.LaptopModels where k.ID == ID select k.Price * k.Quantity * (PDV/100)).FirstOrDefault();
+            laptopFind.FullPriceWithPDV = (from k in _db.LaptopModels where k.ID == ID select (k.Price * k.Quantity * (PDV / 100)) + (k.Price * k.Quantity)).FirstOrDefault();
             _db.SaveChanges();
         }
 

@@ -30,10 +30,33 @@
 
             //Calculate FullPrice in LaptopModels
 
+ 
             decimal? FullPrice(decimal? Price, int Quantity)
             {
                 decimal? result = Price * Convert.ToDecimal(Quantity);
                 return result;
+            }
+
+
+            //Calculate full price with PDV
+
+            decimal PDV = 25;
+
+            decimal? FullPriceWithPDV(decimal? Price, int Quantity)
+            {
+                decimal? result = Price * Convert.ToDecimal(Quantity);
+                decimal? resultWithPDV = result * (PDV / 100) + result;
+                return resultWithPDV;
+            }
+
+
+            //Calculate just PDV
+
+            decimal? justPDV(decimal? Price, int Quantity)
+            {
+                decimal? result = Price * Convert.ToDecimal(Quantity);
+                decimal? resultPDV = result * (PDV / 100);
+                return resultPDV;
             }
 
             //Calculate Savings in LaptopModels
@@ -43,6 +66,7 @@
                 decimal? result = OldPrice - Price;
                 return result;
             }
+
 
 
             var laptop = new List<LaptopModels>
@@ -56,6 +80,8 @@
                    Price = 4333,
                    OldPrice = 7754,
                    FullPrice = FullPrice(4333,100),
+                   FullPriceWithPDV = FullPriceWithPDV(4333,100),
+                   PDV = justPDV(4333,100),
                    Savings = Savings(7754,4333),
                    Date = DateTime.Now
                },
@@ -68,6 +94,8 @@
                    Price = 2287,
                    OldPrice = 3245,
                    FullPrice = FullPrice(2287,23),
+                   FullPriceWithPDV = FullPriceWithPDV(2287,23),
+                   PDV = justPDV(2287,23),
                    Savings = Savings(3245,2287),
                    Date = DateTime.Now
                },
@@ -80,6 +108,8 @@
                     Price = 4443,
                     OldPrice = 5552,
                     FullPrice = FullPrice(4443,88),
+                    FullPriceWithPDV = FullPriceWithPDV(4443,88),
+                    PDV = justPDV(4443,88),
                     Savings = Savings(5552,4443),
                     Date = DateTime.Now
                 },
@@ -92,6 +122,8 @@
                    Price = 2554,
                    OldPrice = 3438,
                    FullPrice = FullPrice(2554,105),
+                   FullPriceWithPDV = FullPriceWithPDV(2554,105),
+                   PDV = justPDV(2554,105),
                    Savings = Savings(3438,2554),
                    Date = DateTime.Now
                },
@@ -104,6 +136,8 @@
                     Price = 5998,
                     OldPrice = 7099,
                     FullPrice = FullPrice(5998,55),
+                    FullPriceWithPDV = FullPriceWithPDV(5998,55),
+                    PDV = justPDV(5998,55),
                     Savings = Savings(7099,5998),
                     Date = DateTime.Now
                 },
@@ -116,6 +150,8 @@
                     Price = 3100,
                     OldPrice = 3300,
                     FullPrice = FullPrice(3100,15),
+                    FullPriceWithPDV = FullPriceWithPDV(3100,15),
+                    PDV = justPDV(3100,15),
                     Savings = Savings(3300,3100),
                     Date = DateTime.Now
                 },
@@ -128,6 +164,8 @@
                     Price = 5554,
                     OldPrice = 5755,
                     FullPrice = FullPrice(5554,74),
+                    FullPriceWithPDV = FullPriceWithPDV(5554,74),
+                    PDV = justPDV(5554,74),
                     Savings = Savings(5755,5554),
                     Date = DateTime.Now},
                 new LaptopModels {
@@ -139,6 +177,8 @@
                     Price = 4776,
                     OldPrice = 4999,
                     FullPrice = FullPrice(4776,18),
+                    FullPriceWithPDV = FullPriceWithPDV(4776,18),
+                    PDV = justPDV(4776,18),
                     Savings = Savings(4999,4776),
                     Date = DateTime.Now },
                 new LaptopModels {
@@ -150,6 +190,8 @@
                     Price = 5221,
                     OldPrice = 6220,
                     FullPrice = FullPrice(5221,8),
+                    FullPriceWithPDV = FullPriceWithPDV(5221,8),
+                    PDV = justPDV(5221,8),
                     Savings = Savings(6220,5221),
                     Date = DateTime.Now},
                 new LaptopModels {
@@ -161,6 +203,8 @@
                     Price = 5554,
                     OldPrice = 5770,
                     FullPrice = FullPrice(5554,55),
+                    FullPriceWithPDV = FullPriceWithPDV(5554,55),
+                    PDV = justPDV(5554,55),
                     Savings = Savings(5770,5554),
                     Date = DateTime.Now
                 },
@@ -173,6 +217,8 @@
                     Price = 4776,
                     OldPrice = 4996,
                     FullPrice = FullPrice(4776,18),
+                    FullPriceWithPDV = FullPriceWithPDV(4776,18),
+                    PDV = justPDV(4776,18),
                     Savings = Savings(4996,4776),
                     Date = DateTime.Now
                 },
@@ -185,6 +231,8 @@
                     Price = 5221,
                     OldPrice = 5321,
                     FullPrice = FullPrice(5221,56),
+                    FullPriceWithPDV = FullPriceWithPDV(5221,56),
+                    PDV = justPDV(5221,56),
                     Savings = Savings(5321,5221),
                     Date = DateTime.Now
                 },
@@ -197,6 +245,8 @@
                     Price = 4599,
                     OldPrice = 4699,
                     FullPrice = FullPrice(4599,121),
+                    FullPriceWithPDV = FullPriceWithPDV(4599,121),
+                    PDV = justPDV(4599,121),
                     Savings = Savings(4699,4599),
                     Date = DateTime.Now
                 },
@@ -209,6 +259,8 @@
                     Price = 5099,
                     OldPrice = 5665,
                     FullPrice = FullPrice(5099,42),
+                    FullPriceWithPDV = FullPriceWithPDV(5099,42),
+                    PDV = justPDV(5099,42),
                     Savings = Savings(5665,5099),
                     Date = DateTime.Now
                 },
@@ -221,6 +273,8 @@
                     Price = 5554,
                     OldPrice = 5755,
                     FullPrice = FullPrice(5554,15),
+                    FullPriceWithPDV = FullPriceWithPDV(5554,15),
+                    PDV = justPDV(5554,15),
                     Savings = Savings(5755,5554),
                     Date = DateTime.Now
                 },
@@ -233,6 +287,8 @@
                     Price = 3887,
                     OldPrice = 3999,
                     FullPrice = FullPrice(3887,10),
+                    FullPriceWithPDV = FullPriceWithPDV(3887,10),
+                    PDV = justPDV(3887,10),
                     Savings = Savings(3999,3887),
                     Date = DateTime.Now
                 },
@@ -245,6 +301,8 @@
                     Price = 5887,
                     OldPrice = 5997,
                     FullPrice = FullPrice(5887,33),
+                    FullPriceWithPDV = FullPriceWithPDV(5887,33),
+                    PDV = justPDV(5887,33),
                     Savings = Savings(5997,5887),
                     Date = DateTime.Now
                 },
@@ -257,6 +315,8 @@
                     Price = 4887,
                     OldPrice = 4997,
                     FullPrice = FullPrice(4887,78),
+                    FullPriceWithPDV = FullPriceWithPDV(4887,78),
+                    PDV = justPDV(4887,78),
                     Savings = Savings(4997,4887),
                     Date = DateTime.Now
                 },
@@ -269,6 +329,8 @@
                     Price = 3998,
                     OldPrice = 4125,
                     FullPrice = FullPrice(3998,44),
+                    FullPriceWithPDV = FullPriceWithPDV(3998,44),
+                    PDV = justPDV(3998,44),
                     Savings = Savings(4125,3998),
                     Date = DateTime.Now
                 },
@@ -281,6 +343,8 @@
                     Price = 4443,
                     OldPrice = 4533,
                     FullPrice = FullPrice(4443,63),
+                    FullPriceWithPDV = FullPriceWithPDV(4443,63),
+                    PDV = justPDV(4443,63),
                     Savings = Savings(4533,4443),
                     Date = DateTime.Now
                 },
@@ -293,6 +357,8 @@
                     Price = 3776,
                     OldPrice = 3996,
                     FullPrice = FullPrice(3776,34),
+                    FullPriceWithPDV = FullPriceWithPDV(3776,34),
+                    PDV = justPDV(3776,34),
                     Savings = Savings(3996,3776),
                     Date = DateTime.Now
                 },
@@ -305,6 +371,8 @@
                     Price = 4221,
                     OldPrice = 4331,
                     FullPrice = FullPrice(4221,45),
+                    FullPriceWithPDV = FullPriceWithPDV(4221,45),
+                    PDV = justPDV(4221,45),
                     Savings = Savings(4331,4221),
                     Date = DateTime.Now
                 },
@@ -317,6 +385,8 @@
                     Price = 4332,
                     OldPrice = 4552,
                     FullPrice = FullPrice(4332,87),
+                    FullPriceWithPDV = FullPriceWithPDV(4332,87),
+                    PDV = justPDV(4332,87),
                     Savings = Savings(4552,4332),
                     Date = DateTime.Now
                 }
@@ -693,14 +763,14 @@
 
             //Add to database and save context
 
-            //context.LaptopModels.AddRange(laptop);
+            context.LaptopModels.AddRange(laptop);
             //context.StoreModels.AddRange(store);
             //context.RolesModels.AddRange(roles);
             //context.TaskListModels.AddRange(task);
             //context.SupplierModels.AddRange(supplier);
             //context.ComputerListModels.AddRange(computer);
             //context.ProccessorModels.AddRange(processor);
-            //context.SaveChanges();
+            context.SaveChanges();
 
 
 

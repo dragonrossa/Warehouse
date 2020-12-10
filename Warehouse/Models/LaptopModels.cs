@@ -55,13 +55,19 @@ namespace Warehouse.Models
         [NotMapped]
         public int? PlaceID { get; set; }
         //FullPrice
-        // [Range(1, 200000)]
         [Column(TypeName = "money")]
         [Display(Name = "Full price")]
         public decimal? FullPrice { get; set; }
+        //FullPriceWithPDV
+        [Column(TypeName = "money")]
+        [Display(Name = "Full price with PDV")]
+        public decimal? FullPriceWithPDV { get; set; }
+        //PDV
+        [Column(TypeName = "money")]
+        [Display(Name = "PDV")]
+        public decimal? PDV { get; set; }
         //Savings
         [Column(TypeName = "money")]
-       // [Range(1, 20000)]
         public decimal? Savings { get; set; }
         public DateTime? Date { get; set; }
 

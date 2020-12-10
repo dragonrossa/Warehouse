@@ -176,7 +176,7 @@ namespace Warehouse.Controllers
             return View();
         }
 
-        //GET: MasterData/Edit/5
+        //GET: MasterData//5
         public ActionResult Edit(int? id)
         {
             try
@@ -189,11 +189,12 @@ namespace Warehouse.Controllers
                 TempData["id"] = Convert.ToInt32(id);
 
 
-               // laptopRepository.laptopFind(id);
-
-                //If price changed FullPrice and Savings have to change too
+                //If price changed FullPrice, Savings, PDV and FullPriceWithPDV have to change too
                 laptopRepository.lastInput.FullPrice = laptopRepository.lastInputFullPrice;
                 laptopRepository.lastInput.Savings = laptopRepository.lastInputSavings;
+                laptopRepository.lastInput.PDV = laptopRepository.lastInputPDV;
+                laptopRepository.lastInput.FullPriceWithPDV =laptopRepository.lastInputFullPriceWithPDV;
+
                 _db.SaveChanges();
                 
                 if (laptopRepository.getLaptop(id) == null)
