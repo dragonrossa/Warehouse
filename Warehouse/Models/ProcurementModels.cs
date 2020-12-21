@@ -21,6 +21,7 @@ namespace Warehouse.Models
         public int Quantity { get; set; }
         [Display(Name = "Invoice")]
         public string InvoiceNo { get; set; }
+        [DataType(DataType.Date)]
         [Display(Name = "Date")]
         public DateTime RequestDate { get; set; }
 

@@ -23,6 +23,7 @@ namespace Warehouse.Models
         public int LaptopQuantity { get; set; }
         [Display(Name = "Store ID")]
         public int StoreID { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
 
         IEnumerable <TransferModels> transfer { get; }

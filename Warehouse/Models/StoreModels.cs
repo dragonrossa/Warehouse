@@ -51,6 +51,7 @@ namespace Warehouse.Models
         [Display(Name = "Working time")]
         public string WorkingTime { get; set; }
         //input - DateTime
+        [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
 
         public IEnumerable<StoreModels> store { get; set; }

@@ -23,6 +23,7 @@ namespace Warehouse.Models
         //Description
         public string Description { get; set; }
         //Date + time
+        [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
 
         //Custom models needed for Index for Type 0, 1, 2, 3, 4, 5, 6, 7

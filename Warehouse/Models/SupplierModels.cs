@@ -22,7 +22,7 @@ namespace Warehouse.Models
         [RegularExpression(@"^[a-zA-Z.0-9 ]{1,30}$", ErrorMessage = "Location must have min 1 and max 30 letters")]
         //Location - not required
         public string Location { get; set; }
-      
+        [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
         public IEnumerable<SupplierModels> suppliers { get; set; }
 

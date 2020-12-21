@@ -21,6 +21,7 @@ namespace Warehouse.Models
         public string Name { get; set; }
         public string SupplierName { get; set; }
         public int SupplierID { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
         public IEnumerable<SelectListItem> computers { get; set; }
         public IEnumerable<SelectListItem> suppliers { get; set; }

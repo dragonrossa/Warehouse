@@ -69,6 +69,7 @@ namespace Warehouse.Models
         //Savings
         [Column(TypeName = "money")]
         public decimal? Savings { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
 
         public IEnumerable<LaptopModels> laptop { get; set;}

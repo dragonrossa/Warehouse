@@ -19,12 +19,10 @@ namespace Warehouse.Models
         public int ID { get; set; }
         [RegularExpression(@"^[a-zA-Z0-9 .-]{1,50}$", ErrorMessage = "Details must have min 1 and max 50 letters")]
         public string Details { get; set; }
-
         public string User { get; set; }
         public bool Status { get; set; }
 
         [DisplayName("Task Assistant")]
-
         public string Assistant1 { get; set; }
 
         [DisplayName("Task Assistant")]
@@ -32,6 +30,7 @@ namespace Warehouse.Models
 
         [DisplayName("Task Assistant")]
         public string Assistant3 { get; set; }
+
         [DisplayName("Upload file")]
         public string UploadName { get; set; }
         public string ContentType { get; set; }

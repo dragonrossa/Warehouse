@@ -13,9 +13,7 @@ namespace Warehouse.Helpers
 
         [Key]
         int ID { get; set; }
-
         string Name { get; set; }
-
         string Details { get; set; }
         int Quantity { get; set; }
 
@@ -38,7 +36,6 @@ namespace Warehouse.Helpers
     {
         int ID { get; set; }
         string SupplierAddress { get; set; }
-
         string SupplierLocation { get; set; }
     }
 
@@ -53,10 +50,8 @@ namespace Warehouse.Helpers
         List<T> DescendingByQuantity { get; }
         List<T> AscendingByPrice { get; }
         List<T> DescendingByPrice { get; }
-
         List<T> AscendingByFullPrice { get; }
         List<T> DescendingByFullPrice { get; }
-
         List<T> AscendingByOS { get; }
         List<T> DescendingByOS { get; }
 
@@ -112,7 +107,6 @@ namespace Warehouse.Helpers
     {
         List<T> AscendingByName { get; }
         List<T> DescendingByName { get; }
-
         List<T> AscendingByLastName { get; }
         List<T> DescendingByLastName { get; }
         List<T> AscendingByUserName { get; }

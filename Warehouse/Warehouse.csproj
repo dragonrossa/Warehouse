@@ -260,6 +260,22 @@
     <Compile Include="Helpers\HelperAdmin.cs" />
     <Compile Include="Helpers\IEquipment.cs" />
     <Compile Include="Helpers\TransferResult.cs" />
+    <Compile Include="Migrations\202012201136296_All.cs" />
+    <Compile Include="Migrations\202012201136296_All.Designer.cs">
+      <DependentUpon>202012201136296_All.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012201143231_ChangesUserModels.cs" />
+    <Compile Include="Migrations\202012201143231_ChangesUserModels.Designer.cs">
+      <DependentUpon>202012201143231_ChangesUserModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012201146210_ChangesUserModels1.cs" />
+    <Compile Include="Migrations\202012201146210_ChangesUserModels1.Designer.cs">
+      <DependentUpon>202012201146210_ChangesUserModels1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012211207200_Date.cs" />
+    <Compile Include="Migrations\202012211207200_Date.Designer.cs">
+      <DependentUpon>202012211207200_Date.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ComputerListModels.cs" />
     <Compile Include="Models\GlobalErrorsModels.cs" />
@@ -605,13 +621,6 @@
     <Folder Include="Content\Images\" />
     <Folder Include="Content\printscreen\" />
     <Folder Include="Content\readme\" />
-    <Folder Include="Views\OrderByComputerList\" />
-    <Folder Include="Views\OrderByLaptop\" />
-    <Folder Include="Views\OrderByLog\" />
-    <Folder Include="Views\OrderByStore\" />
-    <Folder Include="Views\OrderByTask\" />
-    <Folder Include="Views\OrderByTransfer\" />
-    <Folder Include="Views\OrderByUser\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -623,6 +632,20 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202012201136296_All.resx">
+      <DependentUpon>202012201136296_All.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012201143231_ChangesUserModels.resx">
+      <DependentUpon>202012201143231_ChangesUserModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012201146210_ChangesUserModels1.resx">
+      <DependentUpon>202012201146210_ChangesUserModels1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012211207200_Date.resx">
+      <DependentUpon>202012211207200_Date.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
