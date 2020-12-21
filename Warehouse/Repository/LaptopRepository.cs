@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
 using Warehouse.Helpers;
+using System.Threading.Tasks;
 
 namespace Warehouse.Repository
 {
@@ -60,23 +61,23 @@ namespace Warehouse.Repository
 
         //Create some laptop
 
-        public void createLaptop(LaptopModels laptop)
+        public async Task<LaptopModels> createLaptop(LaptopModels laptop)
         {
-            _db.LaptopModels.Add(laptop);
-            _db.SaveChanges();
+           _db.LaptopModels.Add(laptop);
+           await _db.SaveChangesAsync();
 
             //Last input in database
-            var lastInput = (from k in _db.LaptopModels
+            var lastInput = await (from k in _db.LaptopModels
                              select k)
                                 .OrderByDescending(k => k.ID)
-                                .FirstOrDefault();
+                                .FirstOrDefaultAsync();
 
             //Get new full price
-            lastInput.FullPrice = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).First();
+            lastInput.FullPrice = await (from k in _db.LaptopModels where k.ID == lastInput.ID select k.Price * k.Quantity).FirstAsync();
            //Get new saving
-            lastInput.Savings = (from k in _db.LaptopModels where k.ID == lastInput.ID select k.OldPrice - k.Price).First();
+            lastInput.Savings = await (from k in _db.LaptopModels where k.ID == lastInput.ID select k.OldPrice - k.Price).FirstAsync();
             lastInput.Date = DateTime.Now;
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             //Create new log
 
@@ -88,30 +89,35 @@ namespace Warehouse.Repository
                 };
 
                 _db.LogModels.Add(log);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
+
+          
+            return lastInput;
         }
         
 
         //Get some laptop by ID
-        public LaptopModels getLaptop(int? id)
+        public async Task<LaptopModels> getLaptop(int? id)
         {
-            LaptopModels laptop = _db.LaptopModels.Find(id);
+            LaptopModels laptop =  await _db.LaptopModels.FindAsync(id);
             return laptop;
         }
 
         //Edit some laptop
-        public void editLaptop(LaptopModels laptop)
+        public async Task<LaptopModels> editLaptop(LaptopModels laptop)
         {
             _db.Entry(laptop).State = EntityState.Modified;
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
+            return laptop;
         }
 
         //Delete laptop
-        public void deleteLaptop(int? id)
+        public async Task<LaptopModels> deleteLaptop(int? id)
         {
-            LaptopModels laptop = _db.LaptopModels.Find(id);
+            LaptopModels laptop = await _db.LaptopModels.FindAsync(id);
             _db.LaptopModels.Remove(laptop);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
+            return laptop;
         }
 
         //List of stores for transfer
@@ -229,20 +235,21 @@ namespace Warehouse.Repository
         }
 
         //Find and save changes to edited laptop
-        public void laptopFindAndSaveChanges(int? ID)
+        public async Task<LaptopModels> laptopFindAndSaveChanges(int? ID)
         {
             decimal? PDV = 24;
-            var laptopFind = (from k in _db.LaptopModels where k.ID == ID select k).FirstOrDefault();
-            laptopFind.Savings = (from k in _db.LaptopModels where k.ID == ID select k.OldPrice - k.Price).FirstOrDefault();
-            _db.SaveChanges();
-            laptopFind.FullPrice = (from k in _db.LaptopModels where k.ID == ID select k.Price * k.Quantity).FirstOrDefault();
-            laptopFind.PDV = (from k in _db.LaptopModels where k.ID == ID select k.Price * k.Quantity * (PDV/100)).FirstOrDefault();
-            laptopFind.FullPriceWithPDV = (from k in _db.LaptopModels where k.ID == ID select (k.Price * k.Quantity * (PDV / 100)) + (k.Price * k.Quantity)).FirstOrDefault();
-            _db.SaveChanges();
+            var laptopFind = await (from k in _db.LaptopModels where k.ID == ID select k).FirstOrDefaultAsync();
+            laptopFind.Savings = await (from k in _db.LaptopModels where k.ID == ID select k.OldPrice - k.Price).FirstOrDefaultAsync();
+            await _db.SaveChangesAsync();
+            laptopFind.FullPrice = await (from k in _db.LaptopModels where k.ID == ID select k.Price * k.Quantity).FirstOrDefaultAsync();
+            laptopFind.PDV = await (from k in _db.LaptopModels where k.ID == ID select k.Price * k.Quantity * (PDV/100)).FirstOrDefaultAsync();
+            laptopFind.FullPriceWithPDV = await (from k in _db.LaptopModels where k.ID == ID select (k.Price * k.Quantity * (PDV / 100)) + (k.Price * k.Quantity)).FirstOrDefaultAsync();
+            await _db.SaveChangesAsync();
+            return laptopFind;
         }
 
         //Create new transfer
-        public void createTransfer(TransferModels transfer,int id, string name, int quantity, int storeID)
+        public async void createTransfer(TransferModels transfer,int id, string name, int quantity, int storeID)
         {
             //Create new Transfer
             transfer.LaptopID = id;
@@ -251,11 +258,11 @@ namespace Warehouse.Repository
             transfer.StoreID = storeID;
             transfer.Date = DateTime.Now;// add if any field you want insert
             _db.TransferModels.Add(transfer);           // pass the table object
-            _db.SaveChanges();
+           await _db.SaveChangesAsync();
         }
 
         //Create new companie
-        public List<Company> myCompanie()
+        public async Task<List<Company>> myCompanie()
         {
             
             //Add new company

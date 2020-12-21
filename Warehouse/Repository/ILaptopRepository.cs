@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Helpers;
@@ -17,13 +18,13 @@ namespace Warehouse.Repository
         //Find some store
         StoreModels storeFind(int storeID);
         //Create some laptop
-        void createLaptop(LaptopModels laptop);
+        Task<LaptopModels> createLaptop(LaptopModels laptop);
         //Get some laptop by ID
-        LaptopModels getLaptop(int? id);
+        Task<LaptopModels> getLaptop(int? id);
         //Edit some laptop
-        void editLaptop(LaptopModels laptop);
+        Task<LaptopModels> editLaptop(LaptopModels laptop);
         //Delete laptop
-        void deleteLaptop(int? id);
+        Task<LaptopModels>deleteLaptop(int? id);
         //List of stores for transfer
         List<SelectListItem> ddlList();
         //Get sum of full price
@@ -43,10 +44,10 @@ namespace Warehouse.Repository
         ////Get List by ID order ASC
         //List<LaptopModels> ChildByID;
         //Calculate changes after edit laptop
-        void laptopFindAndSaveChanges(int? ID);
+        Task<LaptopModels> laptopFindAndSaveChanges(int? ID);
             //Create new transfer
         void createTransfer(TransferModels transfer, int id, string name, int quantity, int storeID);
         //Get new companie
-        List<Company> myCompanie();
+        Task<List<Company>> myCompanie();
     }
 }

@@ -14,6 +14,7 @@ using Warehouse.Helpers;
 using Microsoft.AspNet.Identity;
 using System.Diagnostics.Contracts;
 using Warehouse.Repository;
+using System.Threading.Tasks;
 
 namespace Warehouse.Controllers
 {
@@ -36,7 +37,7 @@ namespace Warehouse.Controllers
         LaptopRepository laptopRepository = new LaptopRepository();
 
         // GET: MasterData
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
          
             try
@@ -93,7 +94,7 @@ namespace Warehouse.Controllers
 
         //Exception - UserNotFound
 
-        public ActionResult NotFound()
+        public async Task<ActionResult> NotFound()
         {
             return View();
         }
@@ -101,7 +102,7 @@ namespace Warehouse.Controllers
 
 
         //GET: MasterData/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
 
             return View();
@@ -111,13 +112,13 @@ namespace Warehouse.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(LaptopModels laptop)
+        public async Task <ActionResult> Create(LaptopModels laptop)
         {
             if (ModelState.IsValid)
             {
                
                 //Save in database and create new log
-                laptopRepository.createLaptop(laptop);
+                await laptopRepository.createLaptop(laptop);
                 return RedirectToAction("Index");
             }
 
@@ -127,7 +128,7 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/List
-        public ActionResult List()
+        public async Task<ActionResult> List()
         {
            
             try
@@ -144,7 +145,7 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/EditList
-        public ActionResult EditList()
+        public async Task<ActionResult> EditList()
         {
 
             try
@@ -161,7 +162,7 @@ namespace Warehouse.Controllers
         }
 
         ////GET: MasterData/DeleteList
-        public ActionResult DeleteList()
+        public async Task<ActionResult> DeleteList()
         {
             
             try
@@ -177,7 +178,7 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData//5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             try
             {
@@ -195,14 +196,14 @@ namespace Warehouse.Controllers
                 laptopRepository.lastInput.PDV = laptopRepository.lastInputPDV;
                 laptopRepository.lastInput.FullPriceWithPDV =laptopRepository.lastInputFullPriceWithPDV;
 
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 
-                if (laptopRepository.getLaptop(id) == null)
+                if (await laptopRepository.getLaptop(id) == null)
                 {
                     return HttpNotFound();
                 }
 
-                return View(laptopRepository.getLaptop(id));
+                return View(await laptopRepository.getLaptop(id));
             }
             catch (Exception e)
             {
@@ -218,7 +219,7 @@ namespace Warehouse.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(LaptopModels laptop)
+        public async Task<ActionResult> Edit(LaptopModels laptop)
         {
 
             try
@@ -227,13 +228,13 @@ namespace Warehouse.Controllers
                 {
                    
                     //Save changes
-                    laptopRepository.editLaptop(laptop);
+                     await laptopRepository.editLaptop(laptop);
 
                     var ID = Convert.ToInt32(TempData["id"]);
 
                     //find last ID and save new Savings and FullPrice
 
-                    laptopRepository.laptopFindAndSaveChanges(ID);
+                     await laptopRepository.laptopFindAndSaveChanges(ID);
 
                     return RedirectToAction("Index");
                 }
@@ -251,7 +252,7 @@ namespace Warehouse.Controllers
 
         //GET: MasterData/Delete/5
 
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
 
             try
@@ -261,11 +262,11 @@ namespace Warehouse.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
       
-                if (laptopRepository.getLaptop(id) == null)
+                if (await laptopRepository.getLaptop(id) == null)
                 {
                     return HttpNotFound();
                 }
-                return View(laptopRepository.getLaptop(id));
+                return View(await laptopRepository.getLaptop(id));
             }
             catch (Exception e)
             {
@@ -280,14 +281,14 @@ namespace Warehouse.Controllers
         [HttpPost, ActionName("Delete")]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
 
             try
             {
 
                 //Delete laptop
-                laptopRepository.deleteLaptop(id);
+                await laptopRepository.deleteLaptop(id);
                 return RedirectToAction("Index");
             }
             catch (Exception e)
@@ -300,7 +301,7 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/Details/1
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
 
 
@@ -314,7 +315,7 @@ namespace Warehouse.Controllers
                 }
 
 
-                if (laptopRepository.getLaptop(id) == null)
+                if (await laptopRepository.getLaptop(id) == null)
                 {
                     return HttpNotFound();
                 }
@@ -324,7 +325,7 @@ namespace Warehouse.Controllers
                 ViewBag.storeName = laptopRepository.stores(laptopID);
 
 
-                return View(laptopRepository.getLaptop(id));
+                return View(await laptopRepository.getLaptop(id));
             }
             catch (Exception e)
             {
@@ -337,7 +338,7 @@ namespace Warehouse.Controllers
 
        
         //GET: MasterData/Send
-        public ActionResult Send()
+        public async Task<ActionResult> Send()
         {
 
             try
@@ -355,7 +356,7 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/Send
-        public ActionResult SendArticle(int? id)
+        public async Task<ActionResult> SendArticle(int? id)
         {
 
             try
@@ -365,11 +366,11 @@ namespace Warehouse.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                if (laptopRepository.getLaptop(id) == null)
+                if (await laptopRepository.getLaptop(id) == null)
                 {
                     return HttpNotFound();
                 }
-                return View(laptopRepository.getLaptop(id));
+                return View(await laptopRepository.getLaptop(id));
             }
             catch (Exception e)
             {
@@ -382,7 +383,7 @@ namespace Warehouse.Controllers
         }
 
         //GET:MasterData/Check
-        public ActionResult Check(int? id, string name, int quantity)
+        public async Task<ActionResult> Check(int? id, string name, int quantity)
         {
 
 
@@ -413,7 +414,7 @@ namespace Warehouse.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult Check(FormCollection form, TransferModels transfer)
+        public async Task<ActionResult> Check(FormCollection form, TransferModels transfer)
         {
 
             try
@@ -444,12 +445,12 @@ namespace Warehouse.Controllers
             
         }
 
-        public ActionResult Company()
+        public async Task<ActionResult> Company()
         {
            
             try
             {
-                return View(laptopRepository.myCompanie());
+                return View(await laptopRepository.myCompanie());
             }
             catch (Exception e)
             {
