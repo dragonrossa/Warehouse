@@ -34,7 +34,7 @@ And now...
 **How to test this app?**
 
 1. Download
-2. Uncomment and execute code in Configuration.cs (context in protect override Seed)
+2. Uncomment and execute code in Configuration.cs (context in protect override Seed) and update Database to Seed the DB
 3. Start app and register
 4. Have fun!
 
