@@ -11,6 +11,8 @@ namespace Warehouse.Controllers
 {
     public class StartPageController : Controller
     {
+        private ApplicationDbContext _db = new ApplicationDbContext();
+
         //Get StartPage Repository
         StartPageRepository startPageRepository = new StartPageRepository();
 
@@ -28,6 +30,20 @@ namespace Warehouse.Controllers
                 else
                 {
                     ViewBag.user = startPageRepository.user(User.Identity.Name).Name;
+
+                    var user = User.Identity.Name;
+
+                    var adminAccess = (from a in _db.AdminModels where a.Username == user select a).FirstOrDefault();
+
+                    ViewBag.access = Convert.ToInt32(adminAccess.Access);
+                    ViewBag.laptopAccess = Convert.ToInt32(adminAccess.LaptopAccess);
+                    ViewBag.logAccess = Convert.ToInt32(adminAccess.LogAccess);
+                    ViewBag.searchAccess = Convert.ToInt32(adminAccess.SearchAccess);
+                    ViewBag.storeAccess = Convert.ToInt32(adminAccess.StoreAccess);
+                    ViewBag.transferAccess = Convert.ToInt32(adminAccess.TransferAccess);
+                    ViewBag.supplierAccess = Convert.ToInt32(adminAccess.SupplierAccess);
+                    ViewBag.procurementAccess = Convert.ToInt32(adminAccess.ProcurementAccess);
+                    ViewBag.taskAccess = Convert.ToInt32(adminAccess.TaskAccess);
                 }
             }
             catch (Exception)
