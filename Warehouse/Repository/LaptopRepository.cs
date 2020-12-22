@@ -29,23 +29,23 @@ namespace Warehouse.Repository
 
         //Find some laptop
 
-        public LaptopModels laptopFind(int ID)
+        public async Task<LaptopModels> laptopFind(int ID)
         {
 
-            return (from k in _db.LaptopModels where k.ID == ID select k).FirstOrDefault();
+            return await (from k in _db.LaptopModels where k.ID == ID select k).FirstOrDefaultAsync();
         }
 
         //Find stores - list in details for transfers for particular model
 
-        public object stores(int? laptopID)
+        public async Task<object> stores(int? laptopID)
         {
 
 
-            var stores = (from t in _db.TransferModels
+            var stores = await (from t in _db.TransferModels
                           join s in _db.StoreModels on t.StoreID
                           equals s.ID
                           where t.LaptopID == laptopID
-                          select s.Name).ToList();
+                          select s.Name).ToListAsync();
 
 
             return ViewBag.storeName = stores.Count == 0 ? ViewBag.storeName = stores : ViewBag.storeName = stores;
@@ -54,9 +54,9 @@ namespace Warehouse.Repository
 
         //Find some store
 
-        public StoreModels storeFind(int storeID)
+        public async Task<StoreModels> storeFind(int storeID)
         {
-            return (from s in _db.StoreModels where s.ID == storeID select s).First();
+            return await (from s in _db.StoreModels where s.ID == storeID select s).FirstOrDefaultAsync();
         }
 
         //Create some laptop
@@ -188,6 +188,8 @@ namespace Warehouse.Repository
             }
         }
 
+
+        //Calculate PDV, if more of this type do class
         decimal PDV = 25;
 
         //Find last Input PDV

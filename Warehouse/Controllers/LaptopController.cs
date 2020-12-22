@@ -321,8 +321,7 @@ namespace Warehouse.Controllers
                 }
 
 
-
-                ViewBag.storeName = laptopRepository.stores(laptopID);
+                ViewBag.storeName = await laptopRepository.stores(laptopID);
 
 
                 return View(await laptopRepository.getLaptop(id));
@@ -428,10 +427,12 @@ namespace Warehouse.Controllers
                 laptopRepository.createTransfer(transfer, id, name, quantity, storeID);
 
                 //set laptop quantity to zero
-                laptopRepository.laptopFind(id).Quantity = 0;
+                var laptop = await laptopRepository.laptopFind(id);
+                laptop.Quantity = 0;
 
-               //reduce QoP of store for quantity number
-                laptopRepository.storeFind(storeID).QoP -= quantity;
+                //reduce QoP of store for quantity number
+                var store = await laptopRepository.storeFind(storeID);
+                store.QoP -= quantity;
                 _db.SaveChanges();
 
                 return RedirectToAction("Index", "Transfer", new { });

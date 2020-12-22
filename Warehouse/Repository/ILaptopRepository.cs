@@ -12,11 +12,11 @@ namespace Warehouse.Repository
     interface ILaptopRepository
     {
         //Find some laptop
-        LaptopModels laptopFind(int ID);
+        Task<LaptopModels> laptopFind(int ID);
         //Find stores - list in details for transfers for particular model
-        object stores(int? laptopID);
+        Task<object> stores(int? laptopID);
         //Find some store
-        StoreModels storeFind(int storeID);
+        Task<StoreModels> storeFind(int storeID);
         //Create some laptop
         Task<LaptopModels> createLaptop(LaptopModels laptop);
         //Get some laptop by ID
