@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
@@ -28,13 +29,13 @@ namespace Warehouse.Controllers
 
 
         // GET: Admin
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
 
                 try
                 {
                 return View( new UserModels { 
-                    users = adminRepository.users()}
+                    users = await adminRepository.users()}
                 );
                   //  return View(users());
                 }
@@ -63,32 +64,33 @@ namespace Warehouse.Controllers
 
         //Exception - UserNotFound
 
-        public ActionResult NotFound()
+        public async Task<ActionResult> NotFound()
         {
             return View();
         }
 
 
-        public ActionResult ChangeRole(int id)
+        public async Task<ActionResult> ChangeRole(int id)
         {
 
-            TempData["UserID"] = id;                
-            ViewBag.user = adminRepository.findUser(id).Name + " " + adminRepository.findUser(id).LastName;
-            ViewBag.username = adminRepository.findUser(id).UserName;
-            ViewBag.currentRole = adminRepository.currentRole(adminRepository.findUser(id));
+            TempData["UserID"] = id;
+            var thisUsername = await adminRepository.findUser(id);
+            ViewBag.user = thisUsername.Name + " " + thisUsername.LastName;
+            ViewBag.username = thisUsername.UserName;
+            ViewBag.currentRole = await adminRepository.currentRole(thisUsername);
             TempData["currentRole"] = ViewBag.currentRole;
             TempData["username"] = ViewBag.username;
             //List of available roles
-            ViewData["roles"] = adminRepository.listOfRoles();
+            ViewData["roles"] = await adminRepository.listOfRoles();
            // listOfRoles();
 
-            return View(adminRepository.findUser(id));
+            return View(await adminRepository.findUser(id));
         }
 
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangeRole(FormCollection form)
+        public async Task<ActionResult> ChangeRole(FormCollection form)
         {
           
 
@@ -104,8 +106,8 @@ namespace Warehouse.Controllers
                     //if username is already in table update
                     //if username is not already in table create record
 
-                    var username = adminRepository.findUsername(admin);
-                    var user = adminRepository.user1(admin);
+                    var username = await adminRepository.findUsername(admin);
+                    var user =  await adminRepository.user1(admin);
                     
                     if (admin.Username == username)
                     {
@@ -113,26 +115,26 @@ namespace Warehouse.Controllers
                         user.RoleID = Convert.ToInt32(roleID);
                         //Save db
 
-                        adminRepository.SaveData();
+                        await adminRepository.SaveData();
 
                         //Create new log
 
-                        var currentRole = adminRepository.getCurrentRole(user.RoleID);
+                        var currentRole = await adminRepository.getCurrentRole(user.RoleID);
 
-                        adminRepository.log6(user.Username, currentRole);
+                        await adminRepository.log6(user.Username, currentRole);
                     }
                     else
                     {
                       //  _db.AdminModels.Add(admin);
-                        adminRepository.Data(_db).AdminModels.Add(admin);
+                         adminRepository.Data(_db).AdminModels.Add(admin);
 
                         //Save db
 
-                        adminRepository.SaveData();
+                        await adminRepository.SaveData();
 
                         //Create log
 
-                        adminRepository.log6(user.Username, admin.RoleID);
+                        await adminRepository.log6(user.Username, admin.RoleID);
 
                         return RedirectToAction("Index", "Admin", new { });
                     }
@@ -152,7 +154,7 @@ namespace Warehouse.Controllers
 
         }
 
-        public ActionResult ChangeDetails(int id)
+        public async Task<ActionResult> ChangeDetails(int id)
         {
             try
             {
@@ -184,7 +186,7 @@ namespace Warehouse.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangeDetails(UserModels user)
+        public async Task<ActionResult> ChangeDetails(UserModels user)
         {
             try
             {
@@ -195,10 +197,8 @@ namespace Warehouse.Controllers
 
                     adminRepository.Data(_db).Entry(user).State = EntityState.Modified;
 
-
                     //Save db
-
-                    adminRepository.SaveData();
+                    await adminRepository.SaveData();
                     return RedirectToAction("Index", "Admin", user);
 
             }
@@ -214,32 +214,35 @@ namespace Warehouse.Controllers
 
         //Access for all users
 
-        public ActionResult Access2( string username)
+        public async Task<ActionResult> Access2( string username)
 
         {
-           
 
-          // Check access
+            // Check access
 
-            if (adminRepository.access(username).Count == 0)
+            List<AdminModels> list = await adminRepository.access(username);
+
+            if (list.Count == 0)
             {
 
-                adminRepository.adminListOfAccess(username);
+                await adminRepository.adminListOfAccess(username);
             }
 
-            return View(new AdminModels { access = adminRepository.access(username) });
+            return View(new AdminModels { access = list });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Access2(FormCollection form)
+        public async Task<ActionResult> Access2(FormCollection form)
         {
 
             int userID = Convert.ToInt32(form["item.ID"]);
 
+            var user = await adminRepository.adminUser(userID);
+
             //Save changes for user and create new log 
 
-            adminRepository.log7(form, userID, adminRepository.adminUser(userID).Username);
+            await adminRepository.log7(form, userID, user.Username);
  
 
             return RedirectToAction("Index","Admin");

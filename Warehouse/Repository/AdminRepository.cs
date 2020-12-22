@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
+using Warehouse.Helpers;
+using System.Threading.Tasks;
 
 namespace Warehouse.Repository
 {
@@ -20,33 +23,33 @@ namespace Warehouse.Repository
          }
 
         //Return list of users
-        public List<UserModels> users()
+        public async Task<List<UserModels>> users()
         {
-            return (from u in _db.UserModels
-                    select u).ToList();
+            return await(from u in _db.UserModels
+                    select u).ToListAsync();
         }
 
         //Find exact user
-        public UserModels findUser(int id)
+        public async Task<UserModels> findUser(int id)
         {
-            var user = (from u in _db.UserModels
+            var user = await (from u in _db.UserModels
                         where u.ID == id
-                        select u).FirstOrDefault();
+                        select u).FirstOrDefaultAsync();
             return user;
         }
 
         // Current role for some user
-        public string currentRole(UserModels user)
+        public async Task<string> currentRole(UserModels user)
         {
-            return (from r in _db.RolesModels
+            return await (from r in _db.RolesModels
                     join a in _db.AdminModels
                     on r.ID equals a.RoleID
                     where a.Username == user.UserName
-                    select r.Role).SingleOrDefault();
+                    select r.Role).SingleOrDefaultAsync();
         }
 
         //Dropdown with list of possible roles
-        public object listOfRoles()
+        public async Task<object> listOfRoles()
         {
             return _db.RolesModels.ToList().Select(u => new SelectListItem
             {
@@ -58,7 +61,7 @@ namespace Warehouse.Repository
 
         //Logs
 
-        public LogModels log6(string userUsername, object tempdataCurrentRole)
+        public async Task<LogModels> log6(string userUsername, object tempdataCurrentRole)
         {
             LogModels log = new LogModels
             {
@@ -68,40 +71,40 @@ namespace Warehouse.Repository
             };
 
             _db.LogModels.Add(log);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return log;
         }
 
         //Find user by username
 
-        public string findUsername(AdminModels admin)
+        public async Task<string> findUsername(AdminModels admin)
         {
-            return (from u in _db.AdminModels where u.Username == admin.Username select u.Username).FirstOrDefault();
+            return await (from u in _db.AdminModels where u.Username == admin.Username select u.Username).FirstOrDefaultAsync();
         }
 
         //Get user object
-        public AdminModels user1(AdminModels admin)
+        public async Task<AdminModels> user1(AdminModels admin)
         {
-            return (from u in _db.AdminModels where u.Username == admin.Username select u).FirstOrDefault();
+            return await (from u in _db.AdminModels where u.Username == admin.Username select u).FirstOrDefaultAsync();
         }
 
         //Find current role for some user
-        public string getCurrentRole(int userRoleID)
+        public async Task<string> getCurrentRole(int userRoleID)
         {
-            return (from r in _db.RolesModels where r.ID == userRoleID select r.Role).FirstOrDefault();
+            return await (from r in _db.RolesModels where r.ID == userRoleID select r.Role).FirstOrDefaultAsync();
         }
 
 
         //Find Access for user
-        public List<AdminModels> access(string username)
+        public async Task<List<AdminModels>> access(string username)
         {
-            return (from a in _db.AdminModels where a.Username == username select a).ToList();
+            return await (from a in _db.AdminModels where a.Username == username select a).ToListAsync();
         }
 
 
         //Create list of access for users who dont have record in AdminModels
 
-        public AdminModels adminListOfAccess(string username)
+        public async Task<AdminModels> adminListOfAccess(string username)
         {
             AdminModels admin = new AdminModels();
             admin.Username = username;
@@ -115,20 +118,20 @@ namespace Warehouse.Repository
             admin.SupplierAccess = false;
             admin.ProcurementAccess = false;
             _db.AdminModels.Add(admin);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return admin;
         }
 
 
         //Find user in AdminModels
-        public AdminModels adminUser(int userID)
+        public async Task<AdminModels> adminUser(int userID)
         {
-            return (from u in _db.AdminModels where u.ID == userID select u).FirstOrDefault();
+            return await (from u in _db.AdminModels where u.ID == userID select u).FirstOrDefaultAsync();
         }
 
 
         //Create new log
-        public string log7(FormCollection form, int userID, string adminUserIDUsername)
+        public async Task<string> log7(FormCollection form, int userID, string adminUserIDUsername)
         {
 
             //Get info from from
@@ -144,18 +147,20 @@ namespace Warehouse.Repository
 
             //Check if true or false for every of them and save changes
 
+            var acc = await adminUser(userID);
 
-            bool a = access == "true,false" ? adminUser(userID).Access = Convert.ToBoolean("true") : adminUser(userID).Access = Convert.ToBoolean("false");
-            bool b = laptopAccess == "true,false" ? adminUser(userID).LaptopAccess = Convert.ToBoolean("true") : adminUser(userID).LaptopAccess = Convert.ToBoolean("false");
-            bool c = logAccess == "true,false" ? adminUser(userID).LogAccess = Convert.ToBoolean("true") : adminUser(userID).LogAccess = Convert.ToBoolean("false");
-            bool d = searchAccess == "true,false" ? adminUser(userID).SearchAccess = Convert.ToBoolean("true") : adminUser(userID).SearchAccess = Convert.ToBoolean("false");
-            bool e = storeAccess == "true,false" ? adminUser(userID).StoreAccess = Convert.ToBoolean("true") : adminUser(userID).StoreAccess = Convert.ToBoolean("false");
-            bool f = transferAccess == "true,false" ? adminUser(userID).TransferAccess = Convert.ToBoolean("true") : adminUser(userID).TransferAccess = Convert.ToBoolean("false");
-            bool g = taskAccess == "true,false" ? adminUser(userID).TaskAccess = Convert.ToBoolean("true") : adminUser(userID).TaskAccess = Convert.ToBoolean("false");
-            bool h = supplierAccess == "true,false" ? adminUser(userID).SupplierAccess = Convert.ToBoolean("true") : adminUser(userID).SupplierAccess = Convert.ToBoolean("false");
-            bool j = procurementAccess == "true,false" ? adminUser(userID).ProcurementAccess = Convert.ToBoolean("true") : adminUser(userID).ProcurementAccess = Convert.ToBoolean("false");
 
-            _db.SaveChanges();
+            bool a = access == "true,false" ? acc.Access = Convert.ToBoolean("true") : acc.Access = Convert.ToBoolean("false");
+            bool b = laptopAccess == "true,false" ? acc.LaptopAccess = Convert.ToBoolean("true") : acc.LaptopAccess = Convert.ToBoolean("false");
+            bool c = logAccess == "true,false" ? acc.LogAccess = Convert.ToBoolean("true") : acc.LogAccess = Convert.ToBoolean("false");
+            bool d = searchAccess == "true,false" ? acc.SearchAccess = Convert.ToBoolean("true") : acc.SearchAccess = Convert.ToBoolean("false");
+            bool e = storeAccess == "true,false" ? acc.StoreAccess = Convert.ToBoolean("true") : acc.StoreAccess = Convert.ToBoolean("false");
+            bool f = transferAccess == "true,false" ? acc.TransferAccess = Convert.ToBoolean("true") : acc.TransferAccess = Convert.ToBoolean("false");
+            bool g = taskAccess == "true,false" ? acc.TaskAccess = Convert.ToBoolean("true") : acc.TaskAccess = Convert.ToBoolean("false");
+            bool h = supplierAccess == "true,false" ? acc.SupplierAccess = Convert.ToBoolean("true") : acc.SupplierAccess = Convert.ToBoolean("false");
+            bool j = procurementAccess == "true,false" ? acc.ProcurementAccess = Convert.ToBoolean("true") : acc.ProcurementAccess = Convert.ToBoolean("false");
+
+            await _db.SaveChangesAsync();
 
             string[] userAccess = { "Admin access", "Laptop access", " Log access", "Search access", "Store access", "Transfer access", "Task access", "Supplier access", "Procurement access" };
 
@@ -176,7 +181,7 @@ namespace Warehouse.Repository
                 };
 
                 _db.LogModels.Add(log);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
 
             }
 
@@ -185,10 +190,10 @@ namespace Warehouse.Repository
         }
 
         //Save DB
-        public object SaveData()
+        public async Task<object> SaveData()
         {
            
-            return _db.SaveChanges();
+            return await _db.SaveChangesAsync();
         }
 
     }
