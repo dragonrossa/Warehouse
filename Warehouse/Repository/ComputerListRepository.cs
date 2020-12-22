@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
+using System.Data.Entity;
 
 namespace Warehouse.Repository
 {
@@ -23,54 +25,59 @@ namespace Warehouse.Repository
 
 
         //Return List of computers
-        public List<ComputerListModels> computerLists()
+        public async Task<List<ComputerListModels>> computerLists()
         {
-            return (from c in _db.ComputerListModels select c).ToList();
+            return await (from c in _db.ComputerListModels select c).ToListAsync();
         }
 
 
         //List of suppliers
-        public List<SelectListItem> suppliers()
+        public async Task<List<SelectListItem>> suppliers()
         {
-            return _db.SupplierModels.ToList().Select(u => new SelectListItem
+            var list = _db.SupplierModels.Select(u => new SelectListItem
             {
                 Text = u.SupplierName,
                 Value = u.ID.ToString()
-            }).ToList();
+            });
 
+            return await list.ToListAsync();
         }
 
         //Select list for all computers
 
-        public List<SelectListItem> computers()
+        public async Task<List<SelectListItem>> computers()
         {
-            return _db.ComputerListModels.ToList().Select(u => new SelectListItem
+            var list = _db.ComputerListModels.Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.ID.ToString()
-            }).ToList();
+            });
 
+            return await list.ToListAsync();
         }
 
         //Select list for all suppliers
-        public List<SelectListItem> suppliersforClassicView()
+        public async Task<List<SelectListItem>> suppliersforClassicView()
         {
-            return _db.SupplierModels.ToList().Select(u => new SelectListItem
+            var list = _db.SupplierModels.Select(u => new SelectListItem
             {
                 Text = u.SupplierName,
                 Value = u.ID.ToString()
-            }).ToList();
+            });
+
+            return await list.ToListAsync();
+
         }
 
 
         //Create new Computer
-        public ComputerListModels createNewComputer(FormCollection form)
+        public async Task<ComputerListModels> createNewComputer(FormCollection form)
         {
             computer.Name = form["Name"]; ;
             computer.Date = DateTime.Now;
 
             _db.ComputerListModels.Add(computer);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return computer;
 
@@ -97,7 +104,7 @@ namespace Warehouse.Repository
 
 
         //After change save all records
-        public string[] saveAllRecords(FormCollection form)
+        public async Task<string[]> saveAllRecords(FormCollection form)
         {
             var computerName = form["item.Name"].ToString();
             string[] computers = computerName.Split(',');
@@ -117,11 +124,11 @@ namespace Warehouse.Repository
                 comp = computers[i];
                 supName = sup[i];
                 supi = Convert.ToInt32(supName);
-                var computerFind = (from c in _db.ComputerListModels where c.Name == comp select c).FirstOrDefault();
-                var suppliersName = (from s in _db.SupplierModels where s.ID == supi select s).FirstOrDefault();
+                var computerFind = await (from c in _db.ComputerListModels where c.Name == comp select c).FirstOrDefaultAsync();
+                var suppliersName = await (from s in _db.SupplierModels where s.ID == supi select s).FirstOrDefaultAsync();
                 computerFind.SupplierID = Convert.ToInt32(supName);
                 computerFind.SupplierName = suppliersName.SupplierName;
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
 
             return computers;
@@ -129,7 +136,7 @@ namespace Warehouse.Repository
 
 
         //Return classic view for Computers and Suppliers
-        public ComputerListModels getClassicViewSuppliers(FormCollection form)
+        public async Task<ComputerListModels> getClassicViewSuppliers(FormCollection form)
         {
             var computerName = form["Name"].ToString();
             var supplierName = form["SupplierName"].ToString();
@@ -139,27 +146,27 @@ namespace Warehouse.Repository
             int sName = Convert.ToInt32(supplierName.Remove(supplierName.Length - 1));
 
 
-            ComputerListModels computerLists = (from e in _db.ComputerListModels
+            ComputerListModels computerLists = await (from e in _db.ComputerListModels
                                                 where e.ID == cName
-                                                select e).FirstOrDefault();
+                                                select e).FirstOrDefaultAsync();
 
-            var supplier = (from e in _db.SupplierModels
+            var supplier = await(from e in _db.SupplierModels
                             where e.ID == sName
-                            select e).FirstOrDefault();
+                            select e).FirstOrDefaultAsync();
 
             computerLists.SupplierID = sName;
             computerLists.SupplierName = supplier.SupplierName;
 
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return computerLists;
         }
 
         //Save DB
-        public object SaveData()
+        public async Task<object> SaveData()
         {
 
-            return _db.SaveChanges();
+            return await _db.SaveChangesAsync();
         }
     }
 }

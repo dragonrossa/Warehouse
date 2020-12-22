@@ -121,13 +121,15 @@ namespace Warehouse.Repository
         }
 
         //List of stores for transfer
-        public List<SelectListItem> ddlList()
+        public async Task<List<SelectListItem>> ddlList()
         {
-           return _db.StoreModels.ToList().Select(u => new SelectListItem
+           var list = _db.StoreModels.Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.ID.ToString()
-            }).ToList();
+            });
+
+            return await list.ToListAsync();
         }
 
         //Get sum of full price

@@ -395,7 +395,7 @@ namespace Warehouse.Controllers
                 TempData["id"] = id;
                 TempData["name"] = name;
                 TempData["number"] = quantity;
-                ViewData["ddlList"] = laptopRepository.ddlList();
+                ViewData["ddlList"] = await laptopRepository.ddlList();
 
                 return View();
             }

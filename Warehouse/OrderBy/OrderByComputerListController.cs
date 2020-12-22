@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
@@ -18,22 +19,27 @@ namespace Warehouse.OrderBy
 
         ComputerListRepository computerRepository = new ComputerListRepository();
 
+        //Get suppliers for Asc and Desc
+        public async Task<List<SelectListItem>> supplier()
+        {
+            return await computerRepository.suppliers();
+        }
+
 
         //ComputerList - Name
 
-        public ActionResult AscName()
+        public async Task<ActionResult> AscName()
         {
-
             return View("~/Views/ComputerList/Index.cshtml", new ComputerListModels { computersList = computer.AscendingByName,
-                suppliers = computerRepository.suppliers()
+                suppliers = await supplier()
             });
 
         }
 
-        public ActionResult DescName()
+        public async Task<ActionResult> DescName()
         {
             return View("~/Views/ComputerList/Index.cshtml", new ComputerListModels { computersList = computer.DescendingByName,
-                suppliers = computerRepository.suppliers()
+                suppliers = await supplier()
             });
 
         }

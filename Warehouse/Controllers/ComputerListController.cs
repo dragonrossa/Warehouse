@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
@@ -23,7 +24,7 @@ namespace Warehouse.Controllers
 
         public ActionResult checkFormCount(FormCollection form)
         {
-            return form.Count <= 1 ? (ActionResult)RedirectToAction("Index", "Suppliers") : View("Index", "ComputerList");
+            return  form.Count <= 1 ? (ActionResult)RedirectToAction("Index", "Suppliers") : View("Index", "ComputerList");
         }
 
         //Check if there is item.Name
@@ -44,24 +45,27 @@ namespace Warehouse.Controllers
 
         // GET: ComputerList
         [HandleError]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+
+            var computerLists = await computerRepository.computerLists();
+            var suppliers = await computerRepository.suppliers();
 
 
             try
             {
 
-                if (computerRepository.suppliers().Count == 0)
+                if (suppliers.Count == 0)
                 {
                     return RedirectToAction("Index", "Supplier");
                 }
 
-                if(computerRepository.computerLists().Count == 0)
+                if(computerLists.Count == 0)
                 {
                     return RedirectToAction("Create", "ComputerList");
                 }
 
-                return View(new ComputerListModels() { suppliers = computerRepository.suppliers(), computersList = computerRepository.computerLists()});
+                return View(new ComputerListModels() { suppliers = suppliers, computersList = computerLists });
             }
             catch (Exception e)
             {
@@ -86,7 +90,7 @@ namespace Warehouse.Controllers
 
         //Exception - UserNotFound
 
-        public ActionResult NotFound()
+        public async Task<ActionResult> NotFound()
         {
             return View();
         }
@@ -97,7 +101,7 @@ namespace Warehouse.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(FormCollection form)
+        public async Task<ActionResult> Index(FormCollection form)
         {
            
             //If form count is 1 or smaller
@@ -112,7 +116,7 @@ namespace Warehouse.Controllers
 
 
             //Save all suppliers for all computers
-            computerRepository.saveAllRecords(form);
+            await computerRepository.saveAllRecords(form);
 
             return RedirectToAction("Index");
 
@@ -121,20 +125,19 @@ namespace Warehouse.Controllers
 
 
 
-        public ActionResult ClassicView()
+        public async Task<ActionResult> ClassicView()
         {
 
-
-            return View(new ComputerListModels() { suppliers = computerRepository.suppliersforClassicView(), computers = computerRepository.computers() });
+            return View(new ComputerListModels() { suppliers = await computerRepository.suppliersforClassicView(), computers = await computerRepository.computers() });
         }
 
 
         [HttpPost]
-        public ActionResult ClassicView(FormCollection form)
+        public async Task<ActionResult> ClassicView(FormCollection form)
         {
 
             //Get classic view for Computer and Suppliers
-            computerRepository.getClassicViewSuppliers(form);
+            await computerRepository.getClassicViewSuppliers(form);
 
             return RedirectToAction("Index");
         }
@@ -142,7 +145,7 @@ namespace Warehouse.Controllers
 
 
 
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             return View();
         }
@@ -153,12 +156,12 @@ namespace Warehouse.Controllers
         [HandleError]
         [ValidateAntiForgeryToken]
 
-        public ActionResult Create(FormCollection form)
+        public async Task<ActionResult> Create(FormCollection form)
         {
 
             //Create new Computer object
 
-            computerRepository.createNewComputer(form);
+           await computerRepository.createNewComputer(form);
 
             return RedirectToAction("Index");
         }

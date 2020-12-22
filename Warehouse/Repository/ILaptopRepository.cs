@@ -26,7 +26,7 @@ namespace Warehouse.Repository
         //Delete laptop
         Task<LaptopModels>deleteLaptop(int? id);
         //List of stores for transfer
-        List<SelectListItem> ddlList();
+        Task<List<SelectListItem>> ddlList();
         //Get sum of full price
         //decimal? sumFullPrice;
         ////Get max number
