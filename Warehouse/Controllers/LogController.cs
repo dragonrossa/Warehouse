@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
@@ -17,7 +18,7 @@ namespace Warehouse.Controllers
 
     
         // GET: Log
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
 
             try
@@ -26,14 +27,14 @@ namespace Warehouse.Controllers
                 return View(
                     new LogModels
                     {
-                        logs1 = logRepository.logLaptop(),
-                        logs2 = logRepository.logStore(),
-                        logs3 = logRepository.logTransfer(),
-                        logs4 = logRepository.logSearch(),
-                        logs5 = logRepository.logSearchNotFound(),
-                        logs6 = logRepository.logNewUser(),
-                        logs7 = logRepository.logAdmin(),
-                        logs8 = logRepository.logAccess()
+                        logs1 = await logRepository.logLaptop(),
+                        logs2 = await logRepository.logStore(),
+                        logs3 = await logRepository.logTransfer(),
+                        logs4 = await logRepository.logSearch(),
+                        logs5 = await logRepository.logSearchNotFound(),
+                        logs6 = await logRepository.logNewUser(),
+                        logs7 = await logRepository.logAdmin(),
+                        logs8 = await logRepository.logAccess()
                     }); 
             }
             catch (Exception e)
@@ -58,7 +59,7 @@ namespace Warehouse.Controllers
 
     //Exception - UserNotFound
 
-    public ActionResult NotFound()
+    public async Task<ActionResult> NotFound()
     {
         return View();
     }

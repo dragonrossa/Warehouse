@@ -74,7 +74,16 @@
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.logs1)
+                @if (Model.logs1 == null)
+                {
+
+                }
+
+                else
+                {
+
+
+                foreach (var item in Model.logs1)
                 {
                     <tr>
                         <td>
@@ -88,6 +97,7 @@
 
                         </td>
                     </tr>
+                }
                 }
 
             </table>
@@ -125,22 +135,31 @@
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.logs2)
+                @if (Model.logs2 == null)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                    </tr>
+
                 }
 
-            </table>
+                else
+                {
+
+                    foreach (var item in Model.logs2)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                        </tr>
+                    }
+                }
+
+                </table>
 
 
 
@@ -171,23 +190,31 @@
                     </th>
                     <th></th>
                 </tr>
-
-                @foreach (var item in Model.logs3)
+                @if (Model.logs3 == null)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                    </tr>
+
                 }
 
-            </table>
+                else
+                {
+
+                    foreach (var item in Model.logs3)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                        </tr>
+                    }
+                }
+
+                </table>
         </div>
     </div>
     <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
@@ -216,22 +243,31 @@
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.logs4)
+                @if (Model.logs4 == null)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                    </tr>
+
                 }
 
-            </table>
+                else
+                {
+
+                    foreach (var item in Model.logs4)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                        </tr>
+                    }
+                }
+
+                </table>
         </div>
     </div>
     <div class="tab-pane fade" id="searchNotFound" role="tabpanel" aria-labelledby="searchNotFound-tab">
@@ -260,22 +296,31 @@
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.logs5)
+                @if (Model.logs5 == null)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                    </tr>
+
                 }
 
-            </table>
+                else
+                {
+
+                    foreach (var item in Model.logs5)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                        </tr>
+                    }
+                }
+
+                </table>
         </div>
     </div>
     <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
@@ -304,23 +349,32 @@
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.logs6)
+                @if (Model.logs6 == null)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
 
-                        </td>
-                    </tr>
                 }
 
-            </table>
+                else
+                {
+
+                    foreach (var item in Model.logs6)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+
+                            </td>
+                        </tr>
+                    }
+                }
+
+                </table>
         </div>
     </div>
 
@@ -350,22 +404,31 @@
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.logs7)
+                @if (Model.logs7 == null)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                    </tr>
+
                 }
 
-            </table>
+                else
+                {
+
+                    foreach (var item in Model.logs7)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                        </tr>
+                    }
+                }
+
+                </table>
         </div>
     </div>
 
@@ -395,22 +458,31 @@
                     <th></th>
                 </tr>
 
-                @foreach (var item in Model.logs8)
+                @if (Model.logs8 == null)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                    </tr>
+
                 }
 
-            </table>
+                else
+                {
+
+                    foreach (var item in Model.logs8)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                        </tr>
+                    }
+                }
+
+                </table>
         </div>
     </div>
 

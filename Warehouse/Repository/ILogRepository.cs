@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using Warehouse.Models;
 
@@ -12,22 +13,30 @@ namespace Warehouse.Repository
         ApplicationDbContext Data(ApplicationDbContext _db);
         //Get log list for every type
         //1
-        List<LogModels> logLaptop();
+        Task<List<LogModels>> logLaptop();
+        Task<List<LogModels>> logDescLaptop();
         //2
-        List<LogModels> logStore();
+        Task<List<LogModels>> logStore();
+        Task<List<LogModels>> logDescStore();
         //3
-        List<LogModels> logTransfer();
+        Task<List<LogModels>> logTransfer();
+        Task<List<LogModels>> logDescTransfer();
         //4
-        List<LogModels> logSearch();
+        Task<List<LogModels>> logSearch();
+        Task<List<LogModels>> logDescSearch();
         //5
-        List<LogModels> logSearchNotFound();
+        Task<List<LogModels>> logSearchNotFound();
+        Task<List<LogModels>> logDescSearchNotFound();
         //6
-        List<LogModels> logNewUser();
+        Task<List<LogModels>> logNewUser();
+        Task<List<LogModels>> logDescNewUser();
         //7
-        List<LogModels> logAdmin();
+        Task<List<LogModels>> logAdmin();
+        Task<List<LogModels>> logDescAdmin();
         //8
-        List<LogModels> logAccess();
+        Task<List<LogModels>> logAccess();
+        Task<List<LogModels>> logDescAccess();
         //Save data
-        object SaveData();
+        Task<object> SaveData();
     }
 }
