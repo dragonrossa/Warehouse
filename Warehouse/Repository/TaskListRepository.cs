@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Repository
@@ -12,7 +13,7 @@ namespace Warehouse.Repository
     {
         // GET: TaskList
 
-         private ApplicationDbContext _db = new ApplicationDbContext();
+         private WarehouseContext _db = new WarehouseContext();
       //  TaskListModels taskListModels = new TaskListModels();
 
         //Username of this user

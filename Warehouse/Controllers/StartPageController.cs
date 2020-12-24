@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Warehouse.DAL;
 using Warehouse.Models;
 using Warehouse.Repository;
 
@@ -11,7 +12,7 @@ namespace Warehouse.Controllers
 {
     public class StartPageController : Controller
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         //Get StartPage Repository
         StartPageRepository startPageRepository = new StartPageRepository();

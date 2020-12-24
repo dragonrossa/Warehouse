@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Repository
@@ -10,7 +11,7 @@ namespace Warehouse.Repository
     interface ILogRepository
     {
         //Get context
-        ApplicationDbContext Data(ApplicationDbContext _db);
+        WarehouseContext Data(WarehouseContext _db);
         //Get log list for every type
         //1
         Task<List<LogModels>> logLaptop();

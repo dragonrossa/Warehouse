@@ -6,17 +6,18 @@ using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
 using System.Data.Entity;
+using Warehouse.DAL;
 
 namespace Warehouse.Repository
 {
     public class ComputerListRepository:IComputerListRepository
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         ComputerListModels computer = new ComputerListModels();
 
         //Get DB
-        public ApplicationDbContext Data(ApplicationDbContext _db)
+        public WarehouseContext Data(WarehouseContext _db)
         {
 
             this._db = _db;

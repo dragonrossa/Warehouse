@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web.UI.WebControls;
+using Warehouse.DAL;
 using Warehouse.Helpers;
 
 
@@ -11,7 +12,7 @@ namespace Warehouse.Models
 {
     public class LogModels:IElement<LogModels>, ListOrderByLog<LogModels>
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         //ID
         [Key]

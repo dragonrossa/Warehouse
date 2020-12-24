@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Warehouse.DAL;
 using Warehouse.Helpers;
 using Warehouse.Models;
 
@@ -10,7 +11,7 @@ namespace Warehouse.Repository
     public class SearchRepository:DatabaseRepository, ISearchRepository
     {
         //Call database
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         //Create class object
         SearchIndex search = new SearchIndex();

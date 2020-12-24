@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity;
 using System.Diagnostics.Contracts;
 using Warehouse.Repository;
 using System.Threading.Tasks;
+using Warehouse.DAL;
 
 namespace Warehouse.Controllers
 {
@@ -22,7 +23,8 @@ namespace Warehouse.Controllers
     {
         //Get DB Context
 
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
+
 
         //Get LaptopModels object
 

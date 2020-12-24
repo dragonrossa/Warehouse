@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using System.Web;
 using Warehouse.Models;
 using System.Data.Entity;
+using Warehouse.DAL;
 
 namespace Warehouse.Repository
 {
     public class LogRepository : ILogRepository
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         //Get DB
-        public ApplicationDbContext Data(ApplicationDbContext _db)
+        public WarehouseContext Data(WarehouseContext _db)
         {
 
             this._db = _db;

@@ -5,12 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
 using Warehouse.Helpers;
+using Warehouse.DAL;
 
 namespace Warehouse.Repository
 {
     public class TransferRepository: DatabaseRepository, ITransferRepository
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         //Get laptop list
         public List<LaptopModels> ListLaptop()

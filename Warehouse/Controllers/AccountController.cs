@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Controllers
@@ -16,7 +17,7 @@ namespace Warehouse.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 

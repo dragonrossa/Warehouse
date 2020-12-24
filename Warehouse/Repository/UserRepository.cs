@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Repository
 {
     public class UserRepository:IUserRepository
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         //Username of this user
         public string user(string username)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Repository
@@ -10,7 +11,7 @@ namespace Warehouse.Repository
     public class StoreRepository:DatabaseRepository,IStoreRepository
     {
         //DB Context
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         //Get all stores
         public StoreModels result()

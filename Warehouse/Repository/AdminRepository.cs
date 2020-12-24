@@ -7,20 +7,21 @@ using System.Web.Mvc;
 using Warehouse.Models;
 using Warehouse.Helpers;
 using System.Threading.Tasks;
+using Warehouse.DAL;
 
 namespace Warehouse.Repository
 {
-    public class AdminRepository:IAdminRepository
+    public class AdminRepository: DatabaseRepository, IAdminRepository
     {
-        public ApplicationDbContext _db = new ApplicationDbContext();
+        public WarehouseContext _db = new WarehouseContext();
 
-        //Get DB
-        public ApplicationDbContext Data(ApplicationDbContext _db)
-        {
-            
-            this._db = _db;
-            return _db;
-         }
+
+        //public WarehouseContext Data1()
+        //{
+        //    WarehouseContext _db1 = new WarehouseContext();
+        //    return _db1;
+        //}
+
 
         //Return list of users
         public async Task<List<UserModels>> users()

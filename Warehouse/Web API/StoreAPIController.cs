@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Web.Http;
 using System.Web.UI.WebControls;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Controllers
@@ -15,7 +16,7 @@ namespace Warehouse.Controllers
     [RoutePrefix("api/store")]
     public class StoreAPIController : ApiController
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         [HttpGet]
         public IEnumerable<StoreModels> CatchStores()

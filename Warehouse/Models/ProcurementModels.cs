@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Warehouse.DAL;
 using Warehouse.Helpers;
 
 namespace Warehouse.Models
@@ -25,9 +26,9 @@ namespace Warehouse.Models
         [Display(Name = "Date")]
         public DateTime RequestDate { get; set; }
 
-         public ApplicationDbContext _db()
+         public WarehouseContext _db()
         {
-            return new ApplicationDbContext();
+            return new WarehouseContext();
         }
 
 

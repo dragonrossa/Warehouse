@@ -7,13 +7,14 @@ using System.Linq;
 using System.Web;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
+using Warehouse.DAL;
 using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
     public class TaskListModels:IElement<TaskListModels>, ListOrderByTask<TaskListModels>
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         [Key]
         public int ID { get; set; }

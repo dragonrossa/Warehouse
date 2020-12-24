@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Repository
@@ -12,7 +13,7 @@ namespace Warehouse.Repository
     public interface IAdminRepository
     {
         //Get DB
-        ApplicationDbContext Data(ApplicationDbContext _db);
+        WarehouseContext Data(WarehouseContext _db);
         //Return list of users
         Task<List<UserModels>> users();
         //Find exact user

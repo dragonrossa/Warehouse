@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Repository
 {
     public class ProcessorRepository:IProcessorRepository
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         private ProcessorModels _processor;
 
@@ -17,7 +18,7 @@ namespace Warehouse.Repository
 
 
         //Get DB
-        public ApplicationDbContext Data(ApplicationDbContext _db)
+        public WarehouseContext Data(WarehouseContext _db)
         {
 
             this._db = _db;

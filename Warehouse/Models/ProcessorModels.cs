@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using Warehouse.DAL;
 using Warehouse.Helpers;
 using Warehouse.Models;
 
@@ -16,7 +17,7 @@ namespace Warehouse.Models
 
     public class ProcessorModels: IEquipment, IElement<ProcessorModels>, ISupplier
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         [Key]
         public virtual int ID { get; set; }

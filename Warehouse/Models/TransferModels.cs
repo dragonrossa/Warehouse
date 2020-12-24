@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Warehouse.DAL;
 using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
     public class TransferModels:IElement<TransferModels>
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         [Key]
         public int ID { get; set; }

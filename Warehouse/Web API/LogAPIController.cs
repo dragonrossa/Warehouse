@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.UI.WebControls;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Controllers
@@ -14,7 +15,7 @@ namespace Warehouse.Controllers
     public class LogAPIController : ApiController
     {
         
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         [HttpGet]
         public IEnumerable<LogModels> CatchLogs()

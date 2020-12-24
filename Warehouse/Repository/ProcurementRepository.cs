@@ -13,12 +13,13 @@ using System.IO;
 using System.Collections;
 using System.Security.Cryptography.X509Certificates;
 using Warehouse.Repository;
+using Warehouse.DAL;
 
 namespace Warehouse.Repository
 {
     public class ProcurementRepository: Controller, IProcurementRepository 
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
         // GET: Procurement
 
         //Get username

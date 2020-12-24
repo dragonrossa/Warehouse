@@ -7,13 +7,14 @@ using System.Web.Mvc;
 using Warehouse.Models;
 using Warehouse.Helpers;
 using System.Threading.Tasks;
+using Warehouse.DAL;
 
 namespace Warehouse.Repository
 {
     public class LaptopRepository: Controller, ILaptopRepository
     {
         //DB context
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         //Get LaptopModels object
 

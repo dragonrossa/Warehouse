@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Helpers
@@ -13,7 +14,7 @@ namespace Warehouse.Helpers
     public class HelperAdmin
     {
 
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         public List<AdminModels> List
         {

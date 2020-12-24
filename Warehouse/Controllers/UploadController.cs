@@ -13,12 +13,13 @@ using System.Web.UI.WebControls;
 using Warehouse.Helpers;
 using System.Diagnostics;
 using Warehouse.Repository;
+using Warehouse.DAL;
 
 namespace Warehouse.Controllers
 {
     public class UploadController : Controller
     {
-        ApplicationDbContext _db = new ApplicationDbContext();
+        WarehouseContext _db = new WarehouseContext();
         // GET: Upload
         
         public ActionResult Index()

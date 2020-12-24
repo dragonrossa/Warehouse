@@ -5,13 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.DAL;
 using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
     public class ComputerListModels : IElement<ComputerListModels>, ListOrderByComputerList<ComputerListModels>
     {
-        private ApplicationDbContext _db = new ApplicationDbContext();
+        private WarehouseContext _db = new WarehouseContext();
 
         [Key]
         public int ID { get; set; }

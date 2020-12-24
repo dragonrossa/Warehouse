@@ -266,6 +266,8 @@
     <Compile Include="Controllers\TransferController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\UserRightsController.cs" />
+    <Compile Include="DAL\WarehouseContext.cs" />
+    <Compile Include="DAL\WarehouseInitializer.cs" />
     <Compile Include="Helpers\CustomExceptions.cs" />
     <Compile Include="Helpers\HelperAdmin.cs" />
     <Compile Include="Helpers\IEquipment.cs" />
@@ -285,6 +287,22 @@
     <Compile Include="Migrations\202012211207200_Date.cs" />
     <Compile Include="Migrations\202012211207200_Date.Designer.cs">
       <DependentUpon>202012211207200_Date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012240934025_DisplayNameAdmin.cs" />
+    <Compile Include="Migrations\202012240934025_DisplayNameAdmin.Designer.cs">
+      <DependentUpon>202012240934025_DisplayNameAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012240951357_UsernameUserModels.cs" />
+    <Compile Include="Migrations\202012240951357_UsernameUserModels.Designer.cs">
+      <DependentUpon>202012240951357_UsernameUserModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012241031344_Initial.cs" />
+    <Compile Include="Migrations\202012241031344_Initial.Designer.cs">
+      <DependentUpon>202012241031344_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012241131330_Initial1.cs" />
+    <Compile Include="Migrations\202012241131330_Initial1.Designer.cs">
+      <DependentUpon>202012241131330_Initial1.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\ComputerListModels.cs" />
@@ -655,6 +673,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012211207200_Date.resx">
       <DependentUpon>202012211207200_Date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012240934025_DisplayNameAdmin.resx">
+      <DependentUpon>202012240934025_DisplayNameAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012240951357_UsernameUserModels.resx">
+      <DependentUpon>202012240951357_UsernameUserModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012241031344_Initial.resx">
+      <DependentUpon>202012241031344_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012241131330_Initial1.resx">
+      <DependentUpon>202012241131330_Initial1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.DAL;
 using Warehouse.Models;
 
 namespace Warehouse.Repository
@@ -11,7 +12,7 @@ namespace Warehouse.Repository
     interface IComputerListRepository
     {
         //Get DB
-        ApplicationDbContext Data(ApplicationDbContext _db);
+        WarehouseContext Data(WarehouseContext _db);
         //Return List of computers
         Task<List<ComputerListModels>> computerLists();
         //List of suppliers
