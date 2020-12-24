@@ -34,8 +34,12 @@ And now...
 **How to test this app?**
 
 1. Download
-2. Uncomment and execute code in Configuration.cs (context in protect override Seed) and update Database to Seed the DB
-3. Start app and register
-4. Have fun!
+2. Uncomment context type in Web.config and start app (creates database from DAL WarehouseContext)
+3. Register as new user
+4. Test and have fun!
+
+#### PS. Merry Christmas! :)
+
+HO HO HO
 
 Rosana
