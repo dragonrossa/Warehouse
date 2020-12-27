@@ -59,5 +59,15 @@ namespace Warehouse.Controllers
           
             return View();
         }
+
+        //Dispose DB
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

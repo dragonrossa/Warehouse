@@ -39,11 +39,14 @@ namespace Warehouse.Controllers
         LaptopRepository laptopRepository = new LaptopRepository();
 
         // GET: MasterData
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString)
         {
          
             try
             {
+               
+
+                //If there is no laptop redirect to NotFound
 
                 if (laptop.Child == null)
                 {
@@ -59,8 +62,17 @@ namespace Warehouse.Controllers
                 }
                 else
                 {
+                    ////Search box
 
-                  
+                    if (!String.IsNullOrEmpty(searchString))
+                    {
+                        var laptop = await _db.LaptopModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
+
+                        return View(new LaptopModels { laptop = laptop });
+
+
+                    }
+
                     ViewBag.laptop = laptopRepository.lastInput.Name;
                     ViewBag.date = laptopRepository.lastInput.Date;
                     ViewBag.quantity = laptopRepository.lastInput.Quantity;
@@ -114,7 +126,7 @@ namespace Warehouse.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public async Task <ActionResult> Create(LaptopModels laptop)
+        public async Task <ActionResult> Create([Bind(Include = "Name, Details, Quantity, Manufacturer, OS, Price, OldPrice")] LaptopModels laptop)
         {
             if (ModelState.IsValid)
             {
@@ -463,6 +475,16 @@ namespace Warehouse.Controllers
             return View();
 
             
+        }
+
+        //Dispose DB
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

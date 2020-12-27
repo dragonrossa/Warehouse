@@ -643,6 +643,7 @@
     <Content Include="Views\Processor\Ascending.cshtml" />
     <Content Include="Views\Processor\Descending.cshtml" />
     <Content Include="Views\GlobalErrors\Index.cshtml" />
+    <Content Include="Views\Laptop\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

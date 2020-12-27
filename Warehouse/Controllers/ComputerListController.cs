@@ -155,7 +155,6 @@ namespace Warehouse.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-
         public async Task<ActionResult> Create(FormCollection form)
         {
 
@@ -163,10 +162,8 @@ namespace Warehouse.Controllers
 
            await computerRepository.createNewComputer(form);
 
-            return RedirectToAction("Index");
+           return RedirectToAction("Index");
         }
-
-
 
 
     }

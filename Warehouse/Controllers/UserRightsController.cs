@@ -16,7 +16,6 @@ namespace Warehouse.Controllers
         UserRightsRepository userRightsRepository = new UserRightsRepository();
 
         // GET: UserRights
-        [HttpGet]
         public ActionResult Header()
         {
            
