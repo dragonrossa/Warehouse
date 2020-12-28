@@ -2,12 +2,14 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.DAL;
 using Warehouse.Models;
 using Warehouse.Repository;
 
@@ -15,6 +17,11 @@ namespace Warehouse.Controllers
 {
     public class ComputerListController : Controller
     {
+
+        //Get DB Context
+
+        private WarehouseContext _db = new WarehouseContext();
+
         //Get Computer Repository
 
         ComputerListRepository computerRepository = new ComputerListRepository();
@@ -65,7 +72,7 @@ namespace Warehouse.Controllers
                     return RedirectToAction("Create", "ComputerList");
                 }
 
-                return View(new ComputerListModels() { suppliers = suppliers, computersList = computerLists });
+                return View(new ComputerListModels() { suppliers = await computerRepository.suppliers(), computersList = await computerRepository.computerLists() });
             }
             catch (Exception e)
             {
@@ -84,6 +91,23 @@ namespace Warehouse.Controllers
             return View();
 
            
+
+        }
+
+        public async Task<ActionResult> Search(string searchString)
+        {
+            ////Search box
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var computers = _db.ComputerListModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
+
+                return View("Index", new ComputerListModels { suppliers = await computerRepository.suppliers(), computersList = await computers });
+
+
+            }
+
+            return RedirectToAction("Index");
 
         }
 

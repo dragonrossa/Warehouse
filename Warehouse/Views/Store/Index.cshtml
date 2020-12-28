@@ -25,6 +25,15 @@
         </ol>
     </nav>
 
+    @using (Html.BeginForm("Index", "Store", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <p>
+            Find by name: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
+
 
     <table class="table">
         <tr>
@@ -67,7 +76,7 @@
             <th></th>
         </tr>
 
-     
+
         @foreach (var item in Model.store)
         {
             <tr>

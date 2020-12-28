@@ -37,6 +37,10 @@ namespace Warehouse.Repository
         //8
         Task<List<LogModels>> logAccess();
         Task<List<LogModels>> logDescAccess();
+
+        //Search
+        Task<List<LogModels>> logSearchAsc(string searchString);
+        Task<List<LogModels>> logSearchDesc(string searchString);
         //Save data
         Task<object> SaveData();
     }

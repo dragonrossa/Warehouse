@@ -9,7 +9,7 @@
 }
 
 <h1>Choose computer and supplier</h1>
-<div class="container-fluid" style="padding-bottom:20px">
+<div class="container-fluid">
 
 
     <h6>In this view you have opportunity to change various fields.</h6>
@@ -22,6 +22,19 @@
     @Html.ActionLink("Computers", "Create", "ComputerList")
 
 </div>
+
+<div class="container-fluid">
+    @using (Html.BeginForm("Search", "ComputerList", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <p>
+            Find by name: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
+</div>
+
+
 
 <div class="container-fluid">
 

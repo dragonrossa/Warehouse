@@ -4,16 +4,24 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.DAL;
 using Warehouse.Helpers;
 using Warehouse.Models;
 using Warehouse.Repository;
+using System.Data.Entity;
 
 namespace Warehouse.Controllers
 {
     public class TransferController : Controller
     {
+
+        //Get DB Context
+
+        private WarehouseContext _db = new WarehouseContext();
+
         //Get Transfer Repository
         TransferRepository transferRepository = new TransferRepository();
      
@@ -22,12 +30,23 @@ namespace Warehouse.Controllers
 
       
         // GET: Index
-        public ActionResult Index()
+        public async Task<ActionResult> Index(string searchString)
         {
           
 
                 try
                 {
+
+                ////Search box
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    var transfer = transferRepository.storeResult().Where(s => s.LaptopName.Contains(searchString));
+
+                    return View(new TransferResult { result = transfer });
+
+
+                }
 
                 ViewBag.laptop = transferRepository.lastInput.LaptopName;
                 ViewBag.date = transferRepository.lastInput.Date;

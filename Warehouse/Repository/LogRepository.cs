@@ -162,6 +162,24 @@ namespace Warehouse.Repository
                                       .ToListAsync();
         }
 
+        //asc
+
+        public async Task<List<LogModels>> logSearchAsc(string searchString)
+        {
+            return await _db.LogModels
+                .OrderBy(s => s.Date)
+                .Where(s => s.Description.Contains(searchString)).ToListAsync();
+        }
+
+        //desc
+        public async Task<List<LogModels>> logSearchDesc(string searchString)
+        {
+           
+           return await _db.LogModels
+                .OrderByDescending(s=>s.Date)
+                .Where(s => s.Description.Contains(searchString)).ToListAsync();
+        }
+
 
         //Save DB
         public async Task<object> SaveData()

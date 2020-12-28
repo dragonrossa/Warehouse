@@ -38,6 +38,16 @@
             <a class="nav-link" id="access-tab" data-toggle="tab" href="#access" role="tab" aria-controls="access" aria-selected="false" onclick="hideAllInfo()">Access</a>
         </li>
     </ul>
+    <div class="container-fluid">
+        @using (Html.BeginForm("Search", "Log", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                Find by name: @Html.TextBox("SearchString")
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>
     <div class="container-fluid" id="hide" name="hide">
         <p>Here are logs for all crucial parts in this applications:</p>
         <p>Check Laptop, Store, Transfer, Search, Not Found, New user, Admin, Access Logs.</p>

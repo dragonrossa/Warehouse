@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.DAL;
 using Warehouse.Models;
 using Warehouse.Repository;
 
@@ -12,6 +14,9 @@ namespace Warehouse.Controllers
 {
     public class LogController : Controller
     {
+        //Get DB Context
+
+        private WarehouseContext _db = new WarehouseContext();
 
         //Get Log Repository
         LogRepository logRepository = new LogRepository();
@@ -21,7 +26,7 @@ namespace Warehouse.Controllers
         public async Task<ActionResult> Index()
         {
 
-            try
+           try
             {
 
                 return View(
@@ -55,6 +60,23 @@ namespace Warehouse.Controllers
 
             return View();
 
+        }
+
+
+        public async Task<ActionResult> Search(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var log = _db.LogModels.Where(s => s.Description.Contains(searchString)).ToListAsync();
+
+                ViewBag.search = searchString;
+
+                TempData["search"] = searchString;
+
+                return View("Search", new LogModels { logs1 = await log });
+            }
+
+            return RedirectToAction("Index");
         }
 
     //Exception - UserNotFound

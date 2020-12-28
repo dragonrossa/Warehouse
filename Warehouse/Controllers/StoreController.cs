@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.DAL;
 using Warehouse.Models;
 using Warehouse.Repository;
 
@@ -13,6 +15,10 @@ namespace Warehouse.Controllers
 {
     public class StoreController : Controller
     {
+
+        //Get DB Context
+
+        private WarehouseContext _db = new WarehouseContext();
 
         //Get Store Repository
         StoreRepository storeRepository = new StoreRepository();
@@ -40,11 +46,22 @@ namespace Warehouse.Controllers
 
 
         // GET: MasterData
-        public ActionResult Index()
+        public async Task<ActionResult> Index(string searchString)
         {
             
                 try
                 {
+
+                //Search box
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    var store = await _db.StoreModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
+
+                    return View(new StoreModels { store = store });
+
+
+                }
 
                     ViewBag.store = storeRepository.lastInput.Name;
                     ViewBag.date = storeRepository.lastInput.Date;

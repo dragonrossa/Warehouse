@@ -309,5 +309,27 @@ namespace Warehouse.OrderBy
             });
 
         }
+
+        //For logs8
+
+        public async Task<ActionResult> AscDateSearch()
+        {
+
+            return View("~/Views/Log/Search.cshtml", new LogModels
+            {
+                logs1 = await logRepository.logSearchAsc(Convert.ToString(TempData["search"])),
+            });
+
+        }
+
+        public async Task<ActionResult> DescDateSearch()
+        {
+
+            return View("~/Views/Log/Search.cshtml", new LogModels
+            {
+                logs1 = await logRepository.logSearchDesc(Convert.ToString(TempData["search"])),
+            });
+
+        }
     }
 }

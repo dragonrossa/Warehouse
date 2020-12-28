@@ -20,6 +20,15 @@
             <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.ActionLink("Create Transfer", "Create", "Transfer") </a></li>
 
         </ol>
+
+        @using (Html.BeginForm("Index", "Transfer", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                Find by name: @Html.TextBox("SearchString")
+                <input type="submit" value="Search" />
+            </p>
+        }
     </nav>
     <table class="table">
         <tr>

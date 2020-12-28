@@ -22,6 +22,19 @@
 </div>
 
 <div class="container-fluid">
+
+    @using (Html.BeginForm("Index", "Admin", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <p>
+            Find by name: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
+
+</div>
+
+<div class="container-fluid">
     <table class="table">
         <tr>
             <th>
@@ -65,7 +78,7 @@
             <th></th>
         </tr>
 
-        @foreach(var item in Model.users)
+        @foreach (var item in Model.users)
         {
             <tr>
                 <td>
@@ -78,10 +91,10 @@
                     @Html.DisplayFor(modelItem => item.UserName)
                 </td>
                 <td>
-                    @Html.ActionLink("Change role", "ChangeRole", "Admin", new { id = item.ID } , null)
+                    @Html.ActionLink("Change role", "ChangeRole", "Admin", new { id = item.ID }, null)
                 </td>
                 <td>
-                    @Html.ActionLink("Change details", "ChangeDetails", "Admin",new { id = item.ID }, null)
+                    @Html.ActionLink("Change details", "ChangeDetails", "Admin", new { id = item.ID }, null)
                 </td>
                 <td>
                     @Html.ActionLink("Access", "Access2", "Admin", new { username = item.UserName }, null)

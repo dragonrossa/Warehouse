@@ -3,10 +3,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.DAL;
 using Warehouse.Models;
 using Warehouse.Repository;
 
@@ -14,6 +17,10 @@ namespace Warehouse.Controllers
 {
     public class TaskListController : Controller
     {
+        //Get DB Context
+
+        private WarehouseContext _db = new WarehouseContext();
+
         //Get TaskList Repository
 
         TaskListRepository taskListRepository = new TaskListRepository();
@@ -65,11 +72,11 @@ namespace Warehouse.Controllers
             return RedirectToAction("MyList");
         }
 
-        public ActionResult MyList()
+        public async Task<ActionResult> MyList()
         {
             try
             {
-              
+                
                 return View(new TaskListModels { task = taskListRepository.listOfFalseTasks() });
             }
             catch (Exception)
@@ -105,6 +112,18 @@ namespace Warehouse.Controllers
             }
             return View();
           
+        }
+
+        public async Task<ActionResult> Search(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var taskUser = _db.TaskListModels.Where(s => s.User.Contains(searchString)).ToListAsync();
+
+                return View("MyList", new TaskListModels { task = await taskUser });
+            }
+
+            return RedirectToAction("MyList");
         }
 
         public ActionResult List()

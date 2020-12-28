@@ -30,13 +30,26 @@ namespace Warehouse.Controllers
 
 
         // GET: Admin
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString)
         {
 
                 try
                 {
+
+                ////Search box
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                      var user = _db.UserModels.Where(s => s.Name.Contains(searchString)
+                                               || s.LastName.Contains(searchString)
+                                               || s.UserName.Contains(searchString)).ToListAsync();
+
+                    return View(new UserModels { users =  await user });
+                }
+
                 return View( new UserModels { 
-                    users = await adminRepository.users()}
+                    users = await adminRepository.users()
+                }
                 );
                   //  return View(users());
                 }
