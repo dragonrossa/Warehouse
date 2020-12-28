@@ -317,7 +317,7 @@ namespace Warehouse.OrderBy
 
             return View("~/Views/Log/Search.cshtml", new LogModels
             {
-                logs1 = await logRepository.logSearchAsc(Convert.ToString(TempData["search"])),
+                logs1 = await logRepository.logSearchAsc(Convert.ToString(Session["search"])),
             });
 
         }
@@ -327,7 +327,7 @@ namespace Warehouse.OrderBy
 
             return View("~/Views/Log/Search.cshtml", new LogModels
             {
-                logs1 = await logRepository.logSearchDesc(Convert.ToString(TempData["search"])),
+                logs1 = await logRepository.logSearchDesc(Convert.ToString(Session["search"])),
             });
 
         }

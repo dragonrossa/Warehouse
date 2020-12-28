@@ -69,9 +69,7 @@ namespace Warehouse.Controllers
             {
                 var log = _db.LogModels.Where(s => s.Description.Contains(searchString)).ToListAsync();
 
-                ViewBag.search = searchString;
-
-                TempData["search"] = searchString;
+                Session["search"] = searchString;
 
                 return View("Search", new LogModels { logs1 = await log });
             }
