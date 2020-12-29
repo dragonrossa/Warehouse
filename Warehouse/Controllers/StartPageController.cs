@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using Warehouse.DAL;
-using Warehouse.Models;
 using Warehouse.Repository;
+using PagedList;
 
 namespace Warehouse.Controllers
 {

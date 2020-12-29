@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Warehouse.DAL;
 using Warehouse.Helpers;
 using Warehouse.Models;
 using Warehouse.Repository;
 using System.Data.Entity;
+using PagedList;
 
 namespace Warehouse.Controllers
 {

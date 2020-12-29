@@ -1,4 +1,6 @@
-﻿@model  Warehouse.Models.LaptopModels
+﻿@model PagedList.IPagedList<Warehouse.Models.LaptopModels>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
@@ -37,8 +39,8 @@
     <table class="table">
         <tr>
             <th>
-
-                @Html.DisplayNameFor(model => model.Name)
+                Name
+                @* @Html.DisplayNameFor(model => model.Name)*@
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescName","OrderByLaptop")">
                         <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
@@ -50,7 +52,8 @@
                 </label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                Quantity
+                @* @Html.DisplayNameFor(model => model.Quantity)*@
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescQuantity","OrderByLaptop")">
                         <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
@@ -62,7 +65,8 @@
                 </label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                Price
+                @*  @Html.DisplayNameFor(model => model.Price)*@
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescPrice","OrderByLaptop")">
                         <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
@@ -74,7 +78,8 @@
                 </label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FullPrice)
+                Full price
+                @*  @Html.DisplayNameFor(model => model.FullPrice)*@
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescFullPrice","OrderByLaptop")">
                         <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
@@ -89,7 +94,7 @@
         </tr>
 
 
-        @foreach (var item in Model.laptop)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -111,6 +116,15 @@
         }
 
     </table>
+
+    Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index","Laptop",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    @* this one is also ok *@
+
+    @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))*@
 
 
 
@@ -157,6 +171,9 @@
 
 
     </div>
+
+    <br />
+
 
 
     <div class="row">

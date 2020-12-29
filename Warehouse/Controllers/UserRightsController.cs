@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
 using Warehouse.Repository;
+using PagedList;
 
 namespace Warehouse.Controllers
 {

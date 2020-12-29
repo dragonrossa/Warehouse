@@ -1,15 +1,8 @@
-﻿using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Web;
+﻿using System;
 using System.Web.Mvc;
 using Warehouse.Helpers;
-using Warehouse.Models;
 using Warehouse.Repository;
+using PagedList;
 
 namespace Warehouse.Controllers
 {

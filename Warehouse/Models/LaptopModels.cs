@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -74,6 +75,9 @@ namespace Warehouse.Models
         public DateTime? Date { get; set; }
 
         public IEnumerable<LaptopModels> laptop { get; set;}
+
+        //PagedList
+        public IPagedList PagingMetaData { get; set; }
 
         [NotMapped]
         public List<LaptopModels> Child

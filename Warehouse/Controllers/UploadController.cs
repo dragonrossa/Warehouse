@@ -14,6 +14,7 @@ using Warehouse.Helpers;
 using System.Diagnostics;
 using Warehouse.Repository;
 using Warehouse.DAL;
+using PagedList;
 
 namespace Warehouse.Controllers
 {
@@ -183,6 +184,40 @@ namespace Warehouse.Controllers
         {
             return View();
         }
+
+
+      
+            public ActionResult Paging(string sortOrder, string currentFilter, string searchString, int? page)
+            {
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+                ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewBag.CurrentFilter = searchString;
+
+                var students = from s in _db.LaptopModels
+                               select s;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                students = students.Where(s => s.Name.Contains(searchString));
+                                      
+                }
+               
+
+                int pageSize = 5;
+                int pageNumber = (page ?? 1);
+                return View(students.ToPagedList(pageNumber, pageSize));
+            }
+        
 
 
         //Dispose DB

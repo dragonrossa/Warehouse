@@ -1,17 +1,12 @@
-﻿using Microsoft.Ajax.Utilities;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
+﻿using System;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using Warehouse.DAL;
 using Warehouse.Models;
 using Warehouse.Repository;
+using PagedList;
 
 namespace Warehouse.Controllers
 {

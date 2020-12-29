@@ -1,21 +1,14 @@
-﻿using Microsoft.Ajax.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
 using Warehouse.Models;
-using Warehouse.Helpers;
-using Microsoft.AspNet.Identity;
-using System.Diagnostics.Contracts;
 using Warehouse.Repository;
 using System.Threading.Tasks;
 using Warehouse.DAL;
+using PagedList;
 
 namespace Warehouse.Controllers
 {
@@ -38,23 +31,60 @@ namespace Warehouse.Controllers
 
         LaptopRepository laptopRepository = new LaptopRepository();
 
-        // GET: MasterData
-        public async Task<ActionResult> Index(string searchString)
+
+        //Paging functions
+
+
+        public object pageCount(int pageSize)
         {
-         
+            int pageCount = laptop.Child.Count();
+            int pages = pageCount / pageSize;
+            //ViewBag.pageCount = pages;
+            int rest = pageCount % pageSize;
+            if (rest < 10)
+            {
+                pages = pages + 1;
+                ViewBag.pageCount = pages;
+            }
+            return ViewBag.pageCount;
+        }
+
+        public void sessionsForPaging(int pageNumber, int pageSize)
+        {
+
+            //Session for controllers
+
+            Session["pageNumber"] = pageNumber;
+            Session["pageSize"] = pageSize;
+        }
+
+        public IPagedList<LaptopModels> pagedLaptop(int? page){
+
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return listOfLaptops.ToPagedList(pageNumber, pageSize);
+
+        }
+
+    
+
+        // GET: MasterData
+        public async Task<ActionResult> Index(string searchString, string sortOrder, int? page)
+        {
+
             try
             {
-               
 
-                //If there is no laptop redirect to NotFound
+
+                // If there is no laptop redirect to NotFound
 
                 if (laptop.Child == null)
                 {
                     RedirectToAction("NotFound", "Laptop");
                 }
 
- 
-                //if no items in list redirect to NotFound
+
+                // if no items in list redirect to NotFound
 
                 if (laptopRepository.lastInput == null)
                 {
@@ -62,16 +92,39 @@ namespace Warehouse.Controllers
                 }
                 else
                 {
-                    ////Search box
+                    listOfLaptops = (from s in _db.LaptopModels
+                                 select s).ToList();
+
+
+                    ViewBag.CurrentSort = sortOrder;
+                    ViewBag.pageNumber = page ?? 1;
+
+
+                    int pageSize = 10;
+                    int pageNumber = page ?? 1;
+
+             
+
+                    //Get ViewBag.pageCount
+                    pageCount(pageSize);
+
+                    //Search box
 
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        var laptop = await _db.LaptopModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
+                        listOfLaptops = _db.LaptopModels.Where(s => s.Name.Contains(searchString)).ToList();
+                        
 
-                        return View(new LaptopModels { laptop = laptop });
-
+                        return View(pagedLaptop(page));
 
                     }
+
+                    //Sessions
+
+                    sessionsForPaging(pageNumber, pageSize);
+
+
+                    //Details
 
                     ViewBag.laptop = laptopRepository.lastInput.Name;
                     ViewBag.date = laptopRepository.lastInput.Date;
@@ -80,9 +133,10 @@ namespace Warehouse.Controllers
                     ViewBag.sumQuantity = laptopRepository.sumQuantity;
                     ViewBag.sumFullPrice = laptopRepository.sumFullPrice;
 
-                    return View(new LaptopModels { laptop = laptop.Child });
-                }
 
+                    return View(pagedLaptop(page));
+
+                }
             }
             catch (Exception e)
             {
@@ -97,7 +151,7 @@ namespace Warehouse.Controllers
                     return RedirectToAction("NotFound");
 
                 }
-               }
+            }
 
                 //if there are no Laptops in list
                 return View("NotFound");
