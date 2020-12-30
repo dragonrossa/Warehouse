@@ -44,28 +44,61 @@ namespace Warehouse.Controllers
 
 
         // GET: MasterData
-        public async Task<ActionResult> Index(string searchString)
+        public async Task<ActionResult> Index(string searchString, string sortOrder, int? page)
         {
             
                 try
                 {
 
+                ////Search box
+
+                //if (!String.IsNullOrEmpty(searchString))
+                //{
+                //    var store = await _db.StoreModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
+
+                //    return View(new StoreModels { store = store });
+
+
+                //}
+
+                //Paging and search
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+
+
+                //Get ViewBag.pageCount
+                await storeRepository.pageCount(pageSize, store);
+
                 //Search box
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    var store = await _db.StoreModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
 
-                    return View(new StoreModels { store = store });
-
-
+                    return View(await storeRepository.storeSearch(page, searchString));
                 }
 
-                    ViewBag.store = storeRepository.lastInput.Name;
-                    ViewBag.date = storeRepository.lastInput.Date;
-                    ViewBag.location = storeRepository.lastInput.Location;
+                //Session for controllers
 
-                    return View( new StoreModels { store = store.Child });
+                Session["pageNumber"] = pageNumber;
+                Session["pageSize"] = pageSize;
+
+                ViewBag.store = storeRepository.lastInput.Name;
+                ViewBag.date = storeRepository.lastInput.Date;
+                ViewBag.location = storeRepository.lastInput.Location;
+
+
+
+                return View(await storeRepository.pagedStore(page));
+
+             
+
+                   // return View( new StoreModels { store = store.Child });
                 }
                 catch (Exception e)
                 {
@@ -94,7 +127,7 @@ namespace Warehouse.Controllers
 
         //Exception - UserNotFound
 
-        public ActionResult NotFound()
+        public async Task<ActionResult> NotFound()
         {
 
 
@@ -105,7 +138,7 @@ namespace Warehouse.Controllers
 
 
         //GET: MasterData/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             try
             {
@@ -123,7 +156,7 @@ namespace Warehouse.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(StoreModels store)
+        public async Task<ActionResult> Create(StoreModels store)
         {
             try
             {
@@ -131,14 +164,16 @@ namespace Warehouse.Controllers
                 {
                     //Add new store
 
-                    storeRepository.createStore(store);
+                    await storeRepository.createStore(store);
 
                     //Add date on last input
-                    storeRepository.result().Date = DateTime.Now;
+
+                    var storeLast = await storeRepository.result();
+                    storeLast.Date = DateTime.Now;
                     storeRepository.SaveData();
 
                     //Create new log
-                    storeRepository.log(storeRepository.result().Name, storeRepository.result().Date, storeRepository.result().Location);
+                    await storeRepository.log(storeLast.Name, storeLast.Date, storeLast.Location);
 
                     return RedirectToAction("Index");
                 }
@@ -158,7 +193,7 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/List
-        public ActionResult List()
+        public async Task<ActionResult> List()
         {
             try
             {
@@ -174,7 +209,7 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/EditList
-        public ActionResult EditList()
+        public async Task<ActionResult> EditList()
         {
             try
             {
@@ -190,7 +225,7 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/DeleteList
-        public ActionResult DeleteList()
+        public async Task<ActionResult> DeleteList()
         {
             try
             {
@@ -205,7 +240,7 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             try
             {
@@ -236,7 +271,7 @@ namespace Warehouse.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(StoreModels store)
+        public async Task<ActionResult> Edit(StoreModels store)
         {
 
             try
@@ -245,7 +280,7 @@ namespace Warehouse.Controllers
                 {
                     //Modify store, return store
 
-                    storeRepository.editStore(store);
+                    await storeRepository.editStore(store);
 
                     return RedirectToAction("Index");
                 }
@@ -262,7 +297,7 @@ namespace Warehouse.Controllers
 
         //GET: MasterData/Delete/5
 
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             try
             {
@@ -288,7 +323,7 @@ namespace Warehouse.Controllers
         //POST: MasterData/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
 
             try
@@ -296,7 +331,7 @@ namespace Warehouse.Controllers
 
                 //Delete Store
 
-                storeRepository.deleteStore(id);
+                await storeRepository.deleteStore(id);
 
                 return RedirectToAction("Index");
 
@@ -312,7 +347,7 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/Details/1
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
 
             try
@@ -321,7 +356,7 @@ namespace Warehouse.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                storeRepository.findStore(id);
+                await storeRepository.findStore(id);
 
                 if (store == null)
                 {

@@ -10,7 +10,6 @@ namespace Warehouse.Repository
     public abstract class DatabaseRepository:IDatabaseRepository
     {
         private WarehouseContext _db = new WarehouseContext();
-      //  private TransferModels transfer;
 
         //Get DB
         public WarehouseContext Data(WarehouseContext _db)
