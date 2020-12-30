@@ -8,6 +8,7 @@ using Warehouse.Models;
 using Warehouse.Helpers;
 using System.Threading.Tasks;
 using Warehouse.DAL;
+using PagedList;
 
 namespace Warehouse.Repository
 {
@@ -27,6 +28,11 @@ namespace Warehouse.Repository
         //Get List<Company> object
 
         List<Company> myCompanies = new List<Company>();
+
+        //Get List<LaptopModels> for search and paging
+
+        List<LaptopModels> listOfLaptops = new List<LaptopModels>();
+    
 
         //Find some laptop
 
@@ -281,6 +287,42 @@ namespace Warehouse.Repository
             myCompanies.Add(company);
             
             return myCompanies;
+        }
+
+        //Search and Paging
+
+        public async Task<object> pageCount(int pageSize, LaptopModels laptop)
+        {
+            int pageCount = laptop.Child.Count();
+            int pages = pageCount / pageSize;
+            //ViewBag.pageCount = pages;
+            int rest = pageCount % pageSize;
+            if (rest < 10)
+            {
+                pages = pages + 1;
+                ViewBag.pageCount = pages;
+            }
+            return ViewBag.pageCount;
+        }
+
+        //Get IPagedList for View
+
+        public async Task<IPagedList<LaptopModels>> pagedLaptop(int? page)
+        {
+            listOfLaptops = await (from s in _db.LaptopModels select s).ToListAsync(); 
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return listOfLaptops.ToPagedList(pageNumber, pageSize);
+
+        }
+
+        //Get IPagedList for Search
+        public async Task<IPagedList<LaptopModels>> laptopSearch(int? page, string searchString)
+        {
+            listOfLaptops = await _db.LaptopModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return listOfLaptops.ToPagedList(pageNumber, pageSize);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,5 +50,11 @@ namespace Warehouse.Repository
         void createTransfer(TransferModels transfer, int id, string name, int quantity, int storeID);
         //Get new companie
         Task<List<Company>> myCompanie();
+        //Search and Paging
+        Task<object> pageCount(int pageSize, LaptopModels laptop);
+        //Get IPagedList for View
+        Task<IPagedList<LaptopModels>> pagedLaptop(int? page);
+        //Get IPagedList for Search
+        Task<IPagedList<LaptopModels>> laptopSearch(int? page, string searchString);
     }
 }
