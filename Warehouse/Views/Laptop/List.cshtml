@@ -1,4 +1,6 @@
-﻿@model Warehouse.Models.LaptopModels
+﻿@model PagedList.IPagedList<Warehouse.Models.LaptopModels>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
@@ -12,110 +14,131 @@
 </head>
 
 
-<head>
-
-    <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
-
-</head>
 
 <div class="container-fluid">
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-</div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.ActionLink("Create", "Create", "Laptop") </a></li>
+        </ol>
+    </nav>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-            <label style="padding-left:10px;">
-                <a href="@Url.Action("DescNameList","OrderByLaptop")">
-                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
-                </a>
 
-                <a href="@Url.Action("AscNameList","OrderByLaptop")">
-                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
-                </a>
-            </label>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Details)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-            <label style="padding-left:10px;">
-                <a href="@Url.Action("DescQuantityList","OrderByLaptop")">
-                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
-                </a>
 
-                <a href="@Url.Action("AscQuantityList","OrderByLaptop")">
-                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
-                </a>
-            </label>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OS)
-            <label style="padding-left:10px;">
-                <a href="@Url.Action("DescOSList","OrderByLaptop")">
-                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
-                </a>
-
-                <a href="@Url.Action("AscOSList","OrderByLaptop")">
-                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
-                </a>
-            </label>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-            <label style="padding-left:10px;">
-                <a href="@Url.Action("DescPriceList","OrderByLaptop")">
-                    <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
-                </a>
-
-                <a href="@Url.Action("AscPriceList","OrderByLaptop")">
-                    <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
-                </a>
-            </label>
-        </th>
-
-        <th></th>
-    </tr>
-
-  
-
-    @foreach (var item in Model.laptop)
+    @using (Html.BeginForm("List", "Laptop", FormMethod.Post))
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelitem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelitem => item.Details)
-            </td>
-            <td>
-                @Html.DisplayFor(modelitem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelitem => item.OS)
-            </td>
-            <td>
-                @Html.DisplayFor(modelitem => item.Price)
-            </td>
-
-            <td>
-                @Html.ActionLink("Edit", "Edit", "Laptop", new { id = item.ID }, null) |
-                @Html.ActionLink("Details", "Details","Laptop", new { id = item.ID }, null) |
-                @Html.ActionLink("Delete", "Delete", "Laptop", new { id = item.ID }, null)
-            </td>
-        </tr>
+        @Html.AntiForgeryToken()
+        <p>
+            Find by name: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
     }
 
-</table>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+                <label style="padding-left:10px;">
 
 
-<div class="container">
-    @Html.ActionLink("Back to List", "Index","Laptop")
+                    <a href="@Url.Action("DescNameList","OrderByLaptop")">
+
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscNameList","OrderByLaptop")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Details)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescQuantityList","OrderByLaptop")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscQuantityList","OrderByLaptop")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().OS)
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescOSList","OrderByLaptop")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscOSList","OrderByLaptop")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+
+                <label style="padding-left:10px;">
+                    <a href="@Url.Action("DescPriceList","OrderByLaptop")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
+                    </a>
+
+                    <a href="@Url.Action("AscPriceList","OrderByLaptop")">
+                        <i style='font-size:15px;color:black' class='fas'>&#xf106;</i>
+                    </a>
+                </label>
+            </th>
+
+            <th></th>
+        </tr>
+
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Details)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.OS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.Price)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Laptop", new { id = item.ID }, null) |
+                    @Html.ActionLink("Details", "Details", "Laptop", new { id = item.ID }, null) 
+                   @* @Html.ActionLink("Delete", "Delete", "Laptop", new { id = item.ID }, null)*@
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("List", "Laptop",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
 </div>
+
+<div class="container-fluid">
+    @Html.ActionLink("Back to List", "Index", "Laptop")
+</div>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

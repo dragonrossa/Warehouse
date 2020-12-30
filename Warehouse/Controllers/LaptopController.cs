@@ -35,7 +35,7 @@ namespace Warehouse.Controllers
         //Paging functions
 
 
-        public object pageCount(int pageSize)
+        public async Task<object> pageCount(int pageSize)
         {
             int pageCount = laptop.Child.Count();
             int pages = pageCount / pageSize;
@@ -49,7 +49,7 @@ namespace Warehouse.Controllers
             return ViewBag.pageCount;
         }
 
-        public void sessionsForPaging(int pageNumber, int pageSize)
+        public async void sessionsForPaging(int pageNumber, int pageSize)
         {
 
             //Session for controllers
@@ -58,7 +58,7 @@ namespace Warehouse.Controllers
             Session["pageSize"] = pageSize;
         }
 
-        public IPagedList<LaptopModels> pagedLaptop(int? page){
+        public async Task<IPagedList<LaptopModels>> pagedLaptop(int? page){
 
             int pageSize = 10;
             int pageNumber = page ?? 1;
@@ -106,7 +106,7 @@ namespace Warehouse.Controllers
              
 
                     //Get ViewBag.pageCount
-                    pageCount(pageSize);
+                    await pageCount(pageSize);
 
                     //Search box
 
@@ -115,7 +115,7 @@ namespace Warehouse.Controllers
                         listOfLaptops = _db.LaptopModels.Where(s => s.Name.Contains(searchString)).ToList();
                         
 
-                        return View(pagedLaptop(page));
+                        return View(await pagedLaptop(page));
 
                     }
 
@@ -134,7 +134,7 @@ namespace Warehouse.Controllers
                     ViewBag.sumFullPrice = laptopRepository.sumFullPrice;
 
 
-                    return View(pagedLaptop(page));
+                    return View(await pagedLaptop(page));
 
                 }
             }
@@ -196,13 +196,43 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/List
-        public async Task<ActionResult> List()
+        public async Task<ActionResult> List(string searchString, string sortOrder, int? page)
         {
            
             try
             {
-             
-               return View(new LaptopModels { laptop = laptopRepository.ChildByID });
+
+                listOfLaptops = (from s in _db.LaptopModels
+                                 select s).ToList();
+
+                //Search box
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    listOfLaptops = _db.LaptopModels.Where(s => s.Name.Contains(searchString)).ToList();
+
+
+                    return View(await pagedLaptop(page));
+
+                }
+
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+                //Get ViewBag.pageCount
+                await pageCount(pageSize);
+
+                //Sessions
+
+                sessionsForPaging(pageNumber, pageSize);
+
+                return View(await pagedLaptop(page));
+
             }
             catch (Exception e)
             {
@@ -213,12 +243,41 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/EditList
-        public async Task<ActionResult> EditList()
+        public async Task<ActionResult> EditList(string searchString, string sortOrder, int? page)
         {
 
             try
             {
-               return View(new LaptopModels { laptop = laptopRepository.ChildByID });
+                listOfLaptops = (from s in _db.LaptopModels
+                                 select s).ToList();
+
+                //Search box
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    listOfLaptops = _db.LaptopModels.Where(s => s.Name.Contains(searchString)).ToList();
+
+
+                    return View(await pagedLaptop(page));
+
+                }
+
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+                //Get ViewBag.pageCount
+                await pageCount(pageSize);
+
+                //Sessions
+
+                sessionsForPaging(pageNumber, pageSize);
+
+                return View(await pagedLaptop(page));
             }
             catch (Exception e)
             {
@@ -229,13 +288,42 @@ namespace Warehouse.Controllers
 
         }
 
-        ////GET: MasterData/DeleteList
-        public async Task<ActionResult> DeleteList()
+        //GET: MasterData/DeleteList
+        public async Task<ActionResult> DeleteList(string searchString, string sortOrder, int? page)
         {
             
             try
             {
-              return View(new LaptopModels { laptop = laptopRepository.ChildByID });
+                listOfLaptops = (from s in _db.LaptopModels
+                                 select s).ToList();
+
+                //Search box
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    listOfLaptops = _db.LaptopModels.Where(s => s.Name.Contains(searchString)).ToList();
+
+
+                    return View(await pagedLaptop(page));
+
+                }
+
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+                //Get ViewBag.pageCount
+                await pageCount(pageSize);
+
+                //Sessions
+
+                sessionsForPaging(pageNumber, pageSize);
+
+                return View(await pagedLaptop(page));
             }
             catch (Exception e)
             {

@@ -40,7 +40,7 @@
         <tr>
             <th>
                 Name
-                @* @Html.DisplayNameFor(model => model.Name)*@
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescName","OrderByLaptop")">
                         <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
@@ -52,8 +52,7 @@
                 </label>
             </th>
             <th>
-                Quantity
-                @* @Html.DisplayNameFor(model => model.Quantity)*@
+                 @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescQuantity","OrderByLaptop")">
                         <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
@@ -65,8 +64,7 @@
                 </label>
             </th>
             <th>
-                Price
-                @*  @Html.DisplayNameFor(model => model.Price)*@
+                  @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescPrice","OrderByLaptop")">
                         <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
@@ -78,8 +76,7 @@
                 </label>
             </th>
             <th>
-                Full price
-                @*  @Html.DisplayNameFor(model => model.FullPrice)*@
+                  @Html.DisplayNameFor(model => model.FirstOrDefault().FullPrice)
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescFullPrice","OrderByLaptop")">
                         <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
@@ -182,9 +179,9 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+
         @Html.ActionLink("Go back", "Index", "StartPage")
-    </div>
+ 
 
 </div>
 

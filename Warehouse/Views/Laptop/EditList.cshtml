@@ -1,8 +1,12 @@
-﻿@model Warehouse.Models.LaptopModels
+﻿@model PagedList.IPagedList<Warehouse.Models.LaptopModels>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
 }
+
+
 <head>
 
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
@@ -14,14 +18,24 @@
 
 
 <div class="container-fluid">
-    <p>
-        @Html.ActionLink("Create new", "Create")
-    </p>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">@Html.ActionLink("Create", "Create", "Laptop") </a></li>
+        </ol>
+    </nav>
+    @using (Html.BeginForm("EditList", "Laptop", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <p>
+            Find by name: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
 </div>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
             <label style="padding-left:10px;">
                 <a href="@Url.Action("DescNameEditList","OrderByLaptop")">
                     <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
@@ -33,7 +47,7 @@
             </label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Quantity)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
             <label style="padding-left:10px;">
                 <a href="@Url.Action("DescQuantityEditList","OrderByLaptop")">
                     <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
@@ -45,7 +59,7 @@
             </label>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
             <label style="padding-left:10px;">
                 <a href="@Url.Action("DescPriceEditList","OrderByLaptop")">
                     <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
@@ -60,7 +74,7 @@
     </tr>
 
 
-    @foreach (var item in Model.laptop)
+    @foreach (var item in Model)
     {
         <tr>
             <td>
@@ -73,12 +87,17 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit","Laptop", new { id = item.ID }, null)
+                @Html.ActionLink("Edit", "Edit", "Laptop", new { id = item.ID }, null)
             </td>
         </tr>
     }
 
 </table>
+
+Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", "Laptop",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 <div class="container">
     @Html.ActionLink("Back to List", "Index", "Laptop")
