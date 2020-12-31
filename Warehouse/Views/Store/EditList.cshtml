@@ -1,4 +1,6 @@
-﻿@model Warehouse.Models.StoreModels
+﻿@model PagedList.IPagedList<Warehouse.Models.StoreModels>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
@@ -15,11 +17,21 @@
 <div class="container-fluid">
     <h4>Edit</h4>
 
+    @using (Html.BeginForm("EditList", "Store", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <p>
+            Find by name: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
+
+
 
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescNameEdit","OrderByStore")">
                         <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
@@ -31,7 +43,7 @@
                 </label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Location)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Location)
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescLocationEdit","OrderByStore")">
                         <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
@@ -43,7 +55,7 @@
                 </label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ZipCode)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ZipCode)
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescZipcodeEdit","OrderByStore")">
                         <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
@@ -55,55 +67,59 @@
                 </label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telephone)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Telephone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.WorkingTime)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().WorkingTime)
             </th>
             <th></th>
         </tr>
 
-        @foreach (var item in Model.store)
+        @foreach (var item in Model)
         {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ZipCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telephone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WorkingTime)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID })
-        </td>
-      @*  @Html.ActionLink("Home", "Index", "Invoice", null, new { id = "homelink" })*@
-    </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ZipCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telephone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkingTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+                </td>
+                @*  @Html.ActionLink("Home", "Index", "Invoice", null, new { id = "homelink" })*@
+            </tr>
         }
 
     </table>
 
     <div>
-        @Html.ActionLink("Back to List", "Index","Store")
+        Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("EditList", "Store",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        @Html.ActionLink("Back to List", "Index", "Store")
     </div>
 </div>
 

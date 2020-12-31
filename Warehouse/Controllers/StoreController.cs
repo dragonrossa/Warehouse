@@ -50,17 +50,6 @@ namespace Warehouse.Controllers
                 try
                 {
 
-                ////Search box
-
-                //if (!String.IsNullOrEmpty(searchString))
-                //{
-                //    var store = await _db.StoreModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
-
-                //    return View(new StoreModels { store = store });
-
-
-                //}
-
                 //Paging and search
 
                 ViewBag.CurrentSort = sortOrder;
@@ -96,9 +85,6 @@ namespace Warehouse.Controllers
 
                 return View(await storeRepository.pagedStore(page));
 
-             
-
-                   // return View( new StoreModels { store = store.Child });
                 }
                 catch (Exception e)
                 {
@@ -193,11 +179,44 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/List
-        public async Task<ActionResult> List()
+        public async Task<ActionResult> List(string searchString, string sortOrder, int? page)
         {
             try
             {
-                return View( new StoreModels { store = storeRepository.childOrderByID });
+                //Paging and search
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+
+
+                //Get ViewBag.pageCount
+                await storeRepository.pageCount(pageSize, store);
+
+                //Search box
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+
+                    return View(await storeRepository.storeSearch(page, searchString));
+                }
+
+                //Session for controllers
+
+                Session["pageNumber"] = pageNumber;
+                Session["pageSize"] = pageSize;
+
+                ViewBag.store = storeRepository.lastInput.Name;
+                ViewBag.date = storeRepository.lastInput.Date;
+                ViewBag.location = storeRepository.lastInput.Location;
+
+
+
+                return View(await storeRepository.pagedStore(page));
             }
             catch (Exception e)
             {
@@ -209,11 +228,44 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/EditList
-        public async Task<ActionResult> EditList()
+        public async Task<ActionResult> EditList(string searchString, string sortOrder, int? page)
         {
             try
             {
-                return View( new StoreModels { store = storeRepository.childOrderByID });
+                //Paging and search
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+
+
+                //Get ViewBag.pageCount
+                await storeRepository.pageCount(pageSize, store);
+
+                //Search box
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+
+                    return View(await storeRepository.storeSearch(page, searchString));
+                }
+
+                //Session for controllers
+
+                Session["pageNumber"] = pageNumber;
+                Session["pageSize"] = pageSize;
+
+                ViewBag.store = storeRepository.lastInput.Name;
+                ViewBag.date = storeRepository.lastInput.Date;
+                ViewBag.location = storeRepository.lastInput.Location;
+
+
+
+                return View(await storeRepository.pagedStore(page));
             }
             catch (Exception e)
             {
@@ -225,11 +277,44 @@ namespace Warehouse.Controllers
         }
 
         //GET: MasterData/DeleteList
-        public async Task<ActionResult> DeleteList()
+        public async Task<ActionResult> DeleteList(string searchString, string sortOrder, int? page)
         {
             try
             {
-              return View( new StoreModels { store = storeRepository.childOrderByID });
+                //Paging and search
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+
+
+                //Get ViewBag.pageCount
+                await storeRepository.pageCount(pageSize, store);
+
+                //Search box
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+
+                    return View(await storeRepository.storeSearch(page, searchString));
+                }
+
+                //Session for controllers
+
+                Session["pageNumber"] = pageNumber;
+                Session["pageSize"] = pageSize;
+
+                ViewBag.store = storeRepository.lastInput.Name;
+                ViewBag.date = storeRepository.lastInput.Date;
+                ViewBag.location = storeRepository.lastInput.Location;
+
+
+
+                return View(await storeRepository.pagedStore(page));
             }
             catch (Exception e)
             {
