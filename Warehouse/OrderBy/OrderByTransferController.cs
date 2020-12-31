@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,34 +17,34 @@ namespace Warehouse.OrderBy
         public ActionResult AscName()
         {
 
-            return View("~/Views/Transfer/Index.cshtml", new TransferResult { result = transfer.AscendingByName });
+            return View("~/Views/Transfer/Index.cshtml", transfer.AscendingByName.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
 
         }
 
         public ActionResult DescName()
         {
-            return View("~/Views/Transfer/Index.cshtml", new TransferResult { result = transfer.DescendingByName });
+            return View("~/Views/Transfer/Index.cshtml", transfer.DescendingByName.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
 
         }
 
         public ActionResult AscQuantity()
         {
-            return View("~/Views/Transfer/Index.cshtml", new TransferResult { result = transfer.AscendingByQuantity });
+            return View("~/Views/Transfer/Index.cshtml", transfer.AscendingByQuantity.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
         }
 
         public ActionResult DescQuantity()
         {
-            return View("~/Views/Transfer/Index.cshtml", new TransferResult { result = transfer.DescendingByQuantity });
+            return View("~/Views/Transfer/Index.cshtml", transfer.DescendingByQuantity.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
         }
 
         public ActionResult AscLocation()
         {
-            return View("~/Views/Transfer/Index.cshtml", new TransferResult { result = transfer.AscendingByPlace });
+            return View("~/Views/Transfer/Index.cshtml", transfer.AscendingByPlace.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
         }
 
         public ActionResult DescLocation()
         {
-            return View("~/Views/Transfer/Index.cshtml", new TransferResult { result = transfer.DescendingByPlace });
+            return View("~/Views/Transfer/Index.cshtml", transfer.DescendingByPlace.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
         }
 
 

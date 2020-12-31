@@ -6,123 +6,136 @@ using System.Web.Mvc;
 using Warehouse.Models;
 using Warehouse.Helpers;
 using Warehouse.DAL;
+using System.Threading.Tasks;
+using PagedList;
+using System.Data.Entity;
 
 namespace Warehouse.Repository
 {
-    public class TransferRepository: DatabaseRepository, ITransferRepository
+    public class TransferRepository: Controller, ITransferRepository
     {
         private WarehouseContext _db = new WarehouseContext();
 
+        //Get List<TransferResult> for search and paging
+
+        List<TransferResult> listOfTransfers = new List<TransferResult>();
+
         //Get laptop list
-        public List<LaptopModels> ListLaptop()
+        public async Task<List<LaptopModels>> ListLaptop()
         {
 
             return (from k in _db.LaptopModels select k).ToList();
         }
 
         //Get transfer list with laptop and store name
-        public object callResult()
+        public async Task<object> callResult()
         {
-            return (from t in _db.TransferModels 
+            return await (from t in _db.TransferModels 
                     join s in _db.StoreModels on t.StoreID equals s.ID 
-                    select new { s.Name, t.LaptopName, t.LaptopQuantity }).ToList();
+                    select new { s.Name, t.LaptopName, t.LaptopQuantity }).ToListAsync();
         }
 
         //Store list as new object
-        public List<TransferResult> storeResult()
+        public async Task<List<TransferResult>> storeResult()
         {
-            return (from t in _db.TransferModels
+            return await (from t in _db.TransferModels
                     join s in _db.StoreModels on t.StoreID equals s.ID
                     select new TransferResult {  
                         StoreName = s.Name, 
                         LaptopName= t.LaptopName,
-                        LaptopQuantity= t.LaptopQuantity }).ToList();
+                        LaptopQuantity= t.LaptopQuantity }).ToListAsync();
 
         }
 
 
         //Get store
-        public List<SelectListItem> StoreName()
+        public async Task<List<SelectListItem>> StoreName()
         {
-            return _db.StoreModels.ToList().Select(u => new SelectListItem
+            return await _db.StoreModels.Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.ID.ToString()
-            }).ToList();
+            }).ToListAsync();
         }
 
         //Get laptop
-        public List<SelectListItem> LaptopName()
+        public async Task<List<SelectListItem>> LaptopName()
         {
-            return _db.LaptopModels.Where(u => u.Quantity != 0).ToList().Select(u => new SelectListItem
+            return await _db.LaptopModels.Where(u => u.Quantity != 0).Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.ID.ToString()
-            }).ToList();
+            }).ToListAsync();
 
         }
 
         //Get laptop counter
-        public int possibleCount(int LaptopID)
+        public async Task<int> possibleCount(int LaptopID)
         {
-            return (from k in _db.LaptopModels where k.ID == LaptopID select k.Quantity).First();
+            return await (from k in _db.LaptopModels where k.ID == LaptopID select k.Quantity).FirstOrDefaultAsync();
         }
 
         //Get laptop
-        public string laptop(int LaptopID)
+        public async Task<string> laptop(int LaptopID)
         {
-            return (from k in _db.LaptopModels where k.ID == LaptopID select k.Name).First();
+            return await (from k in _db.LaptopModels where k.ID == LaptopID select k.Name).FirstOrDefaultAsync();
         }
 
         //Get store
-        public StoreModels storeFind(int storeID)
+        public async Task<StoreModels> storeFind(int storeID)
         {
-            return (from s in _db.StoreModels where s.ID == storeID select s).First();
+            return await (from s in _db.StoreModels where s.ID == storeID select s).FirstOrDefaultAsync();
         }
 
         //Get laptop by Transfer ID
-        public LaptopModels laptopFind(int TransferLaptopID)
+        public async Task<LaptopModels> laptopFind(int TransferLaptopID)
         {
-            return (from k in _db.LaptopModels where k.ID == TransferLaptopID select k).First();
+            return await(from k in _db.LaptopModels where k.ID == TransferLaptopID select k).FirstOrDefaultAsync();
         }
 
 
         //Create transfer
-        public void createTransfer(FormCollection form, TransferModels transfer, TransferRepository transferRepository)
+        public async Task<TransferModels> createTransfer(FormCollection form, TransferModels transfer, TransferRepository transferRepository)
         {
             int storeID = Convert.ToInt32(form["StoreName"].ToString());
             int LaptopID = Convert.ToInt32(form["LaptopName"].ToString());
             int LaptopQuantity = Convert.ToInt32(form["LaptopQuantity"].ToString());
 
-            if (transferRepository.possibleCount(LaptopID) > 0)
+            if (await transferRepository.possibleCount(LaptopID) > 0)
             {
 
                 transfer.StoreID = storeID;
                 transfer.LaptopID = LaptopID;
-                transfer.LaptopName = transferRepository.laptop(LaptopID);
+                transfer.LaptopName = await transferRepository.laptop(LaptopID);
                 transfer.LaptopQuantity = LaptopQuantity;
                 transfer.Date = DateTime.Now;
                 _db.TransferModels.Add(transfer);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
 
                 //get Laptop
-                transferRepository.storeFind(storeID).QoP -= LaptopQuantity; // reduce QoP for quantity number                                                           //  transferRepository.SaveData();
-                _db.SaveChanges();
-                transferRepository.laptopFind(transfer.LaptopID).Quantity -= LaptopQuantity;  // reduce LaptopQuantity from Quantity
-                _db.SaveChanges();
+                var laptop = await transferRepository.storeFind(storeID);
+                laptop.QoP -= LaptopQuantity; // reduce QoP for quantity number  
+                //  transferRepository.SaveData();
+                await _db.SaveChangesAsync();
+                var laptopFind = await transferRepository.laptopFind(transfer.LaptopID);
+                laptopFind.Quantity -= LaptopQuantity;  // reduce LaptopQuantity from Quantity
+
+               // transferRepository.laptopFind(transfer.LaptopID).Quantity -= LaptopQuantity; 
+                await _db.SaveChangesAsync();
 
                 LogModels log = new LogModels
                 {
                     Type = "2",
                     Description = "New transfer was inserted with transfer of laptop called " + transfer.LaptopName + " with quantity of " +
-                           transfer.LaptopQuantity + " on date " + DateTime.Now + " with location to " + transferRepository.storeFind(storeID).Name + ", " + transferRepository.storeFind(storeID).Location + ".",
+                           transfer.LaptopQuantity + " on date " + DateTime.Now + " with location to " + laptop.Name + ", " + laptop.Location + ".",
                     Date = DateTime.Now
                 };
 
                 _db.LogModels.Add(log);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
 
             }
+            return transfer;
         }
 
         //Properties
@@ -136,6 +149,45 @@ namespace Warehouse.Repository
                                .OrderByDescending(k => k.ID)
                                .First();
             }
+        }
+
+        //Search and Paging
+
+        public async Task<object> pageCount(int pageSize, TransferModels transfer)
+        {
+            int pageCount = transfer.Child.Count();
+            int pages = pageCount / pageSize;
+            //ViewBag.pageCount = pages;
+            int rest = pageCount % pageSize;
+            if (rest < 10)
+            {
+                pages = pages + 1;
+                ViewBag.pageCount = pages;
+            }
+            return ViewBag.pageCount;
+        }
+
+        //Get IPagedList for View
+
+        public async Task<IPagedList<TransferResult>> pagedTransfer(int? page)
+        {
+            // listOfLaptops = await (from s in _db.LaptopModels select s).ToListAsync();
+            listOfTransfers = await storeResult();
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return listOfTransfers.ToPagedList(pageNumber, pageSize);
+
+        }
+
+        //Get IPagedList for Search
+        public async Task<IPagedList<TransferResult>> transferSearch(int? page, string searchString)
+        {
+            // listOfLaptops = await _db.LaptopModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
+            listOfTransfers = await storeResult();
+            listOfTransfers = listOfTransfers.Where(s => s.LaptopName.Contains(searchString)).ToList();
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return listOfTransfers.ToPagedList(pageNumber, pageSize);
         }
 
     }

@@ -27,31 +27,64 @@ namespace Warehouse.Controllers
 
       
         // GET: Index
-        public async Task<ActionResult> Index(string searchString)
+        public async Task<ActionResult> Index(string searchString, string sortOrder, int? page)
         {
-          
 
-                try
-                {
+
+            try
+            {
 
                 ////Search box
 
+                //if (!String.IsNullOrEmpty(searchString))
+                //{
+                //    var transfer = transferRepository.storeResult().Where(s => s.LaptopName.Contains(searchString));
+
+                //    return View(new TransferResult { result = transfer });
+
+
+                //}
+
+                //Paging and search
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+
+
+                //Get ViewBag.pageCount
+                await transferRepository.pageCount(pageSize, transfer);
+
+                //Search box
+
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    var transfer = transferRepository.storeResult().Where(s => s.LaptopName.Contains(searchString));
 
-                    return View(new TransferResult { result = transfer });
-
-
+                    return View(await transferRepository.transferSearch(page, searchString));
                 }
+
+                //Session for controllers
+
+                Session["pageNumber"] = pageNumber;
+                Session["pageSize"] = pageSize;
+
+                var lastInput = transferRepository.lastInput;
+
+                //ViewBag.store = lastInput.LaptopName;
+                //ViewBag.date = lastInput.Date;
+                //ViewBag.location = lastInput.Location;
 
                 ViewBag.laptop = transferRepository.lastInput.LaptopName;
                 ViewBag.date = transferRepository.lastInput.Date;
                 ViewBag.quantity = transferRepository.lastInput.LaptopQuantity;
-               
-                return View( new TransferResult { result = transferRepository.storeResult() }
-                    );
-                }
+
+                return View(await transferRepository.pagedTransfer(page));
+
+            }
                 catch (Exception e)
                {
                     Console.WriteLine("{0} Exception caught.", e);
@@ -70,18 +103,18 @@ namespace Warehouse.Controllers
         }
 
 
-        public ActionResult NotFound()
+        public async Task<ActionResult> NotFound()
         {
             return View();
         }
 
 
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             try
             {
-                ViewData["StoreName"] = transferRepository.StoreName();
-                ViewData["LaptopName"] = transferRepository.LaptopName();
+                ViewData["StoreName"] = await transferRepository.StoreName();
+                ViewData["LaptopName"] = await transferRepository.LaptopName();
 
                 return View();
             }
@@ -98,7 +131,7 @@ namespace Warehouse.Controllers
         [HandleError]
         [ValidateAntiForgeryToken]
 
-        public ActionResult Create(FormCollection form, TransferModels transfer)
+        public async Task<ActionResult> Create(FormCollection form, TransferModels transfer)
         {
             try
             {
@@ -106,10 +139,10 @@ namespace Warehouse.Controllers
                
                 int LaptopID = Convert.ToInt32(form["LaptopName"].ToString());
                
-               transferRepository. createTransfer( form,  transfer,  transferRepository);
+               await transferRepository. createTransfer( form,  transfer,  transferRepository);
 
 
-                if (transferRepository.possibleCount(LaptopID) == 0)
+                if (await transferRepository.possibleCount(LaptopID) == 0)
                 {
                     return RedirectToAction("Index", "Laptop", new { });
                 }

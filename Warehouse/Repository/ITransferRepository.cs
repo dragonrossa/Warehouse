@@ -5,30 +5,40 @@ using System.Web;
 using System.Web.Mvc;
 using Warehouse.Models;
 using Warehouse.Helpers;
+using System.Threading.Tasks;
+using PagedList;
 
 namespace Warehouse.Repository
 {
     interface ITransferRepository
     {
         //Get laptop list
-         List<LaptopModels> ListLaptop();
+         Task<List<LaptopModels>> ListLaptop();
         //Get transfer list with laptop and store name
-         object callResult();
+         Task<object> callResult();
         //Store list as new object
-         List<TransferResult> storeResult();
+         Task<List<TransferResult>> storeResult();
         //Get store
-         List<SelectListItem> StoreName();
+         Task<List<SelectListItem>> StoreName();
         //Get laptop
-         List<SelectListItem> LaptopName();
+         Task<List<SelectListItem>> LaptopName();
         //Get laptop counter
-         int possibleCount(int LaptopID);
+         Task<int> possibleCount(int LaptopID);
         //Get laptop
-         string laptop(int LaptopID);
+         Task<string> laptop(int LaptopID);
         //Get store
-         StoreModels storeFind(int storeID);
+         Task<StoreModels> storeFind(int storeID);
         //Get laptop by Transfer ID
-         LaptopModels laptopFind(int TransferLaptopID);
+         Task<LaptopModels> laptopFind(int TransferLaptopID);
         //Create transfer
-        void createTransfer(FormCollection form, TransferModels transfer, TransferRepository transferRepository);
+         Task<TransferModels> createTransfer(FormCollection form, TransferModels transfer, TransferRepository transferRepository);
+        //Search and Paging
+        Task<object> pageCount(int pageSize, TransferModels transfer);
+
+        //Get IPagedList for View
+        Task<IPagedList<TransferResult>> pagedTransfer(int? page);
+
+        //Get IPagedList for Search
+        Task<IPagedList<TransferResult>> transferSearch(int? page, string searchString);
     }
 }
