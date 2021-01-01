@@ -1,4 +1,6 @@
-﻿@model Warehouse.Models.TaskListModels
+﻿@model PagedList.IPagedList<Warehouse.Models.TaskListModels>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
@@ -35,7 +37,7 @@
 
     <table class="table">
         <th>
-            @Html.DisplayNameFor(model => model.ID)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ID)
             <label style="padding-left:10px;">
                 <a href="@Url.Action("DescID","OrderByTask")">
                     <i style='font-size:15px;color:black' class='fas'>&#xf107;</i>
@@ -52,7 +54,7 @@
             @Html.Label("List")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().User)
         </th>
 
         <th></th>
@@ -61,7 +63,7 @@
 
 
 
-        @foreach (var item in Model.task)
+        @foreach (var item in Model)
         {
 
 
@@ -100,6 +102,11 @@
         }
     </table>
     <div class="container">
+
+        Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("MyList", "TaskList",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
         @Html.ActionLink("Back", "Index", "TaskList", null, new { @class = "btn btn-primary" })
 

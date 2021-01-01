@@ -1,10 +1,14 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Warehouse.DAL;
+using Warehouse.Helpers;
 using Warehouse.Models;
 
 namespace Warehouse.Repository
@@ -14,86 +18,92 @@ namespace Warehouse.Repository
         // GET: TaskList
 
          private WarehouseContext _db = new WarehouseContext();
-      //  TaskListModels taskListModels = new TaskListModels();
+
+        List<TaskListModels> listOfTasks = new List<TaskListModels>();
+
+        TaskListModels task = new TaskListModels();
 
         //Username of this user
 
-        public string user(string username)
+        public async Task<string> user(string username)
         {
             var user = username;
             return user;
         }
 
         //Create task after submiting form
-        public TaskListModels createTask(TaskListModels task, System.Web.Mvc.FormCollection form, string username)
+        public async Task<TaskListModels> createTask(TaskListModels task, System.Web.Mvc.FormCollection form, string username)
         {
             task.Details = form["Details"];
-            task.User = user(username);
+            task.User = await user(username);
             _db.TaskListModels.Add(task);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return task;
         }
 
         //Get back list of false tasks to user
-        public List<TaskListModels> listOfFalseTasks()
+        public async Task<List<TaskListModels>> listOfFalseTasks()
         {
             bool status = false;
-            var list = (from l in _db.TaskListModels where l.Status == status select l).ToList();
+            var list = await (from l in _db.TaskListModels where l.Status == status select l).ToListAsync();
             return list;
         }
 
         //Change status after clicking on checkbox
-        public TaskListModels changeStatus(System.Web.Mvc.FormCollection form, int id)
+        public async Task<TaskListModels> changeStatus(System.Web.Mvc.FormCollection form, int id)
         {
-            var task = (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
+            var task = await (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefaultAsync();
             string status = form["status"];
             task.Status = Convert.ToBoolean(form["status"]);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return task;
         }
 
         //Find task by ID
-        public TaskListModels findTask(int id)
+        public async Task<TaskListModels> findTask(int id)
         {
-            return (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefault();
+            return await (from t in _db.TaskListModels where t.ID == id select t).FirstOrDefaultAsync();
 
         }
 
 
         //Select list for Assistant 1
 
-        public List<SelectListItem> assistant1()
+        public async Task<List<SelectListItem>> assistant1()
         {
-            return _db.UserModels.ToList().Select(u => new SelectListItem
+            return await _db.UserModels.Select(u => new SelectListItem
             {
                 Text = u.UserName,
                 Value = u.UserName
-            }).ToList();
+            }).ToListAsync();
         }
 
         //Select list for Assistant 2
-        public List<SelectListItem> assistant2()
+        public async Task<List<SelectListItem>> assistant2()
         {
-            return _db.UserModels.ToList().Select(u => new SelectListItem
+            return await _db.UserModels.Select(u => new SelectListItem
             {
                 Text = u.UserName,
                 Value = u.UserName
-            }).ToList();
+            }).ToListAsync();
         }
 
         //Select list for Assistant2
-        public List<SelectListItem> assistant3()
+        public async Task<List<SelectListItem>> assistant3()
         {
-            return _db.UserModels.ToList().Select(u => new SelectListItem
+            return await _db.UserModels.Select(u => new SelectListItem
             {
                 Text = u.UserName,
                 Value = u.UserName
-            }).ToList();
+            }).ToListAsync();
         }
 
-        public object getAssistant1Info(int id)
+        //Not assigned assistant 1
+        public async Task<object> getAssistant1Info(int id)
         {
-            if (String.IsNullOrEmpty(findTask(id).Assistant1))
+            var task = await findTask(id);
+
+            if (String.IsNullOrEmpty(task.Assistant1))
             {
                 TempData["assistant1"] = "not assigned yet";
             }
@@ -102,33 +112,40 @@ namespace Warehouse.Repository
             return TempData["assistant1"];
         }
 
-        public object getAssistant2Info(int id)
+        //Not assigned assistant 2
+        public async Task<object> getAssistant2Info(int id)
         {
-            if (String.IsNullOrEmpty(findTask(id).Assistant2))
+            var task = await findTask(id);
+
+            if (String.IsNullOrEmpty(task.Assistant2))
             {
                 TempData["assistant2"] = "not assigned yet";
             }
             return TempData["assistant2"];
         }
 
-        public object getAssistant3Info(int id)
+        //Not assigned assistant 3
+        public async Task<object> getAssistant3Info(int id)
         {
+            var task = await findTask(id);
 
-            if (String.IsNullOrEmpty(findTask(id).Assistant3))
+            if (String.IsNullOrEmpty(task.Assistant3))
             {
                 TempData["assistant3"] = "not assigned yet";
             }
             return TempData["assistant3"];
         }
 
-        public string setAssistant1(int id, string assistantID1)
-        {
+        //Save assistant1
 
+        public async Task<string> setAssistant1(int id, string assistantID1)
+        {
+            var task = await findTask(id);
 
             if (!String.IsNullOrEmpty(assistantID1))
             {
-                findTask(id).Assistant1 = assistantID1;
-                _db.SaveChanges();
+                task.Assistant1 = assistantID1;
+                await _db.SaveChangesAsync();
 
             }
             else
@@ -136,43 +153,46 @@ namespace Warehouse.Repository
 
             }
 
-            return findTask(id).Assistant1;
+            return task.Assistant1;
         }
 
-        public string setAssistant2(int id, string assistantID2)
+        //Save assistant2
+        public async Task<string> setAssistant2(int id, string assistantID2)
         {
 
+            var task = await findTask(id);
 
             if (!String.IsNullOrEmpty(assistantID2))
             {
-                findTask(id).Assistant2 = assistantID2;
-                _db.SaveChanges();
+                task.Assistant2 = assistantID2;
+                await _db.SaveChangesAsync();
             }
             else
             {
 
             }
-            return findTask(id).Assistant2;
+            return task.Assistant2;
         }
 
-        public string setAssistant3(int id, string assistantID3)
+        //Save assistant3
+        public async Task<string> setAssistant3(int id, string assistantID3)
         {
-
+            var task = await findTask(id);
             if (!String.IsNullOrEmpty(assistantID3))
             {
-                findTask(id).Assistant3 = assistantID3;
-                _db.SaveChanges();
+                task.Assistant3 = assistantID3;
+                await _db.SaveChangesAsync();
             }
             else
             {
 
             }
-            return findTask(id).Assistant2;
+            return task.Assistant2;
         }
 
         //Upload file in Details section
 
-        public byte[] uploadFile(int id, HttpPostedFileBase postedFile)
+        public async Task<byte[]> uploadFile(int id, HttpPostedFileBase postedFile)
         {
             byte[] bytes;
 
@@ -184,11 +204,13 @@ namespace Warehouse.Repository
 
             var str = System.Text.Encoding.Default.GetString(bytes);
 
-            findTask(id).UploadName = postedFile.FileName;
-            findTask(id).ContentType = postedFile.ContentType;
-            findTask(id).Data = bytes;
+            var task = await findTask(id);
 
-            _db.SaveChanges();
+            task.UploadName = postedFile.FileName;
+            task.ContentType = postedFile.ContentType;
+            task.Data = bytes;
+
+            await _db.SaveChangesAsync();
 
             return bytes;
 
@@ -198,7 +220,7 @@ namespace Warehouse.Repository
 
         //Download previously uploaded file
 
-        public FileContentResult downloadFile(int? FileId)
+        public async Task<FileContentResult> downloadFile(int? FileId)
         {
             TaskListModels taskList = new TaskListModels();
             var file = _db.TaskListModels.ToList().Find(p => p.ID == FileId);
@@ -207,15 +229,65 @@ namespace Warehouse.Repository
 
         //Delete uploaded file
 
-        public TaskListModels deleteFile(int? FileId2)
+        public async Task<TaskListModels> deleteFile(int? FileId2)
         {
 
-            var file = (from p in _db.TaskListModels where p.ID == FileId2 select p).FirstOrDefault();
+            var file = await (from p in _db.TaskListModels where p.ID == FileId2 select p).FirstOrDefaultAsync();
             file.UploadName = null;
             file.ContentType = null;
             file.Data = null;
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return file;
+        }
+
+        //Properties
+
+        public TransferModels lastInput
+        {
+            get
+            {
+                return (from k in _db.TransferModels
+                        select k)
+                               .OrderByDescending(k => k.ID)
+                               .First();
+            }
+        }
+
+        //Search and Paging
+
+        public async Task<object> pageCount(int pageSize, TaskListModels task)
+        {
+            int pageCount = task.Child.Count();
+            int pages = pageCount / pageSize;
+            //ViewBag.pageCount = pages;
+            int rest = pageCount % pageSize;
+            if (rest < 10)
+            {
+                pages = pages + 1;
+                ViewBag.pageCount = pages;
+            }
+            return ViewBag.pageCount;
+        }
+
+        //Get IPagedList for View
+
+        public async Task<IPagedList<TaskListModels>> pagedTaskList(int? page)
+        {
+            listOfTasks = await listOfFalseTasks();
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return listOfTasks.ToPagedList(pageNumber, pageSize);
+
+        }
+
+        //Get IPagedList for Search
+        public async Task<IPagedList<TaskListModels>> taskSearch(int? page, string searchString)
+        {
+            listOfTasks = await listOfFalseTasks();
+            listOfTasks = listOfTasks.Where(s => s.User.Contains(searchString)).ToList();
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return listOfTasks.ToPagedList(pageNumber, pageSize);
         }
 
     }

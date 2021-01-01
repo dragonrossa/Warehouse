@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,13 +17,13 @@ namespace Warehouse.OrderBy
         public ActionResult AscID()
         {
 
-            return View("~/Views/TaskList/MyList.cshtml", new TaskListModels { task = taskList.AscendingByID });
+            return View("~/Views/TaskList/MyList.cshtml", taskList.AscendingByID.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
 
         }
 
         public ActionResult DescID()
         {
-            return View("~/Views/TaskList/MyList.cshtml", new TaskListModels { task = taskList.DescendingByID });
+            return View("~/Views/TaskList/MyList.cshtml", taskList.DescendingByID.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
 
         }
 
@@ -31,25 +32,25 @@ namespace Warehouse.OrderBy
         public ActionResult AscIDList()
         {
 
-            return View("~/Views/TaskList/List.cshtml", new TaskListModels { task = taskList.AscendingByID });
+            return View("~/Views/TaskList/List.cshtml", taskList.AscendingByID.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
 
         }
 
         public ActionResult DescIDList()
         {
-            return View("~/Views/TaskList/List.cshtml", new TaskListModels { task = taskList.DescendingByID });
+            return View("~/Views/TaskList/List.cshtml", taskList.DescendingByID.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
 
         }
 
         public ActionResult DescStatusList()
         {
-            return View("~/Views/TaskList/List.cshtml", new TaskListModels { task = taskList.AscendingByStatus });
+            return View("~/Views/TaskList/List.cshtml", taskList.AscendingByStatus.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
 
         }
         public ActionResult AscStatusList()
         {
 
-            return View("~/Views/TaskList/List.cshtml", new TaskListModels { task = taskList.DescendingByStatus });
+            return View("~/Views/TaskList/List.cshtml", taskList.DescendingByStatus.ToPagedList(Convert.ToInt32(Session["pageNumber"]), Convert.ToInt32(Session["pageSize"])));
 
         }
     }

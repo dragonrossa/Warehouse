@@ -27,12 +27,12 @@ namespace Warehouse.Controllers
 
 
         // GET: TaskList
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
 
             try
             {
-                ViewBag.user = taskListRepository.user(User.Identity.GetUserName());
+                ViewBag.user = await taskListRepository.user(User.Identity.GetUserName());
                 return View();
             }
             catch (Exception e)
@@ -55,26 +55,52 @@ namespace Warehouse.Controllers
 
         //Exception - UserNotFound
 
-        public ActionResult NotFound()
+        public async Task<ActionResult> NotFound()
         {
             return View();
         }
 
         [HttpPost]
         //[HandleError]
-        public ActionResult Create(TaskListModels task, System.Web.Mvc.FormCollection form)
+        public async Task<ActionResult> Create(TaskListModels task, System.Web.Mvc.FormCollection form)
         {
 
-            taskListRepository.createTask(task, form, User.Identity.GetUserName());
+            await taskListRepository.createTask(task, form, User.Identity.GetUserName());
             return RedirectToAction("MyList");
         }
 
-        public async Task<ActionResult> MyList()
+        public async Task<ActionResult> MyList(string sortOrder, int? page)
         {
             try
             {
-                
-                return View(new TaskListModels { task = taskListRepository.listOfFalseTasks() });
+                //Paging and search
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+
+
+                //Get ViewBag.pageCount
+                await taskListRepository.pageCount(pageSize, taskListModels);
+
+
+                //Session for controllers
+
+                Session["pageNumber"] = pageNumber;
+                Session["pageSize"] = pageSize;
+
+                var lastInput = taskListRepository.lastInput;
+
+                ViewBag.laptop = taskListRepository.lastInput.LaptopName;
+                ViewBag.date = taskListRepository.lastInput.Date;
+                ViewBag.quantity = taskListRepository.lastInput.LaptopQuantity;
+
+                return View(await taskListRepository.pagedTaskList(page));
+
             }
             catch (Exception)
             {
@@ -90,13 +116,13 @@ namespace Warehouse.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult MyList(System.Web.Mvc.FormCollection form, int id)
+        public async Task<ActionResult> MyList(System.Web.Mvc.FormCollection form, int id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    taskListRepository.changeStatus(form, id);
+                    await taskListRepository.changeStatus(form, id);
 
                     return RedirectToAction("Index");
                 }
@@ -111,19 +137,21 @@ namespace Warehouse.Controllers
           
         }
 
-        public async Task<ActionResult> Search(string searchString)
+        public async Task<ActionResult> Search(string searchString, int? page)
         {
+
+            //Search box
+
             if (!String.IsNullOrEmpty(searchString))
             {
-                var taskUser = _db.TaskListModels.Where(s => s.User.Contains(searchString)).ToListAsync();
 
-                return View("MyList", new TaskListModels { task = await taskUser });
+                return View("MyList",await taskListRepository.taskSearch(page, searchString));
             }
 
             return RedirectToAction("MyList");
         }
 
-        public ActionResult List()
+        public async Task<ActionResult> List()
         {
             
 
@@ -135,30 +163,32 @@ namespace Warehouse.Controllers
             });
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
             try
             {
-         
-                TempData["assistant1"] = taskListRepository.findTask(id).Assistant1;
+                var task = await taskListRepository.findTask(id);
 
-                TempData["assistant2"] = taskListRepository.findTask(id).Assistant2;
 
-                TempData["assistant3"] = taskListRepository.findTask(id).Assistant3;
+                TempData["assistant1"] = Convert.ToString(task.Assistant1);
 
-                TempData["id"] = taskListRepository.findTask(id).ID;
+                TempData["assistant2"] = Convert.ToString(task.Assistant2);
+
+                TempData["assistant3"] = Convert.ToString(task.Assistant3);
+
+                TempData["id"] = task.ID;
 
 
                 //Get info if there are assistants checked from before
-                taskListRepository.getAssistant1Info(id);
-                taskListRepository.getAssistant2Info(id);
-                taskListRepository.getAssistant3Info(id);
+                await taskListRepository.getAssistant1Info(id);
+                await taskListRepository.getAssistant2Info(id);
+                await taskListRepository.getAssistant3Info(id);
 
-                ViewData["assistant1"] = taskListRepository.assistant1();
-                ViewData["assistant2"] = taskListRepository.assistant2();
-                ViewData["assistant3"] = taskListRepository.assistant3();
+                ViewData["assistant1"] = await taskListRepository.assistant1();
+                ViewData["assistant2"] = await taskListRepository.assistant2();
+                ViewData["assistant3"] = await taskListRepository.assistant3();
                 
-                return View(taskListRepository.findTask(id));
+                return View(await taskListRepository.findTask(id));
 
             }
             catch (Exception)
@@ -173,7 +203,7 @@ namespace Warehouse.Controllers
         [HandleError]
         [ValidateAntiForgeryToken]
 
-        public ActionResult Details(System.Web.Mvc.FormCollection form, HttpPostedFileBase postedFile)
+        public async Task<ActionResult> Details(System.Web.Mvc.FormCollection form, HttpPostedFileBase postedFile)
         {
             
             //Send to ViewBag
@@ -185,21 +215,21 @@ namespace Warehouse.Controllers
 
                 //Set assistants to user
 
-                taskListRepository.setAssistant1(id, form["assistant1"].ToString());
-                taskListRepository.setAssistant2(id, form["assistant2"].ToString());
-                taskListRepository.setAssistant3(id, form["assistant3"].ToString());
+                await taskListRepository.setAssistant1(id, form["assistant1"].ToString());
+                await taskListRepository.setAssistant2(id, form["assistant2"].ToString());
+                await taskListRepository.setAssistant3(id, form["assistant3"].ToString());
 
             }
             else
             {
 
                 //Set assistants
-                taskListRepository.setAssistant1(id, form["assistant1"].ToString());
-                taskListRepository.setAssistant2(id, form["assistant2"].ToString());
-                taskListRepository.setAssistant3(id, form["assistant3"].ToString());
+                await taskListRepository.setAssistant1(id, form["assistant1"].ToString());
+                await taskListRepository.setAssistant2(id, form["assistant2"].ToString());
+                await taskListRepository.setAssistant3(id, form["assistant3"].ToString());
 
                 //Save uploaded file
-                taskListRepository.uploadFile(id, postedFile);
+                await taskListRepository.uploadFile(id, postedFile);
             }
 
 
@@ -209,18 +239,18 @@ namespace Warehouse.Controllers
 
         [HttpPost]
         [HandleError]
-        public FileResult DownloadFile(int? FileId)
+        public async Task<FileResult> DownloadFile(int? FileId)
         {
 
-           return taskListRepository.downloadFile(FileId);
+           return await taskListRepository.downloadFile(FileId);
         }
 
         [HttpPost]
         [HandleError]
-        public ActionResult DeleteFile(int? FileId2)
+        public async Task<ActionResult> DeleteFile(int? FileId2)
         {
 
-            taskListRepository.deleteFile(FileId2);
+            await taskListRepository.deleteFile(FileId2);
             return RedirectToAction("MyList");
         }
 

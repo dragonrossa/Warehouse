@@ -34,16 +34,6 @@ namespace Warehouse.Controllers
             try
             {
 
-                ////Search box
-
-                //if (!String.IsNullOrEmpty(searchString))
-                //{
-                //    var transfer = transferRepository.storeResult().Where(s => s.LaptopName.Contains(searchString));
-
-                //    return View(new TransferResult { result = transfer });
-
-
-                //}
 
                 //Paging and search
 
