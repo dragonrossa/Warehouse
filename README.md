@@ -38,8 +38,6 @@ And now...
 3. Register as new user
 4. Test and have fun!
 
-#### PS. Merry Christmas! :)
-
-HO HO HO
+#### PS. Happy New 2021 year!
 
 Rosana
