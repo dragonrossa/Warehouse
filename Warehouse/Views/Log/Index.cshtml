@@ -1,8 +1,10 @@
 ﻿@model Warehouse.Models.LogModels
+@using PagedList.Mvc;
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 }
 <head>
 
@@ -84,7 +86,7 @@
                     <th></th>
                 </tr>
 
-                @if (Model.logs1 == null)
+                @if (Model.logs10 == null)
                 {
 
                 }
@@ -93,24 +95,29 @@
                 {
 
 
-                foreach (var item in Model.logs1)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
+                    foreach (var item in Model.logs10)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
 
-                        </td>
-                    </tr>
-                }
+                            </td>
+                        </tr>
+                    }
                 }
 
             </table>
+
+            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+            @Html.PagedListPager(Model.logs10, page => Url.Action("Index", "Log",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 
         </div>
@@ -145,7 +152,7 @@
                     <th></th>
                 </tr>
 
-                @if (Model.logs2 == null)
+                @if (Model.logs20 == null)
                 {
 
                 }
@@ -153,7 +160,7 @@
                 else
                 {
 
-                    foreach (var item in Model.logs2)
+                    foreach (var item in Model.logs20)
                     {
                         <tr>
                             <td>
@@ -169,9 +176,12 @@
                     }
                 }
 
-                </table>
+            </table>
 
+            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
 
+            @Html.PagedListPager(Model.logs20, page => Url.Action("Index", "Log",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
         </div>
     </div>
@@ -200,7 +210,7 @@
                     </th>
                     <th></th>
                 </tr>
-                @if (Model.logs3 == null)
+                @if (Model.logs30 == null)
                 {
 
                 }
@@ -208,7 +218,7 @@
                 else
                 {
 
-                    foreach (var item in Model.logs3)
+                    foreach (var item in Model.logs30)
                     {
                         <tr>
                             <td>
@@ -224,7 +234,11 @@
                     }
                 }
 
-                </table>
+            </table>
+            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+            @Html.PagedListPager(Model.logs30, page => Url.Action("Index", "Log",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
         </div>
     </div>
     <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="search-tab">
@@ -253,7 +267,7 @@
                     <th></th>
                 </tr>
 
-                @if (Model.logs4 == null)
+                @if (Model.logs40 == null)
                 {
 
                 }
@@ -261,7 +275,7 @@
                 else
                 {
 
-                    foreach (var item in Model.logs4)
+                    foreach (var item in Model.logs40)
                     {
                         <tr>
                             <td>
@@ -277,7 +291,11 @@
                     }
                 }
 
-                </table>
+            </table>
+            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+            @Html.PagedListPager(Model.logs40, page => Url.Action("Index", "Log",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
         </div>
     </div>
     <div class="tab-pane fade" id="searchNotFound" role="tabpanel" aria-labelledby="searchNotFound-tab">
@@ -306,7 +324,7 @@
                     <th></th>
                 </tr>
 
-                @if (Model.logs5 == null)
+                @if (Model.logs50 == null)
                 {
 
                 }
@@ -314,7 +332,7 @@
                 else
                 {
 
-                    foreach (var item in Model.logs5)
+                    foreach (var item in Model.logs50)
                     {
                         <tr>
                             <td>
@@ -330,7 +348,11 @@
                     }
                 }
 
-                </table>
+            </table>
+            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+            @Html.PagedListPager(Model.logs50, page => Url.Action("Index", "Log",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
         </div>
     </div>
     <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
@@ -359,7 +381,7 @@
                     <th></th>
                 </tr>
 
-                @if (Model.logs6 == null)
+                @if (Model.logs60 == null)
                 {
 
                 }
@@ -367,7 +389,7 @@
                 else
                 {
 
-                    foreach (var item in Model.logs6)
+                    foreach (var item in Model.logs60)
                     {
                         <tr>
                             <td>
@@ -384,7 +406,11 @@
                     }
                 }
 
-                </table>
+            </table>
+            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+            @Html.PagedListPager(Model.logs60, page => Url.Action("Index", "Log",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
         </div>
     </div>
 
@@ -414,7 +440,7 @@
                     <th></th>
                 </tr>
 
-                @if (Model.logs7 == null)
+                @if (Model.logs70 == null)
                 {
 
                 }
@@ -422,7 +448,7 @@
                 else
                 {
 
-                    foreach (var item in Model.logs7)
+                    foreach (var item in Model.logs70)
                     {
                         <tr>
                             <td>
@@ -438,7 +464,11 @@
                     }
                 }
 
-                </table>
+            </table>
+            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+            @Html.PagedListPager(Model.logs70, page => Url.Action("Index", "Log",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
         </div>
     </div>
 
@@ -468,7 +498,7 @@
                     <th></th>
                 </tr>
 
-                @if (Model.logs8 == null)
+                @if (Model.logs80 == null)
                 {
 
                 }
@@ -476,7 +506,7 @@
                 else
                 {
 
-                    foreach (var item in Model.logs8)
+                    foreach (var item in Model.logs80)
                     {
                         <tr>
                             <td>
@@ -492,7 +522,11 @@
                     }
                 }
 
-                </table>
+            </table>
+            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+            @Html.PagedListPager(Model.logs80, page => Url.Action("Index", "Log",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
         </div>
     </div>
 

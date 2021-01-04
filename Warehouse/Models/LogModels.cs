@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -57,6 +58,16 @@ namespace Warehouse.Models
         public IEnumerable<LogModels> logs7 { get; set; }
 
         public IEnumerable<LogModels> logs8 { get; set; }
+
+        //PagedList
+        public IPagedList<LogModels> logs10{ get; set; }
+        public IPagedList<LogModels> logs20 { get; set; }
+        public IPagedList<LogModels> logs30 { get; set; }
+        public IPagedList<LogModels> logs40 { get; set; }
+        public IPagedList<LogModels> logs50 { get; set; }
+        public IPagedList<LogModels> logs60 { get; set; }
+        public IPagedList<LogModels> logs70 { get; set; }
+        public IPagedList<LogModels> logs80 { get; set; }
 
 
         //All logs

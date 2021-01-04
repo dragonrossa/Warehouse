@@ -21,24 +21,44 @@ namespace Warehouse.Controllers
 
     
         // GET: Log
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString, string sortOrder, int? page)
         {
 
            try
             {
+                //Paging and search
 
-                return View(
-                    new LogModels
-                    {
-                        logs1 = await logRepository.logLaptop(),
-                        logs2 = await logRepository.logStore(),
-                        logs3 = await logRepository.logTransfer(),
-                        logs4 = await logRepository.logSearch(),
-                        logs5 = await logRepository.logSearchNotFound(),
-                        logs6 = await logRepository.logNewUser(),
-                        logs7 = await logRepository.logAdmin(),
-                        logs8 = await logRepository.logAccess()
-                    }); 
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+
+
+                //Get ViewBag.pageCount
+                await logRepository.pageCount(pageSize);
+
+
+                //Session for controllers
+
+                Session["pageNumber"] = pageNumber;
+                Session["pageSize"] = pageSize;
+
+
+                return View(new LogModels { 
+                    logs10 = await logRepository.pagedLaptopLog(page),
+                    logs20 = await logRepository.pagedStoreLog(page),
+                    logs30 = await logRepository.pagedTransferLog(page),
+                    logs40 = await logRepository.pagedSearchLog(page),
+                    logs50 = await logRepository.pagedSearchNotFoundLog(page),
+                    logs60 = await logRepository.pagedNewUserLog(page),
+                    logs70 = await logRepository.pagedAdminLog(page),
+                    logs80 = await logRepository.pagedAccessLog(page),
+
+
+                });
             }
             catch (Exception e)
             {
@@ -61,18 +81,42 @@ namespace Warehouse.Controllers
         }
 
 
-        public async Task<ActionResult> Search(string searchString)
+        public async Task<ActionResult> Search(string searchString, string sortOrder, int? page)
         {
+
+
+            //Paging and search
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.pageNumber = page ?? 1;
+
+
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+
+
+
+            //Get ViewBag.pageCount
+            await logRepository.pageCount(pageSize);
+
+
+            //Session for controllers
+
+            Session["pageNumber"] = pageNumber;
+            Session["pageSize"] = pageSize;
+
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 var log = _db.LogModels.Where(s => s.Description.Contains(searchString)).ToListAsync();
 
                 Session["search"] = searchString;
 
-                return View("Search", new LogModels { logs1 = await log });
+                return View("Search", new LogModels { logs10 = await logRepository.logSearch(page, searchString) });
+
             }
 
-            return RedirectToAction("Index");
+             return RedirectToAction("Index");
         }
 
     //Exception - UserNotFound
