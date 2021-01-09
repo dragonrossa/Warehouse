@@ -20,6 +20,10 @@ namespace Warehouse.Repository
 
         List<LogModels> logs = new List<LogModels>();
 
+        //Get PageParameters object
+
+        PageParameters pages = new PageParameters();
+
         //Get DB
         public WarehouseContext Data(WarehouseContext _db)
         {
@@ -43,9 +47,7 @@ namespace Warehouse.Repository
                                               .OrderBy(x => x.ID)
                                               .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return laptop.ToPagedList(pageNumber, pageSize);
+            return laptop.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //desc
@@ -62,10 +64,7 @@ namespace Warehouse.Repository
             var laptop = await (from k in _db.LogModels where k.Type == "0" select k)
                                               .OrderByDescending(x => x.ID)
                                               .ToListAsync();
-
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return laptop.ToPagedList(pageNumber, pageSize);
+            return laptop.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //2 - asc
@@ -83,9 +82,7 @@ namespace Warehouse.Repository
                                              .OrderBy(x => x.ID)
                                              .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return store.ToPagedList(pageNumber, pageSize);
+            return store.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //desc
@@ -103,9 +100,7 @@ namespace Warehouse.Repository
                                              .OrderByDescending(x => x.ID)
                                              .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return store.ToPagedList(pageNumber, pageSize);
+            return store.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //3 - asc
@@ -123,9 +118,7 @@ namespace Warehouse.Repository
                                             .OrderBy(x => x.ID)
                                             .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return log.ToPagedList(pageNumber, pageSize);
+            return log.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //desc
@@ -143,9 +136,7 @@ namespace Warehouse.Repository
                                             .OrderByDescending(x => x.ID)
                                             .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return log.ToPagedList(pageNumber, pageSize);
+            return log.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //4 - asc
@@ -163,9 +154,7 @@ namespace Warehouse.Repository
                                         .OrderBy(x => x.ID)
                                         .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return log.ToPagedList(pageNumber, pageSize);
+            return log.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //desc 
@@ -182,9 +171,7 @@ namespace Warehouse.Repository
                                         .OrderByDescending(x => x.ID)
                                         .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return log.ToPagedList(pageNumber, pageSize);
+            return log.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //5 - asc
@@ -202,9 +189,7 @@ namespace Warehouse.Repository
                                        .OrderBy(x => x.ID)
                                        .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return search.ToPagedList(pageNumber, pageSize);
+            return search.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //desc
@@ -221,9 +206,7 @@ namespace Warehouse.Repository
                                        .OrderBy(x => x.ID)
                                        .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return search.ToPagedList(pageNumber, pageSize);
+            return search.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //6 - asc
@@ -241,9 +224,7 @@ namespace Warehouse.Repository
                                       .OrderBy(x => x.ID)
                                       .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return user.ToPagedList(pageNumber, pageSize);
+            return user.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
         //desc
 
@@ -259,9 +240,7 @@ namespace Warehouse.Repository
             var user = await (from k in _db.LogModels where k.Type == "5" select k)
                                       .OrderByDescending(x => x.ID)
                                       .ToListAsync();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return user.ToPagedList(pageNumber, pageSize);
+            return user.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //7 - asc
@@ -279,9 +258,7 @@ namespace Warehouse.Repository
                                       .OrderBy(x => x.ID)
                                       .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return admin.ToPagedList(pageNumber, pageSize);
+            return admin.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //desc
@@ -298,9 +275,7 @@ namespace Warehouse.Repository
                                       .OrderByDescending(x => x.ID)
                                       .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return admin.ToPagedList(pageNumber, pageSize);
+            return admin.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //8 - asc
@@ -317,9 +292,8 @@ namespace Warehouse.Repository
             var access = await (from k in _db.LogModels where k.Type == "7" select k)
                                       .OrderBy(x => x.ID)
                                       .ToListAsync();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return access.ToPagedList(pageNumber, pageSize);
+
+            return access.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
 
@@ -337,9 +311,7 @@ namespace Warehouse.Repository
                                       .OrderByDescending(x => x.ID)
                                       .ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return access.ToPagedList(pageNumber, pageSize);
+            return access.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
 
@@ -358,9 +330,7 @@ namespace Warehouse.Repository
                 .OrderBy(s => s.Date)
                 .Where(s => s.Description.Contains(searchString)).ToListAsync();
 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return list.ToPagedList(pageNumber, pageSize);
+            return list.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         //desc
@@ -370,9 +340,8 @@ namespace Warehouse.Repository
            var list = await _db.LogModels
                 .OrderByDescending(s=>s.Date)
                 .Where(s => s.Description.Contains(searchString)).ToListAsync();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return list.ToPagedList(pageNumber, pageSize);
+
+            return list.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
 
@@ -389,7 +358,7 @@ namespace Warehouse.Repository
         {
             int pageCount = logs.Count();
             int pages = pageCount / pageSize;
-            //ViewBag.pageCount = pages;
+            ViewBag.pageCount = pages;
             int rest = pageCount % pageSize;
             if (rest < 10)
             {
@@ -404,9 +373,7 @@ namespace Warehouse.Repository
         public async Task<IPagedList<LogModels>> pagedLogList(int? page)
         {
             logs = await allLogs();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return logs.ToPagedList(pageNumber, pageSize);
+            return logs.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
@@ -415,44 +382,34 @@ namespace Warehouse.Repository
         {
             logs = await allLogs();
             logs = logs.Where(s => s.Description.Contains(searchString)).ToList();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return logs.ToPagedList(pageNumber, pageSize);
+            return logs.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
         public async Task<IPagedList<LogModels>> pagedLaptopLog(int? page)
         {
             logs = await logLaptop();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return logs.ToPagedList(pageNumber, pageSize);
+            return logs.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
         public async Task<IPagedList<LogModels>> pagedStoreLog(int? page)
         {
             logs = await logStore();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return logs.ToPagedList(pageNumber, pageSize);
+            return logs.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
         public async Task<IPagedList<LogModels>> pagedTransferLog(int? page)
         {
             logs = await logTransfer();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return logs.ToPagedList(pageNumber, pageSize);
+            return logs.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
         public async Task<IPagedList<LogModels>> pagedSearchLog(int? page)
         {
             logs = await logSearch();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return logs.ToPagedList(pageNumber, pageSize);
+            return logs.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
@@ -460,9 +417,7 @@ namespace Warehouse.Repository
              public async Task<IPagedList<LogModels>> pagedSearchNotFoundLog(int? page)
         {
             logs = await logSearchNotFound();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return logs.ToPagedList(pageNumber, pageSize);
+            return logs.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
@@ -470,9 +425,7 @@ namespace Warehouse.Repository
         public async Task<IPagedList<LogModels>> pagedNewUserLog(int? page)
         {
             logs = await logNewUser();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return logs.ToPagedList(pageNumber, pageSize);
+            return logs.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
@@ -489,9 +442,7 @@ namespace Warehouse.Repository
         public async Task<IPagedList<LogModels>> pagedAccessLog(int? page)
         {
             logs = await logAccess();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return logs.ToPagedList(pageNumber, pageSize);
+            return logs.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
     }

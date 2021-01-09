@@ -20,6 +20,10 @@ namespace Warehouse.Repository
 
         List<TransferResult> listOfTransfers = new List<TransferResult>();
 
+        //Get PageParameters object
+
+        PageParameters pages = new PageParameters();
+
         //Get laptop list
         public async Task<List<LaptopModels>> ListLaptop()
         {

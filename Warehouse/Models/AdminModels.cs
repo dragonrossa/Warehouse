@@ -1,4 +1,5 @@
 ﻿using Microsoft.Ajax.Utilities;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,14 +8,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Warehouse.DAL;
 using Warehouse.Helpers;
 
 namespace Warehouse.Models
 {
 
-    public class AdminModels
+    public class AdminModels : IElement<AdminModels>
     {
-        
+        private WarehouseContext _db = new WarehouseContext();
+
         [Key]
         public int ID { get; set; }
 
@@ -53,6 +56,7 @@ namespace Warehouse.Models
 
         public IEnumerable<AdminModels> access { get; set; }
 
+
         //Interface implementation
 
 
@@ -64,6 +68,32 @@ namespace Warehouse.Models
         //    this.Username= Username;
         //    this.Access = Access;
         //}
+        [NotMapped]
+        public List<AdminModels> Child
+        {
+            get
+            {
+                return (from t in _db.AdminModels select t).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<AdminModels> Ascending
+        {
+            get
+            {
+                return _db.AdminModels.OrderBy(x => x.ID).ToList();
+            }
+        }
+
+        [NotMapped]
+        public List<AdminModels> Descending
+        {
+            get
+            {
+                return _db.AdminModels.OrderByDescending(x => x.ID).ToList();
+            }
+        }
 
 
     }

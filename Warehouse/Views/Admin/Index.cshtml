@@ -1,8 +1,10 @@
 ﻿@model Warehouse.Models.UserModels
+@using PagedList.Mvc;
 
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 }
 
 <head>
@@ -27,7 +29,7 @@
     {
         @Html.AntiForgeryToken()
         <p>
-            Find by name: @Html.TextBox("SearchString")
+            Find by name, last name or username: @Html.TextBox("SearchString")
             <input type="submit" value="Search" />
         </p>
     }
@@ -78,7 +80,7 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model.users)
+        @foreach (var item in Model.userAccess)
         {
             <tr>
                 <td>
@@ -106,6 +108,10 @@
 </div>
 
 <div class="container-fluid">
+    Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+    @Html.PagedListPager(Model.userAccess, page => Url.Action("Index", "Laptop",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
     @Html.ActionLink("Go back", "Index", "StartPage")
 </div>
 

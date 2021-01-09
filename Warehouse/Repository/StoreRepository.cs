@@ -20,6 +20,10 @@ namespace Warehouse.Repository
 
         List<StoreModels> listOfStores = new List<StoreModels>();
 
+        //Get PageParameters object
+
+        PageParameters pages = new PageParameters();
+
         //Inherited from IDatabaseRepository
 
         //Get DB
@@ -137,9 +141,7 @@ namespace Warehouse.Repository
         public async Task<IPagedList<StoreModels>> pagedStore(int? page)
         {
             listOfStores = await (from s in _db.StoreModels select s).ToListAsync();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return listOfStores.ToPagedList(pageNumber, pageSize);
+            return listOfStores.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
@@ -147,9 +149,7 @@ namespace Warehouse.Repository
         public async Task<IPagedList<StoreModels>> storeSearch(int? page, string searchString)
         {
             listOfStores = await _db.StoreModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return listOfStores.ToPagedList(pageNumber, pageSize);
+            return listOfStores.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
     }
 }

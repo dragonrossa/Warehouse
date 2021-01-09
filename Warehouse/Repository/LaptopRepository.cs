@@ -32,7 +32,11 @@ namespace Warehouse.Repository
         //Get List<LaptopModels> for search and paging
 
         List<LaptopModels> listOfLaptops = new List<LaptopModels>();
-    
+
+        //Get PageParameters object
+
+        PageParameters pages = new PageParameters();
+
 
         //Find some laptop
 
@@ -295,7 +299,7 @@ namespace Warehouse.Repository
         {
             int pageCount = laptop.Child.Count();
             int pages = pageCount / pageSize;
-            //ViewBag.pageCount = pages;
+            ViewBag.pageCount = pages;
             int rest = pageCount % pageSize;
             if (rest < 10)
             {
@@ -310,9 +314,7 @@ namespace Warehouse.Repository
         public async Task<IPagedList<LaptopModels>> pagedLaptop(int? page)
         {
             listOfLaptops = await (from s in _db.LaptopModels select s).ToListAsync(); 
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return listOfLaptops.ToPagedList(pageNumber, pageSize);
+            return listOfLaptops.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
@@ -320,9 +322,7 @@ namespace Warehouse.Repository
         public async Task<IPagedList<LaptopModels>> laptopSearch(int? page, string searchString)
         {
             listOfLaptops = await _db.LaptopModels.Where(s => s.Name.Contains(searchString)).ToListAsync();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return listOfLaptops.ToPagedList(pageNumber, pageSize);
+            return listOfLaptops.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
     }
 }

@@ -23,6 +23,10 @@ namespace Warehouse.Repository
 
         TaskListModels task = new TaskListModels();
 
+        //Get PageParameters object
+
+        PageParameters pages = new PageParameters();
+
         //Username of this user
 
         public async Task<string> user(string username)

@@ -8,19 +8,35 @@ using Warehouse.Models;
 using Warehouse.Helpers;
 using System.Threading.Tasks;
 using Warehouse.DAL;
+using PagedList;
 
 namespace Warehouse.Repository
 {
-    public class AdminRepository: DatabaseRepository, IAdminRepository
+    public class AdminRepository: Controller, IAdminRepository
     {
+        //Get DB Context
+
         public WarehouseContext _db = new WarehouseContext();
 
+        // Get AdminModels object
 
-        //public WarehouseContext Data1()
-        //{
-        //    WarehouseContext _db1 = new WarehouseContext();
-        //    return _db1;
-        //}
+        AdminModels admin = new AdminModels();
+
+        //Get UserModels object
+
+        List<UserModels> user = new List<UserModels>();
+
+        //Get PageParameters object
+
+        PageParameters pages = new PageParameters();
+
+        //Get DB
+        public WarehouseContext Data(WarehouseContext _db)
+        {
+
+            this._db = _db;
+            return _db;
+        }
 
 
         //Return list of users
@@ -52,11 +68,11 @@ namespace Warehouse.Repository
         //Dropdown with list of possible roles
         public async Task<object> listOfRoles()
         {
-            return _db.RolesModels.ToList().Select(u => new SelectListItem
+            return await _db.RolesModels.Select(u => new SelectListItem
             {
                 Text = u.Role,
                 Value = u.ID.ToString()
-            }).ToList();
+            }).ToListAsync();
 
         }
 
@@ -189,6 +205,40 @@ namespace Warehouse.Repository
             return "Done";
 
         }
+
+        //Search and Paging
+
+        public async Task<object> pageCount(int pageSize)
+        {
+            int pageCount = admin.Child.Count();
+            int pages = pageCount / pageSize;
+            ViewBag.pageCount = pages;
+            int rest = pageCount % pageSize;
+            if (rest < 10)
+            {
+                pages = pages + 1;
+                ViewBag.pageCount = pages;
+            }
+            return ViewBag.pageCount;
+        }
+
+        //Get IPagedList for View
+
+        public async Task<IPagedList<UserModels>> pagedUserList(int? page)
+        {
+            user = await users();
+            return user.ToPagedList(pages.pageNumber(page), pages.pageSize);
+
+        }
+
+        //Get IPagedList for Search
+        public async Task<IPagedList<UserModels>> userSearch(int? page, string searchString)
+        {
+            user = await users();
+            user = user.Where(s => s.Name.Contains(searchString) || s.LastName.Contains(searchString) || s.UserName.Contains(searchString)).ToList();
+            return user.ToPagedList(pages.pageNumber(page), pages.pageSize);
+        }
+
 
         //Save DB
         public async Task<object> SaveData()

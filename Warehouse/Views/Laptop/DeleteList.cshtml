@@ -94,7 +94,7 @@
 
     Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
 
-    @Html.PagedListPager(Model, page => Url.Action("Index", "Laptop",
+    @Html.PagedListPager(Model, page => Url.Action("DeleteList", "Laptop",
         new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
     @Html.ActionLink("Back to List", "Index", "Laptop")

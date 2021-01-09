@@ -26,25 +26,57 @@ namespace Warehouse.Controllers
 
 
         // GET: Admin
-        public async Task<ActionResult> Index(string searchString)
+        public async Task<ActionResult> Index(string searchString, string sortOrder, int? page)
         {
 
                 try
                 {
 
-                ////Search box
+                //Paging and search
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+
+
+                //Get ViewBag.pageCount
+                await adminRepository.pageCount(pageSize);
+
+
+                //Session for controllers
+
+                Session["pageNumber"] = pageNumber;
+                Session["pageSize"] = pageSize;
+
+                //////Search box
+
+                //if (!String.IsNullOrEmpty(searchString))
+                //{
+                //      var user = _db.UserModels.Where(s => s.Name.Contains(searchString)
+                //                               || s.LastName.Contains(searchString)
+                //                               || s.UserName.Contains(searchString)).ToListAsync();
+
+                //    return View(new UserModels { users =  await user });
+                //}
+
+
+                //Search box
 
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                      var user = _db.UserModels.Where(s => s.Name.Contains(searchString)
-                                               || s.LastName.Contains(searchString)
-                                               || s.UserName.Contains(searchString)).ToListAsync();
 
-                    return View(new UserModels { users =  await user });
+                    return View( new UserModels { userAccess = await adminRepository.userSearch(page, searchString) });
                 }
 
+
+
+
                 return View( new UserModels { 
-                    users = await adminRepository.users()
+                    userAccess = await adminRepository.pagedUserList(page)
                 }
                 );
                   //  return View(users());

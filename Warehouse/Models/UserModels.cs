@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -46,6 +47,9 @@ namespace Warehouse.Models
         public DateTime? DateModified { get; set; }
 
         public IEnumerable<UserModels> users { get; set; }
+
+        //PagedList
+        public IPagedList<UserModels> userAccess { get; set; }
 
 
         [NotMapped]

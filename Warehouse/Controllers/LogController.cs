@@ -21,7 +21,7 @@ namespace Warehouse.Controllers
 
     
         // GET: Log
-        public async Task<ActionResult> Index(string searchString, string sortOrder, int? page)
+        public async Task<ActionResult> Index(string sortOrder, int? page)
         {
 
            try
