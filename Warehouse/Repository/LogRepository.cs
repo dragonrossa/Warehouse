@@ -352,20 +352,27 @@ namespace Warehouse.Repository
         }
         //asc
 
-        public async Task<List<LogModels>> logSearchAsc(string searchString)
+        public async Task<IPagedList<LogModels>> logSearchAsc(string searchString, int? page)
         {
-            return await _db.LogModels
+            var list = await _db.LogModels
                 .OrderBy(s => s.Date)
                 .Where(s => s.Description.Contains(searchString)).ToListAsync();
+
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return list.ToPagedList(pageNumber, pageSize);
         }
 
         //desc
-        public async Task<List<LogModels>> logSearchDesc(string searchString)
+        public async Task<IPagedList<LogModels>> logSearchDesc(string searchString, int? page)
         {
            
-           return await _db.LogModels
+           var list = await _db.LogModels
                 .OrderByDescending(s=>s.Date)
                 .Where(s => s.Description.Contains(searchString)).ToListAsync();
+            int pageSize = 10;
+            int pageNumber = page ?? 1;
+            return list.ToPagedList(pageNumber, pageSize);
         }
 
 

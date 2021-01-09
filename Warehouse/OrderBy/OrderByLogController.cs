@@ -306,24 +306,24 @@ namespace Warehouse.OrderBy
 
         }
 
-        //For logs8
+        //For Search - logs
 
-        public async Task<ActionResult> AscDateSearch()
+        public async Task<ActionResult> AscDateSearch(int? page)
         {
 
             return View("~/Views/Log/Search.cshtml", new LogModels
             {
-                logs1 = await logRepository.logSearchAsc(Convert.ToString(Session["search"])),
+                logs10 = await logRepository.logSearchAsc(Convert.ToString(Session["search"]),page),
             });
 
         }
 
-        public async Task<ActionResult> DescDateSearch()
+        public async Task<ActionResult> DescDateSearch(int? page)
         {
 
             return View("~/Views/Log/Search.cshtml", new LogModels
             {
-                logs1 = await logRepository.logSearchDesc(Convert.ToString(Session["search"])),
+                logs10 = await logRepository.logSearchDesc(Convert.ToString(Session["search"]),page),
             });
 
         }

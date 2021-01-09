@@ -28,7 +28,7 @@ namespace Warehouse.Repository
         Task<List<LogModels>> logTransfer();
         Task<IPagedList<LogModels>> logTransfer30(int? page);
         Task<List<LogModels>> logDescTransfer();
-        Task<IPagedList<LogModels>> logDescTranfer40(int? page);
+        Task<IPagedList<LogModels>> logDescTransfer30(int? page);
         //4
         Task<List<LogModels>> logSearch();
         Task<IPagedList<LogModels>> logSearch40(int? page);
@@ -56,8 +56,8 @@ namespace Warehouse.Repository
         Task<IPagedList<LogModels>> logDescAccess80(int? page);
 
         //Search
-        Task<List<LogModels>> logSearchAsc(string searchString);
-        Task<List<LogModels>> logSearchDesc(string searchString);
+        Task<IPagedList<LogModels>> logSearchAsc(string searchString, int? page);
+        Task<IPagedList<LogModels>> logSearchDesc(string searchString, int? page);
         //Save data
         Task<object> SaveData();
     }
