@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,6 +28,9 @@ namespace Warehouse.Models
         public IEnumerable<SelectListItem> computers { get; set; }
         public IEnumerable<SelectListItem> suppliers { get; set; }
         public IEnumerable<ComputerListModels> computersList { get; set; }
+        //PagedList
+        public IPagedList<ComputerListModels> computerList { get; set; }
+        public IPagedList<SupplierModels> supplierList { get; set; }
 
         [NotMapped]
         public List<ComputerListModels> Child

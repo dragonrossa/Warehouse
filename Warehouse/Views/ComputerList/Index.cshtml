@@ -1,7 +1,9 @@
 ﻿@model Warehouse.Models.ComputerListModels
+@using PagedList.Mvc;
 
 <head>
     <link href="@Url.Content("~/Content/myStyle.css")" rel="stylesheet" type="text/css" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 </head>
 @{
     Layout = "~/Views/Shared/_LayoutApplication.cshtml";
@@ -69,17 +71,20 @@
 
 
 
-            @foreach (var item in Model.computersList)
+            @foreach (var item in Model.computerList)
             {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                         @Html.HiddenFor(modelItem => item.Name)
                     </td>
-                    <td>
-                        @Html.DropDownListFor(x => x.SupplierName, Model.suppliers)
-                        @Html.HiddenFor(x => x.SupplierName, Model.suppliers)
-                    </td>
+                    @*<td>
+                        @Html.DropDownListFor(x => x.SupplierName, Model.supplierList)
+                        @Html.HiddenFor(x => x.SupplierName, Model.supplierList)
+                    </td>*@
+                <td>
+                    @Html.DropDownList("suppliers")
+                </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SupplierName)
                         @Html.HiddenFor(modelItem => item.SupplierName)
@@ -100,6 +105,10 @@
 
 
 <div class="container-fluid" style="margin-left:15px">
+    Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
+
+    @Html.PagedListPager(Model.computerList, page => Url.Action("Index", "ComputerList",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
     @Html.ActionLink("Go back", "Index", "StartPage")
 </div>
 

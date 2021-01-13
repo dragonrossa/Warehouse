@@ -176,9 +176,7 @@ namespace Warehouse.Repository
         public async Task<IPagedList<TransferResult>> pagedTransfer(int? page)
         {
             listOfTransfers = await storeResult();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return listOfTransfers.ToPagedList(pageNumber, pageSize);
+            return listOfTransfers.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
@@ -187,9 +185,8 @@ namespace Warehouse.Repository
         {
             listOfTransfers = await storeResult();
             listOfTransfers = listOfTransfers.Where(s => s.LaptopName.Contains(searchString)).ToList();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return listOfTransfers.ToPagedList(pageNumber, pageSize);
+
+            return listOfTransfers.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
     }

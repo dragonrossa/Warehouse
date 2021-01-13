@@ -278,9 +278,7 @@ namespace Warehouse.Repository
         public async Task<IPagedList<TaskListModels>> pagedTaskList(int? page)
         {
             listOfTasks = await listOfFalseTasks();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return listOfTasks.ToPagedList(pageNumber, pageSize);
+            return listOfTasks.ToPagedList(pages.pageNumber(page), pages.pageSize);
 
         }
 
@@ -289,9 +287,7 @@ namespace Warehouse.Repository
         {
             listOfTasks = await listOfFalseTasks();
             listOfTasks = listOfTasks.Where(s => s.User.Contains(searchString)).ToList();
-            int pageSize = 10;
-            int pageNumber = page ?? 1;
-            return listOfTasks.ToPagedList(pageNumber, pageSize);
+            return listOfTasks.ToPagedList(pages.pageNumber(page), pages.pageSize);
         }
 
     }

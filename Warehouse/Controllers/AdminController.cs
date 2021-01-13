@@ -52,18 +52,7 @@ namespace Warehouse.Controllers
                 Session["pageNumber"] = pageNumber;
                 Session["pageSize"] = pageSize;
 
-                //////Search box
-
-                //if (!String.IsNullOrEmpty(searchString))
-                //{
-                //      var user = _db.UserModels.Where(s => s.Name.Contains(searchString)
-                //                               || s.LastName.Contains(searchString)
-                //                               || s.UserName.Contains(searchString)).ToListAsync();
-
-                //    return View(new UserModels { users =  await user });
-                //}
-
-
+           
                 //Search box
 
                 if (!String.IsNullOrEmpty(searchString))

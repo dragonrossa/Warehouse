@@ -39,7 +39,7 @@ namespace Warehouse.Controllers
         //Check if there is SupplierName
         public ActionResult checkSupplierName(FormCollection form)
         {
-            return form["SupplierName"].ToString() == null ? (ActionResult)RedirectToAction("Index", "Supplier") : View("Index", "ComputerList");
+            return form["suppliers"].ToString() == null ? (ActionResult)RedirectToAction("Index", "Supplier") : View("Index", "ComputerList");
 
         }
 
@@ -47,15 +47,14 @@ namespace Warehouse.Controllers
 
         // GET: ComputerList
         [HandleError]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString, string sortOrder, int? page)
         {
 
-            var computerLists = await computerRepository.computerLists();
-            var suppliers = await computerRepository.suppliers();
-
-
+            
             try
             {
+                var computerLists = await computerRepository.computerLists();
+                var suppliers = await computerRepository.suppliers();
 
                 if (suppliers.Count == 0)
                 {
@@ -67,7 +66,31 @@ namespace Warehouse.Controllers
                     return RedirectToAction("Create", "ComputerList");
                 }
 
-                return View(new ComputerListModels() { suppliers = await computerRepository.suppliers(), computersList = await computerRepository.computerLists() });
+
+
+                //Paging and search
+
+                ViewBag.CurrentSort = sortOrder;
+                ViewBag.pageNumber = page ?? 1;
+
+
+                int pageSize = 10;
+                int pageNumber = page ?? 1;
+
+
+
+                //Get ViewBag.pageCount
+                await computerRepository.pageCount(pageSize);
+
+
+                //Session for controllers
+
+                Session["pageNumber"] = pageNumber;
+                Session["pageSize"] = pageSize;
+
+                ViewData["suppliers"] = await computerRepository.suppliers();
+
+                return View(new ComputerListModels() { /*supplierList = await computerRepository.pagedSupplierList(page),*/ computerList = await computerRepository.pagedComputerList(page) });
             }
             catch (Exception e)
             {
