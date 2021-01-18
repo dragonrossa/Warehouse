@@ -52,7 +52,7 @@
                 </label>
             </th>
             <th>
-                 @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescQuantity","OrderByLaptop")">
                         <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
@@ -64,7 +64,7 @@
                 </label>
             </th>
             <th>
-                  @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescPrice","OrderByLaptop")">
                         <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
@@ -76,7 +76,7 @@
                 </label>
             </th>
             <th>
-                  @Html.DisplayNameFor(model => model.FirstOrDefault().FullPrice)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().FullPrice)
                 <label style="padding-left:10px;">
                     <a href="@Url.Action("DescFullPrice","OrderByLaptop")">
                         <i style='font-size:15px;color:black;' class='fas'>&#xf107;</i>
@@ -116,7 +116,7 @@
 
     Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
 
-    @Html.PagedListPager(Model, page => Url.Action("Index","Laptop",
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Laptop",
         new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
     @* this one is also ok *@
@@ -180,8 +180,10 @@
     </div>
 
 
-        @Html.ActionLink("Go back", "Index", "StartPage")
- 
+    @Html.ActionLink("Go back", "Index", "StartPage")
+
+    @Html.ValidationMessage("CustomError")
+
 
 </div>
 

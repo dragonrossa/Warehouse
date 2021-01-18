@@ -44,7 +44,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await adminRepository.pageCount(pageSize);
+                ViewBag.pageCount = await adminRepository.pageCount(pageSize);
 
 
                 //Session for controllers

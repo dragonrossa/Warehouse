@@ -66,10 +66,10 @@ namespace Warehouse.Controllers
                     int pageSize = 10;
                     int pageNumber = page ?? 1;
 
-             
+
 
                     //Get ViewBag.pageCount
-                    await laptopRepository.pageCount(pageSize,laptop);
+                    ViewBag.pageCount = await laptopRepository.pageCount(pageSize,laptop);
 
                     //Search box
 
@@ -112,6 +112,8 @@ namespace Warehouse.Controllers
                     return RedirectToAction("NotFound");
 
                 }
+
+                ModelState.AddModelError("CustomError", "This is example of test error");
             }
 
                 //if there are no Laptops in list
@@ -175,7 +177,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await laptopRepository.pageCount(pageSize, laptop);
+                ViewBag.pageCount = await laptopRepository.pageCount(pageSize, laptop);
 
                 //Search box
 
@@ -220,7 +222,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await laptopRepository.pageCount(pageSize, laptop);
+                ViewBag.pageCount = await laptopRepository.pageCount(pageSize, laptop);
 
                 //Search box
 
@@ -265,7 +267,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await laptopRepository.pageCount(pageSize, laptop);
+                ViewBag.pageCount = await laptopRepository.pageCount(pageSize, laptop);
 
                 //Search box
 

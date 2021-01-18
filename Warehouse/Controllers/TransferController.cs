@@ -47,7 +47,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await transferRepository.pageCount(pageSize, transfer);
+                ViewBag.pageCount = await transferRepository.pageCount(pageSize, transfer);
 
                 //Search box
 

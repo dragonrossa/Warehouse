@@ -62,7 +62,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await storeRepository.pageCount(pageSize, store);
+                ViewBag.pageCount = await storeRepository.pageCount(pageSize, store);
 
                 //Search box
 
@@ -195,7 +195,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await storeRepository.pageCount(pageSize, store);
+                ViewBag.pageCount = await storeRepository.pageCount(pageSize, store);
 
                 //Search box
 
@@ -244,7 +244,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await storeRepository.pageCount(pageSize, store);
+                ViewBag.pageCount = await storeRepository.pageCount(pageSize, store);
 
                 //Search box
 
@@ -293,7 +293,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await storeRepository.pageCount(pageSize, store);
+                ViewBag.pageCount = await storeRepository.pageCount(pageSize, store);
 
                 //Search box
 

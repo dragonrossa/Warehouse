@@ -38,7 +38,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await logRepository.pageCount(pageSize);
+                ViewBag.pageCount = await logRepository.pageCount(pageSize);
 
 
                 //Session for controllers
@@ -97,7 +97,7 @@ namespace Warehouse.Controllers
 
 
             //Get ViewBag.pageCount
-            await logRepository.pageCount(pageSize);
+            ViewBag.pageCount = await logRepository.pageCount(pageSize);
 
 
             //Session for controllers

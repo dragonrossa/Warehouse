@@ -114,7 +114,6 @@
 
             </table>
 
-            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
 
             @Html.PagedListPager(Model.logs10, page => Url.Action("Index", "Log",
                 new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
@@ -178,8 +177,6 @@
 
             </table>
 
-            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
-
             @Html.PagedListPager(Model.logs20, page => Url.Action("Index", "Log",
                 new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
@@ -235,7 +232,6 @@
                 }
 
             </table>
-            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
 
             @Html.PagedListPager(Model.logs30, page => Url.Action("Index", "Log",
                 new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
@@ -292,7 +288,6 @@
                 }
 
             </table>
-            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
 
             @Html.PagedListPager(Model.logs40, page => Url.Action("Index", "Log",
                 new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
@@ -349,7 +344,6 @@
                 }
 
             </table>
-            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
 
             @Html.PagedListPager(Model.logs50, page => Url.Action("Index", "Log",
                 new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
@@ -407,7 +401,6 @@
                 }
 
             </table>
-            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
 
             @Html.PagedListPager(Model.logs60, page => Url.Action("Index", "Log",
                 new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
@@ -465,7 +458,6 @@
                 }
 
             </table>
-            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
 
             @Html.PagedListPager(Model.logs70, page => Url.Action("Index", "Log",
                 new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
@@ -523,7 +515,6 @@
                 }
 
             </table>
-            Page @(ViewBag.pageCount < ViewBag.pageNumber ? 0 : ViewBag.pageNumber) of @ViewBag.pageCount
 
             @Html.PagedListPager(Model.logs80, page => Url.Action("Index", "Log",
                 new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

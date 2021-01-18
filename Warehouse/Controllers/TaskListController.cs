@@ -85,7 +85,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await taskListRepository.pageCount(pageSize, taskListModels);
+                ViewBag.pageCount = await taskListRepository.pageCount(pageSize, taskListModels);
 
 
                 //Session for controllers

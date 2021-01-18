@@ -80,7 +80,7 @@ namespace Warehouse.Controllers
 
 
                 //Get ViewBag.pageCount
-                await computerRepository.pageCount(pageSize);
+                ViewBag.pageCount = await computerRepository.pageCount(pageSize);
 
 
                 //Session for controllers
